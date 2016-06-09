@@ -1,7 +1,7 @@
 {
-  "name": "joogasilta",
+  "name": "AppName",
   "version": "1.0.0",
-  "description": "joogakoulusillan kotisivut ja varaus",
+  "description": "",
   "main": "webpack.config.js",
   "dependencies": {
     "babel-loader": "^6.2.0",
@@ -24,6 +24,6 @@
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "BMIC-Team",
+  "author": "",
   "license": "ISC"
 }
