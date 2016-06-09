@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 
-import Layout from "./views/Layout.js";
+import Layout from "./views/Layout";
 
 const app = document.getElementById('app');
 
