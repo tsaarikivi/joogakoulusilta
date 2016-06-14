@@ -1,33 +1,33 @@
 #### Atom:
 > sudo add-apt-repository ppa:webupd8team/atom <br>
-> sudo apt-get update
-> sudo apt-get install atom
+> sudo apt-get update <br>
+> sudo apt-get install atom <br>
 > sudo chown <KÄYTTÄJÄ> .atom/ -R
 
 #### Atom paketit:
 > apm install color-picker linter emmet file-icons react
 
 #### Nodejs:
-> sudo apt-get remove --purge nodejs
-> curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-> source ~/.profile
-> nvm install stable
+> sudo apt-get remove --purge nodejs <br>
+> curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash <br>
+> source ~/.profile <br>
+> nvm install stable <br>
 > nvm use stable
 
 #### Github-repo:
-> cd path/to/code
+> cd path/to/code <br>
 > git clone https://github.com/tsaarikivi/joogakoulusilta
 
 #### Alustus:
-> cd path/to/code/project
+> cd path/to/code/project <br>
 > npm install
 
 #### Käynnistä localhost:8080 ja buildaus:
-> cd path/to/code/project
+> cd path/to/code/project <br>
 > npm run dev
 
 #### Avaa projekti atomilla:
-> cd path/to/code/project
+> cd path/to/code/project <br>
 > atom .
 
 #### Lisävinkkejä atomista:
