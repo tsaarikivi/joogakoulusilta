@@ -16,7 +16,7 @@
 
 #### Github-repo:
 > cd path/to/code
-> git clone github
+> git clone https://github.com/tsaarikivi/joogakoulusilta
 
 #### Alustus:
 > cd path/to/code/project
@@ -30,9 +30,22 @@
 > cd path/to/code/project
 > atom .
 
-#### Linkkejä:
+#### Lisävinkkejä atomista:
+- paina atomin sisällä [ctrl + ,] mene packages kohtaan ja kirjoita hakukenttään "tree" klikkaa tree-view paketin 'SETTINGS' nappia ja tikkaa "hide VCS ignored files" ja "hide ignored names". Jos tulee ikävä ignorattuja filejä voit käydä tikkaamassa pois.
+- paina atomin sisällä [ctrl + ,] mene packages kohtaan ja kirjoita hakukenttään "autosave" kilkkaa autosave paketin 'SETTINGS' nappia ja tikkaa "enabled"
+
+### Linkkejä:
 - [React docs](https://facebook.github.io/react/docs/getting-started.html)
 - [React tutorial](https://www.youtube.com/watch?v=MhkGQAoc7bc&list=PLoYCgNOIyGABj2GQSlDRjgvXtqfDxKm5b)
 - [Redux docs](http://redux.js.org/)
 - [Redux tutorial](https://egghead.io/lessons/javascript-redux-the-single-immutable-state-tree)
-- [Firebase:](https://console.firebase.google.com/)
+- [Firebase](https://console.firebase.google.com/)
+
+********************************************************************************
+## Projektista:
+- Kaikki koodaus tapahtuu src hakemiston sisällä. Koodi buildaantuu kansioon public/ joka saattaa olla näkymättömissä, koska se on gitignoressa. Public on se mikä lähetetään hostaukseen.
+- Src hakemiston sisällä on assets kansio mihin laitetaan mahdolliset staattiset kuvat (jpg, png, gif, svg...)
+- Dev hakemistossa on kaikki javascriptkoodi liittyen reactiin ja reduxiin.
+- Styles hakemistossa on kaikki scss tiedostot. (huom ei css.) Kun lisää scss tiedoston hakemistoon, täytyy muistaa importata tiedosto app.scss tiedostossa. Ohjeet ovat siinä tiedostossa.
+- app.js on äpin perusta. Kyseisessä tiedostossa on 'routing' hommat.
+- index.html on äpin ainoa html tiedosto. Siihen ei näillä näkymin tarvitse koskea.
