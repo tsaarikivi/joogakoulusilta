@@ -49,6 +49,7 @@
 - Kaikki koodaus tapahtuu src hakemiston sisällä. Koodi buildaantuu kansioon public/ joka saattaa olla näkymättömissä, koska se on gitignoressa. Public on se mikä lähetetään hostaukseen.
 - Src hakemiston sisällä on assets kansio mihin laitetaan mahdolliset staattiset kuvat (jpg, png, gif, svg...)
 - Dev hakemistossa on kaikki javascriptkoodi liittyen reactiin ja reduxiin.
+- Dev hakemiston sisällä react-komponentit ovat pääsääntöisesti kansiossa components, mutta sivuston pääelementit ovat kansiossa views. (viewsissä esim Homepage, Loginpage, Reservations, Shoppingcenter yms yms) (componentsissa esim Homepagen komponentit kansiossa homepage Navigation, Content, Contact, Footer yms yms)
 - Styles hakemistossa on kaikki scss tiedostot. (huom ei css.) Kun lisää scss tiedoston hakemistoon, täytyy muistaa importata tiedosto app.scss tiedostossa. Ohjeet ovat siinä tiedostossa.
 - app.js on äpin perusta. Kyseisessä tiedostossa on 'routing' hommat.
 - index.html on äpin ainoa html tiedosto. Siihen ei näillä näkymin tarvitse koskea.
