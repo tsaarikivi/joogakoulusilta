@@ -53,3 +53,5 @@
 - Styles hakemistossa on kaikki scss tiedostot. (huom ei css.) Kun lisää scss tiedoston hakemistoon, täytyy muistaa importata tiedosto app.scss tiedostossa. Ohjeet ovat siinä tiedostossa.
 - app.js on äpin perusta. Kyseisessä tiedostossa on 'routing' hommat.
 - index.html on äpin ainoa html tiedosto. Siihen ei näillä näkymin tarvitse koskea.
+- Testit hakemistossa tests.
+- Älä puske sekavia muutoksia .gitignoreen package.jsoniin webpack.config.jsään
