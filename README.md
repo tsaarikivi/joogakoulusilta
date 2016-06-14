@@ -30,6 +30,10 @@
 > cd path/to/code/project <br>
 > atom .
 
+#### HUOM! luo oma gitbranchi
+> cd path/to/code/project <br>
+> git checkout -b <OMAN BRANCHING NIMI> (tuomo_dev, kaapo_dev, kari_dev)
+
 #### Lisävinkkejä atomista:
 - paina atomin sisällä [ctrl + ,] mene packages kohtaan ja kirjoita hakukenttään "tree" klikkaa tree-view paketin 'SETTINGS' nappia ja tikkaa "hide VCS ignored files" ja "hide ignored names". Jos tulee ikävä ignorattuja filejä voit käydä tikkaamassa pois.
 - paina atomin sisällä [ctrl + ,] mene packages kohtaan ja kirjoita hakukenttään "autosave" kilkkaa autosave paketin 'SETTINGS' nappia ja tikkaa "enabled"
