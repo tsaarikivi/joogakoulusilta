@@ -9,17 +9,19 @@ import Layout from "./dev/views/Layout.jsx";
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCambUGIYI2HeiwG6ril_5dEVEC8Av6oGI",
-  authDomain: "testproject-b9597.firebaseapp.com",
-  databaseURL: "https://testproject-b9597.firebaseio.com",
-  storageBucket: "testproject-b9597.appspot.com",
+  apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
+    authDomain: "joogakoulusilta-projekti.firebaseapp.com",
+    databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
+    storageBucket: "joogakoulusilta-projekti.appspot.com",
 };
 firebase.initializeApp(config);
 
+/*
+firebase works this way:
 firebase.database().ref('items/').push({
   name: "tero",
   size: 11
-})
+})*/
 
 const app = document.getElementById('app');
 
