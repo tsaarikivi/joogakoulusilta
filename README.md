@@ -32,7 +32,7 @@
 
 #### HUOM! luo oma gitbranchi
 > cd path/to/code/project <br>
-> git checkout -b OMAN_BRANCHING_NIMI (tuomo_dev, kaapo_dev, kari_dev)
+> git checkout -b OMAN_BRANCHING_NIMI (esim tuomo_dev, kaapo_dev, kari_dev)
 
 #### Lisävinkkejä atomista:
 - paina atomin sisällä [ctrl + ,] mene packages kohtaan ja kirjoita hakukenttään "tree" klikkaa tree-view paketin 'SETTINGS' nappia ja tikkaa "hide VCS ignored files" ja "hide ignored names". Jos tulee ikävä ignorattuja filejä voit käydä tikkaamassa pois.
