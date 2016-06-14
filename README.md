@@ -1,6 +1,5 @@
 #### Atom:
-> sudo add-apt-repository ppa:webupd8team/atom
-*
+> sudo add-apt-repository ppa:webupd8team/atom \n
 > sudo apt-get update
 > sudo apt-get install atom
 > sudo chown <KÄYTTÄJÄ> .atom/ -R
