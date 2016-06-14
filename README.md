@@ -2,7 +2,7 @@
 > sudo add-apt-repository ppa:webupd8team/atom <br>
 > sudo apt-get update <br>
 > sudo apt-get install atom <br>
-> sudo chown <KÄYTTÄJÄ> .atom/ -R
+> sudo chown KÄYTTÄJÄ .atom/ -R
 
 #### Atom paketit:
 > apm install color-picker linter emmet file-icons react
