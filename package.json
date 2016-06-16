@@ -1,7 +1,7 @@
 {
   "name": "AppName",
   "version": "1.0.0",
-  "description": "",
+  "description": "Joogakoulu Sillan kotisivut ja varausjarjestelma",
   "main": "webpack.config.js",
   "dependencies": {
     "babel-loader": "^6.2.0",

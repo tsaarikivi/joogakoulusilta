@@ -3,11 +3,13 @@ place all of them in this directory 'src/styles/'
 example:
 @import 'fonts.scss';*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
+@import 'variables.scss';
 
 body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  background: $body-color;
 }
 
 button {
@@ -21,15 +23,16 @@ ul {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 10px 0;
+  color: #333;
 }
 
 .container {
   width: 100%;
   max-width: 800px;
   margin: 0 auto 10px;
-  background: #fafafa;
+  background: $container-color;
   padding: 20px;
-  box-shadow: 0 3px 10px #eaeaea;
+  box-shadow: 0 3px 10px $shadow-light;
   text-align: center;
 }
 
@@ -40,6 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .shop-list-container {
   text-align: left;
+
 }
 
 .timetable-container {
@@ -50,63 +54,48 @@ h1, h2, h3, h4, h5, h6 {
   small {
     display: block;
     padding: 10px 0 20px;
-    color: #999;
+    color: $fadeout-text;
   }
 }
 
+.btn-large, .btn-small {
+  background: $button-norm;
+  text-decoration: none;
+  color: $button-text;
+  border-radius: 3px;
+  border-style: none;
+  box-shadow: 0 3px 10px $button-norm-shdw;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: background 0.1s, box-shadow 0.1s;
+  &:hover {
+    background: $button-hover;
+    box-shadow: 0 4px 10px $button-hover-shdw;
+  }
+  &:active {
+    background: $button-active;
+    box-shadow: 0 2px 8px $button-active-shdw;
+  }
+}
 .btn-large {
-  background: #00ddff;
-  text-decoration: none;
-  color: #fff;
   padding: 10px 20px;
-  border-radius: 3px;
-  box-shadow: 0 3px 10px #ccc;
-  text-transform: uppercase;
-  font-weight: 700;
-  transition: background 0.1s, box-shadow 0.1s;
-  &:hover {
-    background: #00ccee;
-    box-shadow: 0 4px 10px #ddd;
-  }
-  &:active {
-    background: #00aacc;
-    box-shadow: 0 2px 8px #bbb;
-  }
 }
-
 .btn-small {
-  background: #00ddff;
-  text-decoration: none;
-  color: #fff;
   padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  box-shadow: 0 3px 10px #ccc;
-  text-transform: uppercase;
-  font-weight: 700;
-  transition: background 0.1s, box-shadow 0.1s;
-  &:hover {
-    background: #00ccee;
-    box-shadow: 0 4px 10px #ddd;
-  }
-  &:active {
-    background: #00aacc;
-    box-shadow: 0 2px 8px #bbb;
-  }
 }
 
 .text-link {
   margin-top: 20px;
   display: block;
   text-decoration: underline;
-  color: #001155;
+  color: $text-link-norm;
   text-transform: uppercase;
   transition: color 0.1s;
   &:hover {
-    color: #3377cc;
+    color: $text-link-hover;
   }
   &:active {
-    color: #66aaff;
+    color: $text-link-active;
   }
 }
 .back-btn {
@@ -115,17 +104,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .use-times {
-  color: #00aacc;
+  color: $use-times;
 }
 
 .item-card {
   width: 30%;
   height: 140px;
-  background: #fff;
+  background: $list-item;
   display: inline-block;
-  margin: 0 3px;
+  margin: 0 5px;
   border-radius: 3px;
-  box-shadow: 0 3px 10px #eee;
+  box-shadow: 0 3px 10px $item-shdw;
 }
 
 table {
@@ -136,15 +125,15 @@ table {
     width: 23%;
     display: inline-block;
     float: left;
-    background: #fff;
+    background: $list-item;
     border-radius: 3px;
-    box-shadow: 0 3px 10px #eee;
+    box-shadow: 0 3px 10px $item-shdw;
     th, td {
       width: 100%;
       display: block;
     }
     td {
-      border-top: 1px solid #ddd;
+      border-top: 1px solid $item-border;
       transition: background 0.1s;
       padding: 5px 0;
       h3 {
@@ -158,29 +147,29 @@ table {
         font-size: 13px;
       }
       &:hover {
-        background: #aaeeff;
+        background: $list-item-hover;
       }
     }
     th {
-      background: #f3f3f3;
+      background: $table-header;
     }
   }
 }
 
-ul {
+ul.shop-list {
   padding: 0;
   li {
-    background: #fff;
+    background: $list-item;
     padding: 20px;
     border-radius: 3px;
-    box-shadow: 0 3px 10px #eee;
-    margin-top: 10px;
+    box-shadow: 0 3px 10px $item-shdw;
+    margin: 10px 100px;
     h3 {
       padding: 0;
       margin: 0;
     }
     .price {
-      color: #3377cc;
+      color: $price;
       font-weight: 700;
     }
   }
