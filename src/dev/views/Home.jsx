@@ -5,15 +5,15 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
-        <div class="container header-container">
+        <div class="container main-header-container">
           <h1 class="main-heading">Joogakoulu Silta</h1>
           <p class="slogan">Silta joogan maailmaan</p>
           <Link className="text-link" to="info">Tutustu tarkemmin</Link>
         </div>
         <div class="container login-container">
           <h2 class="login-heading">Oletko jo jäsen?</h2>
-          <Link className="btn-large login-btn" to="user">Kirjaudu</Link>
-          <Link className="text-link" to="user">Tai rekisteröidy</Link>
+          <Link className="btn-small login-btn" to="user">Kirjaudu</Link>
+          <Link className="btn-small register-btn" to="user">Tai rekisteröidy</Link>
         </div>
         <div class="container contact-container">
             <h2 class="contact-heading">Yhteystiedot</h2>

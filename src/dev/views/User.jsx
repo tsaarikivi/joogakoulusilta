@@ -11,22 +11,25 @@ export default class User extends React.Component {
           <Link className="text-link" to="shop">Kauppaan</Link>
         </div>
         <div class="container">
-          <h2>Tulevia kursseja</h2>
-          <span class="item-card">
-            <h3>Joogakurssi 1</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
-          <span class="item-card">
-            <h3>Joogakurssi 2</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
-          <span class="item-card">
-            <h3>Joogakurssi 3</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
+          <h2>Tulevia erityiskursseja</h2>
+          <div class="items-body">
+            <span class="item-card">
+              <h3>Joogakurssi 1</h3>
+              <p>1.8 klo 12:00</p>
+              <button class="btn-small">lisätietoja</button>
+            </span>
+            <span class="item-card">
+              <h3>Joogakurssi 2</h3>
+              <p>1.8 klo 12:00</p>
+              <button class="btn-small">lisätietoja</button>
+            </span>
+            <span class="item-card">
+              <h3>Joogakurssi 3</h3>
+              <p>1.8 klo 12:00</p>
+              <button class="btn-small">lisätietoja</button>
+            </span>
+          </div>
+          <Link className="text-link" to="shop">Lisää erityiskursseja</Link>
         </div>
         <div class="container timetable-container">
           <h2>Aikataulu</h2>
