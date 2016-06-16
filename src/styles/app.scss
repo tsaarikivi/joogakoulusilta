@@ -36,6 +36,13 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+.header-container {
+  h1 {
+    text-align: left;
+    text-indent: 20px;
+  }
+}
+
 .contact-container {
   text-align: left;
   text-indent: 10%;
@@ -43,7 +50,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .shop-list-container {
   text-align: left;
-
 }
 
 .timetable-container {
@@ -86,7 +92,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-link {
   margin-top: 20px;
-  display: block;
   text-decoration: underline;
   color: $text-link-norm;
   text-transform: uppercase;
@@ -99,7 +104,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .back-btn {
-  text-align: left;
+  display: inline-block;
+  float: left;
   text-decoration: none;
 }
 

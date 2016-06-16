@@ -15,9 +15,11 @@ export default class ShopList extends React.Component {
 
   getItems() {
     var items = [
-      <ShopItem title={"2 joogakertaa"} desc={"Käyttöoikeus säilyy 8 viikon ajan"} price={"20 €"} itemId={"Item-id"}/>,
-      <ShopItem title={"6 joogakertaa"} desc={"Käyttöoikeus säilyy 8 viikon ajan"} price={"50 €"} itemId={"Item-id"}/>,
-      <ShopItem title={"15 joogakertaa"} desc={"Käyttöoikeus säilyy 8 viikon ajan"} price={"100 €"} itemId={"Item-id"}/>
+      <ShopItem title={"2 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"20 €"} itemId={"0"}/>,
+      <ShopItem title={"6 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"50 €"} itemId={"1"}/>,
+      <ShopItem title={"15 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"100 €"} itemId={"2"}/>,
+      <ShopItem title={"1 kuukausi"} desc={""} price={"30 €"} itemId={"3"}/>,
+      <ShopItem title={"6 kuukautta"} desc={""} price={"130 €"} itemId={"4"}/>
     ];
     return items;
   }
