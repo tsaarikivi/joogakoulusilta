@@ -5,7 +5,11 @@ import firebase from "firebase";
 
 require('./styles/app.scss');
 
+import Home from "./dev/views/Home.jsx";
+import Info from "./dev/views/Info.jsx";
 import Layout from "./dev/views/Layout.jsx";
+import Shop from "./dev/views/Shop.jsx";
+import User from "./dev/views/User.jsx";
 
 // Initialize Firebase
 var config = {
@@ -16,18 +20,15 @@ var config = {
 };
 firebase.initializeApp(config);
 
-/*
-firebase works this way:
-firebase.database().ref('items/').push({
-  name: "tero",
-  size: 11
-})*/
-
 const app = document.getElementById('app');
 
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={Layout}>
+      <IndexRoute component={Home}></IndexRoute>
+      <Route path="info" component={Info}></Route>
+      <Route path="shop" component={Shop}></Route>
+      <Route path="user" component={User}></Route>
     </Route>
   </Router>,
 app);

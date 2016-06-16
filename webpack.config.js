@@ -8,7 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./app.js",
+  entry: "./app.jsx",
   module: {
     loaders: [
       {
