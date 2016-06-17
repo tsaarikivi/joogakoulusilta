@@ -21,6 +21,7 @@ var config = {
     storageBucket: "joogakoulusilta-projekti.appspot.com",
 };
 firebase.initializeApp(config);
+var database = firebase.database();
 
 const app = document.getElementById('app');
 
@@ -30,7 +31,7 @@ ReactDOM.render(
       <IndexRoute component={Home}></IndexRoute>
       <Route path="info" component={Info}></Route>
       <Route path="shop" component={Shop}></Route>
-      <Route path="user" component={User}></Route>
+      <Route path="user" component={User} database={database}></Route>
       <Route path="login" component={Login}></Route>
       <Route path="register" component={Register}></Route>
     </Route>

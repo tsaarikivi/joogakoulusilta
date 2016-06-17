@@ -1,8 +1,16 @@
 import React from "react";
 import { Link } from "react-router"
+import firebase from "firebase";
 
 export default class SpecialCourses extends React.Component {
+  getItems() {
+    var database = this.props.database
+    var specialCoursesRef = database.ref('/specialCourses/');
+    return specialCoursesRef;
+  }
+
   render() {
+    console.log(this.getItems())
     return (
       <div class="container">
         <h2>Tulevia erityiskursseja</h2>

@@ -9,7 +9,7 @@ export default class User extends React.Component {
     return (
       <div>
         <UserHeader />
-        <SpecialCourses />
+        <SpecialCourses database={this.props.route.database}/>
         <TimeTable />
       </div>
     );
