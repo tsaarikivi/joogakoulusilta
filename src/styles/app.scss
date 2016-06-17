@@ -200,3 +200,25 @@ ul.shop-list {
     }
   }
 }
+
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+  input, label {
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  label {
+    width: 30%;
+  }
+  input {
+    width: 65%;
+  }
+  .login-btn {
+    display: inline-block;
+    margin-top: 20px;
+  }
+}

@@ -6,8 +6,8 @@ export default class HomeLoginRegister extends React.Component {
     return (
       <div class="container login-container">
         <h2 class="login-heading">Oletko jo jäsen?</h2>
-        <Link className="btn-small login-btn" to="user">Kirjaudu</Link>
-        <Link className="btn-small register-btn" to="user">Tai rekisteröidy</Link>
+        <Link className="btn-small login-btn" to="login">Kirjaudu</Link>
+        <Link className="btn-small register-btn" to="register">Tai rekisteröidy</Link>
       </div>
     );
   }
