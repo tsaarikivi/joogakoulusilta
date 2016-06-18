@@ -28,6 +28,8 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
+var auth = firebase.auth();
+
 
 var joogakouluStore = createStore(storeReducer, applyMiddleware(thunk))
 
@@ -40,9 +42,9 @@ ReactDOM.render(
       <Route path="info" component={Info}></Route>
       <Route path="shop" component={Shop} store={joogakouluStore} database={database}></Route>
       <Route path="user" component={User} database={database}></Route>
-      <Route path="login" component={Login}></Route>
-      <Route path="register" component={Register}></Route>
-      <Route path="checkout" component={Checkout}></Route>
+      <Route path="login" component={Login} auth={auth}></Route>
+      <Route path="register" component={Register} auth={auth}> </Route>
+      <Route path="checkout" component={Checkout}> </Route>
     </Route>
   </Router>,
 app);
