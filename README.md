@@ -30,6 +30,10 @@
 > cd path/to/code/project <br>
 > atom .
 
+#### Käynnistä maksuserveri
+> cd path/to/code/project <br>
+> node src/server.js
+
 #### HUOM! luo oma gitbranchi
 > cd path/to/code/project <br>
 > git checkout -b OMAN_BRANCHING_NIMI (esim tuomo_dev, kaapo_dev, kari_dev) <br>
@@ -60,10 +64,3 @@
 - index.html on äpin ainoa html tiedosto. Siihen ei näillä näkymin tarvitse koskea.
 - Testit hakemistossa tests.
 - Älä puske sekavia muutoksia .gitignoreen package.jsoniin webpack.config.jsään
-
-
-## Braintree detskut
-### Sandbox
-- Merchant ID: 3gv7c5tq5q7hxrcs
-- Public key: gksd667wsgn35wjp
-- Private key: 2c01703b7daffd7352eeaada7a4a95e5

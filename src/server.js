@@ -1,3 +1,10 @@
+//## Braintree detskut
+//### Sandbox
+//Merchant ID: 3gv7c5tq5q7hxrcs
+//Public key: gksd667wsgn35wjp
+//Private key: 2c01703b7daffd7352eeaada7a4a95e5
+
+
 var http = require('http')
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Jquery from "jquery"
 
+
 var Braintree = require("braintree-web");
 import DropIn from "../components/shop/BraintreeDropIn.jsx";
 
