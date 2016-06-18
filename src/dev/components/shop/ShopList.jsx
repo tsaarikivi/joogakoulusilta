@@ -1,12 +1,56 @@
 import React from "react";
 
 import ShopItem from "./ShopItem.jsx"
+import {addShopItem} from "../../actions/storeActions.js"
 
 export default class ShopList extends React.Component {
+  componentWillMount() {
+    const { store } = this.props;
+    const { database } = this.props
+
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
+
+    var specialCoursesReffi = database.ref('/specialCourses');
+
+    store.dispatch(() => {
+      specialCoursesReffi.on('value', snapshot => {
+
+        snapshot.forEach(function(data) {
+          console.log(data)
+          store.dispatch(addShopItem(data.val().title, data.val().desc, data.key))
+        });
+
+      })
+    })
+
+    const specialCoursesRef = database.ref('/specialCourses');
+    specialCoursesRef.once("value", function(snapshot){
+      var courses = [];
+      snapshot.forEach(function(data){
+        var course = {
+          title: data.val().title,
+          time: data.val().time,
+          description: data.val().description
+        }
+        courses.push(course);
+      })
+
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  newItem() {
+    this.props.store.dispatch(addShopItem("titteli", "desci", "100"))
+    console.log(this.props.store.getState())
+  }
+
   render() {
     return (
       <div class="container shop-list-container">
-        <purchase/>
+        <button onClick={() => this.newItem()}>buttoni</button>
         <ul class="shop-list">
           {this.getItems()}
         </ul>
@@ -15,13 +59,16 @@ export default class ShopList extends React.Component {
   }
 
   getItems() {
-    var items = [
-      <ShopItem key={1} title={"2 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"20 €"} itemId={"0"}/>,
-      <ShopItem key={2} title={"6 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"50 €"} itemId={"1"}/>,
-      <ShopItem key={3} title={"15 joogakertaa"} desc={"Käyttöoikeus säilyy 100 päivän ajan"} price={"100 €"} itemId={"2"}/>,
-      <ShopItem key={4} title={"1 kuukausi"} desc={""} price={"30 €"} itemId={"3"}/>,
-      <ShopItem key={5} title={"6 kuukautta"} desc={""} price={"130 €"} itemId={"4"}/>
-    ];
+    let items = [];
+
+    let state = this.props.store.getState();
+
+    state.shopItems.forEach(function(storeItem) {
+      items.push(
+        <ShopItem title={storeItem.title} desc={storeItem.desc} price={storeItem.price} itemId={"10"}/>
+      );
+    });
+
     return items;
   }
 }
