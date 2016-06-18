@@ -25,7 +25,6 @@ var config = {
   authDomain: "joogakoulusilta-projekti.firebaseapp.com",
   databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
   storageBucket: "joogakoulusilta-projekti.appspot.com",
-  }
 };
 firebase.initializeApp(config);
 var database = firebase.database();
