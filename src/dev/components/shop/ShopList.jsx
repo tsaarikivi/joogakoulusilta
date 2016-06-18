@@ -16,26 +16,11 @@ export default class ShopList extends React.Component {
       specialCoursesReffi.on('value', snapshot => {
 
         snapshot.forEach(function(data) {
-          console.log(data)
           store.dispatch(addShopItem(data.val().title, data.val().desc, data.key))
         });
 
       })
     })
-
-    const specialCoursesRef = database.ref('/specialCourses');
-    specialCoursesRef.once("value", function(snapshot){
-      var courses = [];
-      snapshot.forEach(function(data){
-        var course = {
-          title: data.val().title,
-          time: data.val().time,
-          description: data.val().description
-        }
-        courses.push(course);
-      })
-
-    });
   }
 
   componentWillUnmount() {
@@ -44,7 +29,6 @@ export default class ShopList extends React.Component {
 
   newItem() {
     this.props.store.dispatch(addShopItem("titteli", "desci", "100"))
-    console.log(this.props.store.getState())
   }
 
   render() {

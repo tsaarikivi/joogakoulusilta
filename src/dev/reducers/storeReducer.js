@@ -4,7 +4,6 @@ import { ADD_SHOP_ITEM } from '../actions/storeActions.js'
 function shopItems(state = [], action) {
   switch (action.type) {
     case ADD_SHOP_ITEM:
-    console.log("reducing...");
         return [
           ...state,
           {
