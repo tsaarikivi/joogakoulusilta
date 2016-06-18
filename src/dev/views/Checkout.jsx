@@ -5,6 +5,13 @@ import DropIn from "../components/shop/BraintreeDropIn.jsx";
 
 export default class Checkout extends React.Component {
 
+  constructor(){
+    super();
+    this.TokenFactory = new ClientToken;
+
+  }
+
+
   onReady() {
       console.log('Drop-In ready');
   }
@@ -27,7 +34,7 @@ export default class Checkout extends React.Component {
             <form action='/transactions' method='POST'>
                 <DropIn
                     braintree={Braintree}
-                    clientToken={ClientToken}
+                    clientToken={this.TokenFactory.getToken()}
                     onReady={this.onReady}
                     onError={this.onError}
                     onPaymentMethodReceived={this.onPaymentMethodReceived}
