@@ -14,6 +14,8 @@ import Login from "./dev/views/Login.jsx"
 import Register from "./dev/views/Register.jsx"
 import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
+import Checkout from "./dev/views/Checkout.jsx"
+
 
 require('./styles/app.scss');
 
@@ -23,6 +25,7 @@ var config = {
   authDomain: "joogakoulusilta-projekti.firebaseapp.com",
   databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
   storageBucket: "joogakoulusilta-projekti.appspot.com",
+  }
 };
 firebase.initializeApp(config);
 var database = firebase.database();
@@ -40,6 +43,7 @@ ReactDOM.render(
       <Route path="user" component={User} database={database}></Route>
       <Route path="login" component={Login}></Route>
       <Route path="register" component={Register}></Route>
+      <Route path="checkout" component={Checkout}></Route>
     </Route>
   </Router>,
 app);

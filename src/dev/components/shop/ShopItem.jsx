@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router"
 
 export default class ShopItem extends React.Component {
   render() {
@@ -7,7 +8,7 @@ export default class ShopItem extends React.Component {
         <h3>{this.props.title}</h3>
         <p>{this.props.desc}</p>
         <p class="price">{this.props.price}</p>
-        <button class="btn-small">Osta</button>
+        <Link className="btn-small" to="checkout">Osta</Link>
       </li>
     );
   }

@@ -59,6 +59,7 @@ export default class ShopList extends React.Component {
   }
 
   getItems() {
+
     let items = [];
 
     let state = this.props.store.getState();
@@ -69,7 +70,6 @@ export default class ShopList extends React.Component {
       );
     });
 
-    items.concat
     return items;
   }
 }
