@@ -1,7 +1,7 @@
 {
   "name": "AppName",
   "version": "1.0.0",
-  "description": "",
+  "description": "Joogakoulu Sillan kotisivut ja varausjarjestelma",
   "main": "webpack.config.js",
   "dependencies": {
     "babel-loader": "^6.2.0",
@@ -13,6 +13,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "braintree": "^1.39.0",
+    "braintree-web": "^2.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "firebase": "^3.0.4",
     "history": "^1.17.0",

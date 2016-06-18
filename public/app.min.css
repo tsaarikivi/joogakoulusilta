@@ -5,26 +5,38 @@ example:
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif; }
+  font-family: 'Open Sans', sans-serif;
+  background: #fff; }
 
-button {
-  outline-style: none; }
+button, a {
+  outline-style: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px; }
 
 ul {
   list-style-type: none; }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  padding: 10px 0; }
+  padding: 10px 0;
+  color: #333; }
 
 .container {
   width: 100%;
   max-width: 800px;
   margin: 0 auto 10px;
-  background: #fafafa;
+  background: #f7f7f8;
   padding: 20px;
   box-shadow: 0 3px 10px #eaeaea;
   text-align: center; }
+
+.main-header-container h1 {
+  font-size: 50px;
+  text-transform: uppercase; }
+
+.header-container h1 {
+  text-align: left;
+  text-indent: 30px; }
 
 .contact-container {
   text-align: left;
@@ -42,44 +54,37 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px 0 20px;
   color: #999; }
 
-.btn-large {
-  background: #00ddff;
-  text-decoration: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 3px;
-  box-shadow: 0 3px 10px #ccc;
-  text-transform: uppercase;
-  font-weight: 700;
-  transition: background 0.1s, box-shadow 0.1s; }
-  .btn-large:hover {
-    background: #00ccee;
-    box-shadow: 0 4px 10px #ddd; }
-  .btn-large:active {
-    background: #00aacc;
-    box-shadow: 0 2px 8px #bbb; }
-
 .btn-small {
-  background: #00ddff;
+  background: #22ccee;
   text-decoration: none;
   color: #fff;
-  padding: 5px 10px;
-  border: none;
   border-radius: 3px;
+  border-style: none;
+  padding: 5px 10px;
   box-shadow: 0 3px 10px #ccc;
   text-transform: uppercase;
-  font-weight: 700;
   transition: background 0.1s, box-shadow 0.1s; }
   .btn-small:hover {
-    background: #00ccee;
+    background: #11bbdd;
     box-shadow: 0 4px 10px #ddd; }
   .btn-small:active {
     background: #00aacc;
     box-shadow: 0 2px 8px #bbb; }
 
+.register-btn {
+  margin-left: 5px;
+  background: #fafafa;
+  color: #11bbdd;
+  transition: background 0.1s, box-shadow 0.1s; }
+  .register-btn:hover {
+    background: #f4f4f4;
+    box-shadow: 0 4px 10px #ddd; }
+  .register-btn:active {
+    background: #fff;
+    box-shadow: 0 2px 8px #bbb; }
+
 .text-link {
   margin-top: 20px;
-  display: block;
   text-decoration: underline;
   color: #001155;
   text-transform: uppercase;
@@ -90,20 +95,25 @@ h1, h2, h3, h4, h5, h6 {
     color: #66aaff; }
 
 .back-btn {
-  text-align: left;
+  display: inline-block;
+  float: left;
   text-decoration: none; }
 
 .use-times {
   color: #00aacc; }
 
+.items-body {
+  width: 100%;
+  margin-bottom: 15px; }
+
 .item-card {
-  width: 30%;
+  width: 32%;
   height: 140px;
   background: #fff;
   display: inline-block;
-  margin: 0 3px;
+  margin: 0 5px;
   border-radius: 3px;
-  box-shadow: 0 3px 10px #eee; }
+  box-shadow: 0 3px 10px #eaeaeb; }
 
 table {
   margin: 0 auto;
@@ -115,7 +125,7 @@ table {
     float: left;
     background: #fff;
     border-radius: 3px;
-    box-shadow: 0 3px 10px #eee; }
+    box-shadow: 0 3px 10px #eaeaeb; }
     table tr th, table tr td {
       width: 100%;
       display: block; }
@@ -134,21 +144,38 @@ table {
       table tr td:hover {
         background: #aaeeff; }
     table tr th {
-      background: #f3f3f3; }
+      background: #ededee; }
 
-ul {
+ul.shop-list {
   padding: 0; }
-  ul li {
+  ul.shop-list li {
     background: #fff;
     padding: 20px;
     border-radius: 3px;
-    box-shadow: 0 3px 10px #eee;
-    margin-top: 10px; }
-    ul li h3 {
+    box-shadow: 0 3px 10px #eaeaeb;
+    margin: 10px 100px; }
+    ul.shop-list li h3 {
       padding: 0;
       margin: 0; }
-    ul li .price {
-      color: #3377cc;
+    ul.shop-list li .price {
+      color: #00aacc;
       font-weight: 700; }
+
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0; }
+  form input, form label {
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 5px; }
+  form label {
+    width: 30%; }
+  form input {
+    width: 65%; }
+  form .login-btn {
+    display: inline-block;
+    margin-top: 20px; }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAubWluLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/
