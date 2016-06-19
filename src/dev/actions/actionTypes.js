@@ -1,0 +1,5 @@
+export const ADD_SHOP_ITEM = 'ADD_SHOP_ITEM'
+export const REMOVE_SHOP_ITEM = 'REMOVE_SHOP_ITEM'
+
+export const ADD_COURSE = 'ADD_COURSE'
+export const REMOVE_COURSE = 'REMOVE_COURSE'

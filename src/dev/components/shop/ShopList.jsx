@@ -1,7 +1,7 @@
 import React from "react";
 
 import ShopItem from "./ShopItem.jsx"
-import { addShopItem } from "../../actions/shopActions.js"
+import { addShopItem } from "../../actions/shopActionCreators.js"
 
 export default class ShopList extends React.Component {
 

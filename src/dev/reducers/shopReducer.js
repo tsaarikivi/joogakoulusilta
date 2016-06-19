@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_SHOP_ITEM } from '../actions/shopActions.js'
+import { ADD_SHOP_ITEM, REMOVE_SHOP_ITEM } from '../actions/actionTypes.js'
 
 function shopItems(state = [], action) {
   switch (action.type) {
@@ -12,6 +12,7 @@ function shopItems(state = [], action) {
           price: action.price,
         }
       ]
+      break;
     default:
       return state
   }
