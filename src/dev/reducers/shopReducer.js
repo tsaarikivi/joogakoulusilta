@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_SHOP_ITEM } from '../actions/storeActions.js'
+import { ADD_SHOP_ITEM } from '../actions/shopActions.js'
 
 function shopItems(state = [], action) {
   switch (action.type) {
@@ -17,8 +17,8 @@ function shopItems(state = [], action) {
   }
 }
 
-const storeReducer = combineReducers({
+const shopReducer = combineReducers({
   shopItems
 })
 
-export default storeReducer
+export default shopReducer

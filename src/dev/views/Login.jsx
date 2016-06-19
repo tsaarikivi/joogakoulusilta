@@ -2,21 +2,21 @@ import React from "react";
 import { Link } from "react-router"
 
 export default class Login extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       error: "",
+      user: ""
     };
-  }
-
-  startListeningToAuth = () => {
-    this.props.route.auth.onAuthStateChanged( function(user) {
-          if (user) {
-            console.log("käyttäjä");
-          } else {
-            console.log("ei");
-          }
-        });
+    props.route.auth.onAuthStateChanged( function(user) {
+      if (user) {
+        console.log("Logged in.");
+        this.setState({user: user.email});
+      } else {
+        console.log("Not logged in.");
+        this.setState({user: "NOT LOGGED IN"});
+      }
+    }.bind(this));
   }
 
   onError = (e) => {
@@ -28,6 +28,14 @@ export default class Login extends React.Component {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var { auth } = this.props.route;
+    var user = auth.currentUser;
+    if(user){
+      auth.signOut().then(function() {
+        console.log("Logged out succesfully.");
+      }, function(error) {
+        console.log("Error happened when logging out: " + error.code + error.message);
+      });
+    }
     auth.signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -54,8 +62,8 @@ export default class Login extends React.Component {
   render() {
     return (
       <div class="container">
+        <h4>Logged in as {this.state.user}</h4>
         <form>
-          <h1>{userEmail}</h1>
           <h1>Kirjaudu sisään</h1>
             <h3 style={{color: 'red'}}>{this.state.error}</h3>
             <label>Sähköposti</label>
@@ -63,7 +71,7 @@ export default class Login extends React.Component {
             <label>Salasana</label>
             <input id="password" type="password" name="password" placeholder="Salasana"/>
           <br/>
-          <button className="btn-small login-btn" onClick={this.handleLogin.bind(this)}>Kirjaudu</button>
+          <button className="btn-small login-btn" onClick={this.handleLogin}>Kirjaudu</button>
         </form>
       </div>
     );

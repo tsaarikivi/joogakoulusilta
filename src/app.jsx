@@ -5,7 +5,7 @@ import firebase from "firebase";
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 
-import storeReducer from "./dev/reducers/storeReducer.js"
+import shopReducer from "./dev/reducers/shopReducer.js"
 
 import Home from "./dev/views/Home.jsx"
 import Info from "./dev/views/Info.jsx"
@@ -15,7 +15,6 @@ import Register from "./dev/views/Register.jsx"
 import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
-
 
 require('./styles/app.scss');
 
@@ -28,10 +27,8 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
+var joogakouluStore = createStore(shopReducer, applyMiddleware(thunk))
 var auth = firebase.auth();
-
-
-var joogakouluStore = createStore(storeReducer, applyMiddleware(thunk))
 
 const app = document.getElementById('app');
 
