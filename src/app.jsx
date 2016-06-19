@@ -19,6 +19,7 @@ import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
 
+
 // Styles
 require('./styles/app.scss');
 
@@ -33,7 +34,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var auth = firebase.auth();
 
-// Create Stroe
 var store = createStore(shopReducer, applyMiddleware(thunk));
 
 const app = document.getElementById('app');
