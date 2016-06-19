@@ -19,10 +19,10 @@ export default class Checkout extends React.Component {
       Jquery.ajax({
            async: false,
            type: 'GET',
-           url: 'http://localhost:3000',
+           url: 'http://localhost:3000/clientToken',
            success: function(result) {
              that.token = result;
-             console.log("Token: " + result);
+             //console.log("Token: " + result);
            }
       });
       } catch(error) {
@@ -41,17 +41,35 @@ export default class Checkout extends React.Component {
   }
 
   onPaymentMethodReceived(payload) {
+        console.log("Payment method received.")
         console.log(payload);
+        console.log(payload.nonce);
+        console.log("sending nonce");
+        try {
+          Jquery.ajax({
+               async: false,
+               type: 'GET',
+               url: 'http://localhost:3000/checkout',
+               data: {
+                 payment_method_nonce: payload.nonce
+               },
+               success: function(result) {
+                 console.log("Checkout DONE: " + result);
+               }
+          });
+          } catch(error) {
+            // Handle error
+            console.log("CHECKOUT_ERROR:");
+            console.error(error);
+          }
 
-        // Now that you have a nonce, send it to your
-        // server to create a payment method or a transaction
   }
 
+
   render() {
-    console.log('token-is: ' + this.token);
     return (
           <div>
-            <p>Testaa numerolla: <code>4111 1111 1111 111</code> Päivämärä voi olla mikä vaan.</p>
+            <p>Testaa numerolla: <code>4111 1111 1111 1111</code> Päivämärä voi olla mikä vaan.</p>
             <form action='/transactions' method='POST'>
                 <DropIn
                     braintree={Braintree}
@@ -60,7 +78,7 @@ export default class Checkout extends React.Component {
                     onError={this.onError}
                     onPaymentMethodReceived={this.onPaymentMethodReceived}
                 />
-                <input type='submit' value='Buy for $14' />
+              <input type='submit' value='10.00'></input>
             </form>
           </div>
     );
