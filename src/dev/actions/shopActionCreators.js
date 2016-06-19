@@ -9,9 +9,9 @@ export function addShopItem(title, desc, price) {
   }
 }
 
-export function removeShopItem(id) {
+export function removeShopItem(key) {
   return {
     type: REMOVE_SHOP_ITEM,
-    id
+    key
   }
 }

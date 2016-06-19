@@ -13,6 +13,8 @@ function shopItems(state = [], action) {
         }
       ]
       break;
+    case REMOVE_SHOP_ITEM:
+      return state
     default:
       return state
   }
