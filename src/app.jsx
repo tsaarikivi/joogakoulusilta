@@ -22,8 +22,7 @@ import Checkout from "./dev/views/Checkout.jsx"
 // Styles
 require('./styles/app.scss');
 
-/* Initialize Firebase
-var config = {
+/*var config = {
   apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
   authDomain: "joogakoulusilta-projekti.firebaseapp.com",
   databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",

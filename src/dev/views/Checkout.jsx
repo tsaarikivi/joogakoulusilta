@@ -9,24 +9,33 @@ export default class Checkout extends React.Component {
 
   constructor(){
     super();
+    this.token = "";
     this.getToken();
   }
 
+  componentWillMount() {
+    const { store } = this.props;
+    const { database } = this.props;
+    const { price } = this.props;
+    console.log(price);
+}
+
   getToken() {
     console.log("requesting client token");
-    var that = this;
+    let that = this;
     try {
       Jquery.ajax({
-           async: false,
+           async: true,
            type: 'GET',
            url: 'http://localhost:3000/clientToken',
            success: function(result) {
              that.token = result;
-             //console.log("Token: " + result);
+             that.forceUpdate()
            }
       });
       } catch(error) {
         // Handle error
+        that.token = "error"
         console.log("TOKEN_ERROR:");
         console.error(error);
       }
@@ -41,46 +50,63 @@ export default class Checkout extends React.Component {
   }
 
   onPaymentMethodReceived(payload) {
-        console.log("Payment method received.")
-        console.log(payload);
-        console.log(payload.nonce);
-        console.log("sending nonce");
+        console.log("Payment method received. Sending nonce to server");
+        let that = this;
         try {
           Jquery.ajax({
                async: false,
-               type: 'GET',
+               type: 'POST',
                url: 'http://localhost:3000/checkout',
                data: {
                  payment_method_nonce: payload.nonce
                },
                success: function(result) {
                  console.log("Checkout DONE: " + result);
+                 that.token = "done";
+                 that.forceUpdate();
                }
           });
           } catch(error) {
             // Handle error
             console.log("CHECKOUT_ERROR:");
             console.error(error);
+            that.token = "error";
+            that.forceUpdate();
           }
 
   }
 
 
   render() {
-    return (
-          <div>
-            <p>Testaa numerolla: <code>4111 1111 1111 1111</code> Päivämärä voi olla mikä vaan.</p>
-            <form action='/transactions' method='POST'>
-                <DropIn
-                    braintree={Braintree}
-                    clientToken={this.token}
-                    onReady={this.onReady}
-                    onError={this.onError}
-                    onPaymentMethodReceived={this.onPaymentMethodReceived}
-                />
-              <input type='submit' value='10.00'></input>
-            </form>
-          </div>
-    );
+    if(this.token === "") {
+      return(
+        <div>Alustetaan maksuyhteyttä...</div>
+      )
+    } else if(this.token === "done") {
+      return(
+        <div>Maksu suoritettu...</div>
+      )
+    } else if(this.token === "error") {
+      return(
+        <div>Maksuyhteydessä ongelmia...</div>
+      )
+    } else {
+      return (
+            <div>
+              <p>Valitse maksutapa ja vahvista maksu.</p>
+              <p class='test-instruction' >Testaa: <code>4111 1111 1111 1111</code></p>
+              <form action='/transactions' method='POST'>
+                  <DropIn
+                      braintree={Braintree}
+                      clientToken={this.token}
+                      onReady={this.onReady}
+                      onError={this.onError}
+                      onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
+                  />
+                <input type='submit' value='Vahvista'></input>
+              </form>
+            </div>
+      );
+    }
   }
 }
