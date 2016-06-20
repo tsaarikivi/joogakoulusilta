@@ -5,6 +5,10 @@ example:
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
 @import 'variables.scss';
 
+.test-instruction {
+  font-size: .5em
+}
+
 body {
   padding: 0;
   margin: 0;

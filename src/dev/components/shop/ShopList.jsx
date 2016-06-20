@@ -9,6 +9,7 @@ export default class ShopList extends React.Component {
     const { store } = this.props;
     const { database } = this.props
 
+    //Subscribe to any store changes to update the virtual DOM
     this.unsubscribe = store.subscribe(() => this.forceUpdate());
 
     let specialCoursesRef = database.ref('/specialCourses');

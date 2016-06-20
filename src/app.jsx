@@ -41,7 +41,7 @@ ReactDOM.render(
       <Route path="user" component={User} database={database}></Route>
       <Route path="login" component={Login} auth={auth}></Route>
       <Route path="register" component={Register} auth={auth}> </Route>
-      <Route path="checkout" component={Checkout}> </Route>
+      <Route path="checkout" component={Checkout} store={joogakouluStore} database={database}> </Route>
     </Route>
   </Router>,
 app);
