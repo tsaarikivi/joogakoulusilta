@@ -10,10 +10,9 @@ export default class ShopList extends React.Component {
   }
 
   componentWillMount() {
-    console.log("Calling fetchShopItems");
     const { firebase } = this.props;
     const { store } = this.props;
-    console.log(firebase);
+    this.unsubscribe = store.subscribe(() => this.forceUpdate());
     fetchShopItems(store, firebase.database().ref('/shopItems/'))
   }
 
@@ -37,17 +36,17 @@ export default class ShopList extends React.Component {
     const { store } = this.props;
     let items = [];
     let state = store.getState();
-    let nextId = 0;
 
-    console.log(state);
-
-    state.shopItems.forEach(function(item) {
+    for(var item in state.shopItems){
+      console.log(item, state.shopItems[item]);
       items.push(
-        <ShopItem title={item.title} desc={item.desc} price={item.price} itemId={nextId}/>
-      );
-      nextId += 1
-    });
-
+        <ShopItem
+          title={state.shopItems[item].title}
+          desc={state.shopItems[item].desc}
+          price={state.shopItems[item].price}
+          key={item}/>
+      )
+    }
     return items;
   }
 }

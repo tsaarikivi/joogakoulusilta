@@ -5,9 +5,7 @@ export function shopItems(state = [], action) {
     case FETCH_SHOP_ITEMS:
       console.log("fetch items payload")
       console.log(action.payload);
-      return [
-        ...state
-      ]
+      return action.payload;
     default:
       return state
   }
