@@ -54,7 +54,7 @@ export default class Checkout extends React.Component {
         let that = this;
         try {
           Jquery.ajax({
-               async: false,
+               async: true,
                type: 'POST',
                url: 'http://localhost:3000/checkout',
                data: {

@@ -54,15 +54,13 @@ http.createServer(function(req, res) {
         });
         req.on('end', function () {
             var post = qs.parse(body);
-            // use post['blah'], etc.
             console.log(body);
             var startPos = body.search("=") + 1;
             var nonceFromTheClient = body.slice(startPos,body.length);
-            console.log(nonceFromTheClient);
             console.log("sendig for settlement.");
             gateway.transaction.sale({
                 amount: '10.00', //TODO: get the amount from the request
-                paymentMethodNonce: nonceFromTheClient, 
+                paymentMethodNonce: nonceFromTheClient,
                 options: {
                   submitForSettlement: true
                 }
