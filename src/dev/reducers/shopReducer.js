@@ -1,20 +1,18 @@
 import { combineReducers } from 'redux'
-import { ADD_SHOP_ITEM, REMOVE_SHOP_ITEM } from '../actions/actionTypes.js'
+import { FETCH_SHOP_ITEMS, ADD_SHOP_ITEM, REMOVE_SHOP_ITEM } from '../actions/actionTypes.js'
 
 function shopItems(state = [], action) {
   switch (action.type) {
-    case ADD_SHOP_ITEM:
+    case FETCH_SHOP_ITEMS:
+      console.log("fetch items payload")
       return [
         ...state,
         {
-          title: action.title,
-          desc: action.desc,
-          price: action.price,
+          title: "title",
+          desc: "desc",
+          price: "price"
         }
       ]
-      break;
-    case REMOVE_SHOP_ITEM:
-      return state
     default:
       return state
   }

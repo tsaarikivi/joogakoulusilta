@@ -19,18 +19,17 @@ import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
 
-
 // Styles
 require('./styles/app.scss');
 
-// Initialize Firebase
+/* Initialize Firebase
 var config = {
   apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
   authDomain: "joogakoulusilta-projekti.firebaseapp.com",
   databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
   storageBucket: "joogakoulusilta-projekti.appspot.com",
 };
-firebase.initializeApp(config);
+firebase.initializeApp(config);*/
 var database = firebase.database();
 var auth = firebase.auth();
 
