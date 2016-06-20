@@ -28,7 +28,7 @@ http.createServer(function(req, res) {
         console.log('response from braintree.');
         res.end(response.clientToken);
     });
-  }
+  }result
   else if (req.url.search("checkout") > -1) {
       console.log(" checkout request received");
       console.log(req);
