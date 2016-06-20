@@ -55,7 +55,7 @@ export default class Checkout extends React.Component {
         try {
           Jquery.ajax({
                async: false,
-               type: 'GET',
+               type: 'POST',
                url: 'http://localhost:3000/checkout',
                data: {
                  payment_method_nonce: payload.nonce
@@ -70,6 +70,8 @@ export default class Checkout extends React.Component {
             // Handle error
             console.log("CHECKOUT_ERROR:");
             console.error(error);
+            that.token = "error";
+            that.forceUpdate();
           }
 
   }

@@ -7,6 +7,9 @@
 
 var http = require('http')
 var braintree = require("braintree");
+var qs = require('querystring');
+
+
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -38,28 +41,47 @@ http.createServer(function(req, res) {
   }
   else if (req.url.search("checkout") > -1) {
       console.log(" checkout request received");
-      console.log(req);
-      console.log(req.url);
-      let startPos = req.url.search("=") + 1;
-      var nonceFromTheClient = req.url.slice(startPos,req.url.length);
-      console.log(nonceFromTheClient);
-      console.log("sendig for settlement.");
-      gateway.transaction.sale({
-          amount: '10.00', //TODO: get the amount from the request
-          paymentMethodNonce: nonceFromTheClient,  //TODO: get the nonce from the request (change to POST)
-          options: {
-            submitForSettlement: true
-          }
-      }, function (err, result) {
-        if(err) {
-          console.error(err);
-          res.statusCode = 300;
-        } else {
-          res.statusCode = 200;
-        }
-        res.end();
-        console.error(result);
-      });
+
+      if (req.method == 'POST') {
+        var body = '';
+
+        req.on('data', function (data) {
+            body += data;
+            // Too much POST data, kill the connection!
+            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+            if (body.length > 1e6)
+                req.connection.destroy();
+        });
+        req.on('end', function () {
+            var post = qs.parse(body);
+            // use post['blah'], etc.
+            console.log(body);
+            var startPos = body.search("=") + 1;
+            var nonceFromTheClient = body.slice(startPos,body.length);
+            console.log(nonceFromTheClient);
+            console.log("sendig for settlement.");
+            gateway.transaction.sale({
+                amount: '10.00', //TODO: get the amount from the request
+                paymentMethodNonce: nonceFromTheClient, 
+                options: {
+                  submitForSettlement: true
+                }
+            }, function (err, result) {
+              if(err) {
+                console.error(err);
+                res.statusCode = 300;
+              } else {
+                res.statusCode = 200;
+              }
+              res.end();
+              console.error(result);
+            });
+
+        });
+    }
+
+
+
   }
   // This endpoint is hit when the browser is requesting bundle.js from the page above
   else {
