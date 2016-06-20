@@ -1,12 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
-import firebase from "firebase";
+import React from "react"
+import ReactDOM from "react-dom"
+import { Router, Route, IndexRoute, hashHistory } from "react-router"
+import firebase from "firebase"
 import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
 
-import shopReducer from "./dev/reducers/shopReducer.js"
+// Reducer
+import combineReducer from "./dev/reducers/combineReducer.js"
 
+// Views
 import Home from "./dev/views/Home.jsx"
 import Info from "./dev/views/Info.jsx"
 import Layout from "./dev/views/Layout.jsx"
@@ -16,8 +19,8 @@ import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
 
-import seedData from "./seed.js"
 
+// Styles
 require('./styles/app.scss');
 
 // Initialize Firebase
@@ -29,21 +32,26 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
-var joogakouluStore = createStore(shopReducer, seedData, applyMiddleware(thunk))
 var auth = firebase.auth();
+
+var store = createStore(combineReducer, applyMiddleware(thunk));
 
 const app = document.getElementById('app');
 
 ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={Layout}>
-      <IndexRoute component={Home}></IndexRoute>
-      <Route path="info" component={Info}></Route>
-      <Route path="shop" component={Shop} store={joogakouluStore} database={database}></Route>
-      <Route path="user" component={User} database={database}></Route>
-      <Route path="login" component={Login} auth={auth}></Route>
-      <Route path="register" component={Register} auth={auth}> </Route>
-      <Route path="checkout" component={Checkout} store={joogakouluStore} database={database}> </Route>
-    </Route>
-  </Router>,
-app);
+
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={Layout}>
+        <IndexRoute component={Home}></IndexRoute>
+        <Route path="info" component={Info}></Route>
+        <Route path="shop" component={Shop} store={store} database={database}></Route>
+        <Route path="user" component={User} database={database}></Route>
+        <Route path="login" component={Login} auth={auth}></Route>
+        <Route path="register" component={Register} auth={auth}> </Route>
+        <Route path="checkout" component={Checkout} store={store} database={database}> </Route>
+      </Route>
+    </Router>
+  </Provider>,
+  app
+);

@@ -1,36 +1,12 @@
 import React from "react";
 
 import ShopItem from "./ShopItem.jsx"
-import { addShopItem } from "../../actions/shopActions.js"
+import { fetchShopItems, addShopItem, removeShopItem } from "../../actions/actionCreators.js"
 
 export default class ShopList extends React.Component {
 
   componentWillMount() {
-    const { store } = this.props;
-    const { database } = this.props
-
-    //Subscribe to any store changes to update the virtual DOM
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-
-    let specialCoursesRef = database.ref('/specialCourses');
-
-    store.dispatch(() => {
-      specialCoursesRef.on('value', snapshot => {
-
-        snapshot.forEach(function(data) {
-          store.dispatch(addShopItem(data.val().title, data.val().desc, data.key))
-        });
-
-      })
-    })
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  newItem() {
-    this.props.store.dispatch(addShopItem("titteli", "desci", "100"))
+    fetchShopItems()
   }
 
   render() {
@@ -44,16 +20,22 @@ export default class ShopList extends React.Component {
     );
   }
 
+  newItem() {
+    addShopItem("titteli", "desci", "100")
+  }
+
   getItems() {
-
     let items = [];
-
     let state = this.props.store.getState();
+    let nextId = 0;
 
-    state.shopItems.forEach(function(storeItem) {
+    console.log(state);
+
+    state.shopItems.forEach(function(item) {
       items.push(
-        <ShopItem title={storeItem.title} desc={storeItem.desc} price={storeItem.price} itemId={"10"}/>
+        <ShopItem title={item.title} desc={item.desc} price={item.price} itemId={nextId}/>
       );
+      nextId += 1
     });
 
     return items;

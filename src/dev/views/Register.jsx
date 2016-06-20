@@ -5,27 +5,19 @@ export default class Register extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
       error: ""
     };
   }
 
-  onEmailChange(e) {
-   this.setState({email: e.target.value});
-  }
-
-  onPasswordChange(e) {
-     this.setState({password: e.target.value});
-  }
-
-  onError(e) {
+  onError = (e) =>  {
     this.setState({error: e});
   }
 
-  handleRegister(e) {
-    var email = this.state.email;
-    var password = this.state.password;
+  handleRegister = (e) => {
+    e.preventDefault();
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    console.log("password: "+password );
     var { auth } = this.props.route;
     auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
@@ -47,6 +39,7 @@ export default class Register extends React.Component {
         default:
           this.onError("Virhe rekisteröinnissä.");
       }
+      return;
     }.bind(this));
   }
 
@@ -54,14 +47,14 @@ export default class Register extends React.Component {
     return (
       <div class="container">
           <form>
-            <h2>Rekisteröidy käyttäjäksi</h2>
+            <h1>Rekisteröidy käyttäjäksi</h1>
             <h3 style={{color: 'red'}}>{this.state.error}</h3>
             <label>Sähköposti</label>
-            <input type="email" name="email" placeholder="Sähköposti" onChange={this.onEmailChange.bind(this)}/>
+            <input id="email" type="email" name="email" placeholder="Sähköposti"/>
             <label>Salasana</label>
-            <input type="password" name="password" placeholder="Salasana" onChange={this.onPasswordChange.bind(this)}/>
+            <input id="password" type="password" name="password" placeholder="Salasana"/>
             <br/>
-            <button className="btn-small login-btn" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+            <button className="btn-small login-btn" onClick={this.handleRegister}>Rekisteröidy</button>
           </form>
       </div>
     );
