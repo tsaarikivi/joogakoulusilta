@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { ADD_SHOP_ITEM } from '../actions/shopActions.js'
 
 function shopItems(state = [], action) {
+  console.log(state);
   switch (action.type) {
     case ADD_SHOP_ITEM:
       return [

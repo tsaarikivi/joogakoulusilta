@@ -16,6 +16,8 @@ import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
 
+import seedData from "./seed.js"
+
 require('./styles/app.scss');
 
 // Initialize Firebase
@@ -27,7 +29,7 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
-var joogakouluStore = createStore(shopReducer, applyMiddleware(thunk))
+var joogakouluStore = createStore(shopReducer, seedData, applyMiddleware(thunk))
 var auth = firebase.auth();
 
 const app = document.getElementById('app');
