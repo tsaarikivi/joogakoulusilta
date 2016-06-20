@@ -6,11 +6,8 @@ import { FETCH_SHOP_ITEMS, ADD_SHOP_ITEM, REMOVE_SHOP_ITEM } from './actionTypes
 
 
 export function fetchShopItems(storeRef, databaseRef) {
-  console.log("in fetchShopItems");
   storeRef.dispatch(() => {
     databaseRef.on('value', snapshot => {
-      console.log("fetchShopItems: snapshot.val()");
-      console.log(snapshot.val());
       storeRef.dispatch({
         type: FETCH_SHOP_ITEMS,
         payload: snapshot.val()

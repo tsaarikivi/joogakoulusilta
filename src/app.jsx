@@ -9,6 +9,11 @@ import { Provider } from 'react-redux'
 // Reducers imports
 import { combineReducers } from 'redux'
 import { shopItems } from './dev/reducers/shopReducer.js'
+import { seedStore } from './dev/reducers/seedReducer.js'
+//--
+import { SEED } from './dev/actions/actionTypes.js'
+var seedDb = require('./seed.js')
+
 // Views
 import Home from "./dev/views/Home.jsx"
 import Info from "./dev/views/Info.jsx"
@@ -18,6 +23,7 @@ import Register from "./dev/views/Register.jsx"
 import Shop from "./dev/views/Shop.jsx"
 import User from "./dev/views/User.jsx"
 import Checkout from "./dev/views/Checkout.jsx"
+
 
 
 // Styles
@@ -34,9 +40,12 @@ firebase.initializeApp(config);
 
 //Add here the reducers
 const combineReducer = combineReducers({
-  shopItems
-})
+  shopItems,
+  seedStore
+});
 var store = createStore(combineReducer, applyMiddleware(thunk));
+
+store.dispatch({type:SEED, payload:seedDb});
 
 const app = document.getElementById('app');
 

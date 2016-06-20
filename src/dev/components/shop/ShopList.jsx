@@ -38,7 +38,6 @@ export default class ShopList extends React.Component {
     let state = store.getState();
 
     for(var item in state.shopItems){
-      console.log(item, state.shopItems[item]);
       items.push(
         <ShopItem
           title={state.shopItems[item].title}
