@@ -4,13 +4,9 @@ export function shopItems(state = [], action) {
   switch (action.type) {
     case FETCH_SHOP_ITEMS:
       console.log("fetch items payload")
+      console.log(action.payload);
       return [
-        ...state,
-        {
-          title: "title",
-          desc: "desc",
-          price: "price"
-        }
+        ...state
       ]
     default:
       return state

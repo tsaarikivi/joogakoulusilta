@@ -5,8 +5,16 @@ import { fetchShopItems, addShopItem, removeShopItem } from "../../actions/actio
 
 export default class ShopList extends React.Component {
 
+  constructor(){
+    super();
+  }
+
   componentWillMount() {
-    fetchShopItems()
+    console.log("Calling fetchShopItems");
+    const { firebase } = this.props;
+    const { store } = this.props;
+    console.log(firebase);
+    fetchShopItems(store, firebase.database().ref('/shopItems/'))
   }
 
   render() {
@@ -21,12 +29,14 @@ export default class ShopList extends React.Component {
   }
 
   newItem() {
-    addShopItem("titteli", "desci", "100")
+    const { firebase } = this.props;
+    addShopItem(firebase.database().ref('/shopItems/'), "titteli", "desci", "100")
   }
 
   getItems() {
+    const { store } = this.props;
     let items = [];
-    let state = this.props.store.getState();
+    let state = store.getState();
     let nextId = 0;
 
     console.log(state);

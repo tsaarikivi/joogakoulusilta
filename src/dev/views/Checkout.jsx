@@ -14,10 +14,7 @@ export default class Checkout extends React.Component {
   }
 
   componentWillMount() {
-    const { store } = this.props;
-    const { database } = this.props;
-    const { price } = this.props;
-    console.log(price);
+    const { firebase } = this.props.route;
 }
 
   getToken() {

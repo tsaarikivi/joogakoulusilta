@@ -8,7 +8,7 @@ export default class Shop extends React.Component {
     return (
       <div>
         <ShopHeader />
-        <ShopList store={this.props.route.store} database={this.props.route.database}/>
+        <ShopList store={this.props.route.store} firebase={this.props.route.firebase}/>
       </div>
     );
   }

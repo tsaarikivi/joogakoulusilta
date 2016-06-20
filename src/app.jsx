@@ -6,9 +6,9 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 
-// Reducer
-import combineReducer from "./dev/reducers/combineReducer.js"
-
+// Reducers imports
+import { combineReducers } from 'redux'
+import { shopItems } from './dev/reducers/shopReducer.js'
 // Views
 import Home from "./dev/views/Home.jsx"
 import Info from "./dev/views/Info.jsx"
@@ -31,9 +31,11 @@ var config = {
   storageBucket: "joogakoulusilta-projekti.appspot.com",
 };
 firebase.initializeApp(config);
-var database = firebase.database();
-var auth = firebase.auth();
 
+//Add here the reducers
+const combineReducer = combineReducers({
+  shopItems
+})
 var store = createStore(combineReducer, applyMiddleware(thunk));
 
 const app = document.getElementById('app');
@@ -45,11 +47,11 @@ ReactDOM.render(
       <Route path="/" component={Layout}>
         <IndexRoute component={Home}></IndexRoute>
         <Route path="info" component={Info}></Route>
-        <Route path="shop" component={Shop} store={store} database={database}></Route>
-        <Route path="user" component={User} database={database}></Route>
-        <Route path="login" component={Login} auth={auth}></Route>
-        <Route path="register" component={Register} auth={auth}> </Route>
-        <Route path="checkout" component={Checkout} store={store} database={database}> </Route>
+        <Route path="shop" component={Shop} store={store} firebase={firebase}></Route>
+        <Route path="user" component={User} auth={firebase.auth()}></Route>
+        <Route path="login" component={Login} auth={firebase.auth()}></Route>
+        <Route path="register" component={Register} firebase={firebase}> </Route>
+        <Route path="checkout" component={Checkout} firebase={firebase}> </Route>
       </Route>
     </Router>
   </Provider>,
