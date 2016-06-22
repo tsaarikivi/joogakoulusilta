@@ -11,15 +11,12 @@ class ShopList extends React.Component {
   }
 
   renderShopItems(item) {
-    console.log(item);
     return (
-      <ShopItem key={item.key} item={item} />
+      <ShopItem key={item.key} item={item}/>
     )
   }
 
   render() {
-
-
     return (
       <div className="container shop-list-container">
         <button onClick={() => this.props.actions.addShopItem("testTitle", "testDesc", "testPrice")}>Add test item</button>
