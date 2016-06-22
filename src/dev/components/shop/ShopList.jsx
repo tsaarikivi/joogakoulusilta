@@ -1,43 +1,42 @@
-import React from "react";
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import ShopItem from "./ShopItem.jsx"
-import { fetchShopItems, addShopItem, removeShopItem } from "../../actions/actionCreators.js"
+import ShopItem from './ShopItem.jsx'
+import * as actionCreators from '../../actions/shop.js'
 
-export default class ShopList extends React.Component {
-
+class ShopList extends React.Component {
   componentWillMount() {
-    fetchShopItems()
+    this.props.actions.fetchShopItems()
+  }
+
+  renderShopItems(item) {
+    console.log(item);
+    return (
+      <ShopItem key={item.title} item={item} />
+    )
   }
 
   render() {
+
+
     return (
-      <div class="container shop-list-container">
-        <button onClick={() => this.newItem()}>buttoni</button>
-        <ul class="shop-list">
-          {this.getItems()}
+      <div className="container shop-list-container">
+        <button onClick={() => this.props.actions.addShopItem("testTitle", "testDesc", "testPrice")}>Add test item</button>
+        <ul className="shop-list">
+          {this.props.shopItems.map(this.renderShopItems)}
         </ul>
       </div>
-    );
-  }
-
-  newItem() {
-    addShopItem("titteli", "desci", "100")
-  }
-
-  getItems() {
-    let items = [];
-    let state = this.props.store.getState();
-    let nextId = 0;
-
-    console.log(state);
-
-    state.shopItems.forEach(function(item) {
-      items.push(
-        <ShopItem title={item.title} desc={item.desc} price={item.price} itemId={nextId}/>
-      );
-      nextId += 1
-    });
-
-    return items;
+    )
   }
 }
+
+function mapStateToProps(state) {
+  return { shopItems: state.shopItems }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopList)

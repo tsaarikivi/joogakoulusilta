@@ -1,25 +1,12 @@
-import { combineReducers } from 'redux'
-import { FETCH_SHOP_ITEMS, ADD_SHOP_ITEM, REMOVE_SHOP_ITEM } from '../actions/actionTypes.js'
+import { FETCH_SHOP_ITEMS } from '../actions/actionTypes.js'
 
-function shopItems(state = [], action) {
+const INITIAL_STATE = []
+
+export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_SHOP_ITEMS:
-      console.log("fetch items payload")
-      return [
-        ...state,
-        {
-          title: "title",
-          desc: "desc",
-          price: "price"
-        }
-      ]
+      return action.payload
     default:
       return state
   }
 }
-
-const shopReducer = combineReducers({
-  shopItems
-})
-
-export default shopReducer
