@@ -13,7 +13,7 @@ class ShopList extends React.Component {
   renderShopItems(item) {
     console.log(item);
     return (
-      <ShopItem key={item.title} item={item} />
+      <ShopItem key={item.key} item={item} />
     )
   }
 

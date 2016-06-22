@@ -6,7 +6,9 @@ export function fetchShopItems() {
   var list = []
   return dispatch => {
     ShopItemsRef.on('child_added', snapshot => {
-      list = list.concat(snapshot.val())
+      let shopItemWithKey = snapshot.val();
+      shopItemWithKey.key = snapshot.key;
+      list = list.concat(shopItemWithKey);
       dispatch({
         type: FETCH_SHOP_ITEMS,
         payload: list
