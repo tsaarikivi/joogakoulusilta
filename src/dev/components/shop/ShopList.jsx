@@ -19,7 +19,6 @@ class ShopList extends React.Component {
   render() {
     return (
       <div className="container shop-list-container">
-        <button onClick={() => this.props.actions.addShopItem("testTitle", "testDesc", "testPrice")}>Add test item</button>
         <ul className="shop-list">
           {this.props.shopItems.map(this.renderShopItems)}
         </ul>

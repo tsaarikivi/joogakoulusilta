@@ -24,7 +24,7 @@ export default class SpecialCourses extends React.Component {
             <button class="btn-small">lisätietoja</button>
           </span>
         </div>
-        <Link className="text-link" to="shop">Lisää erityiskursseja</Link>
+        <Link className="text-link" to="specialCourses">Lisää erityiskursseja</Link>
       </div>
     );
   }

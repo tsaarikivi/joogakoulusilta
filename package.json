@@ -37,6 +37,7 @@
     "style-loader": "^0.13.1"
   },
   "scripts": {
+    "rebuild": "webpack && npm install",
     "dev": "webpack-dev-server --content-base public --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

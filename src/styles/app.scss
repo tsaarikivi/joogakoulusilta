@@ -198,11 +198,12 @@ ul.shop-list {
       padding: 0;
       margin: 0;
     }
-    .price {
-      color: $price;
-      font-weight: 700;
-    }
   }
+}
+
+.item-price {
+  color: $price;
+  font-weight: 700;
 }
 
 form {
