@@ -6,7 +6,7 @@ export function fetchSpecialCoursesBanner() {
   var list = []
   return dispatch => {
     CoursesRef.on('child_added', snapshot => {
-      if (snapshot.val().special && list.length <= 3) {
+      if (snapshot.val().special && list.length < 3) {
         let specialCourseWithKey = snapshot.val();
         specialCourseWithKey.key = snapshot.key;
         list = list.concat(specialCourseWithKey);
