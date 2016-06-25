@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import SpecialCoursesItem from './SpecialCoursesItem.jsx'
-import * as actionCreators from '../../actions/specialCoursesBanner.js'
+import * as actionCreators from '../../actions/courses.js'
 
 class SpecialCourses extends React.Component {
 
