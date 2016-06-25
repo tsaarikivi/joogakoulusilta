@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import SpecialCoursesItem from './SpecialCoursesItem.jsx'
-import * as actionCreators from '../../actions/specialCourse.js'
+import * as actionCreators from '../../actions/specialCourses.js'
 
-export default class SpecialCoursesList extends React.Component {
+class SpecialCoursesList extends React.Component {
 
   componentWillMount() {
-    this.actions.fetchSpecialCourses()
+    this.props.actions.fetchSpecialCourses()
   }
 
   renderSpecialCourseItems(item) {
@@ -19,8 +19,8 @@ export default class SpecialCoursesList extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <ul className="course-list">
+      <div className="container align-left">
+        <ul className="wide-list">
           {this.props.specialCourses.map(this.renderSpecialCourseItems)}
         </ul>
       </div>

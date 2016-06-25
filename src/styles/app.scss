@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.header-container {
+.header-left {
   h1 {
     text-align: left;
     text-indent: 30px;
@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
   text-indent: 10%;
 }
 
-.shop-list-container {
+.align-left {
   text-align: left;
 }
 
@@ -133,18 +133,19 @@ h1, h2, h3, h4, h5, h6 {
   color: $use-times;
 }
 
-.items-body {
+.narrow-list {
   width: 100%;
-  margin-bottom: 15px;
-}
-.item-card {
-  width: 32%;
-  height: 140px;
-  background: $list-item;
-  display: inline-block;
-  margin: 0 5px;
-  border-radius: 3px;
-  box-shadow: 0 3px 10px $item-shdw;
+  margin: 0 auto 15px;
+  padding: 0;
+  li {
+    width: 32%;
+    height: 140px;
+    background: $list-item;
+    display: inline-block;
+    margin: 0 5px;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px $item-shdw;
+  }
 }
 
 table {
@@ -186,7 +187,7 @@ table {
   }
 }
 
-ul.shop-list {
+ul.wide-list {
   padding: 0;
   li {
     background: $list-item;

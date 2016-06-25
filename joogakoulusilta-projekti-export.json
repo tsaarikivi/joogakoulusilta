@@ -1,5 +1,5 @@
 {
-  "classTypes" : {
+  "courseTypes" : {
     "astangajooga" : {
       "desc" : "astangajoogadesc",
       "name" : "astangajooga"
@@ -17,9 +17,9 @@
       "name" : "äijäjooga"
     }
   },
-  "classes" : {
+  "courses" : {
     "-KLASSEN1" : {
-      "classTypes" : {
+      "courseTypes" : {
         "flowjooga" : true
       },
       "day" : 1,
@@ -39,7 +39,7 @@
       }
     },
     "-KLASSEN2" : {
-      "classTypes" : {
+      "courseTypes" : {
         "astangajooga" : true
       },
       "day" : 1,
@@ -58,7 +58,7 @@
       }
     },
     "-KLASSEN3" : {
-      "classTypes" : {
+      "courseTypes" : {
         "äijäjooga" : true
       },
       "day" : 2,
@@ -71,6 +71,82 @@
         "Lauttasaari" : true
       },
       "special" : false,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN4" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "10.10.2016",
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 10,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN5" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "11.10.2016",
+      "end" : 1500,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 11,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN6" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "12.10.2016",
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 10,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN7" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "13.10.2016",
+      "end" : 1500,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 11,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
       "start" : 1200,
       "users" : {
         "tero" : true

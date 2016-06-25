@@ -18,8 +18,8 @@ class ShopList extends React.Component {
 
   render() {
     return (
-      <div className="container shop-list-container">
-        <ul className="shop-list">
+      <div className="container align-left">
+        <ul className="wide-list">
           {this.props.shopItems.map(this.renderShopItems)}
         </ul>
       </div>
