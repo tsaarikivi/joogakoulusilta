@@ -1,51 +1,38 @@
-import React from "react";
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import ShopItem from "./ShopItem.jsx"
-import { fetchShopItems, addShopItem, removeShopItem } from "../../actions/actionCreators.js"
+import ShopItem from './ShopItem.jsx'
+import * as actionCreators from '../../actions/shop.js'
 
-export default class ShopList extends React.Component {
-
-  constructor(){
-    super();
+class ShopList extends React.Component {
+  componentWillMount() {
+    this.props.actions.fetchShopItems()
   }
 
-  componentWillMount() {
-    const { firebase } = this.props;
-    const { store } = this.props;
-    this.unsubscribe = store.subscribe(() => this.forceUpdate());
-    fetchShopItems(store, firebase.database().ref('/shopItems/'))
+  renderShopItems(item) {
+    return (
+      <ShopItem key={item.key} item={item}/>
+    )
   }
 
   render() {
     return (
-      <div class="container shop-list-container">
-        <button onClick={() => this.newItem()}>buttoni</button>
-        <ul class="shop-list">
-          {this.getItems()}
+      <div className="container align-left">
+        <ul className="wide-list">
+          {this.props.shopItems.map(this.renderShopItems)}
         </ul>
       </div>
-    );
-  }
-
-  newItem() {
-    const { firebase } = this.props;
-    addShopItem(firebase.database().ref('/shopItems/'), "titteli", "desci", "100")
-  }
-
-  getItems() {
-    const { store } = this.props;
-    let items = [];
-    let state = store.getState();
-
-    for(var item in state.shopItems){
-      items.push(
-        <ShopItem
-          title={state.shopItems[item].title}
-          desc={state.shopItems[item].desc}
-          price={state.shopItems[item].price}
-          key={item}/>
-      )
-    }
-    return items;
+    )
   }
 }
+
+function mapStateToProps(state) {
+  return { shopItems: state.shopItems }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopList)

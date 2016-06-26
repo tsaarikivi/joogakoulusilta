@@ -19,6 +19,7 @@ var gateway = braintree.connect({
 });
 
 
+
 http.createServer(function(req, res) {
 
   res.setHeader('Content-Type', 'text/plain');
@@ -53,7 +54,7 @@ http.createServer(function(req, res) {
                 req.connection.destroy();
         });
         req.on('end', function () {
-            var post = qs.parse(body);
+            var post = qs.parse(body); //TODO: use the post for input data!!
             console.log(body);
             var startPos = body.search("=") + 1;
             var nonceFromTheClient = body.slice(startPos,body.length);

@@ -4,8 +4,15 @@ var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
+var commonLoaders = [
+	{ test: /\.js$/, loader: "jsx-loader" },
+	{ test: /\.png$/, loader: "url-loader" },
+	{ test: /\.jpg$/, loader: "file-loader" },
+];
 
-module.exports = {
+module.exports = [
+  {
+  name : "joogakoulu web front-end",
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
   entry: "./app.jsx",
@@ -56,4 +63,21 @@ module.exports = {
     copyUnmodified: true
     })
   ],
-};
+},
+{
+		// The configuration for the server-side component
+		name: "joogakoulu payment",
+    context: path.join(__dirname, "src"),
+		entry: "./server.js",
+		target: "node",
+		output: {
+			path: __dirname + "/public/",
+			filename: "index.js",
+			publicPath: __dirname + "/public/",
+			libraryTarget: "commonjs2"
+		},
+		externals: /^[a-z\-0-9]+$/,
+		module: {
+			loaders: commonLoaders
+		}
+	}];

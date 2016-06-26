@@ -7,6 +7,19 @@
   </head>
   <body>
     <div id="app"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var firebaseConfig = {
+        apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
+        authDomain: "joogakoulusilta-projekti.firebaseapp.com",
+        databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
+        storageBucket: "joogakoulusilta-projekti.appspot.com",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
     <script src="app.min.js"></script>
   </body>
 </html>

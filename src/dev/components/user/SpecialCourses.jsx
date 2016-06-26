@@ -1,31 +1,42 @@
-import React from "react";
-import { Link } from "react-router"
+import React from 'react'
+import { Link } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-export default class SpecialCourses extends React.Component {
+import SpecialCoursesItem from './SpecialCoursesItem.jsx'
+import * as actionCreators from '../../actions/courses.js'
+
+class SpecialCourses extends React.Component {
+
+  componentWillMount() {
+    this.props.actions.fetchSpecialCoursesBanner()
+  }
+
+  renderSpecialCoursesBanner(item) {
+    return (
+      <SpecialCoursesItem key={item.key} item={item} />
+    )
+  }
 
   render() {
     return (
       <div class="container">
         <h2>Tulevia erityiskursseja</h2>
-        <div class="items-body">
-          <span class="item-card">
-            <h3>Joogakurssi 1</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
-          <span class="item-card">
-            <h3>Joogakurssi 2</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
-          <span class="item-card">
-            <h3>Joogakurssi 3</h3>
-            <p>1.8 klo 12:00</p>
-            <button class="btn-small">lisätietoja</button>
-          </span>
-        </div>
-        <Link className="text-link" to="shop">Lisää erityiskursseja</Link>
+        <ul class="narrow-list">
+          {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner)}
+        </ul>
+        <Link className="text-link" to="specialCourses">Lisää erityiskursseja</Link>
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { specialCoursesBanner: state.specialCoursesBanner }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SpecialCourses)
