@@ -156,10 +156,10 @@ table {
   margin: 0 auto;
   padding: 0;
   tr {
+    vertical-align: text-top;
     margin: 0 5px 10px;
     width: 23%;
     display: inline-block;
-    float: left;
     background: $list-item;
     border-radius: 3px;
     box-shadow: 0 3px 10px $item-shdw;
