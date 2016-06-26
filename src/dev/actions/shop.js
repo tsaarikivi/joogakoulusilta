@@ -5,7 +5,7 @@ const ShopItemsRef = firebase.database().ref('/shopItems/')
 export function fetchShopItems() {
   var list = []
   return dispatch => {
-    ShopItemsRef.on('child_added', snapshot => {
+    ShopItemsRef.orderByChild('price').on('child_added', snapshot => {
       let shopItemWithKey = snapshot.val();
       shopItemWithKey.key = snapshot.key;
       list = list.concat(shopItemWithKey);

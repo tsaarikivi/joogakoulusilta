@@ -5,11 +5,11 @@ const CoursesRef = firebase.database().ref('/courses/')
 export function fetchSpecialCourses() {
   var list = []
   return dispatch => {
-    CoursesRef.on('child_added', snapshot => {
+    CoursesRef.orderByChild('date').on('child_added', snapshot => {
       if (snapshot.val().special) {
-        let specialCourseWithKey = snapshot.val();
-        specialCourseWithKey.key = snapshot.key;
-        list = list.concat(specialCourseWithKey);
+        let courseWithKey = snapshot.val();
+        courseWithKey.key = snapshot.key;
+        list = list.concat(courseWithKey);
         dispatch({
           type: FETCH_SPECIAL_COURSES,
           payload: list
@@ -22,11 +22,11 @@ export function fetchSpecialCourses() {
 export function fetchSpecialCoursesBanner() {
   var list = []
   return dispatch => {
-    CoursesRef.on('child_added', snapshot => {
+    CoursesRef.orderByChild('date').on('child_added', snapshot => {
       if (snapshot.val().special && list.length < 3) {
-        let specialCourseWithKey = snapshot.val();
-        specialCourseWithKey.key = snapshot.key;
-        list = list.concat(specialCourseWithKey);
+        let courseWithKey = snapshot.val();
+        courseWithKey.key = snapshot.key;
+        list = list.concat(courseWithKey);
         dispatch({
           type: FETCH_SPECIAL_COURSES_BANNER,
           payload: list
@@ -39,7 +39,7 @@ export function fetchSpecialCoursesBanner() {
 export function fetchTimetable() {
   var list = []
   return dispatch => {
-    CoursesRef.on('child_added', snapshot => {
+    CoursesRef.orderByChild('start').on('child_added', snapshot => {
       if (!snapshot.val().special) {
         let courseWithKey = snapshot.val();
         courseWithKey.key = snapshot.key;
