@@ -1,4 +1,4 @@
-import { FETCH_SHOP_ITEMS } from '../actions/actionTypes.js'
+import { FETCH_SHOP_ITEMS , ADD_TO_CART_AND_CHECKOUT} from '../actions/actionTypes.js'
 
 const INITIAL_STATE = []
 

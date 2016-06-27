@@ -54,10 +54,12 @@ http.createServer(function(req, res) {
                 req.connection.destroy();
         });
         req.on('end', function () {
-            var post = qs.parse(body); //TODO: use the post for input data!!
-            console.log(body);
-            var startPos = body.search("=") + 1;
-            var nonceFromTheClient = body.slice(startPos,body.length);
+            var post = qs.parse(body);
+            //Get the purchase properties.
+            console.log("POST:::", post);
+            console.log("PROP:::", post.payment_method_nonce);
+            var nonceFromTheClient = post.payment_method_nonce;
+
             console.log("sendig for settlement.");
             gateway.transaction.sale({
                 amount: '10.00', //TODO: get the amount from the request

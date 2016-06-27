@@ -1,21 +1,27 @@
 import React from "react";
 import Jquery from "jquery"
+import { Link } from "react-router"
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import * as actionCreators from '../actions/shop.js'
 
 
 var Braintree = require("braintree-web");
 import DropIn from "../components/shop/BraintreeDropIn.jsx";
 
-export default class Checkout extends React.Component {
+class Checkout extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
 
   constructor(){
     super();
     this.token = "";
     this.getToken();
   }
-
-  componentWillMount() {
-    const { firebase } = this.props.route;
-}
 
   getToken() {
     console.log("requesting client token");
@@ -49,13 +55,15 @@ export default class Checkout extends React.Component {
   onPaymentMethodReceived(payload) {
         console.log("Payment method received. Sending nonce to server");
         let that = this;
+        console.log("Checkout_PROPS::", this.props);
         try {
           Jquery.ajax({
                async: true,
                type: 'POST',
                url: 'http://localhost:3000/checkout',
                data: {
-                 payment_method_nonce: payload.nonce
+                 payment_method_nonce: payload.nonce,
+                 item_price: this.props.cart.price
                },
                success: function(result) {
                  console.log("Checkout DONE: " + result);
@@ -74,15 +82,19 @@ export default class Checkout extends React.Component {
   }
 
 
+
   render() {
     if(this.token === "") {
       return(
         <div>Alustetaan maksuyhteyttä...</div>
       )
     } else if(this.token === "done") {
-      return(
-        <div>Maksu suoritettu...</div>
-      )
+        return(
+          <div>
+            <p>Maksu onnistuneesti suoritettu...</p>
+            <Link className="btn-small" to="shop"> Takaisin kauppaan...</Link>
+          </div>
+        )
     } else if(this.token === "error") {
       return(
         <div>Maksuyhteydessä ongelmia...</div>
@@ -100,10 +112,23 @@ export default class Checkout extends React.Component {
                       onError={this.onError}
                       onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
                   />
-                <input type='submit' value='Vahvista'></input>
+                <br></br>
+                <p>{this.props.cart.title}</p><br></br>
+                <p>Hinta: {this.props.cart.price} € </p>
+                <input type='submit' value='Vahvista:'></input>
               </form>
             </div>
       );
     }
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+function mapStateToProps(state) {
+  return { cart: state.cart }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

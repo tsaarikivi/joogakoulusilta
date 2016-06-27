@@ -1,4 +1,4 @@
-import { FETCH_SHOP_ITEMS } from './actionTypes.js'
+import { FETCH_SHOP_ITEMS, ADD_TO_CART_AND_CHECKOUT } from './actionTypes.js'
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
@@ -16,6 +16,15 @@ export function fetchShopItems() {
     })
   }
 }
+
+export function addToCart(item){
+  return dispatch => { dispatch ({
+    type: ADD_TO_CART_AND_CHECKOUT,
+    payload: item
+    })
+  }
+}
+
 
 export function addShopItem(title, desc, price) {
   return dispatch => ShopItemsRef.push({
