@@ -19,7 +19,7 @@ export default class TopBar extends React.Component {
   render() {
     var userText;
     var button;
-    if(this.props.auth.email) {
+    if(this.props.auth) {
       userText = <h4>Kirjautunut sähköpostilla: {this.props.auth.email}</h4>;
       button = <button className="btn-small logout-btn" onClick={this.handleLogout}>Kirjaudu ulos</button>;
     } else {

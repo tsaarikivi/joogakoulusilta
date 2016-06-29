@@ -1,6 +1,6 @@
 import { ADD_USER, REMOVE_USER } from '../actions/actionTypes.js'
 
-const INITIAL_STATE = []
+const INITIAL_STATE = null
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

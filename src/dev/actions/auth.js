@@ -3,18 +3,19 @@ import { ADD_USER, REMOVE_USER } from './actionTypes.js'
 const Auth = firebase.auth();
 
 export function authListener() {
-  var list = []
   return dispatch => {
-    Auth.onAuthStateChanged(function(user) {
+    Auth.onAuthStateChanged(function(userdata) {
       console.log("Authentication state changed.");
-      if (user) {
-        list = []
-        list.email = user.email;
-        list.uid = user.uid;
+      if (userdata) {
+        var user = {}
+        console.log("userdata that can be handled:",userdata);
+        user.email = userdata.email;
+        user.uid = userdata.uid;
         console.log("Adding user to redux state.");
+        console.log("user is:", user);
         dispatch({
           type: ADD_USER,
-          payload: list
+          payload: user
         })
       } else {
         console.log("Removing user from redux state.");
