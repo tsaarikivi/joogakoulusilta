@@ -6,6 +6,11 @@ import * as actionCreators from '../actions/auth.js'
 
 export default class Login extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
+
   constructor(){
     super();
     this.errorText = ""
@@ -16,7 +21,12 @@ export default class Login extends React.Component {
     if(nextProps.auth.code != 0){
       this.errorText = nextProps.auth.message;
     }
-    console.log("NEXT_PROPS_END:", this.errorText);
+    else {
+      this.errorText = ""
+      if(nextProps.auth.uid){
+            this.context.router.push('user');
+      }
+    }
   }
 
 

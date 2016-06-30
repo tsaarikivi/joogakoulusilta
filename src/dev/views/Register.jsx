@@ -19,7 +19,9 @@ export default class Register extends React.Component {
     if(nextProps.auth.code != 0){
       this.errorText = nextProps.auth.message;
     }
-    console.log("NEXT_PROPS_END:", this.errorText);
+    else {
+      this.errorText = "";
+    }
   }
 
 

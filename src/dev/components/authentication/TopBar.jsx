@@ -6,6 +6,10 @@ import { Link } from "react-router"
 
 export default class TopBar extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
   componentWillMount() {
     this.props.actions.authListener();
   }
@@ -13,15 +17,21 @@ export default class TopBar extends React.Component {
   handleLogout = (e) => {
     e.preventDefault();
     console.log("Logging out.");
-    this.props.actions.logout();
+    if(this.props.auth.uid){
+      this.props.actions.logout();
+      this.context.router.push('');
+    }
+    else {
+      console.log("User not logged in. No action taken.");
+    }
   }
 
   render() {
     var userText;
     var button;
-    if(this.props.auth) {
+    if(this.props.auth.uid) {
       userText = <h4>Kirjautunut sähköpostilla: {this.props.auth.email}</h4>;
-      button = <button className="btn-small logout-btn" onClick={this.handleLogout}>Kirjaudu ulos</button>;
+      button = <button className="btn-small logout-btn" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>;
     } else {
       userText = null;
       button = <Link className="btn-small login-btn" to="login">Kirjaudu sisään</Link>;
