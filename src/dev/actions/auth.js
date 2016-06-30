@@ -31,6 +31,12 @@ export function login(email, password) {
   return dispatch => {
     Auth.signInWithEmailAndPassword(email, password).catch(function(error) {
       console.log("Error happened when logging in: ", error);
+      if(error.code != 0){
+        dispatch({
+          type: AUTH_ERROR,
+          payload: error
+        })
+      }
     });
   }
 }
@@ -41,6 +47,12 @@ export function logout() {
       console.log("Signed out succesfully.");
     }, function(error) {
       console.log("Error happened when logging logging out: ", error);
+      if(error.code != 0){
+        dispatch({
+          type: AUTH_ERROR,
+          payload: error
+        })
+      }
     });
   }
 

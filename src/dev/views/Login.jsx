@@ -6,6 +6,20 @@ import * as actionCreators from '../actions/auth.js'
 
 export default class Login extends React.Component {
 
+  constructor(){
+    super();
+    this.errorText = ""
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log("NEXT PROPS:", nextProps);
+    if(nextProps.auth.code != 0){
+      this.errorText = nextProps.auth.message;
+    }
+    console.log("NEXT_PROPS_END:", this.errorText);
+  }
+
+
   handleLogin = (e) => {
     e.preventDefault();
     var email = document.getElementById("email").value;
@@ -25,6 +39,8 @@ export default class Login extends React.Component {
             <input id="password" type="password" name="password" placeholder="Salasana"/>
           <br/>
           <button className="btn-small login-btn" onClick={this.handleLogin}>Kirjaudu</button>
+          <br/>
+          <b>{this.errorText}</b>
         </form>
       </div>
     );
