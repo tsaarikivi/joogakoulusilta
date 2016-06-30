@@ -1,46 +1,34 @@
 import React from "react";
 import { Link } from "react-router"
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import * as actionCreators from '../actions/auth.js'
 
 export default class Register extends React.Component {
-  constructor() {
+
+
+
+  constructor(){
     super();
-    this.state = {
-      error: ""
-    };
+    this.errorText = ""
   }
 
-  onError = (e) =>  {
-    this.setState({error: e});
+  componentWillReceiveProps(nextProps){
+    console.log("NEXT PROPS:", nextProps);
+    if(nextProps.auth.code != 0){
+      this.errorText = nextProps.auth.message;
+    }
+    console.log("NEXT_PROPS_END:", this.errorText);
   }
+
 
   handleRegister = (e) => {
     e.preventDefault();
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    console.log("password: "+password );
-    var { auth } = this.props.route;
-    auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode + " " + errorMessage);
-      switch (errorCode) {
-        case EMAIL_ALREADY_IN_USE:
-          this.onError("Sähköpostiosoite on jo käytössä.");
-          break;
-        case INVALID_EMAIL:
-          this.onError("Sähköpostiosoite on väärässä muodossa.");
-          break;
-        case OPERATION_NOT_ALLOWED:
-          this.onError("Authentikaatiota ei ole sallittu palvelimella. Ota yhteytttä kehittäjiin.");
-          break;
-        case PASSWORD_TOO_WEAK:
-          this.onError("Salasana on liian lyhyt.");
-          break;
-        default:
-          this.onError("Virhe rekisteröinnissä.");
-      }
-      return;
-    }.bind(this));
+    console.log("handle register:", email, password);
+    this.props.actions.register(email, password);
   }
 
   render() {
@@ -48,20 +36,26 @@ export default class Register extends React.Component {
       <div class="container">
           <form>
             <h1>Rekisteröidy käyttäjäksi</h1>
-            <h3 style={{color: 'red'}}>{this.state.error}</h3>
             <label>Sähköposti</label>
             <input id="email" type="email" name="email" placeholder="Sähköposti"/>
             <label>Salasana</label>
             <input id="password" type="password" name="password" placeholder="Salasana"/>
             <br/>
-            <button className="btn-small login-btn" onClick={this.handleRegister}>Rekisteröidy</button>
+            <button className="btn-small login-btn" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+            <br/>
+            <b>{this.errorText}</b>
           </form>
       </div>
     );
   }
 }
 
-var EMAIL_ALREADY_IN_USE = "auth/email-already-in-use";
-var INVALID_EMAIL = "auth/invalid-email"
-var OPERATION_NOT_ALLOWED = "auth/operation-not-allowed"
-var PASSWORD_TOO_WEAK = "auth/weak-password"
+function mapStateToProps(state) {
+  return { auth: state.auth }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

@@ -5,13 +5,15 @@ import SpecialCourseReducer from './specialCoursesReducer.js'
 import SpecialCoursesBannerReducer from './specialCoursesBannerReducer.js'
 import TimetableReducer from './timetableReducer.js'
 import CartReducer from './cartReducer.js'
+import AuthReducer from './authReducer.js'
 
 const combinedReducer = combineReducers({
   cart: CartReducer,
   shopItems: ShopReducer,
   specialCourses: SpecialCourseReducer,
   specialCoursesBanner: SpecialCoursesBannerReducer,
-  timetable: TimetableReducer
+  timetable: TimetableReducer,
+  auth: AuthReducer
 })
 
 export default combinedReducer;
