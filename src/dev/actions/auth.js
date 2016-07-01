@@ -6,13 +6,9 @@ const UsersRef = firebase.database().ref('/users/')
 let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
 
 function fetchUserDetails(uid, dispatch) {
-  console.log(1);
   var usr = null;
-  console.log(2);
   UsersRef.orderByChild('uid').equalTo(uid).on('child_added', snapshot => {
 
-    console.log("VAL", snapshot.val());
-    console.log("KEY", snapshot.key);
     usr = snapshot.val();
     usr.key = snapshot.key;
     dispatch({

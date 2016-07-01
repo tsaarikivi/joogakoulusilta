@@ -63,7 +63,8 @@ class Checkout extends React.Component {
                url: 'http://localhost:3000/checkout',
                data: {
                  payment_method_nonce: payload.nonce,
-                 item_price: this.props.cart.price
+                 item_price: this.props.cart.price,
+                 current_user: this.props.currentUser.key
                },
                success: function(result) {
                  console.log("Checkout DONE: " + result);
@@ -128,7 +129,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { cart: state.cart }
+  return { cart: state.cart, currentUser: state.currentUser }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

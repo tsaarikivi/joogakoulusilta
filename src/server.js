@@ -8,8 +8,16 @@
 var http = require('http')
 var braintree = require("braintree");
 var qs = require('querystring');
+var firebase = require('firebase')
 
-
+var firebaseConfig = {
+  apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
+  authDomain: "joogakoulusilta-projekti.firebaseapp.com",
+  databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
+  storageBucket: "joogakoulusilta-projekti.appspot.com",
+};
+firebase.initializeApp(firebaseConfig);
+const TransactionRef = firebase.database().ref('/transactions/')
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -19,20 +27,17 @@ var gateway = braintree.connect({
 });
 
 
-
-http.createServer(function(req, res) {
+http.createServer((req, res) => {
 
   res.setHeader('Content-Type', 'text/plain');
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   if (req.url == '/clientToken') {
-    console.log('request to root...');
-    gateway.clientToken.generate({}, function (err, response) {
-        console.log('response from braintree.');
+    gateway.clientToken.generate({}, (err, response) => {
         if (err) {
           console.error(err);
           console.error(response);
-          res.statusCode = 300;
+          res.statusCode = 500;
           res.end(err);
         }
         else {
@@ -41,41 +46,49 @@ http.createServer(function(req, res) {
     });
   }
   else if (req.url.search("checkout") > -1) {
-      console.log(" checkout request received");
 
       if (req.method == 'POST') {
         var body = '';
-
-        req.on('data', function (data) {
+        req.on('data', (data) => {
             body += data;
             // Too much POST data, kill the connection!
             // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
             if (body.length > 1e6)
                 req.connection.destroy();
         });
-        req.on('end', function () {
+        req.on('end', () => {
             var post = qs.parse(body);
-            //Get the purchase properties.
-            console.log("POST:::", post);
-            console.log("PROP:::", post.payment_method_nonce);
-            var nonceFromTheClient = post.payment_method_nonce;
 
-            console.log("sendig for settlement.");
+            var nonceFromTheClient = post.payment_method_nonce;
+            var price = post.item_price;
+            var currentUser = post.current_user;
+
             gateway.transaction.sale({
-                amount: '10.00', //TODO: get the amount from the request
+                amount: price,
                 paymentMethodNonce: nonceFromTheClient,
                 options: {
                   submitForSettlement: true
                 }
-            }, function (err, result) {
+            },  (err, result) => {
               if(err) {
                 console.error(err);
-                res.statusCode = 300;
+                res.statusCode = 500;
               } else {
                 res.statusCode = 200;
               }
               res.end();
-              console.error(result);
+
+              TransactionRef.push({
+                user: currentUser,
+                error: err ? err : {code: 0},
+                details: result
+              }
+                , (error) => {
+                  if(error){
+                      console.error("Transaction write to database failed", error);
+                  }
+                }
+              );
             });
 
         });
