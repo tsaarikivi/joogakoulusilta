@@ -1,4 +1,4 @@
-import { ADD_USER, REMOVE_USER, AUTH_ERROR } from '../actions/actionTypes.js'
+import { ADD_USER, REMOVE_USER, AUTH_ERROR, FETCH_USER_DETAILS } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {error:{code: 0, message: ""}}
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import * as actionCreators from '../actions/auth.js'
 
-export default class Register extends React.Component {
+class Register extends React.Component {
 
 
 
@@ -53,7 +53,7 @@ export default class Register extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth }
+  return { auth: state.auth, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {

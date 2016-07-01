@@ -9,3 +9,5 @@ export const ADD_TO_CART_AND_CHECKOUT = 'ADD_TO_CART_AND_CHECKOUT'
 export const ADD_USER = 'ADD_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const AUTH_ERROR = 'AUTH_ERROR'
+
+export const FETCH_USER_DETAILS = 'FETCH_USER_DETAILS'

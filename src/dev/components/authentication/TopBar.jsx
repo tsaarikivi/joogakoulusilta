@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../../actions/auth.js'
 import { Link } from "react-router"
 
-export default class TopBar extends React.Component {
+class TopBar extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
@@ -46,7 +46,7 @@ export default class TopBar extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth }
+  return { auth: state.auth, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
