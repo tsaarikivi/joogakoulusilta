@@ -11,6 +11,7 @@ export function authListener() {
         console.log("userdata that can be handled:",userdata);
         user.email = userdata.email;
         user.uid = userdata.uid;
+        user.userdata = userdata;
         console.log("Adding user to redux state.");
         console.log("user is:", user);
         dispatch({
@@ -34,7 +35,7 @@ export function login(email, password) {
       if(error.code != 0){
         dispatch({
           type: AUTH_ERROR,
-          payload: error
+          payload: {error:{code: error.code, message: error.message}}
         })
       }
     });
@@ -50,7 +51,7 @@ export function logout() {
       if(error.code != 0){
         dispatch({
           type: AUTH_ERROR,
-          payload: error
+          payload: {error:{code: error.code, message: error.message}}
         })
       }
     });
@@ -65,7 +66,7 @@ export function register(email, password) {
       if(error.code != 0){
         dispatch({
           type: AUTH_ERROR,
-          payload: error
+          payload: {error:{code: error.code, message: error.message}}
         })
       }
     });

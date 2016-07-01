@@ -18,8 +18,8 @@ export default class Login extends React.Component {
 
   componentWillReceiveProps(nextProps){
     console.log("NEXT PROPS:", nextProps);
-    if(nextProps.auth.code != 0){
-      this.errorText = nextProps.auth.message;
+    if(nextProps.auth.error.code != 0){
+      this.errorText = nextProps.auth.error.message;
     }
     else {
       this.errorText = ""
