@@ -1,25 +1,40 @@
 import { ADD_USER, REMOVE_USER, AUTH_ERROR } from './actionTypes.js'
 
 const Auth = firebase.auth();
+const UsersRef = firebase.database().ref('/users/')
+
+let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
 
 export function authListener() {
   return dispatch => {
     Auth.onAuthStateChanged(function(userdata) {
-      console.log("Authentication state changed.");
       if (userdata) {
         var user = {}
-        console.log("userdata that can be handled:",userdata);
         user.email = userdata.email;
         user.uid = userdata.uid;
         user.userdata = userdata;
-        console.log("Adding user to redux state.");
-        console.log("user is:", user);
+        console.log("USER:", user);
         dispatch({
           type: ADD_USER,
           payload: user
         })
+        if(registeringUser){
+          registeringUser = false;
+          console.log("REGISTERING USER:", user);
+          UsersRef.push({
+                          email:user.email,
+                          name:user.uid
+          },function(error){
+              if(error){
+                  console.error("Error writing new user to database", error);
+                  dispatch({
+                          type: AUTH_ERROR,
+                          payload: {error:{code: error.code, message: error.message}}
+                  })
+              }
+          });
+        }
       } else {
-        console.log("Removing user from redux state.");
         dispatch({
           type: REMOVE_USER
         })
@@ -31,8 +46,7 @@ export function authListener() {
 export function login(email, password) {
   return dispatch => {
     Auth.signInWithEmailAndPassword(email, password).catch(function(error) {
-      console.log("Error happened when logging in: ", error);
-      if(error.code != 0){
+      if(error){
         dispatch({
           type: AUTH_ERROR,
           payload: {error:{code: error.code, message: error.message}}
@@ -45,10 +59,8 @@ export function login(email, password) {
 export function logout() {
   return dispatch => {
     Auth.signOut().then(function() {
-      console.log("Signed out succesfully.");
     }, function(error) {
-      console.log("Error happened when logging logging out: ", error);
-      if(error.code != 0){
+      if(error){
         dispatch({
           type: AUTH_ERROR,
           payload: {error:{code: error.code, message: error.message}}
@@ -60,10 +72,11 @@ export function logout() {
 }
 
 export function register(email, password) {
+
+  registeringUser = true;
   return dispatch => {
     Auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-      console.log("Error happened when registering: ", error);
-      if(error.code != 0){
+      if(error){
         dispatch({
           type: AUTH_ERROR,
           payload: {error:{code: error.code, message: error.message}}
