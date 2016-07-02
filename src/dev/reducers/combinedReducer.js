@@ -7,6 +7,7 @@ import TimetableReducer from './timetableReducer.js'
 import CartReducer from './cartReducer.js'
 import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
+import { reducer as FormReducer } from 'redux-form'
 
 const combinedReducer = combineReducers({
   cart: CartReducer,
@@ -15,7 +16,8 @@ const combinedReducer = combineReducers({
   specialCourses: SpecialCourseReducer,
   specialCoursesBanner: SpecialCoursesBannerReducer,
   timetable: TimetableReducer,
-  auth: AuthReducer
+  auth: AuthReducer,
+  form: FormReducer
 })
 
 export default combinedReducer;

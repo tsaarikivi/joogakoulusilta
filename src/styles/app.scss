@@ -216,7 +216,7 @@ form {
   max-width: 500px;
   margin: 0 auto;
   padding: 0;
-  input, label {
+  input, label, textarea {
     display: inline-block;
     text-align: left;
     margin-bottom: 5px;
@@ -224,11 +224,19 @@ form {
   label {
     width: 30%;
   }
-  input {
+  input, textarea {
+    vertical-align: text-top;
     width: 65%;
+  }
+  textarea {
+    resize: none;
+    height: 300px;
   }
   .login-btn {
     display: inline-block;
     margin-top: 20px;
+  }
+  .form-error {
+    color: red;
   }
 }
