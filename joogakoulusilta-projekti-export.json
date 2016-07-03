@@ -1,4 +1,15 @@
 {
+  "tokens" : {
+    "token1" : {
+      "id" : "876987"
+    },
+    "token2" : {
+      "id" : "567678"
+    },
+    "token3" : {
+      "id" : "234345"
+    }
+  },
   "courseTypes" : {
     "astangajooga" : {
       "desc" : "astangajoogadesc",
@@ -179,17 +190,20 @@
     "item_1111" : {
       "desc" : "Kerta joogaa hyvässä seurassa",
       "price" : 10,
-      "title" : "kerta jooga"
+      "title" : "kerta jooga",
+      "token" : "token1"
     },
     "item_2222" : {
       "desc" : "Viikko joogaa hyvässä seurassa",
       "price" : 100,
-      "title" : "viikko joogaa"
+      "title" : "viikko joogaa",
+      "token" : "token2"
     },
     "item_3333" : {
       "desc" : "Kuukausi joogaa hyvässä seurassa",
       "price" : 400,
-      "title" : "kuukausi joogaa"
+      "title" : "kuukausi joogaa",
+      "token" : "token3"
     }
   },
   "users" : {

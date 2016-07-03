@@ -14,9 +14,9 @@ const FIELDS = {
   },
   price: {
     type: 'input',
-    label: 'Hinta'
+    label: 'Hinta',
   }
-}
+};
 
 class ShopItemForm extends React.Component {
 
@@ -24,7 +24,7 @@ class ShopItemForm extends React.Component {
     var title = props.title;
     var desc = props.description;
     var price = props.price;
-    addShopItem(title, desc, price);
+    this.props.addShopItem(title, desc, price);
     console.log("ShopItem added.");
   }
 
@@ -73,4 +73,4 @@ export default reduxForm({
   form: 'ShopItemForm',
   fields: _.keys(FIELDS),
   validate
-})(ShopItemForm)
+}, null, {addShopItem})(ShopItemForm)
