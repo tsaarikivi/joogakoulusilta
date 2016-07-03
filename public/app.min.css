@@ -173,16 +173,22 @@ form {
   max-width: 500px;
   margin: 0 auto;
   padding: 0; }
-  form input, form label {
+  form input, form label, form textarea {
     display: inline-block;
     text-align: left;
     margin-bottom: 5px; }
   form label {
     width: 30%; }
-  form input {
+  form input, form textarea {
+    vertical-align: text-top;
     width: 65%; }
+  form textarea {
+    resize: none;
+    height: 300px; }
   form .login-btn {
     display: inline-block;
     margin-top: 20px; }
+  form .form-error {
+    color: red; }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAubWluLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/
