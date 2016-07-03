@@ -21,6 +21,7 @@ class Checkout extends React.Component {
     super();
     this.token = "";
     this.getToken();
+    console.log(global);
   }
 
   getToken() {
@@ -63,7 +64,7 @@ class Checkout extends React.Component {
                url: 'http://localhost:3000/checkout',
                data: {
                  payment_method_nonce: payload.nonce,
-                 item_price: this.props.cart.price,
+                 item_key: this.props.cart.key,
                  current_user: this.props.currentUser.key
                },
                success: function(result) {
