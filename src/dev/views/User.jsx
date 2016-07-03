@@ -7,8 +7,6 @@ import * as actionCreators from '../actions/auth.js'
 import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
-import Feedback from '../components/user/Feedback.jsx'
-
 
 class User extends React.Component {
   render() {
@@ -17,7 +15,6 @@ class User extends React.Component {
         <UserHeader curUsr={this.props.currentUser}/>
         <SpecialCourses />
         <Timetable />
-        <Feedback />
       </div>
     );
   }

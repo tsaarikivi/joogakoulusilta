@@ -27,6 +27,10 @@ class TopBar extends React.Component {
   }
 
   render() {
+    return (
+      <div></div>
+    )
+    /*
     var userText;
     var button;
     if(this.props.auth.uid) {
@@ -42,6 +46,7 @@ class TopBar extends React.Component {
         {button}
       </div>
     );
+    */
   }
 }
 
