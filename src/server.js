@@ -22,7 +22,6 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 JPS.TransactionRef = firebase.database().ref('/transactions/')
-JPS.UsersRef = firebase.database().ref('/users/')
 JPS.ShopItemsRef = firebase.database().ref('/shopItems')
 
 JPS.gateway = braintree.connect({
@@ -103,29 +102,93 @@ app.post('/checkout', (req, res) => {
               },  (err, result) => {
                 if(err) {
                   console.error(err);
-                  res.statusCode = 500;
+
                 } else {
                   res.statusCode = 200;
                 }
                 res.end();
 
                 JPS.TransactionRef.push({
-                  user: JPS.currentUserKey,
-                  token: {
-                    key: JPS.shopItem.token,
-                    used: false
-                  },
-                  error: err ? err : {code: 0},
-                  details: result
-                }
-                  , (error) => {
+                          user: JPS.currentUserKey,
+                          token: {
+                            key: JPS.shopItem.token,
+                            used: false
+                          },
+                          error: err ? err : {code: 0},
+                          details: result
+                }, (error) => {
                     if(error){
                         console.error("Transaction write to database failed", error);
                     }
+                })
+
+                JPS.TokenRef = firebase.database().ref('/tokens/' + JPS.shopItem.token);
+                JPS.TokenRef.once('value', tokenSnapshot => {
+                  JPS.token = tokenSnapshot.val();
+
+                  JPS.UserRef = firebase.database().ref('/users/' + JPS.currentUserKey);
+                  JPS.UserRef.once('value', userSnapshot => {
+
+                    JPS.user = userSnapshot.val();
+                    console.log(JPS.user);
+
+                    var ut = JPS.user.tokens.usetimes;
+                    var ld = JPS.user.tokens.lastday;
+
+                    if(JPS.token.type === 'count'){
+                      ut += JPS.token.usetimes
+                    }
+                    if(JPS.token.type === 'time'){
+                      // TODO: use actual dates and push last day forward
+                      ld += JPS.token.usedays
+                    }
+
+                    JPS.UserRef.update({tokens: { usetimes: ut, lastday: ld }}, (err) =>{
+                      if(err){
+                        console.error("User update failed: ", err);
+                      }
+                    });
+
+
+                  }, err => {
+                    if(err){
+                      console.error("Fetching user details failed: ", err);
+                    }
                   })
+
+                }, err => {
+                  console.error("Fetching token info failed: ", err);
+                })
+
+
               })
             }, error => {
       console.error("Failed reading shopItem details: ", error);
+      res.statusCode = 500;
+      res.end();
     })
   })
 })
+
+/*
+app.post('/bookTime', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  JPS.body = '';
+  req.on('data', (data) => {
+    JPS.body += data;
+    // Too much POST data, kill the connection!
+    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+    if (JPS.body.length > 1e6) req.connection.destroy();
+  });
+  req.on('end', () => {
+    JPS.post = qs.parse(JPS.body);
+    JPS.currentUserKey = JPS.post.current_user;
+    JPS.slotKey = JPS.post.slot_key;
+    console.log("POST:", JPS.post);
+
+    res.statusCode = 200;
+    res.end();
+  })
+}
+*/

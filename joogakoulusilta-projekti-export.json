@@ -1,13 +1,19 @@
 {
   "tokens" : {
     "token1" : {
-      "id" : "876987"
+      "type" : "count",
+      "usetimes" : "1",
+      "usedays" : "0"
     },
     "token2" : {
-      "id" : "567678"
+      "type" : "time",
+      "usetimes" : "0",
+      "usedays" : "30"
     },
     "token3" : {
-      "id" : "234345"
+      "type" : "count",
+      "usetimes" : "4",
+      "usedays" : "0"
     }
   },
   "courseTypes" : {

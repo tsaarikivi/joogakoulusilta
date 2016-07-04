@@ -26,11 +26,12 @@ export function addToCart(item){
 }
 
 
-export function addShopItem(title, desc, price) {
+export function addShopItem(title, desc, price, token) {
   return dispatch => ShopItemsRef.push({
-    title,
-    desc,
-    price
+    title: title,
+    desc: desc,
+    price: price,
+    token: token
   })
 }
 

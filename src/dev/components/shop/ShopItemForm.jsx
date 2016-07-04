@@ -15,6 +15,10 @@ const FIELDS = {
   price: {
     type: 'input',
     label: 'Hinta',
+  },
+  token: {
+    type: 'input',
+    label: 'Token'
   }
 };
 
@@ -24,7 +28,8 @@ class ShopItemForm extends React.Component {
     var title = props.title;
     var desc = props.description;
     var price = props.price;
-    this.props.addShopItem(title, desc, price);
+    var token = props.token;
+    this.props.addShopItem(title, desc, price, token);
     console.log("ShopItem added.");
   }
 

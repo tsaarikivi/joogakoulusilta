@@ -25,7 +25,11 @@ function createNewUser(user) {
                   uid: user.uid,
                   alias: "alias",
                   firstname: "firstname",
-                  lastname: "lastname"
+                  lastname: "lastname",
+                  tokens: {
+                    usetimes: 0,
+                    lastday: 0
+                  }
   }, error => {
            if(error){
              console.error("Error writing new user to database", error);
