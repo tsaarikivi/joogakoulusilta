@@ -14,7 +14,7 @@ class User extends React.Component {
       <div>
         <UserHeader curUsr={this.props.currentUser}/>
         <SpecialCourses />
-        <Timetable />
+        <Timetable/>
       </div>
     );
   }

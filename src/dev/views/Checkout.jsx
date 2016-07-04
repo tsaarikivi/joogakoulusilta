@@ -1,5 +1,5 @@
 import React from "react";
-import Jquery from "jquery"
+import axios from "axios"
 import { Link } from "react-router"
 
 import { bindActionCreators } from 'redux'
@@ -27,23 +27,17 @@ class Checkout extends React.Component {
   getToken() {
     console.log("requesting client token");
     let that = this;
-    try {
-      Jquery.ajax({
-           async: true,
-           type: 'GET',
-           url: 'http://localhost:3000/clientToken',
-           success: function(result) {
-             that.token = result;
-             that.forceUpdate()
-           }
-      });
-      } catch(error) {
-        // Handle error
-        that.token = "error"
-        console.log("TOKEN_ERROR:");
-        console.error(error);
-      }
-  }
+    axios.get('http://localhost:3000/clientToken')
+    .then( response => {
+      that.token = response.data;
+      console.log("RESPONSE",response);
+      that.forceUpdate()
+    })
+    .catch( error => {
+      that.token = "error"
+      console.error("TOKEN_ERROR:", error);
+    });
+    }
 
   onReady() {
       console.log('Drop-In ready');
@@ -57,29 +51,23 @@ class Checkout extends React.Component {
         console.log("Payment method received. Sending nonce to server");
         let that = this;
         console.log("Checkout_PROPS::", this.props);
-        try {
-          Jquery.ajax({
-               async: true,
-               type: 'POST',
-               url: 'http://localhost:3000/checkout',
-               data: {
-                 payment_method_nonce: payload.nonce,
-                 item_key: this.props.cart.key,
-                 current_user: this.props.currentUser.key
-               },
-               success: function(result) {
-                 console.log("Checkout DONE: " + result);
-                 that.token = "done";
-                 that.forceUpdate();
-               }
-          });
-          } catch(error) {
-            // Handle error
-            console.log("CHECKOUT_ERROR:");
-            console.error(error);
-            that.token = "error";
-            that.forceUpdate();
-          }
+        axios.post('http://localhost:3000/checkout',
+          {
+            payment_method_nonce: payload.nonce,
+            item_key: this.props.cart.key,
+            current_user: this.props.currentUser.key
+          })
+        .then( result => {
+          console.log("Checkout DONE: " + result);
+          that.token = "done";
+          that.forceUpdate();
+        })
+        .catch( error => {
+          console.log("CHECKOUT_ERROR:");
+          console.error(error);
+          that.token = "error";
+          that.forceUpdate();
+        })
 
   }
 

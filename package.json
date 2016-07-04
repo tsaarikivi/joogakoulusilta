@@ -4,6 +4,7 @@
   "description": "Joogakoulu Sillan kotisivut ja varausjarjestelma",
   "main": "webpack.config.js",
   "dependencies": {
+    "axios": "^0.12.0",
     "babel-loader": "^6.2.0",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-react-html-attrs": "^2.0.0",
@@ -21,7 +22,6 @@
     "history": "^1.17.0",
     "http": "0.0.0",
     "https": "^1.0.0",
-    "jquery": "^3.0.0",
     "lodash": "^4.13.1",
     "node-sass": "^3.7.0",
     "react": "^0.14.8",

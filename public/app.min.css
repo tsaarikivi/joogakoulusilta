@@ -181,7 +181,8 @@ form {
     width: 30%; }
   form input, form textarea {
     vertical-align: text-top;
-    width: 65%; }
+    width: 65%;
+    box-sizing: border-box; }
   form textarea {
     resize: none;
     height: 300px; }

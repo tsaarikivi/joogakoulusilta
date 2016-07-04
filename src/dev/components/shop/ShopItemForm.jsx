@@ -20,7 +20,7 @@ const FIELDS = {
     type: 'input',
     label: 'Token'
   }
-};
+}
 
 class ShopItemForm extends React.Component {
 
@@ -37,7 +37,7 @@ class ShopItemForm extends React.Component {
     const fieldHelper = this.props.fields[field];
 
     return (
-      <div className={'form-group ${fieldHelper.touched && fieldHelper.invalid ? "has-danger" : ""}'} >
+      <div key={fieldConfig.label} className={'form-group ${fieldHelper.touched && fieldHelper.invalid ? "has-danger" : ""}'} >
         <label>{fieldConfig.label}</label>
         <fieldConfig.type type="text" className="form-control" {...fieldHelper} />
         <div className="form-error">
@@ -53,7 +53,7 @@ class ShopItemForm extends React.Component {
     return (
       <div className="container">
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h3>Luo uusi myyntikohde</h3>
+          <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}
           <button type="submit">Lähetä</button>
         </form>
