@@ -227,6 +227,7 @@ form {
   input, textarea {
     vertical-align: text-top;
     width: 65%;
+    box-sizing: border-box;
   }
   textarea {
     resize: none;

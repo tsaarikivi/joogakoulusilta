@@ -14,16 +14,16 @@ const FIELDS = {
   },
   price: {
     type: 'input',
-    label: 'Hinta',
+    label: 'Hinta'
   }
-};
+}
 
 class ShopItemForm extends React.Component {
 
   onSubmit(props) {
-    var title = props.title;
-    var desc = props.description;
-    var price = props.price;
+    const title = props.title;
+    const desc = props.description;
+    const price = props.price;
     this.props.addShopItem(title, desc, price);
     console.log("ShopItem added.");
   }
@@ -32,7 +32,7 @@ class ShopItemForm extends React.Component {
     const fieldHelper = this.props.fields[field];
 
     return (
-      <div className={'form-group ${fieldHelper.touched && fieldHelper.invalid ? "has-danger" : ""}'} >
+      <div key={fieldConfig.label} className={'form-group ${fieldHelper.touched && fieldHelper.invalid ? "has-danger" : ""}'} >
         <label>{fieldConfig.label}</label>
         <fieldConfig.type type="text" className="form-control" {...fieldHelper} />
         <div className="form-error">
@@ -48,7 +48,7 @@ class ShopItemForm extends React.Component {
     return (
       <div className="container">
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h3>Luo uusi myyntikohde</h3>
+          <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}
           <button type="submit">Lähetä</button>
         </form>
