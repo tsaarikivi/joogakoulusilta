@@ -1,5 +1,6 @@
 import { FETCH_SHOP_ITEMS, ADD_TO_CART_AND_CHECKOUT } from './actionTypes.js'
 
+console.log("GLOBAL: ", global);
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
 export function fetchShopItems() {
