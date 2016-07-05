@@ -26,8 +26,12 @@ class Checkout extends React.Component {
 
   getToken() {
     console.log("requesting client token");
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER+'/clientToken'
+    console.log("JOOGASERVER: ", JOOGASERVER);
+    console.log("JOOGAURL: ", JOOGAURL);
+
     let that = this;
-    axios.get('http://localhost:3000/clientToken')
+    axios.get(JOOGAURL)
     .then( response => {
       that.token = response.data;
       console.log("RESPONSE",response);
@@ -51,7 +55,11 @@ class Checkout extends React.Component {
         console.log("Payment method received. Sending nonce to server");
         let that = this;
         console.log("Checkout_PROPS::", this.props);
-        axios.post('http://localhost:3000/checkout',
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER+'/checkout'
+        console.log("JOOGASERVER: ", JOOGASERVER);
+        console.log("JOOGAURL: ", JOOGAURL);
+
+        axios.post(JOOGAURL,
           {
             payment_method_nonce: payload.nonce,
             item_key: this.props.cart.key,

@@ -2,13 +2,18 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
+
 class TimeTableItem extends React.Component {
 
   slotClicked(){
+
+    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER+'/reserveSlot'
+    console.log("JOOGASERVER: ", JOOGASERVER);
+    console.log("JOOGAURL: ", JOOGAURL);
     var that = this;
     console.log("CLICK", this.props);
     axios.post(
-      'http://localhost:3000/reserveSlot', {
+      JOOGAURL, {
         user: this.props.currentUser.key,
         slot: this.props.item
       })
