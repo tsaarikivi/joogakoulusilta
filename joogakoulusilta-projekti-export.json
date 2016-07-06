@@ -1,0 +1,225 @@
+{
+  "tokens" : {
+    "token1" : {
+      "type" : "count",
+      "usetimes" : "1",
+      "usedays" : "0"
+    },
+    "token2" : {
+      "type" : "time",
+      "usetimes" : "0",
+      "usedays" : "30"
+    },
+    "token3" : {
+      "type" : "count",
+      "usetimes" : "4",
+      "usedays" : "0"
+    }
+  },
+  "courseTypes" : {
+    "astangajooga" : {
+      "desc" : "astangajoogadesc",
+      "name" : "astangajooga"
+    },
+    "flowjooga" : {
+      "desc" : "flowjoogadesc",
+      "name" : "flowjooga"
+    },
+    "hotjooga" : {
+      "desc" : "hotjoogadesc",
+      "name" : "hotjooga"
+    },
+    "äijäjooga" : {
+      "desc" : "äijäjoogadesc",
+      "name" : "äijäjooga"
+    }
+  },
+  "courses" : {
+    "-KLASSEN1" : {
+      "courseTypes" : {
+        "flowjooga" : true
+      },
+      "day" : 1,
+      "end" : 1400,
+      "instructors" : {
+        "Juhani" : true
+      },
+      "maxCapacity" : 12,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : false,
+      "start" : 1200,
+      "users" : {
+        "markus" : true,
+        "tero" : true
+      }
+    },
+    "-KLASSEN2" : {
+      "courseTypes" : {
+        "astangajooga" : true
+      },
+      "day" : 1,
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 11,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : false,
+      "start" : 1600,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN3" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "day" : 2,
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 10,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : false,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN4" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "10.10.2016",
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 10,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN5" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "11.10.2016",
+      "end" : 1500,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 11,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN6" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "12.10.2016",
+      "end" : 1400,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 10,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    },
+    "-KLASSEN7" : {
+      "courseTypes" : {
+        "äijäjooga" : true
+      },
+      "date" : "13.10.2016",
+      "end" : 1500,
+      "instructors" : {
+        "Laura" : true
+      },
+      "maxCapacity" : 11,
+      "places" : {
+        "Lauttasaari" : true
+      },
+      "special" : true,
+      "start" : 1200,
+      "users" : {
+        "tero" : true
+      }
+    }
+  },
+  "instructors" : {
+    "Juhani" : {
+      "desc" : "Juhanidesc",
+      "name" : "Juhani Matti-Matti"
+    },
+    "Laura" : {
+      "desc" : "Lauradesc",
+      "name" : "Laura Surkupätkä"
+    }
+  },
+  "places" : {
+    "Lauttasaari" : {
+      "address " : "Tallbergin puistotie 8",
+      "desc" : "Joogadesc",
+      "name" : "Joogakoulu Silta Lauttasaari"
+    },
+    "Sörnäinen" : {
+      "address" : "Sörnäiskatu 6",
+      "desc" : "Joogadesc",
+      "name" : "Joogakoulu Silta Sörnäinen"
+    }
+  },
+  "shopItems" : {
+    "item_1111" : {
+      "desc" : "Kerta joogaa hyvässä seurassa",
+      "price" : 10,
+      "title" : "kerta jooga",
+      "token" : "token1"
+    },
+    "item_2222" : {
+      "desc" : "Viikko joogaa hyvässä seurassa",
+      "price" : 100,
+      "title" : "viikko joogaa",
+      "token" : "token2"
+    },
+    "item_3333" : {
+      "desc" : "Kuukausi joogaa hyvässä seurassa",
+      "price" : 400,
+      "title" : "kuukausi joogaa",
+      "token" : "token3"
+    }
+  },
+  "users" : {
+    "markus" : {
+      "email" : "m.alikoski@gmail.com",
+      "name" : "Markus Alikoski"
+    },
+    "tero" : {
+      "email" : "saarikivit@gmail.com",
+      "name" : "Tero Saarikivi"
+    }
+  }
+}

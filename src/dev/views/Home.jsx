@@ -1,14 +1,45 @@
 import React from "react";
-import { Link } from "react-router"
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-export default class Home extends React.Component {
+
+import ContactInfo from '../components/home/ContactInfo.jsx'
+import HomeHeader from '../components/home/HomeHeader.jsx'
+import HomeLoginRegister from '../components/home/HomeLoginRegister.jsx'
+
+class Home extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
+  componentWillMount(){
+    console.log("HOME will mount - auth", this.props.auth);
+    if(this.props.auth.uid) {
+      this.context.router.push('user');
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log("HOME: nextProps:", nextProps);
+    if(nextProps.auth.uid) {
+      this.context.router.push('user');
+    }
+  }
+
   render() {
     return (
       <div>
-        <h1>Moi</h1>
-        <Link to="info">Lue lisää</Link>
-        <Link to="user">Kirjaudu</Link>
+        <HomeHeader />
+        <HomeLoginRegister />
+        <ContactInfo />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { auth: state.auth }
+}
+
+export default connect(mapStateToProps, null)(Home)

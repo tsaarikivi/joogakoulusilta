@@ -26,9 +26,18 @@
 > cd path/to/code/project <br>
 > npm run dev
 
+#### JOOGASERVER
+> Jos haluat käyttää ulkoista maksuserveriä
+> aseta JOOGASERVER osoittamaan serveriin, jota haluat käyttää (esim. joogaserver.herokuapp.com)
+> JOOGASERVER on määritelty index.html:ssä
+
 #### Avaa projekti atomilla:
 > cd path/to/code/project <br>
 > atom .
+
+#### Käynnistä maksuserveri
+> cd path/to/code/project <br>
+> node src/server.js
 
 #### HUOM! luo oma gitbranchi
 > cd path/to/code/project <br>

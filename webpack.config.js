@@ -4,8 +4,15 @@ var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
+var commonLoaders = [
+	{ test: /\.js$/, loader: "jsx-loader" },
+	{ test: /\.png$/, loader: "url-loader" },
+	{ test: /\.jpg$/, loader: "file-loader" },
+];
 
-module.exports = {
+module.exports = [
+  {
+  name : "joogakoulu web front-end",
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
   entry: "./app.jsx",
@@ -36,6 +43,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'index.html', to: '../public/index.html'},
+			{ from: 'favicon.ico', to: '../public/favicon.ico'},
       { from: 'assets', to: '../public/assets'}
     ], {
     ignore: [],
@@ -49,11 +57,12 @@ module.exports = {
       allChunks: true
     }),
     new CopyWebpackPlugin([
-      { from: 'index.html', to: '../public/index.html'},
+			{ from: 'index.html', to: '../public/index.html'},
+			{ from: 'favicon.ico', to: '../public/favicon.ico'},
       { from: 'assets', to: '../public/assets'}
     ], {
     ignore: [],
     copyUnmodified: true
     })
   ],
-};
+}];

@@ -1,10 +1,16 @@
 import React from "react";
 
+import InfoHeader from '../components/info/InfoHeader.jsx'
+import PlaceInfo from '../components/info/PlaceInfo.jsx'
+import InstructorInfo from '../components/info/InstructorInfo.jsx'
+
 export default class Info extends React.Component {
   render() {
     return (
       <div>
-        <h1>Infosivu</h1>
+        <InfoHeader />
+        <PlaceInfo />
+        <InstructorInfo />
       </div>
     );
   }

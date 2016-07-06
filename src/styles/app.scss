@@ -2,3 +2,242 @@
 place all of them in this directory 'src/styles/'
 example:
 @import 'fonts.scss';*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
+@import 'variables.scss';
+
+.test-instruction {
+  font-size: .5em
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background: $body-color;
+}
+
+button, a {
+  outline-style: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 10px 0;
+  color: #333;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 10px;
+  background: $container-color;
+  padding: 20px;
+  box-shadow: 0 3px 10px $shadow-light;
+  text-align: center;
+}
+
+.main-header-container {
+  h1 {
+    font-size: 50px;
+    text-transform: uppercase;
+  }
+}
+
+.header-left {
+  h1 {
+    text-align: left;
+    text-indent: 30px;
+  }
+}
+
+.contact-container {
+  text-align: left;
+  text-indent: 10%;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.timetable-container {
+  h2 {
+    padding: 0;
+    margin: 0;
+  }
+  small {
+    display: block;
+    padding: 10px 0 20px;
+    color: $fadeout-text;
+  }
+}
+.btn-small {
+  background: $button-norm;
+  text-decoration: none;
+  color: $button-text;
+  border-radius: 3px;
+  border-style: none;
+  padding: 5px 10px;
+  box-shadow: 0 3px 10px $button-norm-shdw;
+  text-transform: uppercase;
+  transition: background 0.1s, box-shadow 0.1s;
+  &:hover {
+    background: $button-hover;
+    box-shadow: 0 4px 10px $button-hover-shdw;
+  }
+  &:active {
+    background: $button-active;
+    box-shadow: 0 2px 8px $button-active-shdw;
+  }
+}
+.register-btn {
+  margin-left: 5px;
+  background: $button-light-norm;
+  color: $button-hover;
+  transition: background 0.1s, box-shadow 0.1s;
+  &:hover {
+    background: $button-light-hover;
+    box-shadow: 0 4px 10px $button-hover-shdw;
+  }
+  &:active {
+    background: $button-light-active;
+    box-shadow: 0 2px 8px $button-active-shdw;
+  }
+}
+
+.text-link {
+  margin-top: 20px;
+  text-decoration: underline;
+  color: $text-link-norm;
+  text-transform: uppercase;
+  transition: color 0.1s;
+  &:hover {
+    color: $text-link-hover;
+  }
+  &:active {
+    color: $text-link-active;
+  }
+}
+.back-btn {
+  display: inline-block;
+  float: left;
+  text-decoration: none;
+}
+
+.use-times {
+  color: $use-times;
+}
+
+.narrow-list {
+  width: 100%;
+  margin: 0 auto 15px;
+  padding: 0;
+  li {
+    h3 {
+      padding: 0;
+    }
+    width: 32%;
+    height: 115px;
+    background: $list-item;
+    display: inline-block;
+    margin: 0 5px;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px $item-shdw;
+    padding: 30px 0;
+  }
+}
+
+table {
+  margin: 0 auto;
+  padding: 0;
+  tr {
+    vertical-align: text-top;
+    margin: 0 5px 10px;
+    width: 23%;
+    display: inline-block;
+    background: $list-item;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px $item-shdw;
+    th, td {
+      width: 100%;
+      display: block;
+    }
+    td {
+      border-top: 1px solid $item-border;
+      transition: background 0.1s;
+      padding: 5px 0;
+      h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+      }
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+      }
+      &:hover {
+        background: $list-item-hover;
+      }
+    }
+    th {
+      background: $table-header;
+    }
+  }
+}
+
+ul.wide-list {
+  padding: 0;
+  li {
+    background: $list-item;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px $item-shdw;
+    margin: 10px 100px;
+    h3 {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.item-price {
+  color: $price;
+  font-weight: 700;
+}
+
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+  input, label, textarea {
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+  label {
+    width: 30%;
+  }
+  input, textarea {
+    vertical-align: text-top;
+    width: 65%;
+    box-sizing: border-box;
+  }
+  textarea {
+    resize: none;
+    height: 300px;
+  }
+  .login-btn {
+    display: inline-block;
+    margin-top: 20px;
+  }
+  .form-error {
+    color: red;
+  }
+}
