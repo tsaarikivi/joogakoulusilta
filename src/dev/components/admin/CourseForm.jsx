@@ -4,6 +4,7 @@ import { addCourse } from '../../actions/courses.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
+    console.log("props:", props);
     this.props.addCourse(props)
   }
 
@@ -17,7 +18,7 @@ class CourseForm extends React.Component {
 
           <label>Viikonpäivä</label>
           <select name="day" {...day} value="1">
-            <option value="1" defaultValue>Maanantai</option>
+            <option value="1">Maanantai</option>
             <option value="2">Tiistai</option>
             <option value="3">Keskiviikko</option>
             <option value="4">Torstai</option>
@@ -42,7 +43,7 @@ class CourseForm extends React.Component {
           </select>
 
           <label>Erikoiskurssin päivämäärä</label>
-          <input type="text" name="date" {...date} placeholder="esim  1.1.2016 tai 10.10.2016" value="" />
+          <input type="text" name="date" placeholder="esim  1.1.2016 tai 10.10.2016" defaultValue="" {...date}/>
 
           <button className="btn-small" type="submit">Lähetä</button>
         </form>
@@ -53,7 +54,6 @@ class CourseForm extends React.Component {
 
 function validate(values) {
   const errors = {}
-
   return errors;
 }
 

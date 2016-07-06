@@ -223,8 +223,10 @@ form {
   }
   label {
     width: 30%;
+    font-size: 12px;
+    vertical-align: middle;
   }
-  input, textarea {
+  input, textarea, select {
     vertical-align: text-top;
     width: 65%;
     box-sizing: border-box;

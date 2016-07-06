@@ -28,7 +28,7 @@ class TimeTableItem extends React.Component {
   render() {
     return (
       <td>
-        <h3>KORJAA TITLE</h3>
+        <h3>{this.props.item.courseType.name}</h3>
         <button className="btn-small" onClick={this.slotClicked.bind(this)}>Varaa</button>
         <p>{this.props.item.start} - {this.props.item.end}</p>
       </td>
