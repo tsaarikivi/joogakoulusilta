@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "joogakoulusilta-projekti",
-    "production": "joogakoulusilta"
+    "stage": "joogakoulusilta-projekti",
+    "production": "joogakoulusilta-654a9"
   }
 }
