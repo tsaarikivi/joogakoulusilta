@@ -1,46 +1,10 @@
-import { ADD_USER, REMOVE_USER, AUTH_ERROR, FETCH_USER_DETAILS } from './actionTypes.js'
+import { ADD_USER, REMOVE_USER, AUTH_ERROR } from './actionTypes.js'
+import { createNewUser } from './user.js'
 
 const Auth = firebase.auth();
 const UsersRef = firebase.database().ref('/users/')
 
 let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
-
-function fetchUserDetails(uid, dispatch) {
-  var usr = null;
-  UsersRef.orderByChild('uid').equalTo(uid).on('child_added', snapshot => {
-
-    usr = snapshot.val();
-    usr.key = snapshot.key;
-    dispatch({
-      type: FETCH_USER_DETAILS,
-      payload: usr
-    })
-    })
-}
-
-function createNewUser(user) {
-  console.log("ADDING USER:", user);
-  UsersRef.push({
-                  email: user.email,
-                  uid: user.uid,
-                  alias: "alias",
-                  firstname: "firstname",
-                  lastname: "lastname",
-                  tokens: {
-                    usetimes: 0,
-                    lastday: 0
-                  }
-  }, error => {
-           if(error){
-             console.error("Error writing new user to database", error);
-             dispatch({
-                  type: AUTH_ERROR,
-                  payload: {error:{code: error.code, message: error.message}}
-             })
-          }
-      })
-}
-
 
 export function authListener() {
   return dispatch => {
@@ -59,8 +23,6 @@ export function authListener() {
           registeringUser = false;
           createNewUser(user);
         }
-        console.log("LETS FETCH:", user.uid);
-        fetchUserDetails(user.uid, dispatch);
       } else {
         dispatch({
           type: REMOVE_USER
