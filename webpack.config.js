@@ -43,6 +43,7 @@ module.exports = [
     }),
     new CopyWebpackPlugin([
       { from: 'index.html', to: '../public/index.html'},
+			{ from: 'favicon.ico', to: '../public/favicon.ico'},
       { from: 'assets', to: '../public/assets'}
     ], {
     ignore: [],
@@ -56,7 +57,8 @@ module.exports = [
       allChunks: true
     }),
     new CopyWebpackPlugin([
-      { from: 'index.html', to: '../public/index.html'},
+			{ from: 'index.html', to: '../public/index.html'},
+			{ from: 'favicon.ico', to: '../public/favicon.ico'},
       { from: 'assets', to: '../public/assets'}
     ], {
     ignore: [],

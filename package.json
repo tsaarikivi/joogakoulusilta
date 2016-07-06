@@ -1,5 +1,5 @@
 {
-  "name": "AppName",
+  "name": "joogakoulusilta",
   "version": "1.0.0",
   "description": "Joogakoulu Sillan kotisivut ja varausjarjestelma",
   "main": "webpack.config.js",
@@ -41,6 +41,10 @@
     "rebuild": "webpack && npm install",
     "dev": "webpack-dev-server --content-base public --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsaarikivi/joogakoulusilta"
   },
   "author": "",
   "license": "ISC"
