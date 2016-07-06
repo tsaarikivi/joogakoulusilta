@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "joogakoulusilta-projekti"
+    "default": "joogakoulusilta-projekti",
+    "production": "joogakoulusilta"
   }
 }

@@ -1,4 +1,4 @@
-import { FETCH_USER_DETAILS } from './actionTypes.js'
+import { USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
 
 const Auth = firebase.auth();
 const UsersRef = firebase.database().ref('/users/')
@@ -6,15 +6,28 @@ const UsersRef = firebase.database().ref('/users/')
 
 export function fetchUserDetails(uid) {
   var usr = null;
+  let tmp = null
   return dispatch => {
-    UsersRef.orderByChild('uid').equalTo(uid).on('child_added', snapshot => {
-
-    usr = snapshot.val();
-    usr.key = snapshot.key;
+    UsersRef.orderByChild('uid').equalTo(uid).on('value', snapshot => {
+    for (tmp in snapshot.val()){
+      usr = snapshot.val()[tmp];
+      usr.key = tmp;
+    }
     dispatch({
-      type: FETCH_USER_DETAILS,
+      type: USER_DETAILS_UPDATED_IN_DB,
       payload: usr
     })
+    })
+  }
+}
+
+export function finishedWithUserDetails(){
+  console.log("ACTION: finished with user called");
+  UsersRef.off('value')
+  return dispatch => {
+      dispatch({
+      type: STOP_UPDATING_USER_DETAILS_FROM_DB,
+      payload : null
     })
   }
 }
