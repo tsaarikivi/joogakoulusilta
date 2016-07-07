@@ -34,7 +34,8 @@ export function finishedWithUserDetails(){
 
 export function createNewUser(user) {
   console.log("ADDING USER:", user);
-  UsersRef.push({
+  var UIDUsersRef = firebase.database().ref('/users/'+user.uid)
+  UIDUsersRef.update({
                   email: user.email,
                   uid: user.uid,
                   alias: "alias",
