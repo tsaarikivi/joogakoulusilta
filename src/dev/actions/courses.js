@@ -1,4 +1,8 @@
-import { FETCH_TIMETABLE, FETCH_SPECIAL_COURSES_BANNER, FETCH_SPECIAL_COURSES } from './actionTypes.js'
+import { FETCH_TIMETABLE,
+         FETCH_SPECIAL_COURSES_BANNER,
+         FETCH_SPECIAL_COURSES,
+         PUT_COURSE_INFO,
+         REMOVE_COURSE_INFO } from './actionTypes.js'
 
 const CoursesRef = firebase.database().ref('/courses/')
 
@@ -72,4 +76,17 @@ export function addCourse(data) {
     start: parseInt(data.start),
     date: data.date
   })
+}
+
+export function putCourseInfo(course) {
+  return {
+    type: PUT_COURSE_INFO,
+    payload: course
+  }
+}
+
+export function removeCourseInfo() {
+  return {
+    type: REMOVE_COURSE_INFO
+  }
 }
