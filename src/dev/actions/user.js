@@ -2,9 +2,10 @@ import { USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from '
 
 const Auth = firebase.auth();
 
+var UserRef;
 
 export function fetchUserDetails(uid) {
-  var UserRef = firebase.database().ref('/users/'+uid)
+  UserRef = firebase.database().ref('/users/'+uid)
   var usr = null;
   let tmp = null
   return dispatch => {
@@ -15,13 +16,15 @@ export function fetchUserDetails(uid) {
         type: USER_DETAILS_UPDATED_IN_DB,
         payload: usr
       })
+    }, err => {
+      console.error("Getting user data failed: ", err);
     })
   }
 }
 
 export function finishedWithUserDetails(){
   console.log("ACTION: finished with user called");
-  //UsersRef.off('value')
+  UserRef.off('value');
   return dispatch => {
       dispatch({
       type: STOP_UPDATING_USER_DETAILS_FROM_DB,

@@ -26,26 +26,39 @@ class User extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log("USER_VIEW-next props:", nextProps);
+    if(typeof(nextProps.auth.uid) == "undefined"){
+      this.context.router.push('/');
+    }
+  }
+
   componentWillUnmount(){
     //this.props.actions.finishedWithUserDetails()
     // This should be put to LOGOUT action.
   }
 
   render() {
-    if( this.props.auth.uid && this.props.currentUser.key != "0") {
-      return (
-          <div>
-            <UserHeader curUsr={this.props.currentUser}/>
-            <Timetable/>
-            <CourseInfo />
-            <SpecialCourses />
-          </div>
-        );
+    console.log("USER_VIEW:", this.props.auth, this.props.currentUser);
+    if( this.props.auth.uid ) {
+      if (this.props.currentUser.key != "0") {
+        return (
+            <div>
+              <UserHeader curUsr={this.props.currentUser}/>
+              <Timetable/>
+              <CourseInfo />
+              <SpecialCourses />
+            </div>
+          );
       } else {
         return (
         <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
         );
       }
+    }
+    else {
+      <p> Käyttäjä kirjautunut ulos.</p>
+    }
   }
 }
 

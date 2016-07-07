@@ -1,7 +1,8 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../../actions/auth.js'
+import * as authActionCreators from '../../actions/auth.js'
+import * as userActionCreators from '../../actions/user.js'
 import { Link } from "react-router"
 
 class TopBar extends React.Component {
@@ -11,15 +12,17 @@ class TopBar extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.authListener();
+    this.props.authActions.authListener();
   }
 
   handleLogout = (e) => {
     e.preventDefault();
     console.log("Logging out.");
     if(this.props.auth.uid){
-      this.props.actions.logout();
-      this.context.router.push('');
+      console.log("11111");
+      this.props.authActions.logout();
+      console.log("22222");
+      this.props.userActions.finishedWithUserDetails();
     }
     else {
       console.log("User not logged in. No action taken.");
@@ -27,10 +30,6 @@ class TopBar extends React.Component {
   }
 
   render() {
-    return (
-      <div></div>
-    )
-    /*
     var userText;
     var button;
     if(this.props.auth.uid) {
@@ -46,7 +45,6 @@ class TopBar extends React.Component {
         {button}
       </div>
     );
-    */
   }
 }
 
@@ -55,7 +53,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return {
+    authActions: bindActionCreators(authActionCreators, dispatch),
+    userActions: bindActionCreators(userActionCreators, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopBar)

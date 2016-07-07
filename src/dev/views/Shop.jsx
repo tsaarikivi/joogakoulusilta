@@ -9,7 +9,6 @@ export default class Shop extends React.Component {
       <div>
         <ShopHeader />
         <ShopList />
-        <ShopItemForm />
       </div>
     );
   }

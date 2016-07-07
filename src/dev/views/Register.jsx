@@ -34,21 +34,30 @@ class Register extends React.Component {
   }
 
   render() {
-    return (
-      <div class="container">
-          <form>
-            <h1>Rekisteröidy käyttäjäksi</h1>
-            <label>Sähköposti</label>
-            <input id="email" type="email" name="email" placeholder="Sähköposti"/>
-            <label>Salasana</label>
-            <input id="password" type="password" name="password" placeholder="Salasana"/>
-            <br/>
-            <button className="btn-small login-btn" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
-            <br/>
-            <b>{this.errorText}</b>
-          </form>
-      </div>
-    );
+    if(this.props.auth.uid){
+      return(
+        <div>
+          <p>Rekisteröinti onnistui!</p>
+          <link className="btn-small" to="user">Jatka sovelluksen käyttöä</link>
+        </div>
+      );
+    } else {
+      return (
+        <div class="container">
+            <form>
+              <h1>Rekisteröidy käyttäjäksi</h1>
+              <label>Sähköposti</label>
+              <input id="email" type="email" name="email" placeholder="Sähköposti"/>
+              <label>Salasana</label>
+              <input id="password" type="password" name="password" placeholder="Salasana"/>
+              <br/>
+              <button className="btn-small login-btn" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+              <br/>
+              <b>{this.errorText}</b>
+            </form>
+        </div>
+      );
+    }
   }
 }
 
