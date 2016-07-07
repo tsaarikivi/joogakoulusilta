@@ -2,7 +2,6 @@ import { ADD_USER, REMOVE_USER, AUTH_ERROR } from './actionTypes.js'
 import { createNewUser } from './user.js'
 
 const Auth = firebase.auth();
-const UsersRef = firebase.database().ref('/users/')
 
 let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
 
