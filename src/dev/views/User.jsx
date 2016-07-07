@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -7,6 +7,7 @@ import * as actionCreators from '../actions/user.js'
 import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
+import CourseInfo from '../components/user/CourseInfo.jsx'
 
 class User extends React.Component {
 
@@ -36,6 +37,7 @@ class User extends React.Component {
           <div>
             <UserHeader curUsr={this.props.currentUser}/>
             <Timetable/>
+            <CourseInfo />
             <SpecialCourses />
           </div>
         );
