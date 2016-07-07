@@ -178,8 +178,10 @@ form {
     text-align: left;
     margin-bottom: 5px; }
   form label {
-    width: 30%; }
-  form input, form textarea {
+    width: 30%;
+    font-size: 12px;
+    vertical-align: middle; }
+  form input, form textarea, form select {
     vertical-align: text-top;
     width: 65%;
     box-sizing: border-box; }
