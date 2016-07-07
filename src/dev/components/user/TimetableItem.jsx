@@ -12,16 +12,24 @@ class TimeTableItem extends React.Component {
     console.log("JOOGAURL: ", JOOGAURL);
     var that = this;
     console.log("CLICK", this.props);
-    axios.post(
-      JOOGAURL, {
-        user: this.props.currentUser.key,
-        slot: this.props.item
-      })
-      .then( response => {
-        console.log(response);
-      })
-      .catch( error => {
-        console.log(error);
+
+    firebase.auth().currentUser.getToken(true).then( idToken => {
+      console.log("IDTOKEN: ", idToken);
+
+      axios.post(
+        JOOGAURL, {
+          user: idToken,
+          slot: this.props.item
+        })
+        .then( response => {
+          console.log(response);
+        })
+        .catch( error => {
+          console.log(error);
+        });
+
+      }).catch( error => {
+        console.error("Failde to get authentication token for current user: ", error);
       });
   }
 
