@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { reduxForm } from 'redux-form'
 import { addShopItem } from '../../actions/shop.js'
 import _ from 'lodash'
@@ -55,7 +55,7 @@ class ShopItemForm extends React.Component {
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}
-          <button type="submit">Lähetä</button>
+          <button className="btn-small" type="submit">Lähetä</button>
         </form>
       </div>
     )

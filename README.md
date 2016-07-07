@@ -26,6 +26,15 @@
 > cd path/to/code/project <br>
 > npm run dev
 
+#### Deployment firebaseStageConfig
+> asenna firebase työkalut
+> $>npm install -g firebase-tools
+> Käy valitsemassa src/index.html tiedostosta oikeat ympäristö konfiguraatiot
+> Buildaa projekti $>NODE_ENV="production" webpack
+> Testaa lokaalisti: $>firebase serve
+> Valitse target: $>firebase use [production|stage]
+> Depoly: $>firebase deploy
+
 #### JOOGASERVER
 > Jos haluat käyttää ulkoista maksuserveriä
 > aseta JOOGASERVER osoittamaan serveriin, jota haluat käyttää (esim. joogaserver.herokuapp.com)

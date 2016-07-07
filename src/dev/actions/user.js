@@ -1,27 +1,42 @@
-import { FETCH_USER_DETAILS } from './actionTypes.js'
+import { USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
 
 const Auth = firebase.auth();
-const UsersRef = firebase.database().ref('/users/')
 
+var UserRef;
 
 export function fetchUserDetails(uid) {
+  UserRef = firebase.database().ref('/users/'+uid)
   var usr = null;
+  let tmp = null
   return dispatch => {
-    UsersRef.orderByChild('uid').equalTo(uid).on('child_added', snapshot => {
-
-    usr = snapshot.val();
-    usr.key = snapshot.key;
-    dispatch({
-      type: FETCH_USER_DETAILS,
-      payload: usr
+    UserRef.on('value', snapshot => {
+      usr = snapshot.val();
+      usr.key = snapshot.key;
+      dispatch({
+        type: USER_DETAILS_UPDATED_IN_DB,
+        payload: usr
+      })
+    }, err => {
+      console.error("Getting user data failed: ", err);
     })
+  }
+}
+
+export function finishedWithUserDetails(){
+  console.log("ACTION: finished with user called");
+  UserRef.off('value');
+  return dispatch => {
+      dispatch({
+      type: STOP_UPDATING_USER_DETAILS_FROM_DB,
+      payload : null
     })
   }
 }
 
 export function createNewUser(user) {
   console.log("ADDING USER:", user);
-  UsersRef.push({
+  var UIDUsersRef = firebase.database().ref('/users/'+user.uid)
+  UIDUsersRef.update({
                   email: user.email,
                   uid: user.uid,
                   alias: "alias",

@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react'
 
-import ShopList from "../components/shop/ShopList.jsx"
-import ShopHeader from "../components/shop/ShopHeader.jsx"
-import ShopItemForm from "../components/shop/ShopItemForm.jsx"
+import ShopList from '../components/shop/ShopList.jsx'
+import ShopHeader from '../components/shop/ShopHeader.jsx'
 
 export default class Shop extends React.Component {
   render() {
@@ -10,7 +9,6 @@ export default class Shop extends React.Component {
       <div>
         <ShopHeader />
         <ShopList />
-        <ShopItemForm />
       </div>
     );
   }

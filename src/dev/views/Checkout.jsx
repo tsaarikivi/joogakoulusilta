@@ -20,28 +20,32 @@ class Checkout extends React.Component {
   constructor(){
     super();
     this.token = "";
-    this.getToken();
+    this.getClientToken();
     console.log(global);
   }
 
-  getToken() {
+  getClientToken() {
+    let that = this;
     console.log("requesting client token");
     let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER+'/clientToken'
     console.log("JOOGASERVER: ", JOOGASERVER);
     console.log("JOOGAURL: ", JOOGAURL);
-
-    let that = this;
-    axios.get(JOOGAURL)
-    .then( response => {
-      that.token = response.data;
-      console.log("RESPONSE",response);
-      that.forceUpdate()
-    })
-    .catch( error => {
-      that.token = "error"
-      console.error("TOKEN_ERROR:", error);
+    firebase.auth().currentUser.getToken(true).then( idToken => {
+      console.log("IDTOKEN: ", idToken);
+      axios.get(JOOGAURL + '?token=' + idToken)
+      .then( response => {
+        that.token = response.data;
+        console.log("RESPONSE",response);
+        that.forceUpdate()
+      })
+      .catch( error => {
+        that.token = "error"
+        console.error("TOKEN_ERROR:", error);
+      });
+    }).catch( error => {
+      console.error("Failde to get authentication token for current user: ", error);
     });
-    }
+  }
 
   onReady() {
       console.log('Drop-In ready');
@@ -52,30 +56,36 @@ class Checkout extends React.Component {
   }
 
   onPaymentMethodReceived(payload) {
-        console.log("Payment method received. Sending nonce to server");
-        let that = this;
-        console.log("Checkout_PROPS::", this.props);
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER+'/checkout'
-        console.log("JOOGASERVER: ", JOOGASERVER);
-        console.log("JOOGAURL: ", JOOGAURL);
+    console.log("Payment method received. Sending nonce to server");
+    let that = this;
+    console.log("Checkout_PROPS::", this.props);
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER+'/checkout'
+    console.log("JOOGASERVER: ", JOOGASERVER);
+    console.log("JOOGAURL: ", JOOGAURL);
 
-        axios.post(JOOGAURL,
-          {
-            payment_method_nonce: payload.nonce,
-            item_key: this.props.cart.key,
-            current_user: this.props.currentUser.key
-          })
-        .then( result => {
-          console.log("Checkout DONE: " + result);
-          that.token = "done";
-          that.forceUpdate();
+    firebase.auth().currentUser.getToken(true).then( idToken => {
+      console.log("IDTOKEN: ", idToken);
+
+      axios.post(JOOGAURL,
+        {
+          payment_method_nonce: payload.nonce,
+          item_key: this.props.cart.key,
+          current_user: idToken
         })
-        .catch( error => {
-          console.log("CHECKOUT_ERROR:");
-          console.error(error);
-          that.token = "error";
-          that.forceUpdate();
-        })
+      .then( result => {
+        console.log("Checkout DONE: " + result);
+        that.token = "done";
+        that.forceUpdate();
+      })
+      .catch( error => {
+        console.log("CHECKOUT_ERROR:");
+        console.error(error);
+        that.token = "error";
+        that.forceUpdate();
+      })
+    }).catch( error => {
+      console.error("Failde to get authentication token for current user: ", error);
+    });
 
   }
 
