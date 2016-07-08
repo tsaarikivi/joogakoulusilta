@@ -54,7 +54,7 @@ class CourseInfo extends React.Component {
             <p>Joogaopettaja {this.props.courseInfo.instructor.name}</p>
             <hr/>
             <p>Ilmoittautuneita {this.props.courseInfo.users.length}/{this.props.courseInfo.maxCapacity}</p>
-            <button className="btn-small" onClick={this.makeReservation.bind(this)} >Ilmoittaudu</button>
+            <button className="btn-small btn-blue" onClick={this.makeReservation.bind(this)} >Ilmoittaudu</button>
           </div>
         </div>
       )

@@ -48,7 +48,7 @@ class Login extends React.Component {
             <label>Salasana</label>
             <input id="password" type="password" name="password" placeholder="Salasana"/>
           <br/>
-          <button className="btn-small login-btn" onClick={this.handleLogin}>Kirjaudu</button>
+          <button className="btn-small login-btn btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
           <br/>
           <b>{this.errorText}</b>
         </form>

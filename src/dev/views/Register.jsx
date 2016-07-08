@@ -38,7 +38,7 @@ class Register extends React.Component {
       return(
         <div>
           <p>Rekisteröinti onnistui!</p>
-          <link className="btn-small" to="user">Jatka sovelluksen käyttöä</link>
+          <link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</link>
         </div>
       );
     } else {
@@ -51,7 +51,7 @@ class Register extends React.Component {
               <label>Salasana</label>
               <input id="password" type="password" name="password" placeholder="Salasana"/>
               <br/>
-              <button className="btn-small login-btn" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+              <button className="btn-small login-btn btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
               <br/>
               <b>{this.errorText}</b>
             </form>
