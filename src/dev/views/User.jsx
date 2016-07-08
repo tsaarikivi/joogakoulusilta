@@ -16,10 +16,11 @@ class User extends React.Component {
   }
 
   componentWillMount(){
-    console.log("User-will-mount:ACTIONS: ",this.props.actions);
-    console.log("User-will-mount:AUTH: ",this.props.auth);
+    //console.log("User-will-mount:ACTIONS: ",this.props.actions);
+    //console.log("User-will-mount:AUTH: ",this.props.auth);
     if( this.props.auth.uid ) {
-      this.props.actions.fetchUserDetails(this.props.auth.uid)
+      this.props.actions.fetchUserDetails(this.props.auth.uid);
+      this.props.actions.fetchUsersTransactions(this.props.auth.uid);
     }
     else {
       this.context.router.push('/');
@@ -27,7 +28,7 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("USER_VIEW-next props:", nextProps);
+    //console.log("USER_VIEW-next props:", nextProps);
     if(typeof(nextProps.auth.uid) == "undefined"){
       this.context.router.push('/');
     }
@@ -57,7 +58,9 @@ class User extends React.Component {
       }
     }
     else {
+      return(
       <p> Käyttäjä kirjautunut ulos.</p>
+      );
     }
   }
 }

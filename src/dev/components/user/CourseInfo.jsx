@@ -20,7 +20,7 @@ class CourseInfo extends React.Component {
       axios.post(
         JOOGAURL, {
           user: idToken,
-          slot: this.props.item
+          courseInfo: that.props.courseInfo
         })
         .then( response => {
           console.log(response);

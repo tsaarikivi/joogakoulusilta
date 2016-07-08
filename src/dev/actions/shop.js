@@ -28,7 +28,7 @@ export function addToCart(item){
 
 
 export function addShopItem(title, desc, price, token) {
-  return dispatch => ShopItemsRef.push({
+  return dispatch => firebase.database().ref('/shopItems/'+title).update({
     title: title,
     desc: desc,
     price: price,

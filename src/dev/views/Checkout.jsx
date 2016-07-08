@@ -31,7 +31,6 @@ class Checkout extends React.Component {
     console.log("JOOGASERVER: ", JOOGASERVER);
     console.log("JOOGAURL: ", JOOGAURL);
     firebase.auth().currentUser.getToken(true).then( idToken => {
-      console.log("IDTOKEN: ", idToken);
       axios.get(JOOGAURL + '?token=' + idToken)
       .then( response => {
         that.token = response.data;
