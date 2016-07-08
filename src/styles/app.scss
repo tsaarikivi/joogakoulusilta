@@ -121,11 +121,11 @@ h1, h2, h3, h4, h5, h6 {
   transition: background 0.1s, box-shadow 0.1s;
   &:hover {
     background: $button-light-hover;
-    box-shadow: 0 4px 10px $button-hover-shdw;
+    box-shadow: 0 3px $button-hover-shdw;
   }
   &:active {
     background: $button-light-active;
-    box-shadow: 0 2px 8px $button-active-shdw;
+    box-shadow: 0 1px $button-active-shdw;
   }
 }
 
