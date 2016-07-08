@@ -52,12 +52,14 @@ class User extends React.Component {
           );
       } else {
         return (
-        <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
+          <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
         );
       }
     }
     else {
-      <p> Käyttäjä kirjautunut ulos.</p>
+      return (
+        <p> Käyttäjä kirjautunut ulos.</p>
+      )
     }
   }
 }

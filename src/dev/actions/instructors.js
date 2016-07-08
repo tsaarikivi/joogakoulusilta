@@ -1,4 +1,4 @@
-import { FETCH_INSTRUCTOR_INFO } from './actionTypes.js'
+/*import { FETCH_INSTRUCTOR_INFO } from './actionTypes.js'
 
 const InstructorInfoRef = firebase.database().ref('/instructors/')
 
@@ -16,3 +16,4 @@ export function fetchInstructorInfo() {
     })
   }
 }
+*/
