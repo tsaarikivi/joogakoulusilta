@@ -34,11 +34,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto 10px;
+  margin: 0 auto;
   background: $container-color;
-  padding: 20px;
-  box-shadow: 0 3px 10px $shadow-light;
+  padding: 20px 0;
+  border-bottom: 1px solid $container-border;
   text-align: center;
 }
 
@@ -93,16 +92,16 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px;
   border-style: none;
   padding: 5px 10px;
-  box-shadow: 0 3px 10px $button-norm-shdw;
+  box-shadow: 0 2px $button-norm-shdw;
   text-transform: uppercase;
   transition: background 0.1s, box-shadow 0.1s;
   &:hover {
     background: $button-hover;
-    box-shadow: 0 4px 10px $button-hover-shdw;
+    box-shadow: 0 3px $button-hover-shdw;
   }
   &:active {
     background: $button-active;
-    box-shadow: 0 2px 8px $button-active-shdw;
+    box-shadow: 0 1px $button-active-shdw;
   }
 }
 .btn-blue {
@@ -167,7 +166,8 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     margin: 0 5px;
     border-radius: 3px;
-    box-shadow: 0 3px 10px $item-shdw;
+    border: 1px solid $item-border;
+    box-shadow: 0 2px $item-shdw;
     padding: 30px 0;
   }
 }
@@ -192,7 +192,8 @@ table {
     display: inline-block;
     background: $list-item;
     border-radius: 3px;
-    box-shadow: 0 3px 10px $item-shdw;
+    border: 1px solid $item-border;
+    box-shadow: 0 2px $item-shdw;
     th, td {
       width: 100%;
       display: block;
@@ -227,7 +228,8 @@ ul.wide-list {
     background: $list-item;
     padding: 20px;
     border-radius: 3px;
-    box-shadow: 0 3px 10px $item-shdw;
+    border: 1px solid $item-border;
+    box-shadow: 0 2px $item-shdw;
     margin: 10px 100px;
     h3 {
       padding: 0;
