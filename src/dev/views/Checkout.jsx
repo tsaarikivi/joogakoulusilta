@@ -100,7 +100,7 @@ class Checkout extends React.Component {
         return(
           <div>
             <p>Maksu onnistuneesti suoritettu...</p>
-            <Link className="btn-small" to="shop"> Takaisin kauppaan...</Link>
+            <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
           </div>
         )
     } else if(this.token === "error") {

@@ -9,7 +9,7 @@ export default class SpecialCoursesItem extends React.Component {
         <p className="item-desc">KORJAA DESC</p>
         <p className="item-instructor">KORJAA VETÄJÄ</p>
         <p className="item-users">Ilmoittautuneet: KORJAA USERS /{this.props.item.maxCapacity}</p>
-        <a href="#" className="btn-small">Ilmoittaudu</a>
+        <a href="#" className="btn-small btn-blue">Ilmoittaudu</a>
       </li>
     );
   }

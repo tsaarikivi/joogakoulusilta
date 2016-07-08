@@ -55,7 +55,7 @@ class ShopItemForm extends React.Component {
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}
-          <button className="btn-small" type="submit">Lähetä</button>
+          <button className="btn-small btn-blue" type="submit">Lähetä</button>
         </form>
       </div>
     )

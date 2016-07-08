@@ -64,6 +64,17 @@ h1, h2, h3, h4, h5, h6 {
 .align-left {
   text-align: left;
 }
+.align-right {
+  text-align: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
 
 .timetable-container {
   h2 {
@@ -77,7 +88,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .btn-small {
-  background: $button-norm;
   text-decoration: none;
   color: $button-text;
   border-radius: 3px;
@@ -95,6 +105,16 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 2px 8px $button-active-shdw;
   }
 }
+.btn-blue {
+  background: $button-blue-norm;
+}
+.btn-green {
+  background: $button-green-norm;
+}
+.btn-red {
+  background: $button-red-norm;
+}
+
 .register-btn {
   margin-left: 5px;
   background: $button-light-norm;
@@ -150,6 +170,16 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 3px 10px $item-shdw;
     padding: 30px 0;
   }
+}
+.text-list-item {
+  span {
+    margin-top: 14px;
+    font-size: 12px;
+  }
+  button {
+    margin-top: 6px;
+  }
+  height: 40px;
 }
 
 table {
