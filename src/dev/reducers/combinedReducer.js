@@ -11,6 +11,8 @@ import UserReducer from './userReducer.js'
 import PlaceInfoReducer from './placeInfoReducer.js'
 import InstructorInfoReducer from './instructorInfoReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
+import UserListReducer from './userListReducer.js'
+import AdminListReducer from './adminListReducer.js'
 
 const combinedReducer = combineReducers({
   cart: CartReducer,
@@ -23,7 +25,9 @@ const combinedReducer = combineReducers({
   form: FormReducer,
   placeInfoData: PlaceInfoReducer,
   instructorInfo: InstructorInfoReducer,
-  courseInfo: CourseInfoReducer
+  courseInfo: CourseInfoReducer,
+  userList: UserListReducer,
+  adminList: AdminListReducer
 })
 
 export default combinedReducer;

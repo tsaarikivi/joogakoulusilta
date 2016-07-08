@@ -1,3 +1,4 @@
+/*
 import { FETCH_PLACE_INFO } from './actionTypes.js'
 
 const PlaceInfoRef = firebase.database().ref('/places/')
@@ -17,7 +18,7 @@ export function fetchPlaceInfo() {
   }
 }
 
-/*
+
 export function addPlaceInfo(props) {
   return dispatch => PlaceInfoRef.push({
     props.title,
