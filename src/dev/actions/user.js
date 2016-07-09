@@ -1,9 +1,30 @@
-import { UPDATE_USERS_TRANSACTIONS, USER_ERROR, USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
+import { UPDATE_USERS_BOOKINGS, UPDATE_USERS_TRANSACTIONS, USER_ERROR, USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
 
 const Auth = firebase.auth();
 
 var UserRef;
 var TransactionsRef;
+var BookingsRef;
+
+export function fetchUsersBookings(uid){
+  return dispatch => {
+    var bookings = null;
+    BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
+    BookingsRef.on('value', snapshot => {
+      var bkn = snapshot.val();
+      dispatch({
+        type: UPDATE_USERS_BOOKINGS,
+        payload: {bookings: bkn}
+      })
+    }, err => {
+      console.error("Failed getting bookings: ",uid, err);
+      dispatch({
+        type: USER_ERROR,
+        payload: err
+      })
+    })
+  }
+}
 
 export function fetchUsersTransactions(uid){
   return dispatch => {
@@ -16,7 +37,6 @@ export function fetchUsersTransactions(uid){
       let one;
       var details={};
       for (one in all){
-        console.log("ONE: ", all[one]);
         details = Object.assign({}); //Need new object to be pushed to arrays
         details.puchasetime = one;
         details.type = all[one].type;
@@ -43,13 +63,10 @@ export function fetchUsersTransactions(uid){
             console.error("undefined transaction type: ",uid , all[one]);
           break;
         }
-        console.log("DETAILS: ", details);
         if(details.expires > now){
           trx.details.valid.push(details);
-          console.log("VALID: ", trx.details.valid);
         } else {
           trx.details.expired.push(details);
-          console.log("EXPIRED: ", trx.details.expired);
         }
       }
       dispatch({
@@ -93,6 +110,7 @@ export function finishedWithUserDetails(){
   console.log("ACTION: finished with user called");
   UserRef.off('value');
   TransactionsRef.off('value');
+  BookingsRef.off('value')
   return dispatch => {
       dispatch({
       type: STOP_UPDATING_USER_DETAILS_FROM_DB,

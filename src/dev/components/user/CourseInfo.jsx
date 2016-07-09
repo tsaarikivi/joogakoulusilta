@@ -7,7 +7,7 @@ import * as actionCreators from '../../actions/courses.js'
 
 class CourseInfo extends React.Component {
 
-  makeReservation() {
+  makeReservation(forward) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER+'/reserveSlot'
     console.log("JOOGASERVER: ", JOOGASERVER);
     console.log("JOOGAURL: ", JOOGAURL);
@@ -20,7 +20,8 @@ class CourseInfo extends React.Component {
       axios.post(
         JOOGAURL, {
           user: idToken,
-          courseInfo: that.props.courseInfo
+          courseInfo: that.props.courseInfo,
+          weeksForward: forward
         })
         .then( response => {
           console.log(response);
@@ -53,8 +54,9 @@ class CourseInfo extends React.Component {
             <hr/>
             <p>Joogaopettaja {this.props.courseInfo.instructor.name}</p>
             <hr/>
-            <p>Ilmoittautuneita {this.props.courseInfo.users.length}/{this.props.courseInfo.maxCapacity}</p>
-            <button className="btn-small btn-blue" onClick={this.makeReservation.bind(this)} >Ilmoittaudu</button>
+            <p>Ilmoittautuneita 00 /{this.props.courseInfo.maxCapacity}</p>
+            <button className="btn-small btn-blue" onClick={() => this.makeReservation(0)} >Ilmoittaudu tälle viikolle</button>
+            <button className="btn-small btn-blue" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
           </div>
         </div>
       )
