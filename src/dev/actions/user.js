@@ -8,10 +8,13 @@ var BookingsRef;
 
 export function fetchUsersBookings(uid){
   return dispatch => {
-    var bookings = null;
+    var bkn = {message: "no bookings"};
     BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
     BookingsRef.on('value', snapshot => {
-      var bkn = snapshot.val();
+      bkn = snapshot.val();
+      if(!bkn){
+        bkn = {0: "ei varauksia"};
+      }
       dispatch({
         type: UPDATE_USERS_BOOKINGS,
         payload: {bookings: bkn}

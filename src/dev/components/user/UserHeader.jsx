@@ -11,6 +11,16 @@ export default class UserHeader extends React.Component {
     this.firstexpire = new Date();
   }
 
+  componentWillMount(){
+    if(this.props.curUsr.transactions.time != 0){
+      this.aikaLoppuu.setTime(this.props.curUsr.transactions.time);
+      this.onkoAikaa = true;
+    }
+    this.count = this.props.curUsr.transactions.count;
+    this.firstexpire.setTime(this.props.curUsr.transactions.firstexpire);
+    console.log("HEADER: ", this.props, this.onkoAikaa, this.aikaLoppuu);
+  }
+
   componentWillReceiveProps(nextProps){
     if(nextProps.curUsr.transactions.time != 0){
       this.aikaLoppuu.setTime(nextProps.curUsr.transactions.time);
