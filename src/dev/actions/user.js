@@ -10,21 +10,46 @@ export function fetchUsersTransactions(uid){
     var transactions = null;
     TransactionsRef = firebase.database().ref('/transactions/'+uid);
     TransactionsRef.on('value', snapshot => {
-      var trx = {time: 0, count: 0};
+      var trx = {time: 0, count: 0, firstexpire: 0, details: {valid:[], expired:[]}};
       let now = Date.now();
       let all = snapshot.val();
       let one;
+      var details={};
       for (one in all){
-        console.log("ONE:",all[one]);
-        if( all[one].type === "time"){
-          if(all[one].expires > now){
-            trx.time = all[one].expires;
-          }
+        console.log("ONE: ", all[one]);
+        details = Object.assign({}); //Need new object to be pushed to arrays
+        details.puchasetime = one;
+        details.type = all[one].type;
+        details.expires = all[one].expires;
+        switch(all[one].type){
+          case "time":
+            if(all[one].expires > now){
+              trx.time = all[one].expires;
+            }
+          break;
+          case "count":
+            details.unusedtimes = all[one].unusedtimes;
+            details.usetimes = all[one].usetimes;
+            if(all[one].expires > now){
+              trx.count += all[one].unusedtimes;
+            }
+            if(all[one].expires < trx.firstexpire || trx.firstexpire === 0){
+              if(all[one].unusedtimes > 0){
+                trx.firstexpire = all[one].expires;
+              }
+            }
+          break;
+          default:
+            console.error("undefined transaction type: ",uid , all[one]);
+          break;
         }
-        if( all[one].type === "count"){
-          if(all[one].expires > now){
-            trx.count += all[one].unusedtimes;
-          }
+        console.log("DETAILS: ", details);
+        if(details.expires > now){
+          trx.details.valid.push(details);
+          console.log("VALID: ", trx.details.valid);
+        } else {
+          trx.details.expired.push(details);
+          console.log("EXPIRED: ", trx.details.expired);
         }
       }
       dispatch({
