@@ -37,7 +37,6 @@ class User extends React.Component {
 
 
   render() {
-    console.log("USER_BOOKINGS: ", this.props.currentUser.bookings);
     if( this.props.auth.uid &&
         this.props.currentUser.key != "0" &&
         typeof(this.props.currentUser.transactions) != "undefined" &&

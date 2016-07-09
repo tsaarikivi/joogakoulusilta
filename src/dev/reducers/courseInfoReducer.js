@@ -6,11 +6,13 @@ export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case PUT_COURSE_INFO:
+      console.log("PUT_COURSE_INFO", action.payload);
       return action.payload
 
     case REMOVE_COURSE_INFO:
+      console.log("REMOVE_COURSE_INFO");
       return INITIAL_STATE
-      
+
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import * as actionCreators from '../../actions/courses.js'
 class Timetable extends React.Component {
 
   componentWillMount() {
-    this.props.actions.fetchTimetable()
+    this.props.actions.fetchTimetable();
   }
 
   render() {
@@ -115,7 +115,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timetable)

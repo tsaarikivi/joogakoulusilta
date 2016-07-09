@@ -18,7 +18,6 @@ export default class UserHeader extends React.Component {
     }
     this.count = this.props.curUsr.transactions.count;
     this.firstexpire.setTime(this.props.curUsr.transactions.firstexpire);
-    console.log("HEADER: ", this.props, this.onkoAikaa, this.aikaLoppuu);
   }
 
   componentWillReceiveProps(nextProps){
@@ -28,7 +27,6 @@ export default class UserHeader extends React.Component {
     }
     this.count = nextProps.curUsr.transactions.count;
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
-    console.log("HEADER: ", nextProps, this.onkoAikaa, this.aikaLoppuu);
   }
 
   render() {

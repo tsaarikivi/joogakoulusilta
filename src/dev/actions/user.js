@@ -85,7 +85,6 @@ export function fetchUsersTransactions(uid){
 
 export function fetchUserDetails(uid) {
   UserRef = firebase.database().ref('/users/'+uid);
-  console.log("UUUUSEEERRR: ", UserRef);
   var usr = null;
   let tmp = null
   return dispatch => {
