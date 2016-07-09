@@ -21,6 +21,7 @@ class User extends React.Component {
     if( this.props.auth.uid ) {
       this.props.actions.fetchUserDetails(this.props.auth.uid);
       this.props.actions.fetchUsersTransactions(this.props.auth.uid);
+      this.props.actions.fetchUsersBookings(this.props.auth.uid);
     }
     else {
       this.context.router.push('/');
@@ -34,15 +35,12 @@ class User extends React.Component {
     }
   }
 
-  componentWillUnmount(){
-    //this.props.actions.finishedWithUserDetails()
-    // This should be put to LOGOUT action.
-  }
 
   render() {
-    console.log("USER_VIEW:", this.props.auth, this.props.currentUser);
-    if( this.props.auth.uid ) {
-      if (this.props.currentUser.key != "0") {
+    if( this.props.auth.uid &&
+        this.props.currentUser.key != "0" &&
+        typeof(this.props.currentUser.transactions) != "undefined" &&
+        typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
               <UserHeader curUsr={this.props.currentUser}/>
@@ -56,12 +54,6 @@ class User extends React.Component {
           <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
         );
       }
-    }
-    else {
-      return (
-        <p> Käyttäjä kirjautunut ulos.</p>
-      )
-    }
   }
 }
 
