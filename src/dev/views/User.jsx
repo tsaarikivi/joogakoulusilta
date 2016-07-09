@@ -41,7 +41,6 @@ class User extends React.Component {
   }
 
   render() {
-    console.log("USER_VIEW:", this.props.auth, this.props.currentUser);
     if( this.props.auth.uid ) {
       if (this.props.currentUser.key != "0") {
         return (
