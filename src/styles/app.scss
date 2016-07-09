@@ -219,6 +219,7 @@ table {
       }
       &:hover {
         background: $list-item-hover;
+        cursor: pointer;
       }
     }
     th {
