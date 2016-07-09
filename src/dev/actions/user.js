@@ -8,13 +8,10 @@ var BookingsRef;
 
 export function fetchUsersBookings(uid){
   return dispatch => {
-    var bkn = {message: "no bookings"};
+    var bkn = null;
     BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
     BookingsRef.on('value', snapshot => {
       bkn = snapshot.val();
-      if(!bkn){
-        bkn = {0: "ei varauksia"};
-      }
       dispatch({
         type: UPDATE_USERS_BOOKINGS,
         payload: {bookings: bkn}
@@ -38,12 +35,12 @@ export function fetchUsersTransactions(uid){
       let now = Date.now();
       let all = snapshot.val();
       let one;
-      var details={};
+      var trxdetails={};
       for (one in all){
-        details = Object.assign({}); //Need new object to be pushed to arrays
-        details.puchasetime = one;
-        details.type = all[one].type;
-        details.expires = all[one].expires;
+        trxdetails = Object.assign({}); //Need new object to be pushed to arrays
+        trxdetails.puchasetime = one;
+        trxdetails.type = all[one].type;
+        trxdetails.expires = all[one].expires;
         switch(all[one].type){
           case "time":
             if(all[one].expires > now){
@@ -51,8 +48,8 @@ export function fetchUsersTransactions(uid){
             }
           break;
           case "count":
-            details.unusedtimes = all[one].unusedtimes;
-            details.usetimes = all[one].usetimes;
+            trxdetails.unusedtimes = all[one].unusedtimes;
+            trxdetails.usetimes = all[one].usetimes;
             if(all[one].expires > now){
               trx.count += all[one].unusedtimes;
             }
@@ -66,10 +63,10 @@ export function fetchUsersTransactions(uid){
             console.error("undefined transaction type: ",uid , all[one]);
           break;
         }
-        if(details.expires > now){
-          trx.details.valid.push(details);
+        if(trxdetails.expires > now){
+          trx.details.valid.push(trxdetails);
         } else {
-          trx.details.expired.push(details);
+          trx.details.expired.push(trxdetails);
         }
       }
       dispatch({
