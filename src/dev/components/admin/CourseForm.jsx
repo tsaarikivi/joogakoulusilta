@@ -45,7 +45,7 @@ class CourseForm extends React.Component {
           <label>Erikoiskurssin päivämäärä</label>
           <input type="text" name="date" placeholder="esim  1.1.2016 tai 10.10.2016" defaultValue="" {...date}/>
 
-          <button className="btn-small btn-blue" type="submit">Lähetä</button>
+          <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
       </div>
     )

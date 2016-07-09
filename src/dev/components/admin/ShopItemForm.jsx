@@ -3,6 +3,9 @@ import { reduxForm } from 'redux-form'
 import { addShopItem } from '../../actions/shop.js'
 import _ from 'lodash'
 
+// TODO: FIX form to proper dropdowns
+// TODO: Forms to be interactive according user choises
+
 const FIELDS = {
   title: {
     type: 'input',
@@ -16,9 +19,17 @@ const FIELDS = {
     type: 'input',
     label: 'Hinta',
   },
-  token: {
+  tokenType: {
     type: 'input',
-    label: 'Token'
+    label: 'Aika vai Kerta?'
+  },
+  time: {
+    type: 'input',
+    label: 'Aikamäärä'
+  },
+  amount: {
+    type: 'input',
+    label: 'Kertamäärä'
   }
 }
 
@@ -55,7 +66,7 @@ class ShopItemForm extends React.Component {
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}
-          <button className="btn-small btn-blue" type="submit">Lähetä</button>
+          <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
       </div>
     )
