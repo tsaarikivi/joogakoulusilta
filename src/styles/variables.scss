@@ -1,5 +1,5 @@
-$body-color: #fff;
-$container-color: #f3f3f4;
+$body-color: #fefdfc;
+$container-color: $body-color;
 $shadow-light: #dbdbdc;
 $container-border: #ddd;
 
@@ -25,9 +25,9 @@ $text-link-bg: #eaeaea;
 
 $use-times: $button-active;
 
-$table-header: #dededf;
+$table-header: #e3e3e5;
 $list-item: #fff;
-$list-item-hover: #aaeeff;
+$list-item-hover: #fff3dd;
 $item-shdw: #cfcfd0;
 $price: $button-active;
 $item-border: #ddd;
