@@ -17,7 +17,8 @@ class CourseForm extends React.Component {
           <h2>Luo uusi kurssi</h2>
 
           <label>Viikonpäivä</label>
-          <select name="day" {...day} value="1">
+          <select {...day} value={day.value || ''}>
+            <option>-- Valitse päivä --</option>
             <option value="1">Maanantai</option>
             <option value="2">Tiistai</option>
             <option value="3">Keskiviikko</option>
@@ -37,7 +38,8 @@ class CourseForm extends React.Component {
           <input type="number" name="maxCapacity" {...maxCapacity} placeholder="esim: 12 tai 1" />
 
           <label>Onko erikoiskurssi?</label>
-          <select {...special} value="0">
+          <select {...special} value={special.value || ''}>
+            <option>-- Valitse arvo --</option>
             <option value="1">On</option>
             <option value="0">Ei</option>
           </select>
@@ -45,7 +47,7 @@ class CourseForm extends React.Component {
           <label>Erikoiskurssin päivämäärä</label>
           <input type="text" name="date" placeholder="esim  1.1.2016 tai 10.10.2016" defaultValue="" {...date}/>
 
-          <button className="btn-small btn-blue" type="submit">Lähetä</button>
+          <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
       </div>
     )

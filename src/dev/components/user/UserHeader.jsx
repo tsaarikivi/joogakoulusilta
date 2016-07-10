@@ -35,7 +35,7 @@ export default class UserHeader extends React.Component {
       return (
         <div class="container">
           <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Voit käyttää kurssitarjontaamme <span class="use-times"> {this.aikaLoppuu.toString()} </span> asti.</h2>
+          <p>Voit käyttää kurssitarjontaamme <span class="use-times"> {this.aikaLoppuu.toString()} </span> asti.</p>
           <Link className="text-link" to="shop">Kauppaan</Link>
         </div>
       );
@@ -44,8 +44,8 @@ export default class UserHeader extends React.Component {
         return (
         <div class="container">
           <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Sinulla on <span class="use-times">{this.count}</span> kertalippua käytettävissä</h2>
-          <h2>Ensimmäinen vanhenee <span class="use-times"> {this.firstexpire.toString()} </span>.</h2>
+          <p>Sinulla on <span class="use-times">{this.count}</span> kertalippua käytettävissä</p>
+          <p>Ensimmäinen vanhenee <span class="use-times"> {this.firstexpire.toString()} </span>.</p>
           <Link className="text-link" to="shop">Kauppaan</Link>
         </div>
       );
@@ -53,8 +53,8 @@ export default class UserHeader extends React.Component {
       return (
         <div class="container">
           <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa.</h2>
-          <h2>Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</h2>
+          <p>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa.</p>
+          <p>Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
           <Link className="text-link" to="shop">Kauppaan</Link>
         </div>
       );

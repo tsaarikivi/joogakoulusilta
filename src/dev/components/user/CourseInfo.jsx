@@ -88,7 +88,7 @@ class CourseInfo extends React.Component {
       }
     }
     if(outStr === ""){
-        return(<p>Sinulla ei ole varauksia tälle kurssille.</p>);
+        return(<p className="info-noreservations">Sinulla ei ole varauksia tälle kurssille.</p>);
     } else {
       return(
         <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
@@ -111,15 +111,15 @@ class CourseInfo extends React.Component {
       this.bookings[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
       return(
         <div>
-          <p>Ilmoittautuneita {this.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
-          <p>Osallistujat: {participantlist}</p>
+          <p className="info-reserved">Ilmoittautuneita {this.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
+          <p className="info-participants">Osallistujat: {participantlist}</p>
         </div>
       );
     }
     else {
       return(
         <div>
-          <p>Ei ilmoittautuneita.</p>
+          <p className="info-reserved">Ei ilmoittautuneita.</p>
         </div>
       )
     }
@@ -132,7 +132,7 @@ class CourseInfo extends React.Component {
       if (hasDayPassed(this.props.courseInfo.day)){
         return(
           <div>
-            <p>Tämän viikon kurssi on jo pidetty.</p>
+            <p className="info-keptweek">Tämän viikon kurssi on jo pidetty.</p>
           </div>
         )
       }
@@ -161,20 +161,22 @@ class CourseInfo extends React.Component {
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
-            <h3>{this.props.courseInfo.courseType.name}</h3>
-            <p>{this.props.courseInfo.courseType.desc}</p>
-            <hr/>
-            <p>Klo {getCourseTimeGMT(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeGMT(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
-            <p>Sijainti {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-            <hr/>
-            <p>Joogaopettaja {this.props.courseInfo.instructor.name}</p>
-            <hr/>
+            <div className="info-info-container">
+              <h3>{this.props.courseInfo.courseType.name}</h3>
+              <p className="info-time">Klo {getCourseTimeGMT(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeGMT(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
+              <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
+              <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.name}</p>
+              <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              {this.usersReservations()}
+            </div>
+            <span className="week-info-container">
               {this.reservationButton(0)}
               {this.participants(0)}
+            </span>
+            <span className="week-info-container">
               {this.reservationButton(1)}
               {this.participants(1)}
-              <br></br>
-              {this.usersReservations()}
+            </span>
           </div>
         </div>
       )

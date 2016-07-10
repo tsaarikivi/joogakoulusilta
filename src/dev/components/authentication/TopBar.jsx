@@ -37,7 +37,7 @@ class TopBar extends React.Component {
       button = <button className="btn-small logout-btn btn-blue" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>;
     } else {
       userText = null;
-      button = <Link className="btn-small login-btn btn-blue" to="login">Kirjaudu sisään</Link>;
+      button = <Link className="btn-small btn-blue" to="login">Kirjaudu sisään</Link>;
     }
     return (
       <div class="authentication-bar container">
