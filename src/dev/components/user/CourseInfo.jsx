@@ -104,7 +104,7 @@ class CourseInfo extends React.Component {
             <br></br>
             <p>Ilmoittautuneita ensi viikolle {this.nextWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
             <p>Osallistujat: {this.nextWeekParticipants}</p>
-            <button className="btn-small register-btn btn-blue" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
+            <button className="btn-small btn-white" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
           </div>
         </div>
       )

@@ -87,6 +87,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .btn-small {
+  margin: 0 2px;
   text-decoration: none;
   color: $button-text;
   border-radius: 3px;
@@ -94,15 +95,17 @@ h1, h2, h3, h4, h5, h6 {
   padding: 5px 10px;
   box-shadow: 0 2px 1px $button-norm-shdw;
   text-transform: uppercase;
-  transition: background 0.1s, box-shadow 0.1s;
+  transition: background 0.1s, box-shadow 0.1s, color 0.1s;
   font-weight: bold;
   &:hover {
     background: $button-hover;
     box-shadow: 0 3px 1px $button-hover-shdw;
+    color: $button-text;
   }
   &:active {
     background: $button-active;
     box-shadow: 0 3px 1px $button-active-shdw;
+    color: $button-text;
   }
 }
 .btn-blue {
@@ -114,20 +117,9 @@ h1, h2, h3, h4, h5, h6 {
 .btn-red {
   background: $button-red-norm;
 }
-
-.register-btn {
-  margin-left: 5px;
+.btn-white {
   background: $button-light-norm;
   color: $button-blue-norm;
-  transition: background 0.1s, box-shadow 0.1s;
-  &:hover {
-    background: $button-light-hover;
-    box-shadow: 0 3px 1px $button-hover-shdw;
-  }
-  &:active {
-    background: $button-light-active;
-    box-shadow: 0 3px 1px $button-active-shdw;
-  }
 }
 
 .text-link {
