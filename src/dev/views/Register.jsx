@@ -51,7 +51,7 @@ class Register extends React.Component {
               <label>Salasana</label>
               <input id="password" type="password" name="password" placeholder="Salasana"/>
               <br/>
-              <button className="btn-small login-btn btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+              <button className="btn-small btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
               <br/>
               <b>{this.errorText}</b>
             </form>

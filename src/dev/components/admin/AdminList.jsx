@@ -19,10 +19,12 @@ class AdminList extends React.Component {
   render() {
     return (
       <div className="container">
-        <h2>Ylläpitäjät</h2>
-        <ul className="wide-list">
-          {this.props.adminList.map(this.renderAdminList)}
-        </ul>
+        <div className="content-container align-left">
+          <h2>Ylläpitäjät</h2>
+          <ul className="wide-list">
+            {this.props.adminList.map(this.renderAdminList)}
+          </ul>
+        </div>
       </div>
     )
   }

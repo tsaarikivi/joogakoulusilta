@@ -1,0 +1,39 @@
+@import 'variables.scss';
+
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  input, label, textarea {
+    margin-bottom: 5px;
+  }
+  label {
+    width: 100%;
+    font-size: 13px;
+  }
+  input, textarea, select {
+    vertical-align: text-top;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    background: white;
+    text-indent: 5px;
+    border-radius: 3px;
+    border: 1px solid $item-border;
+  }
+  input, select {
+    height: 28px;
+  }
+  textarea {
+    resize: none;
+    height: 300px;
+  }
+  .form-error {
+    color: red;
+  }
+  button[type="submit"] {
+    margin-top: 14px;
+  }
+}

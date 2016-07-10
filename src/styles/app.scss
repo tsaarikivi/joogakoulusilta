@@ -2,11 +2,27 @@
 place all of them in this directory 'src/styles/'
 example:
 @import 'fonts.scss';*/
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
+@import 'forms.scss';
 @import 'variables.scss';
+@import 'lists.scss';
+@import 'tables.scss';
+@import 'containers.scss';
+@import 'buttons.scss';
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
 
 .test-instruction {
   font-size: .5em
+}
+
+button, a {
+  outline-style: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
+select, textarea {
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -16,36 +32,10 @@ body {
   background: $body-color;
 }
 
-button, a {
-  outline-style: none;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-}
-
-ul {
-  list-style-type: none;
-}
-
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 10px 0;
   color: #333;
-}
-
-.container {
-  width: 100%;
-  margin: 0 auto;
-  background: $container-color;
-  padding: 20px 0;
-  border-bottom: 1px solid $container-border;
-  text-align: center;
-}
-
-.main-header-container {
-  h1 {
-    font-size: 50px;
-    text-transform: uppercase;
-  }
 }
 
 .header-left {
@@ -53,11 +43,6 @@ h1, h2, h3, h4, h5, h6 {
     text-align: left;
     text-indent: 30px;
   }
-}
-
-.contact-container {
-  text-align: left;
-  text-indent: 10%;
 }
 
 .align-left {
@@ -75,165 +60,8 @@ h1, h2, h3, h4, h5, h6 {
   float: right;
 }
 
-.timetable-container {
-  h2 {
-    padding: 0;
-    margin: 0;
-  }
-  small {
-    display: block;
-    padding: 10px 0 20px;
-    color: $fadeout-text;
-  }
-}
-.btn-small {
-  margin: 0 2px;
-  text-decoration: none;
-  color: $button-text;
-  border-radius: 3px;
-  border-style: none;
-  padding: 5px 10px;
-  box-shadow: 0 2px 1px $button-norm-shdw;
-  text-transform: uppercase;
-  transition: background 0.1s, box-shadow 0.1s, color 0.1s;
-  font-weight: bold;
-  &:hover {
-    background: $button-hover;
-    box-shadow: 0 3px 1px $button-hover-shdw;
-    color: $button-text;
-  }
-  &:active {
-    background: $button-active;
-    box-shadow: 0 3px 1px $button-active-shdw;
-    color: $button-text;
-  }
-}
-.btn-blue {
-  background: $button-blue-norm;
-}
-.btn-green {
-  background: $button-green-norm;
-}
-.btn-red {
-  background: $button-red-norm;
-}
-.btn-white {
-  background: $button-light-norm;
-  color: $button-blue-norm;
-}
-
-.text-link {
-  margin-top: 20px;
-  text-decoration: none;
-  color: $text-link-norm;
-  text-transform: uppercase;
-  transition: color 0.1s;
-  font-weight: bold;
-  padding: 7px 12px;
-  border-radius: 3px;
-  &:hover {
-    color: $text-link-hover;
-    background-color: $text-link-bg;
-  }
-  &:active {
-    color: $text-link-active;
-  }
-}
-.back-btn {
-  display: inline-block;
-  float: left;
-  text-decoration: none;
-}
-
 .use-times {
   color: $use-times;
-}
-
-.narrow-list {
-  width: 100%;
-  margin: 0 auto 15px;
-  padding: 0;
-  li {
-    width: 32%;
-    height: 115px;
-    background: $list-item;
-    display: inline-block;
-    margin: 0 5px;
-    border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
-    padding: 30px 0;
-    h3 {
-      padding: 0;
-    }
-  }
-}
-.text-list-item {
-  span {
-    margin-top: 14px;
-    font-size: 12px;
-  }
-  button {
-    margin-top: 6px;
-  }
-  height: 40px;
-}
-
-table {
-  margin: 0 auto;
-  padding: 0;
-  tr {
-    vertical-align: text-top;
-    margin: 0 5px 10px;
-    width: 23%;
-    display: inline-block;
-    background: $list-item;
-    border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
-    th, td {
-      width: 100%;
-      display: block;
-    }
-    td {
-      border-top: 1px solid $item-border;
-      transition: background 0.1s;
-      padding: 5px 0;
-      h3 {
-        margin: 0;
-        padding: 0;
-        font-size: 15px;
-      }
-      p {
-        margin: 0;
-        padding: 0;
-        font-size: 13px;
-      }
-      &:hover {
-        background: $list-item-hover;
-        cursor: pointer;
-      }
-    }
-    th {
-      background: $table-header;
-    }
-  }
-}
-
-ul.wide-list {
-  padding: 0;
-  li {
-    background: $list-item;
-    padding: 20px;
-    border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
-    margin: 10px 100px;
-    h3 {
-      padding: 0;
-      margin: 0;
-    }
-  }
 }
 
 .item-price {
@@ -241,70 +69,4 @@ ul.wide-list {
   font-weight: 700;
 }
 
-form {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
-  input, label, textarea {
-    display: inline-block;
-    text-align: left;
-    margin-bottom: 5px;
-  }
-  label {
-    width: 30%;
-    font-size: 12px;
-    vertical-align: middle;
-  }
-  input, textarea, select {
-    vertical-align: text-top;
-    width: 65%;
-    box-sizing: border-box;
-  }
-  textarea {
-    resize: none;
-    height: 300px;
-  }
-  .login-btn {
-    display: inline-block;
-    margin-top: 20px;
-  }
-  .form-error {
-    color: red;
-  }
-}
 
-.course-info-container {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
-  .course-info {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    border-radius: 3px;
-    box-shadow: 0 3px 10px #444;
-    .exit-btn {
-      color: $button-red-norm;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      padding: 0;
-      margin: 0;
-      line-height: 0;
-      border: none;
-      background-color: #fefefe;
-      border-radius: 3px;
-      &:hover {
-        color: #444;
-      }
-    }
-  }
-}

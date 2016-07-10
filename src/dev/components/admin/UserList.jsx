@@ -19,10 +19,12 @@ class UserList extends React.Component {
   render() {
     return (
       <div className="container">
-        <h2>Käyttäjät</h2>
-        <ul className="wide-list">
-          {this.props.userList.map(this.renderUserList)}
-        </ul>
+        <div className="content-container align-left">
+          <h2>Käyttäjät</h2>
+          <ul className="wide-list">
+            {this.props.userList.map(this.renderUserList)}
+          </ul>
+        </div>
       </div>
     )
   }
