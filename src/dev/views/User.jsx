@@ -15,10 +15,17 @@ class User extends React.Component {
     router: React.PropTypes.object
   }
 
+  constructor(){
+    super();
+    this.countMount = 0;
+    console.log("USER-constructor");
+  }
+
   componentWillMount(){
     //console.log("User-will-mount:ACTIONS: ",this.props.actions);
     //console.log("User-will-mount:AUTH: ",this.props.auth);
     if( this.props.auth.uid ) {
+      console.log("USER-mount: ", this.countMount++);
       this.props.actions.fetchUserDetails(this.props.auth.uid);
       this.props.actions.fetchUsersTransactions(this.props.auth.uid);
       this.props.actions.fetchUsersBookings(this.props.auth.uid);
@@ -26,6 +33,11 @@ class User extends React.Component {
     else {
       this.context.router.push('/');
     }
+  }
+
+  componentWillUnmount(){
+    console.log("USER-un-mount");
+    this.props.actions.finishedWithUserDetails();
   }
 
   componentWillReceiveProps(nextProps){
@@ -50,9 +62,13 @@ class User extends React.Component {
             </div>
           );
       } else {
-        return (
-          <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
-        );
+          if (this.props.auth.uid){
+            return (
+              <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
+            );
+          } else {
+            return(<p> Ei käyttäjää</p>);
+          }
       }
   }
 }

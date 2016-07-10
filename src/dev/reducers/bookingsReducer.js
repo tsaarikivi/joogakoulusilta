@@ -1,6 +1,6 @@
 import { FETCH_BOOKINGS, CLEAR_BOOKINGS } from '../actions/actionTypes.js'
 
-const INITIAL_STATE = {}
+const INITIAL_STATE = null;
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -10,9 +10,9 @@ export default function(state = INITIAL_STATE, action) {
     break;
     case FETCH_BOOKINGS:
       console.log("FETCH_BOOKINGS: ", action.payload);
-      return Object.assign({},state,action.payload);
+      return action.payload;
     break;
     default:
-      return INITIAL_STATE;
+      return state;
   }
 }
