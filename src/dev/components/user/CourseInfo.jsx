@@ -126,6 +126,8 @@ class CourseInfo extends React.Component {
   }
 
   reservationButton(weekIndex){
+    let dayStr = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString();
+    let milliseconds = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
     if(weekIndex == 0){
       if (hasDayPassed(this.props.courseInfo.day)){
         return(
@@ -135,11 +137,18 @@ class CourseInfo extends React.Component {
         )
       }
     }
+    if(this.props.currentUser.bookings){
+      if(this.props.currentUser.bookings[milliseconds]){
+        return(
+          <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+        );
+      }
+    }
         return(
           <div>
             <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
-              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString()}
-              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()}
+              { dayStr }
+              { milliseconds }
             </button>
           </div>
         );
