@@ -18,14 +18,10 @@ class User extends React.Component {
   constructor(){
     super();
     this.countMount = 0;
-    console.log("USER-constructor");
   }
 
   componentWillMount(){
-    //console.log("User-will-mount:ACTIONS: ",this.props.actions);
-    //console.log("User-will-mount:AUTH: ",this.props.auth);
     if( this.props.auth.uid ) {
-      console.log("USER-mount: ", this.countMount++);
       this.props.actions.fetchUserDetails(this.props.auth.uid);
       this.props.actions.fetchUsersTransactions(this.props.auth.uid);
       this.props.actions.fetchUsersBookings(this.props.auth.uid);
@@ -36,12 +32,10 @@ class User extends React.Component {
   }
 
   componentWillUnmount(){
-    console.log("USER-un-mount");
     this.props.actions.finishedWithUserDetails();
   }
 
   componentWillReceiveProps(nextProps){
-    //console.log("USER_VIEW-next props:", nextProps);
     if(typeof(nextProps.auth.uid) == "undefined"){
       this.context.router.push('/');
     }

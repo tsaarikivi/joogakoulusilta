@@ -12,11 +12,10 @@ class CourseInfo extends React.Component {
     this.fetchStarted = false;
     this.bookings = [];
     this.userbookings= [];
+    this.userCanBook = false;
   }
 
   processBookings(inputBookings){
-    console.log("INPUTBOOKINGS: ", inputBookings);
-
     let instanceId;
     let instanceObj;
     let booking = {}
@@ -44,8 +43,15 @@ class CourseInfo extends React.Component {
     this.bookings.sort((a,b) => {return a.instance - b.instance})
   }
 
+  checkIfUserCanBook(nextProps){
+    this.userCanBook = false;
+    let tx = this.props.currentUser.transactions;
+    if(tx.count > 0 || tx.time > Date.now()){
+      this.userCanBook = true;
+    }
+  }
+
   componentWillReceiveProps(nextProps){
-    console.log("COURSEITEM.NEXTPROPS:", nextProps);
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
     if(nextProps.courseInfo && !this.fetchStarted){
@@ -58,6 +64,7 @@ class CourseInfo extends React.Component {
     if(nextProps.bookings){
       this.processBookings(nextProps.bookings);
     }
+    this.checkIfUserCanBook(nextProps)
   }
 
   makeReservation(forward) {
@@ -149,6 +156,12 @@ class CourseInfo extends React.Component {
           </div>
         )
       }
+    }
+    if(!this.userCanBook){
+      return(<div>
+              <p className="info-cantreserve">Sinulla ei ole oikeutta varata. Mene kauppaan</p>
+            </div>
+    );
     }
     if(this.props.bookings){
       let ones;
