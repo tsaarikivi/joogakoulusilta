@@ -62,7 +62,7 @@ class ShopItemForm extends React.Component {
     const { handleSubmit } = this.props
 
     return (
-      <div className="container">
+      <div className="container bordered-container">
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi myyntikohde</h2>
           {_.map(FIELDS, this.renderField)}

@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import UserItem from './UserItem.jsx'
-import { fetchUserList } from '../../actions/admin.js'
+import * as actionCreators from '../../actions/admin.js'
 
 class UserList extends React.Component {
   componentWillMount() {
-    this.props.fetchUserList()
+    this.props.actions.fetchUserList()
   }
 
   renderUserList(user) {
@@ -16,14 +16,35 @@ class UserList extends React.Component {
     )
   }
 
+  renderContent() {
+    if (this.props.userListShow) {
+      return (
+        <ul className="wide-list">
+          {this.props.userList.map(this.renderUserList)}
+        </ul>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+
+  renderExpandButton() {
+    if(this.props.userListShow) {
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeUserList()}>Piilota</button>
+    }
+    else {
+      return <button className="expand-btn" onClick={() => this.props.actions.expandUserList()}>Avaa</button>
+    }
+  }
+
   render() {
     return (
-      <div className="container">
+      <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2>Käyttäjät</h2>
-          <ul className="wide-list">
-            {this.props.userList.map(this.renderUserList)}
-          </ul>
+          <h2 className="header-collapse">Käyttäjät</h2>
+          {this.renderExpandButton()}
+          {this.renderContent()}
         </div>
       </div>
     )
@@ -31,7 +52,11 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { userList: state.userList }
+  return { userList: state.userList, userListShow: state.userListShow }
 }
 
-export default connect(mapStateToProps, { fetchUserList })(UserList)
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserList)

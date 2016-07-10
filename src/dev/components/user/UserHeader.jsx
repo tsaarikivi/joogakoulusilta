@@ -29,35 +29,39 @@ export default class UserHeader extends React.Component {
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
 
-  render() {
-
+  renderContent() {
     if(this.onkoAikaa){
       return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <p>Voit käyttää kurssitarjontaamme <span class="use-times"> {this.aikaLoppuu.toString()} </span> asti.</p>
-          <Link className="text-link" to="shop">Kauppaan</Link>
+        <div>
+          <p>Voit käyttää kurssitarjontaamme <span className="use-times"> {this.aikaLoppuu.toString()} </span> asti.</p>
         </div>
-      );
+      )
     }
-      if(this.count > 0){
-        return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <p>Sinulla on <span class="use-times">{this.count}</span> kertalippua käytettävissä</p>
-          <p>Ensimmäinen vanhenee <span class="use-times"> {this.firstexpire.toString()} </span>.</p>
-          <Link className="text-link" to="shop">Kauppaan</Link>
+    else if(this.count > 0){
+      return (
+        <div>
+          <p>Sinulla on <span className="use-times">{this.count}</span> kertalippua käytettävissä. Ensimmäinen vanhenee <span className="use-times"> {this.firstexpire.toString()} </span>.</p>
         </div>
-      );
+      )
     } else {
       return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <p>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa.</p>
-          <p>Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
-          <Link className="text-link" to="shop">Kauppaan</Link>
+        <div>
+          <p>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
         </div>
-      );
+      )
     }
   }
+
+  render() {
+    return (
+      <div class="container colored-container">
+        <div className="content-container align-left">
+          <h1>Hei, {this.props.curUsr.email}!</h1>
+          {this.renderContent()}
+          <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+        </div>
+      </div>
+    )
+  }
+
 }

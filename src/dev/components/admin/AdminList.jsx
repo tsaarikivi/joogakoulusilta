@@ -3,11 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AdminItem from './AdminItem.jsx'
-import { fetchAdminList } from '../../actions/admin.js'
+import * as actionCreators from '../../actions/admin.js'
 
 class AdminList extends React.Component {
+  
   componentWillMount() {
-    this.props.fetchAdminList()
+    this.props.actions.fetchAdminList()
   }
 
   renderAdminList(admin) {
@@ -16,14 +17,35 @@ class AdminList extends React.Component {
     )
   }
 
+  renderContent() {
+    if (this.props.adminListShow) {
+      return (
+        <ul className="wide-list">
+          {this.props.adminList.map(this.renderAdminList)}
+        </ul>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+
+  renderExpandButton() {
+    if(this.props.adminListShow) {
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeAdminList()}>Piilota</button>
+    }
+    else {
+      return <button className="expand-btn" onClick={() => this.props.actions.expandAdminList()}>Avaa</button>
+    }
+  }
+
   render() {
     return (
-      <div className="container">
+      <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2>Ylläpitäjät</h2>
-          <ul className="wide-list">
-            {this.props.adminList.map(this.renderAdminList)}
-          </ul>
+          <h2 className="header-collapse">Ylläpitäjät</h2>
+          {this.renderExpandButton()}
+          {this.renderContent()}
         </div>
       </div>
     )
@@ -31,7 +53,11 @@ class AdminList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { adminList: state.adminList }
+  return { adminList: state.adminList, adminListShow: state.adminListShow }
 }
 
-export default connect(mapStateToProps, { fetchAdminList })(AdminList)
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminList)
