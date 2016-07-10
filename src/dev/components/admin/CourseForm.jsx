@@ -12,7 +12,7 @@ class CourseForm extends React.Component {
     const { fields: { day, start, end, maxCapacity, special, date }, handleSubmit } = this.props
 
     return (
-      <div className="container">
+      <div className="container bordered-container">
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi kurssi</h2>
 

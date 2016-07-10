@@ -106,14 +106,29 @@
   width: 100%;
   margin: 0 auto;
   background: $container-color;
-  padding: 20px 0;
-  border-bottom: 1px solid $container-border;
+  padding: 60px 0;
   text-align: center;
+}
+.bordered-container {
+  border-bottom: 1px solid $item-border;
 }
 .content-container {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+}
+.colored-container {
+  background-color: $button-blue-norm;
+  h1 {
+    color: $text-white;
+    padding: 0;
+  }
+  p {
+    color: $text-white;
+  }
+  a {
+    color: $text-white;
+  }
 }
 
 .main-header-container {

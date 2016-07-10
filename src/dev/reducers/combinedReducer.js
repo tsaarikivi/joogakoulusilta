@@ -14,6 +14,8 @@ import InstructorInfoReducer from './instructorInfoReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
 import UserListReducer from './userListReducer.js'
 import AdminListReducer from './adminListReducer.js'
+import AdminListShowReducer from './adminListShowReducer.js'
+import UserListShowReducer from './userListShowReducer.js'
 
 const combinedReducer = combineReducers({
   cart: CartReducer,
@@ -29,7 +31,9 @@ const combinedReducer = combineReducers({
   instructorInfo: InstructorInfoReducer,
   courseInfo: CourseInfoReducer,
   userList: UserListReducer,
-  adminList: AdminListReducer
+  adminList: AdminListReducer,
+  adminListShow: AdminListShowReducer,
+  userListShow: UserListShowReducer
 })
 
 export default combinedReducer;
