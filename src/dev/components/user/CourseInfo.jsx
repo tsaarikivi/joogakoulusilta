@@ -1,9 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
 import { getCourseTimeGMT, hasDayPassed } from '../../helpers/timeHelper.js'
-
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
@@ -13,9 +11,12 @@ class CourseInfo extends React.Component {
     super();
     this.fetchStarted = false;
     this.bookings = [];
+    this.userbookings= [];
   }
 
   processBookings(inputBookings){
+    console.log("INPUTBOOKINGS: ", inputBookings);
+
     let instanceId;
     let instanceObj;
     let booking = {}
@@ -31,13 +32,16 @@ class CourseInfo extends React.Component {
         for(user in instanceObj){
           booking.reservations++;
           booking.participants.push(instanceObj[user].user);
+          if(user === this.props.currentUser.key){
+            this.userbookings.push(Object.assign({item: instanceId, txRef: instanceObj[user].transactionReference}));
+          }
         }
         this.bookings.push(Object.assign({},booking))
         index++;
       }
     }
+    this.userbookings.sort();
     this.bookings.sort((a,b) => {return a.instance - b.instance})
-    console.log("PROCESSED BOOKINGS: ", this.bookings);
   }
 
   componentWillReceiveProps(nextProps){
@@ -49,9 +53,9 @@ class CourseInfo extends React.Component {
       this.props.bookingsActions.fetchBookings(nextProps.courseInfo.key)
     }
     this.bookings = [];
+    this.userbookings = [];
     //If boooking information is present, find relevant details for display
     if(nextProps.bookings){
-      console.log("BOOKINGS PRESENT.", nextProps.bookings, typeof(nextProps.bookings));
       this.processBookings(nextProps.bookings);
     }
   }
@@ -70,22 +74,19 @@ class CourseInfo extends React.Component {
     this.fetchStarted = false;
   }
 
+  //========================================================================
+  //========================================================================
+  //========================================================================
   usersReservations(){
-    console.log("USERSRESERVATIONS:", this.props.currentUser.bookings);
     let outStr = "";
     let item = 0;
     let txRef = 0;
     let time = new Date();
-    if(this.props.currentUser.bookings){
-      let one;
-      let all = this.props.currentUser.bookings
-      for (one in all){
-        if(this.props.courseInfo.key === all[one].course)
-        time.setTime(one);
-        outStr += time.toString() + " | "
-        item = one;
-        txRef = all[one].transactionReference;
-      }
+    if(this.userbookings.length > 0){
+        item = this.userbookings[0].item;
+        time.setTime(item);
+        outStr += time.toString() + " | " + item;
+        txRef = this.userbookings[0].txRef;
     }
     if(outStr === ""){
         return(<p className="info-noreservations">Sinulla ei ole varauksia tälle kurssille.</p>);
@@ -96,14 +97,23 @@ class CourseInfo extends React.Component {
     }
   }
 
+  //========================================================================
+  //========================================================================
+  //========================================================================
   participants(bookingIndex){
     let adjustedIndex;
+    //=======================================
     if (hasDayPassed(this.props.courseInfo.day)){
-      if(bookingIndex == 0) return(<div></div>)
-      else adjustedIndex = bookingIndex - 1;
+      if(bookingIndex == 0){
+        return(<div></div>); //Not listing past participants.
+      }
+      else {
+        adjustedIndex = bookingIndex - 1;
+      }
     } else {
       adjustedIndex = bookingIndex;
     }
+    //========================================
     if(this.bookings.length > adjustedIndex){
       let participantlist = "";
       let date = new Date();
@@ -125,7 +135,12 @@ class CourseInfo extends React.Component {
     }
   }
 
+  //========================================================================
+  //========================================================================
+  //========================================================================
   reservationButton(weekIndex){
+    let dayStr = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString();
+    let milliseconds = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
     if(weekIndex == 0){
       if (hasDayPassed(this.props.courseInfo.day)){
         return(
@@ -135,11 +150,27 @@ class CourseInfo extends React.Component {
         )
       }
     }
+    if(this.props.bookings){
+      let ones;
+      let oneu;
+      let alls = this.props.bookings;
+      let usrs = {};
+      for (ones in alls){
+        usrs = alls[ones];
+        for (oneu in usrs){
+          if(this.props.currentUser.key === oneu){
+            return(
+              <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+            );
+          }
+        }
+      }
+    }
         return(
           <div>
             <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
-              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString()}
-              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()}
+              { dayStr }
+              { milliseconds }
             </button>
           </div>
         );
