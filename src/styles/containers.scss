@@ -10,20 +10,29 @@
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
   .course-info {
-    background-color: #fefefe;
-    margin: 15% auto;
+    background-color: $body-color;
+    margin: 50px auto 0;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 100%;
+    max-width: 500px;
     border-radius: 3px;
     box-shadow: 0 3px 10px #444;
+    .week-info-container {
+      margin: 0 2%;
+      width: 46%;
+      display: inline-block;
+    }
+    .info-info-container {
+      margin: 0 2%;
+    }
     .exit-btn {
       color: $button-red-norm;
       float: right;
       font-size: 28px;
       font-weight: bold;
       padding: 0;
-      margin: 0;
+      margin: 5px 0 0;
       line-height: 0;
       border: none;
       background-color: #fefefe;
@@ -31,6 +40,34 @@
       &:hover {
         color: #444;
       }
+    }
+    p {
+      font-size: 14px;
+    }
+    h3 {
+      margin: 5px 0 0;
+      padding: 0;
+    }
+    .info-time {
+      color: $info-time;
+      margin-bottom: 0;
+    }
+    .info-desc {
+      color: $info-desc;
+    }
+    .info-place {
+      color: $info-place;
+      margin: 0;
+    }
+    .info-instructor {
+      color: $info-instructor;
+      margin-top: 0;
+    }
+    .info-reserved {
+      color: $info-reserved;
+    }
+    .info-participants {
+      color: $info-participants;
     }
   }
 }

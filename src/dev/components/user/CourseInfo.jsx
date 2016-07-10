@@ -90,21 +90,23 @@ class CourseInfo extends React.Component {
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
-            <h3>{this.props.courseInfo.courseType.name}</h3>
-            <p>{this.props.courseInfo.courseType.desc}</p>
-            <hr/>
-            <p>Klo {this.props.courseInfo.start} - {this.props.courseInfo.end}</p>
-            <p>Sijainti {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-            <hr/>
-            <p>Joogaopettaja {this.props.courseInfo.instructor.name}</p>
-            <hr/>
-            <p>Ilmoittautuneita tälle viikolle {this.thisWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
-            <p>Osallistujat: {this.thisWeekParticipants}</p>
+            <div className="info-info-container">
+              <h3>{this.props.courseInfo.courseType.name}</h3>
+              <p className="info-time">Klo {this.props.courseInfo.start} - {this.props.courseInfo.end}</p>
+              <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
+              <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.name}</p>
+              <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+            </div>
+            <span className="week-info-container">
               <button className="btn-small btn-blue" onClick={() => this.makeReservation(0)} >Ilmoittaudu tälle viikolle</button>
-            <br></br>
-            <p>Ilmoittautuneita ensi viikolle {this.nextWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
-            <p>Osallistujat: {this.nextWeekParticipants}</p>
-            <button className="btn-small btn-white" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
+              <p className="info-reserved">Ilmoittautuneita tälle viikolle {this.thisWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
+              <p className="info-participants">Osallistujat: {this.thisWeekParticipants}</p>
+            </span>
+            <span className="week-info-container">
+              <button className="btn-small btn-white" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
+              <p className="info-reserved">Ilmoittautuneita ensi viikolle {this.nextWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
+              <p className="info-participants">Osallistujat: {this.nextWeekParticipants}</p>
+            </span>
           </div>
         </div>
       )
