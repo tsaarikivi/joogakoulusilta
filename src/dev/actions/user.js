@@ -107,9 +107,9 @@ export function fetchUserDetails(uid) {
 
 export function finishedWithUserDetails(){
   console.log("ACTION: finished with user called");
-  UserRef.off('value');
-  TransactionsRef.off('value');
-  BookingsRef.off('value')
+  if(UserRef) UserRef.off('value');
+  if(TransactionsRef) TransactionsRef.off('value');
+  if(BookingsRef) BookingsRef.off('value')
   return dispatch => {
       dispatch({
       type: STOP_UPDATING_USER_DETAILS_FROM_DB,

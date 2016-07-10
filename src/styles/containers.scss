@@ -11,7 +11,7 @@
   background-color: rgba(0,0,0,0.4);
   .course-info {
     background-color: $body-color;
-    margin: 50px auto 0;
+    margin: 50px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 100%;
@@ -19,9 +19,13 @@
     border-radius: 3px;
     box-shadow: 0 3px 10px #444;
     .week-info-container {
-      margin: 0 2%;
+      margin: 0 1%;
       width: 46%;
       display: inline-block;
+      vertical-align: text-top;
+      background-color: white;
+      padding: 1%;
+      box-shadow: 0 2px 1px $item-shdw;
     }
     .info-info-container {
       margin: 0 2%;
@@ -68,6 +72,12 @@
     }
     .info-participants {
       color: $info-participants;
+    }
+    .info-keptweek {
+      color: $info-keptweek;
+    }
+    .info-noreservations {
+      color: $info-noreservations;
     }
   }
 }

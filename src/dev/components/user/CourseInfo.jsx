@@ -1,7 +1,8 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import axios from 'axios'
+
+import { getCourseTimeGMT, hasDayPassed } from '../../helpers/timeHelper.js'
 
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
@@ -11,10 +12,32 @@ class CourseInfo extends React.Component {
   constructor(){
     super();
     this.fetchStarted = false;
-    this.thisWeekReservations = 0;
-    this.nextWeekReservations = 0;
-    this.thisWeekParticipants = "";
-    this.nextWeekParticipants = "";
+    this.bookings = [];
+  }
+
+  processBookings(inputBookings){
+    let instanceId;
+    let instanceObj;
+    let booking = {}
+    let user;
+    let index = 0;
+    for (instanceId in inputBookings){
+      //Booking is in the future - it counts!!
+      if(instanceId > Date.now()){
+        booking.instance = instanceId;
+        booking.reservations = 0;
+        booking.participants = [];
+        instanceObj = inputBookings[instanceId];
+        for(user in instanceObj){
+          booking.reservations++;
+          booking.participants.push(instanceObj[user].user);
+        }
+        this.bookings.push(Object.assign({},booking))
+        index++;
+      }
+    }
+    this.bookings.sort((a,b) => {return a.instance - b.instance})
+    console.log("PROCESSED BOOKINGS: ", this.bookings);
   }
 
   componentWillReceiveProps(nextProps){
@@ -25,57 +48,20 @@ class CourseInfo extends React.Component {
       this.fetchStarted = true;
       this.props.bookingsActions.fetchBookings(nextProps.courseInfo.key)
     }
+    this.bookings = [];
     //If boooking information is present, find relevant details for display
     if(nextProps.bookings){
-      var instanceId;
-      var user;
-      this.thisWeekReservations = 0;
-      this.nextWeekReservations = 0;
-      this.thisWeekParticipants = "";
-      this.nextWeekParticipants = "";
-      for (instanceId in nextProps.bookings){
-        //Booking is in the future - it counts!!
-        if(instanceId > Date.now()){
-          var instanceObj = nextProps.bookings[instanceId];
-          //Booking is for next week
-          if(instanceId > Date.now()+ 7*24*60*60*1000){
-            for(user in instanceObj){
-              this.nextWeekReservations++;
-              this.nextWeekParticipants += " " + instanceObj[user].user;
-            }
-          }
-          else {
-            for(user in instanceObj){
-              this.thisWeekReservations++
-              this.thisWeekParticipants += " " + instanceObj[user].user;
-            }
-          }
-        }
-      }
+      console.log("BOOKINGS PRESENT.", nextProps.bookings, typeof(nextProps.bookings));
+      this.processBookings(nextProps.bookings);
     }
   }
 
   makeReservation(forward) {
-    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER+'/reserveSlot'
-    console.log("JOOGASERVER: ", JOOGASERVER);
-    console.log("JOOGAURL: ", JOOGAURL);
-    var that = this;
-    firebase.auth().currentUser.getToken(true).then( idToken => {
-      axios.post(
-        JOOGAURL, {
-          user: idToken,
-          courseInfo: that.props.courseInfo,
-          weeksForward: forward
-        })
-        .then( response => {
-          console.log(response.data);
-        })
-        .catch( error => {
-          console.error(error);
-        });
-      }).catch( error => {
-        console.error("Failde to get authentication token for current user: ", error);
-      });
+    this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
+  }
+
+  cancelReservation(item, txRef) {
+    this.props.bookingsActions.postCancellation(item, txRef, this.props.courseInfo)
   }
 
   exitContainer() {
@@ -83,6 +69,82 @@ class CourseInfo extends React.Component {
     this.props.bookingsActions.stopFetchBookings()
     this.fetchStarted = false;
   }
+
+  usersReservations(){
+    console.log("USERSRESERVATIONS:", this.props.currentUser.bookings);
+    let outStr = "";
+    let item = 0;
+    let txRef = 0;
+    let time = new Date();
+    if(this.props.currentUser.bookings){
+      let one;
+      let all = this.props.currentUser.bookings
+      for (one in all){
+        if(this.props.courseInfo.key === all[one].course)
+        time.setTime(one);
+        outStr += time.toString() + " | "
+        item = one;
+        txRef = all[one].transactionReference;
+      }
+    }
+    if(outStr === ""){
+        return(<p className="info-noreservations">Sinulla ei ole varauksia tälle kurssille.</p>);
+    } else {
+      return(
+        <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
+      );
+    }
+  }
+
+  participants(bookingIndex){
+    let adjustedIndex;
+    if (hasDayPassed(this.props.courseInfo.day)){
+      if(bookingIndex == 0) return(<div></div>)
+      else adjustedIndex = bookingIndex - 1;
+    } else {
+      adjustedIndex = bookingIndex;
+    }
+    if(this.bookings.length > adjustedIndex){
+      let participantlist = "";
+      let date = new Date();
+      date.setTime(this.bookings[adjustedIndex].instance);
+      this.bookings[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
+      return(
+        <div>
+          <p className="info-reserved">Ilmoittautuneita {this.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
+          <p className="info-participants">Osallistujat: {participantlist}</p>
+        </div>
+      );
+    }
+    else {
+      return(
+        <div>
+          <p className="info-reserved">Ei ilmoittautuneita.</p>
+        </div>
+      )
+    }
+  }
+
+  reservationButton(weekIndex){
+    if(weekIndex == 0){
+      if (hasDayPassed(this.props.courseInfo.day)){
+        return(
+          <div>
+            <p className="info-keptweek">Tämän viikon kurssi on jo pidetty.</p>
+          </div>
+        )
+      }
+    }
+        return(
+          <div>
+            <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
+              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString()}
+              { getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()}
+            </button>
+          </div>
+        );
+  }
+
 
   render() {
     if(this.props.courseInfo) {
@@ -92,20 +154,19 @@ class CourseInfo extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
               <h3>{this.props.courseInfo.courseType.name}</h3>
-              <p className="info-time">Klo {this.props.courseInfo.start} - {this.props.courseInfo.end}</p>
+              <p className="info-time">Klo {getCourseTimeGMT(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeGMT(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
               <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
               <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.name}</p>
               <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              {this.usersReservations()}
             </div>
             <span className="week-info-container">
-              <button className="btn-small btn-blue" onClick={() => this.makeReservation(0)} >Ilmoittaudu tälle viikolle</button>
-              <p className="info-reserved">Ilmoittautuneita tälle viikolle {this.thisWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
-              <p className="info-participants">Osallistujat: {this.thisWeekParticipants}</p>
+              {this.reservationButton(0)}
+              {this.participants(0)}
             </span>
             <span className="week-info-container">
-              <button className="btn-small btn-white" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
-              <p className="info-reserved">Ilmoittautuneita ensi viikolle {this.nextWeekReservations}/{this.props.courseInfo.maxCapacity}</p>
-              <p className="info-participants">Osallistujat: {this.nextWeekParticipants}</p>
+              {this.reservationButton(1)}
+              {this.participants(1)}
             </span>
           </div>
         </div>
