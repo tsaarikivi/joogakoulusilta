@@ -12,6 +12,11 @@ export function hasDayPassed(dayNumber){
     return false;
   }
 }
+
+export function timeToMoment(startTime){
+  return startTime - Date.now();
+}
+
 export function getCourseTimeGMT(weeksForward, timeOfStart, dayNumber){
 
   var JHLP = {}

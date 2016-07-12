@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getCourseTimeGMT, hasDayPassed } from '../../helpers/timeHelper.js'
+import { getCourseTimeGMT, hasDayPassed, timeToMoment } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
@@ -52,11 +52,13 @@ class CourseInfo extends React.Component {
     let item = 0;
     let txRef = 0;
     let time = new Date();
-    if(this.props.courseInfo.userbookings.length > 0){
-        item = this.props.courseInfo.userbookings[0].item;
-        time.setTime(item);
-        outStr += time.toString() + " | " + item;
-        txRef = this.props.courseInfo.userbookings[0].txRef;
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.user.length > 0){
+          item = this.props.courseInfo.bookings.user[0].item;
+          time.setTime(item);
+          outStr += time.toString() + " | " + item;
+          txRef = this.props.courseInfo.bookings.user[0].txRef;
+      }
     }
     if(outStr === ""){
         return(<p className="info-noreservations">Et ole ilmoittautunut tälle kurssille.</p>);
@@ -84,17 +86,19 @@ class CourseInfo extends React.Component {
       adjustedIndex = bookingIndex;
     }
     //========================================
-    if(this.props.courseInfo.bookings.length > adjustedIndex){
-      let participantlist = "";
-      let date = new Date();
-      date.setTime(this.props.courseInfo.bookings[adjustedIndex].instance);
-      this.props.courseInfo.bookings[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
-      return(
-        <div>
-          <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
-          <p className="info-participants">Osallistujat: {participantlist}</p>
-        </div>
-      );
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.all.length > adjustedIndex){
+        let participantlist = "";
+        let date = new Date();
+        date.setTime(this.props.courseInfo.bookings.all[adjustedIndex].instance);
+        this.props.courseInfo.bookings.all[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
+        return(
+          <div>
+            <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
+            <p className="info-participants">Osallistujat: {participantlist}</p>
+          </div>
+        );
+      }
     }
     else {
       return(
@@ -110,7 +114,8 @@ class CourseInfo extends React.Component {
   //========================================================================
   reservationButton(weekIndex){
     let dayStr = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString();
-    let milliseconds = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
+    let millisecondsStart = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
+    let millisecondsEnd = getCourseTimeGMT(weekIndex, this.props.courseInfo.end, this.props.courseInfo.day).getTime()
     if(weekIndex == 0){
       if (hasDayPassed(this.props.courseInfo.day)){
         return(
@@ -120,7 +125,7 @@ class CourseInfo extends React.Component {
         )
       }
     } else {
-      if (!hasDayPassed(this.props.courseInfo.day)){
+      if (!hasDayPassed(this.props.courseInfo.day) && timeToMoment(millisecondsStart) < 1*60*60*1000){
         return(
           <div>
             <p className="info-keptweek">Ensi viikon kurssia ei voi vielä varata.</p>
@@ -134,20 +139,40 @@ class CourseInfo extends React.Component {
             </div>
     );
     }
-    if(this.props.courseInfo.userbookings.length > 0){
-        //TODO: tarkista että onko juuri tälle viikolle ilmoitauduttu
-            return(
-              <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
-            );
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.user.length > 0){
+          //TODO: tarkista että onko juuri tälle viikolle ilmoitauduttu
+              return(
+                <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+              );
+      }
     }
-    return(
-          <div>
-            <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
-              { dayStr }
-              { milliseconds }
-            </button>
-          </div>
+    if (weekIndex === 0){
+      if(timeToMoment(millisecondsEnd) < 0){
+        return(
+          <p> Tämän viikon kurssin on jo pidetty</p>
         );
+      }
+      if(timeToMoment(millisecondsStart) < 0 && millisecondsEnd > 0){
+        return(
+          <p> Kurssi on jo käynnissä </p>
+        );
+      }
+      if(timeToMoment(millisecondsStart) < 1*60*60*1000){
+        return(
+          <p> Kurssin alkuun aikaa alle tunti. Varauksia ei voi tehdä. Kurssi alkaa: {dayStr}</p>
+        );
+      }
+    }
+
+      return(
+            <div>
+              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
+                { dayStr }
+                { millisecondsStart }
+              </button>
+            </div>
+          );
   }
 
 
