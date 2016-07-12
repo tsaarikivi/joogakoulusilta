@@ -56,6 +56,7 @@ export function postReservation(forward, courseInfo){
 }
 
 function processBookings(inputBookings, uid, bookings, userbookings){
+  console.log("processBookings: ", inputBookings, uid);
   let instanceId;
   let instanceObj;
   let booking = {}
@@ -63,6 +64,7 @@ function processBookings(inputBookings, uid, bookings, userbookings){
   let index = 0;
   for (instanceId in inputBookings){
     //Booking is in the future - it counts!!
+    console.log("instance id: ", instanceId, Date.now());
     if(instanceId > Date.now()){
       booking.instance = instanceId;
       booking.reservations = 0;
@@ -72,9 +74,11 @@ function processBookings(inputBookings, uid, bookings, userbookings){
         booking.reservations++;
         booking.participants.push(instanceObj[user].user);
         if(user === uid){
+          console.log("Push to userbookings: ");
           userbookings.push(Object.assign({item: instanceId, txRef: instanceObj[user].transactionReference}));
         }
       }
+      console.log("Push to bookings: ");
       bookings.push(Object.assign({},booking))
       index++;
     }
@@ -87,15 +91,18 @@ export function fetchCourseBookings(coursekey, uid) {
   var bookings = [];
   var userbookings= [];
 
+  console.log("FETCHCOURSEBOOKINGS", coursekey, uid);
+
   BookingsRef = firebase.database().ref('/bookingsbycourse/'+coursekey);
   return dispatch => {
     var bkns = {};
+    //Clear the booking details in case there are no bookings and the
     BookingsRef.on('value', snapshot => {
       bkns = snapshot.val();
       processBookings(bkns, uid, bookings, userbookings)
       dispatch({
         type: FETCH_COURSE_BOOKINGS,
-        payload: {bookings: bookings, userbookings: userbookings}
+        payload: {bookings: {all :bookings, user: userbookings}}
       })
     }, err => {
       console.error("Error is fetching bookingsbycourse: ", err);
