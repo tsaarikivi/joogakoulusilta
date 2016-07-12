@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 import {
-  FETCH_BOOKINGS,
-  CLEAR_BOOKINGS
+  FETCH_COURSE_BOOKINGS
 } from './actionTypes.js'
 
 var BookingsRef;
@@ -56,18 +55,47 @@ export function postReservation(forward, courseInfo){
   }
 }
 
+function processBookings(inputBookings, uid, bookings, userbookings){
+  let instanceId;
+  let instanceObj;
+  let booking = {}
+  let user;
+  let index = 0;
+  for (instanceId in inputBookings){
+    //Booking is in the future - it counts!!
+    if(instanceId > Date.now()){
+      booking.instance = instanceId;
+      booking.reservations = 0;
+      booking.participants = [];
+      instanceObj = inputBookings[instanceId];
+      for(user in instanceObj){
+        booking.reservations++;
+        booking.participants.push(instanceObj[user].user);
+        if(user === uid){
+          userbookings.push(Object.assign({item: instanceId, txRef: instanceObj[user].transactionReference}));
+        }
+      }
+      bookings.push(Object.assign({},booking))
+      index++;
+    }
+  }
+  userbookings.sort();
+  bookings.sort((a,b) => {return a.instance - b.instance})
+}
 
-export function fetchBookings(coursekey) {
-  var list = [];
+export function fetchCourseBookings(coursekey, uid) {
+  var bookings = [];
+  var userbookings= [];
+
   BookingsRef = firebase.database().ref('/bookingsbycourse/'+coursekey);
   return dispatch => {
     var bkns = {};
     BookingsRef.on('value', snapshot => {
       bkns = snapshot.val();
-      console.log("BOOOOOOOOOOOOOOOOOOOKINGS:", bkns);
+      processBookings(bkns, uid, bookings, userbookings)
       dispatch({
-        type: FETCH_BOOKINGS,
-        payload: bkns
+        type: FETCH_COURSE_BOOKINGS,
+        payload: {bookings: bookings, userbookings: userbookings}
       })
     }, err => {
       console.error("Error is fetching bookingsbycourse: ", err);
@@ -75,12 +103,8 @@ export function fetchBookings(coursekey) {
   }
 }
 
-export function stopFetchBookings() {
+export function stopfetchCourseBookings() {
   return dispatch => {
     BookingsRef.off('value');
-    dispatch({
-      type: CLEAR_BOOKINGS,
-      payload: null
-    })
   }
 }
