@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class AdminItem extends React.Component {
+export default class CourseItem extends React.Component {
   renderButtons() {
 
     //TODO: Add proper buttons and functionality
@@ -19,7 +19,7 @@ export default class AdminItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{item.firstname} {item.lastname} {item.email}</span>
+        <span className="float-left">{item.courseType.name}</span>
         {this.renderButtons()}
       </li>
     )

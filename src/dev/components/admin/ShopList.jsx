@@ -2,13 +2,12 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Item from './AdminItem.jsx'
+import Item from './ShopItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
-class AdminList extends React.Component {
-  
+class ShopList extends React.Component {
   componentWillMount() {
-    this.props.actions.fetchAdminList()
+    this.props.actions.fetchShopList()
   }
 
   renderList(item) {
@@ -32,10 +31,10 @@ class AdminList extends React.Component {
 
   renderExpandButton() {
     if(this.props.list.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeAdminList()}>Piilota</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeShopList()}>Piilota</button>
     }
     else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandAdminList()}>Avaa</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.expandShopList()}>Avaa</button>
     }
   }
 
@@ -43,7 +42,7 @@ class AdminList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Ylläpitäjät</h2>
+          <h2 className="header-collapse">Kauppa</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
         </div>
@@ -53,11 +52,11 @@ class AdminList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.adminList }
+  return { list: state.shopList }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminList)
+export default connect(mapStateToProps, mapDispatchToProps)(ShopList)

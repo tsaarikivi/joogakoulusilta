@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class AdminItem extends React.Component {
+export default class InstructorItem extends React.Component {
   renderButtons() {
 
     //TODO: Add proper buttons and functionality

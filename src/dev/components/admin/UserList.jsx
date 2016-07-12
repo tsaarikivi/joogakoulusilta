@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import UserItem from './UserItem.jsx'
+import Item from './UserItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
 class UserList extends React.Component {
@@ -10,17 +10,17 @@ class UserList extends React.Component {
     this.props.actions.fetchUserList()
   }
 
-  renderUserList(user) {
+  renderList(item) {
     return (
-      <UserItem key={user.key} user={user}/>
+      <Item key={item.key} item={item}/>
     )
   }
 
   renderContent() {
-    if (this.props.userList.expanded) {
+    if (this.props.list.expanded) {
       return (
         <ul className="wide-list">
-          {this.props.userList.list.map(this.renderUserList)}
+          {this.props.list.list.map(this.renderList)}
         </ul>
       )
     }
@@ -30,7 +30,7 @@ class UserList extends React.Component {
   }
 
   renderExpandButton() {
-    if(this.props.userList.expanded) {
+    if(this.props.list.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeUserList()}>Piilota</button>
     }
     else {
@@ -52,7 +52,7 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { userList: state.userList }
+  return { list: state.userList }
 }
 
 function mapDispatchToProps(dispatch) {
