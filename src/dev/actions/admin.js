@@ -10,8 +10,6 @@ import {
 
 const UsersRef = firebase.database().ref('/users/')
 
-// TODO : ADD admin boolean to users and list here according
-
 export function fetchUserList() {
   var list = []
   return dispatch => {
