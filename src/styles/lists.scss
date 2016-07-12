@@ -36,6 +36,8 @@ ul {
 
 ul.wide-list {
   padding: 0;
+  width: 100%;
+  margin: 0 auto;
   li {
     background: $list-item;
     padding: 12px;
@@ -47,5 +49,13 @@ ul.wide-list {
       padding: 0;
       margin: 0;
     }
+    p {
+      font-size: 14px;
+    }
   }
+}
+
+.item-expiration {
+  font-size: 14px;
+  color: $button-blue-norm;
 }

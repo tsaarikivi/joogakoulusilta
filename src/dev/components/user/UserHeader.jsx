@@ -46,7 +46,7 @@ export default class UserHeader extends React.Component {
     } else {
       return (
         <div>
-          <p>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
+          <p>Sinulla ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
         </div>
       )
     }
