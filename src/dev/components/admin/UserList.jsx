@@ -17,10 +17,10 @@ class UserList extends React.Component {
   }
 
   renderContent() {
-    if (this.props.userListShow) {
+    if (this.props.userList.expanded) {
       return (
         <ul className="wide-list">
-          {this.props.userList.map(this.renderUserList)}
+          {this.props.userList.list.map(this.renderUserList)}
         </ul>
       )
     }
@@ -30,7 +30,7 @@ class UserList extends React.Component {
   }
 
   renderExpandButton() {
-    if(this.props.userListShow) {
+    if(this.props.userList.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeUserList()}>Piilota</button>
     }
     else {
@@ -52,7 +52,7 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { userList: state.userList, userListShow: state.userListShow }
+  return { userList: state.userList }
 }
 
 function mapDispatchToProps(dispatch) {

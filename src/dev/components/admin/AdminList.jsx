@@ -18,10 +18,10 @@ class AdminList extends React.Component {
   }
 
   renderContent() {
-    if (this.props.adminListShow) {
+    if (this.props.adminList.expanded) {
       return (
         <ul className="wide-list">
-          {this.props.adminList.map(this.renderAdminList)}
+          {this.props.adminList.list.map(this.renderAdminList)}
         </ul>
       )
     }
@@ -31,7 +31,7 @@ class AdminList extends React.Component {
   }
 
   renderExpandButton() {
-    if(this.props.adminListShow) {
+    if(this.props.adminList.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeAdminList()}>Piilota</button>
     }
     else {
@@ -53,7 +53,7 @@ class AdminList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { adminList: state.adminList, adminListShow: state.adminListShow }
+  return { adminList: state.adminList }
 }
 
 function mapDispatchToProps(dispatch) {
