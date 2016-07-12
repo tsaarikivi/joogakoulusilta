@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { addCourse } from '../../actions/courses.js'
+import { addCourse } from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
@@ -9,15 +9,15 @@ class CourseForm extends React.Component {
   }
 
   render() {
-    const { fields: { day, start, end, maxCapacity, special, date }, handleSubmit } = this.props
+    const { fields: { day, start, end, maxCapacity }, handleSubmit } = this.props
 
     return (
       <div className="container bordered-container">
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h2>Luo uusi kurssi</h2>
+          <h2>Luo uusi vakiokurssi</h2>
 
-          <label>Viikonpäivä</label>
-          <select {...day} value={day.value || ''}>
+          <label htmlFor="courseDay">Viikonpäivä</label>
+          <select name="courseDay" {...day} value={day.value || ''}>
             <option>-- Valitse päivä --</option>
             <option value="1">Maanantai</option>
             <option value="2">Tiistai</option>
@@ -28,24 +28,14 @@ class CourseForm extends React.Component {
             <option value="7">Sunnuntai</option>
           </select>
 
-          <label>Alkaa klo.</label>
-          <input type="number" name="start" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
+          <label htmlFor="courseStart">Alkaa klo.</label>
+          <input type="number" name="courseStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
 
-          <label>Loppuu klo.</label>
-          <input type="number" name="end" {...end} placeholder="esim: 900 tai 1100 tai 2230" />
+          <label htmlFor="courseEnd">Loppuu klo.</label>
+          <input type="number" name="courseEnd" {...end} placeholder="esim: 900 tai 1100 tai 2230" />
 
-          <label>Maksimimäärä henkilöitä</label>
-          <input type="number" name="maxCapacity" {...maxCapacity} placeholder="esim: 12 tai 1" />
-
-          <label>Onko erikoiskurssi?</label>
-          <select {...special} value={special.value || ''}>
-            <option>-- Valitse arvo --</option>
-            <option value="1">On</option>
-            <option value="0">Ei</option>
-          </select>
-
-          <label>Erikoiskurssin päivämäärä</label>
-          <input type="text" name="date" placeholder="esim  1.1.2016 tai 10.10.2016" defaultValue="" {...date}/>
+          <label htmlFor="courseMax">Maksimimäärä henkilöitä</label>
+          <input type="number" name="courseMax" {...maxCapacity} placeholder="esim: 12 tai 1" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
@@ -61,6 +51,6 @@ function validate(values) {
 
 export default reduxForm({
   form: 'CourseForm',
-  fields: ['day', 'start', 'end', 'maxCapacity', 'special', 'date'],
+  fields: ['day', 'start', 'end', 'maxCapacity'],
   validate
 }, null, {addCourse})(CourseForm)

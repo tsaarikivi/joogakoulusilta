@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { addCourseType } from '../../actions/courses.js'
+import { addCourseType } from '../../actions/admin.js'
 
 class CourseTypeForm extends React.Component {
 
@@ -17,11 +17,11 @@ class CourseTypeForm extends React.Component {
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <h2>Luo uusi kurssityyppi</h2>
 
-          <label>Kurssityypin nimi</label>
-          <input type="text" placeholder="Flow jooga" {...name}/>
+          <label htmlFor="courseType">Kurssityypin nimi</label>
+          <input type="text" name="courseType" placeholder="esim: Flow jooga" {...name}/>
 
-          <label>Kurssityypin kuvaus</label>
-          <textarea type="text" placeholder="Flow jooga on rentoa joogaa." {...desc}/>
+          <label htmlFor="courseDesc">Kurssityypin kuvaus</label>
+          <textarea type="text" name="courseDesc" placeholder="esim: Flow jooga on rentoa joogaa." {...desc}/>
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>

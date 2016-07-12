@@ -31,16 +31,6 @@ export function addToCart(item){
   }
 }
 
-
-export function addShopItem(title, desc, price, token) {
-  return dispatch => firebase.database().ref('/shopItems/'+title).update({
-    title: title,
-    desc: desc,
-    price: price,
-    token: token
-  })
-}
-
 export function removeShopItem(key) {
   return dispatch => ShopItemsRef.child(key).remove()
 }
