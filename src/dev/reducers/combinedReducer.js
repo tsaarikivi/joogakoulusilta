@@ -5,7 +5,6 @@ import ShopReducer from './shopReducer.js'
 import SpecialCourseReducer from './specialCoursesReducer.js'
 import SpecialCoursesBannerReducer from './specialCoursesBannerReducer.js'
 import TimetableReducer from './timetableReducer.js'
-import BookingsReducer from './bookingsReducer.js'
 import CartReducer from './cartReducer.js'
 import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
@@ -24,7 +23,6 @@ const combinedReducer = combineReducers({
   specialCourses: SpecialCourseReducer,
   specialCoursesBanner: SpecialCoursesBannerReducer,
   timetable: TimetableReducer,
-  bookings: BookingsReducer,
   auth: AuthReducer,
   form: FormReducer,
   placeInfoData: PlaceInfoReducer,

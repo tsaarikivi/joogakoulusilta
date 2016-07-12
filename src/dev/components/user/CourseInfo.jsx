@@ -10,53 +10,20 @@ class CourseInfo extends React.Component {
   constructor(){
     super();
     this.fetchStarted = false;
-    this.bookings = [];
-    this.userbookings= [];
   }
 
-  processBookings(inputBookings){
-    console.log("INPUTBOOKINGS: ", inputBookings);
+  componentWillMount(){
+  }
 
-    let instanceId;
-    let instanceObj;
-    let booking = {}
-    let user;
-    let index = 0;
-    for (instanceId in inputBookings){
-      //Booking is in the future - it counts!!
-      if(instanceId > Date.now()){
-        booking.instance = instanceId;
-        booking.reservations = 0;
-        booking.participants = [];
-        instanceObj = inputBookings[instanceId];
-        for(user in instanceObj){
-          booking.reservations++;
-          booking.participants.push(instanceObj[user].user);
-          if(user === this.props.currentUser.key){
-            this.userbookings.push(Object.assign({item: instanceId, txRef: instanceObj[user].transactionReference}));
-          }
-        }
-        this.bookings.push(Object.assign({},booking))
-        index++;
-      }
-    }
-    this.userbookings.sort();
-    this.bookings.sort((a,b) => {return a.instance - b.instance})
+  componentWillUnMount(){
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("COURSEITEM.NEXTPROPS:", nextProps);
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
     if(nextProps.courseInfo && !this.fetchStarted){
       this.fetchStarted = true;
-      this.props.bookingsActions.fetchBookings(nextProps.courseInfo.key)
-    }
-    this.bookings = [];
-    this.userbookings = [];
-    //If boooking information is present, find relevant details for display
-    if(nextProps.bookings){
-      this.processBookings(nextProps.bookings);
+      this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
     }
   }
 
@@ -70,10 +37,13 @@ class CourseInfo extends React.Component {
 
   exitContainer() {
     this.props.courseActions.removeCourseInfo()
-    this.props.bookingsActions.stopFetchBookings()
+    this.props.bookingsActions.stopfetchCourseBookings()
     this.fetchStarted = false;
   }
 
+  userCanBook(){
+    return (this.props.currentUser.transactions.count > 0 || this.props.currentUser.transactions.time > Date.now()) ? true : false;
+  }
   //========================================================================
   //========================================================================
   //========================================================================
@@ -82,14 +52,14 @@ class CourseInfo extends React.Component {
     let item = 0;
     let txRef = 0;
     let time = new Date();
-    if(this.userbookings.length > 0){
-        item = this.userbookings[0].item;
+    if(this.props.courseInfo.userbookings.length > 0){
+        item = this.props.courseInfo.userbookings[0].item;
         time.setTime(item);
         outStr += time.toString() + " | " + item;
-        txRef = this.userbookings[0].txRef;
+        txRef = this.props.courseInfo.userbookings[0].txRef;
     }
     if(outStr === ""){
-        return(<p className="info-noreservations">Sinulla ei ole varauksia tälle kurssille.</p>);
+        return(<p className="info-noreservations">Et ole ilmoittautunut tälle kurssille.</p>);
     } else {
       return(
         <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
@@ -114,14 +84,14 @@ class CourseInfo extends React.Component {
       adjustedIndex = bookingIndex;
     }
     //========================================
-    if(this.bookings.length > adjustedIndex){
+    if(this.props.courseInfo.bookings.length > adjustedIndex){
       let participantlist = "";
       let date = new Date();
-      date.setTime(this.bookings[adjustedIndex].instance);
-      this.bookings[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
+      date.setTime(this.props.courseInfo.bookings[adjustedIndex].instance);
+      this.props.courseInfo.bookings[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
       return(
         <div>
-          <p className="info-reserved">Ilmoittautuneita {this.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
+          <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
           <p className="info-participants">Osallistujat: {participantlist}</p>
         </div>
       );
@@ -149,24 +119,28 @@ class CourseInfo extends React.Component {
           </div>
         )
       }
+    } else {
+      if (!hasDayPassed(this.props.courseInfo.day)){
+        return(
+          <div>
+            <p className="info-keptweek">Ensi viikon kurssia ei voi vielä varata.</p>
+          </div>
+        )
+      }
     }
-    if(this.props.bookings){
-      let ones;
-      let oneu;
-      let alls = this.props.bookings;
-      let usrs = {};
-      for (ones in alls){
-        usrs = alls[ones];
-        for (oneu in usrs){
-          if(this.props.currentUser.key === oneu){
+    if(!this.userCanBook()){
+      return(<div>
+              <p className="info-cantreserve">Sinulla ei ole oikeutta varata. Mene kauppaan</p>
+            </div>
+    );
+    }
+    if(this.props.courseInfo.userbookings.length > 0){
+        //TODO: tarkista että onko juuri tälle viikolle ilmoitauduttu
             return(
               <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
             );
-          }
-        }
-      }
     }
-        return(
+    return(
           <div>
             <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
               { dayStr }
@@ -211,9 +185,7 @@ class CourseInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {  courseInfo: state.courseInfo,
-            currentUser: state.currentUser,
-            bookings: state.bookings }
+  return {  courseInfo: state.courseInfo, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
