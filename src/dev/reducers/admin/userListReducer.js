@@ -1,4 +1,4 @@
-import { FETCH_USER_LIST, EXPAND_USER_LIST, MINIMIZE_USER_LIST } from '../actions/actionTypes.js'
+import { FETCH_USER_LIST, EXPAND_USER_LIST, MINIMIZE_USER_LIST } from '../../actions/actionTypes.js'
 
 const INITIAL_STATE = {}
 

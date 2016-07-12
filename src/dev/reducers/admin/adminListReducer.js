@@ -1,4 +1,4 @@
-import { FETCH_ADMIN_LIST, EXPAND_ADMIN_LIST, MINIMIZE_ADMIN_LIST } from '../actions/actionTypes.js'
+import { FETCH_ADMIN_LIST, EXPAND_ADMIN_LIST, MINIMIZE_ADMIN_LIST } from '../../actions/actionTypes.js'
 
 const INITIAL_STATE = {}
 

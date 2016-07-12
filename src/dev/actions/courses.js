@@ -87,6 +87,13 @@ export function addCourse(data) {
   })
 }
 
+export function addCourseType(data) {
+  return dispatch => firebase.database().ref('/courseTypes/'+data.name).update({
+    name: data.name,
+    desc: data.desc
+  })
+}
+
 export function putCourseInfo(course) {
   return {
     type: PUT_COURSE_INFO,
