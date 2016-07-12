@@ -59,7 +59,7 @@ class CourseInfo extends React.Component {
         txRef = this.props.courseInfo.userbookings[0].txRef;
     }
     if(outStr === ""){
-        return(<p className="info-noreservations">Sinulla ei ole varauksia tälle kurssille.</p>);
+        return(<p className="info-noreservations">Et ole ilmoittautunut tälle kurssille.</p>);
     } else {
       return(
         <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
