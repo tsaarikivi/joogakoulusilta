@@ -44,9 +44,11 @@ class CourseTypeForm extends React.Component {
   render() {
     return (
       <div className="container bordered-container">
-        <h2 className="header-collapse">Luo uusi kurssityyppi</h2>
-        {this.renderExpandButton()}
-        {this.renderContent()}        
+        <div className="content-container">
+          <h2 className="header-collapse">Luo uusi kurssityyppi</h2>
+          {this.renderExpandButton()}
+          {this.renderContent()}
+        </div>
       </div>
     )
   }
