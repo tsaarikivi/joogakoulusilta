@@ -1,6 +1,6 @@
 import { EXPAND_COURSE_TYPE_FORM, MINIMIZE_COURSE_TYPE_FORM } from '../../actions/actionTypes.js'
 
-const INITIAL_STATE = {}
+const INITIAL_STATE = {expanded: false}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

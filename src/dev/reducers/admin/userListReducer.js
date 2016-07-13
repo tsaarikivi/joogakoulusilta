@@ -1,6 +1,6 @@
 import { FETCH_USER_LIST, EXPAND_USER_LIST, MINIMIZE_USER_LIST } from '../../actions/actionTypes.js'
 
-const INITIAL_STATE = {}
+const INITIAL_STATE = {expanded: false}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

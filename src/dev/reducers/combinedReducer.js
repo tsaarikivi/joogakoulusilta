@@ -43,7 +43,7 @@ const combinedReducer = combineReducers({
   placeForm: PlaceFormReducer,
   courseTypeFrom: CourseTypeFormReducer,
   courseForm: CourseFormReducer,
-  specialCourseForm: SpecialCourseFormReducer,
+  specialCourseFrom: SpecialCourseFormReducer,
   shopItemTimeForm: ShopItemTimeFormReducer,
   shopItemCountForm: ShopItemCountFormReducer
 })

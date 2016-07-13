@@ -1,21 +1,21 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { addCourse } from '../../actions/admin.js'
+import { bindActionCreators } from 'redux'
+
+import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
     console.log("props:", props);
-    this.props.addCourse(props)
+    this.props.actions.addCourse(props)
   }
 
-  render() {
+  renderContent() {
     const { fields: { day, start, end, maxCapacity }, handleSubmit } = this.props
 
-    return (
-      <div className="container bordered-container">
-        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h2>Luo uusi vakiokurssi</h2>
-
+    if (this.props.cmp.expanded) {
+      return (
+        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>        
           <label htmlFor="courseDay">Viikonpäivä</label>
           <select name="courseDay" {...day} value={day.value || ''}>
             <option>-- Valitse päivä --</option>
@@ -39,6 +39,30 @@ class CourseForm extends React.Component {
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+
+  renderExpandButton() {
+    if(this.props.cmp.expanded) {
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseForm()}>Piilota</button>
+    }
+    else {
+      return <button className="expand-btn" onClick={() => this.props.actions.expandCourseForm()}>Avaa</button>
+    }
+  }
+
+  render() {    
+    return (
+      <div className="container bordered-container">
+        <div className="content-container">
+          <h2 className="header-collapse">Luo uusi vakiokurssi</h2>
+          {this.renderExpandButton()}
+          {this.renderContent()}   
+        </div>
       </div>
     )
   }
@@ -47,10 +71,19 @@ class CourseForm extends React.Component {
 function validate(values) {
   const errors = {}
   return errors;
+  // TODO: form validation
+}
+
+function mapStateToProps(state) {
+  return { cmp: state.courseForm }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
 export default reduxForm({
   form: 'CourseForm',
   fields: ['day', 'start', 'end', 'maxCapacity'],
   validate
-}, null, {addCourse})(CourseForm)
+}, mapStateToProps, mapDispatchToProps)(CourseForm)

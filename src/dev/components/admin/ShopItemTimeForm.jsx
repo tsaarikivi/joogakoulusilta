@@ -1,21 +1,21 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { addShopItem } from '../../actions/admin.js'
+import { bindActionCreators } from 'redux'
+
+import * as actionCreators from '../../actions/admin.js'
 
 class ShopItemTimeForm extends React.Component {
   onSubmit(props) {
     console.log("props:", props);
-    this.props.addShopItem(props, "time")
+    this.props.actions.addShopItem(props, "time")
   }
 
-  render() {
+  renderContent() {
     const { fields: { desc, price, title, usedays }, handleSubmit } = this.props
 
-    return (
-      <div className="container bordered-container">
-        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h2>Luo uusi aikakortti</h2>
-
+    if (this.props.cmp.expanded) {
+      return (
+        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>          
           <label htmlFor="timeDesc">Kuvaus</label>
           <textarea type="text" name="timeDesc" {...desc} placeholder="esim: Oikeus ilmoittautua mihin tahansa joogaan 6 viikon ajan." />
 
@@ -30,6 +30,30 @@ class ShopItemTimeForm extends React.Component {
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+
+  renderExpandButton() {
+    if(this.props.cmp.expanded) {
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeTimeShopForm()}>Piilota</button>
+    }
+    else {
+      return <button className="expand-btn" onClick={() => this.props.actions.expandTimeShopForm()}>Avaa</button>
+    }
+  }
+
+  render() {    
+    return (
+      <div className="container bordered-container">
+        <div className="content-container">
+        <h2 className="header-collapse">Luo uusi aikakortti</h2>
+        {this.renderExpandButton()}
+        {this.renderContent()}        
+        </div>
       </div>
     )
   }
@@ -38,10 +62,19 @@ class ShopItemTimeForm extends React.Component {
 function validate(values) {
   const errors = {}
   return errors;
+  // TODO: form validation
+}
+
+function mapStateToProps(state) {
+  return { cmp: state.shopItemTimeForm }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
 export default reduxForm({
   form: 'ShopItemTimeForm',
   fields: ['desc', 'price', 'title', 'usedays'],
   validate
-}, null, {addShopItem})(ShopItemTimeForm)
+}, mapStateToProps, mapDispatchToProps)(ShopItemTimeForm)

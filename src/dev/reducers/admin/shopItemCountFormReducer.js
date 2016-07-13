@@ -1,6 +1,6 @@
 import { EXPAND_COUNT_SHOP_FORM, MINIMIZE_COUNT_SHOP_FORM } from '../../actions/actionTypes.js'
 
-const INITIAL_STATE = false
+const INITIAL_STATE = {expanded: false}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

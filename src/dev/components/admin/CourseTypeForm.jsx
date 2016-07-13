@@ -41,7 +41,7 @@ class CourseTypeForm extends React.Component {
     }
   }
 
-  render() {
+  render() {    
     return (
       <div className="container bordered-container">
         <div className="content-container">
@@ -57,6 +57,7 @@ class CourseTypeForm extends React.Component {
 function validate(values) {
   const errors = {}
   return errors;
+  // TODO: form validation
 }
 
 function mapStateToProps(state) {

@@ -60,6 +60,7 @@ class PlaceForm extends React.Component {
 function validate(values) {
   const errors = {}
   return errors;
+  // TODO: form validation
 }
 
 function mapStateToProps(state) {

@@ -182,154 +182,154 @@ export function addShopItem(data, type) {
 
 export function expandAdminList() {
   return dispatch => { dispatch ({
-    type: EXPAND_ADMIN_LIST,
+    type: EXPAND_ADMIN_LIST
     })
   }
 }
 
 export function minimizeAdminList() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_ADMIN_LIST,
+    type: MINIMIZE_ADMIN_LIST
     })
   }
 }
 
 export function expandUserList() {
   return dispatch => { dispatch ({
-    type: EXPAND_USER_LIST,
+    type: EXPAND_USER_LIST
     })
   }
 }
 
 export function minimizeUserList() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_USER_LIST,
+    type: MINIMIZE_USER_LIST
     })
   }
 }
 
 export function expandCourseList() {
   return dispatch => { dispatch ({
-    type: EXPAND_COURSE_LIST,
+    type: EXPAND_COURSE_LIST
     })
   }
 }
 
 export function minimizeCourseList() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_COURSE_LIST,
+    type: MINIMIZE_COURSE_LIST
     })
   }
 }
 
 export function expandInstructorList() {
   return dispatch => { dispatch ({
-    type: EXPAND_INSTRUCTOR_LIST,
+    type: EXPAND_INSTRUCTOR_LIST
     })
   }
 }
 
 export function minimizeInstructorList() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_INSTRUCTOR_LIST,
+    type: MINIMIZE_INSTRUCTOR_LIST
     })
   }
 }
 
 export function expandShopList() {
   return dispatch => { dispatch ({
-    type: EXPAND_SHOP_LIST,
+    type: EXPAND_SHOP_LIST
     })
   }
 }
 
 export function minimizeShopList() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_SHOP_LIST,
+    type: MINIMIZE_SHOP_LIST
     })
   }
 }
 
 export function expandPlaceForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_PLACE_FORM,
+    type: EXPAND_PLACE_FORM
     })
   }
 }
 
 export function minimizePlaceForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_PLACE_FORM,
+    type: MINIMIZE_PLACE_FORM
     })
   }
 }
 
 export function expandCourseTypeForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_COURSE_TYPE_FORM,
+    type: EXPAND_COURSE_TYPE_FORM
     })
   }
 }
 
 export function minimizeCourseTypeForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_COURSE_TYPE_FORM,
+    type: MINIMIZE_COURSE_TYPE_FORM
     })
   }
 }
 
 export function expandCourseForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_COURSE_FORM,
+    type: EXPAND_COURSE_FORM
     })
   }
 }
 
 export function minimizeCourseForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_COURSE_FORM,
+    type: MINIMIZE_COURSE_FORM
     })
   }
 }
 
 export function expandSpecialCourseForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_SPECIAL_COURSE_FORM,
+    type: EXPAND_SPECIAL_COURSE_FORM
     })
   }
 }
 
 export function minimizeSpecialCourseForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_SPECIAL_COURSE_FORM,
+    type: MINIMIZE_SPECIAL_COURSE_FORM
     })
   }
 }
 
 export function expandTimeShopForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_TIME_SHOP_FORM,
+    type: EXPAND_TIME_SHOP_FORM
     })
   }
 }
 
 export function minimizeTimeShopForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_TIME_SHOP_FORM,
+    type: MINIMIZE_TIME_SHOP_FORM
     })
   }
 }
 
 export function expandCountShopForm() {
   return dispatch => { dispatch ({
-    type: EXPAND_COUNT_SHOP_FORM,
+    type: EXPAND_COUNT_SHOP_FORM
     })
   }
 }
 
 export function minimizeCountShopForm() {
   return dispatch => { dispatch ({
-    type: MINIMIZE_COUNT_SHOP_FORM,
+    type: MINIMIZE_COUNT_SHOP_FORM
     })
   }
 }
