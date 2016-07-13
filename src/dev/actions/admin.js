@@ -41,7 +41,7 @@ export function fetchUserList() {
     UsersRef.once('value', snapshot => {
       var users = snapshot.val()
       for (var key in users) {
-        if (users.hasOwnProperty(key) && !users[key].admin && !users[key].instructor) {
+        if (users.hasOwnProperty(key)  && !users[key].instructor) {
           let ItemWithKey = users[key]
           ItemWithKey.key = key
           list = list.concat(ItemWithKey)
