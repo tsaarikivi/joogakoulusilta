@@ -38,7 +38,7 @@ export function fetchUserList() {
     UsersRef.once('value', snapshot => {
       var users = snapshot.val()
       for (var key in users) {
-        if (users.hasOwnProperty(key) && !users[key].admin) {
+        if (users.hasOwnProperty(key) && !users[key].admin && !users[key].instructor) {
           let ItemWithKey = users[key]
           ItemWithKey.key = key
           list = list.concat(ItemWithKey)
@@ -177,6 +177,31 @@ export function addShopItem(data, type) {
     expiresAfterDays: data.expiresAfterDays || null,
     usetimes: data.usetimes || null,
     usedays: data.usedays || null
+  })
+}
+
+export function lockUser(key) {
+  return dispatch => firebase.database().ref('/users/'+key).update({
+    locked: true,
+    instructor: null
+  })
+}
+
+export function unlockUser(key) {
+  return dispatch => firebase.database().ref('/users/'+key).update({
+    locked: null
+  })
+}
+
+export function makeInstructor(key) {
+  return dispatch => firebase.database().ref('/users/'+key).update({
+    instructor: true
+  })
+}
+
+export function unmakeInstructor(key) {
+  return dispatch => firebase.database().ref('/users/'+key).update({
+    instructor: null
   })
 }
 

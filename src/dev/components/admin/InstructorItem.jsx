@@ -1,15 +1,16 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-export default class InstructorItem extends React.Component {
+import * as actionCreators from '../../actions/admin.js'
+
+class InstructorItem extends React.Component {
   renderButtons() {
 
     //TODO: Add proper buttons and functionality
-    if (true) {
-      return <button className="btn-small btn-green float-right">Jotain</button>
-    }
-    else {
-      return <button className="btn-small btn-red float-right">Jotain</button>
-    }
+    return(
+      <button className="btn-small btn-red float-right" onClick={() => this.props.actions.unmakeInstructor(this.props.item.uid)}>Poista Joogaopettaja</button>
+    )
   }
   
   render() {
@@ -25,3 +26,9 @@ export default class InstructorItem extends React.Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(null, mapDispatchToProps)(InstructorItem)

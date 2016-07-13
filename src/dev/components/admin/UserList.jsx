@@ -12,7 +12,7 @@ class UserList extends React.Component {
 
   renderList(item) {
     return (
-      <Item key={item.key} item={item}/>
+      <Item key={item.key} item={item} />
     )
   }
 

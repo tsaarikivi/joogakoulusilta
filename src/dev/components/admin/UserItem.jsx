@@ -1,16 +1,25 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-export default class UserItem extends React.Component {
+import * as actionCreators from '../../actions/admin.js'
+
+class UserItem extends React.Component {
   
   renderButtons() {
-
     //TODO: fix according !user.locked
     //TODO: add button functionality
-    if (true) {
-      return <button className="btn-small btn-red float-right">Lukitse</button>
+
+    if (this.props.item.locked) {
+      return <button className="btn-small btn-green float-right" onClick={() => this.props.actions.unlockUser(this.props.item.uid)}>Aktivoi</button>
     }
-    else {
-      return <button className="btn-small btn-green float-right">Aktivoi</button>
+    else {      
+      return (
+        <div>
+          <button className="btn-small btn-red float-right" onClick={() => this.props.actions.lockUser(this.props.item.uid)}>Lukitse</button>
+          <button className="btn-small btn-blue float-right" onClick={() => this.props.actions.makeInstructor(this.props.item.uid)}>Joogaopettajaksi</button>
+        </div>        
+      )
     }
   }
   
@@ -27,3 +36,9 @@ export default class UserItem extends React.Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(null, mapDispatchToProps)(UserItem)
