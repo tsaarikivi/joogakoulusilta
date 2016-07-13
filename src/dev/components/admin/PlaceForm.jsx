@@ -1,22 +1,22 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { addPlace } from '../../actions/admin.js'
+import { bindActionCreators } from 'redux'
+
+import * as actionCreators from '../../actions/admin.js'
 
 class PlaceForm extends React.Component {
 
   onSubmit(props) {
     console.log("props:", props);
-    this.props.addPlace(props)
+    this.props.actions.addPlace(props)
   }
 
-  render() {
+  renderContent() {
     const { fields: { name, desc, address }, handleSubmit } = this.props
 
-    return (
-      <div className="container bordered-container">
+    if (this.props.cmp.expanded) {
+      return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <h2>Luo uusi joogapaikka</h2>
-
           <label htmlFor="placeName">Paikan nimi</label>
           <input type="text" name="placeName" placeholder="esim: Joogakoulu Lauttasaari" {...name}/>
 
@@ -28,6 +28,28 @@ class PlaceForm extends React.Component {
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
+      )
+    }
+    else {
+      return <div></div>
+    }
+  }
+
+  renderExpandButton() {
+    if(this.props.cmp.expanded) {
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizePlaceForm()}>Piilota</button>
+    }
+    else {
+      return <button className="expand-btn" onClick={() => this.props.actions.expandPlaceForm()}>Avaa</button>
+    }
+  }
+
+  render() {
+    return (
+      <div className="container bordered-container">
+        <h2 className="header-collapse">Luo uusi joogapaikka</h2>
+        {this.renderExpandButton()}
+        {this.renderContent()}        
       </div>
     )
   }
@@ -38,8 +60,16 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps(state) {
+  return { cmp: state.placeForm }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
 export default reduxForm({
   form: 'PlaceForm',
   fields: ['name', 'desc', 'address'],
   validate
-}, null, {addPlace})(PlaceForm)
+}, mapStateToProps, mapDispatchToProps)(PlaceForm)

@@ -14,7 +14,20 @@ import {
   EXPAND_INSTRUCTOR_LIST,
   MINIMIZE_INSTRUCTOR_LIST,
   EXPAND_SHOP_LIST,
-  MINIMIZE_SHOP_LIST
+  MINIMIZE_SHOP_LIST,
+  
+  EXPAND_PLACE_FORM,
+  MINIMIZE_PLACE_FORM,
+  EXPAND_COURSE_TYPE_FORM,
+  MINIMIZE_COURSE_TYPE_FORM,
+  EXPAND_COURSE_FORM,
+  MINIMIZE_COURSE_FORM,
+  EXPAND_SPECIAL_COURSE_FORM,
+  MINIMIZE_SPECIAL_COURSE_FORM,
+  EXPAND_TIME_SHOP_FORM,
+  MINIMIZE_TIME_SHOP_FORM,
+  EXPAND_COUNT_SHOP_FORM,
+  MINIMIZE_COUNT_SHOP_FORM
 } from './actionTypes.js'
 
 const UsersRef = firebase.database().ref('/users/')
@@ -233,6 +246,90 @@ export function expandShopList() {
 export function minimizeShopList() {
   return dispatch => { dispatch ({
     type: MINIMIZE_SHOP_LIST,
+    })
+  }
+}
+
+export function expandPlaceForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_PLACE_FORM,
+    })
+  }
+}
+
+export function minimizePlaceForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_PLACE_FORM,
+    })
+  }
+}
+
+export function expandCourseTypeForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_COURSE_TYPE_FORM,
+    })
+  }
+}
+
+export function minimizeCourseTypeForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_COURSE_TYPE_FORM,
+    })
+  }
+}
+
+export function expandCourseForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_COURSE_FORM,
+    })
+  }
+}
+
+export function minimizeCourseForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_COURSE_FORM,
+    })
+  }
+}
+
+export function expandSpecialCourseForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_SPECIAL_COURSE_FORM,
+    })
+  }
+}
+
+export function minimizeSpecialCourseForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_SPECIAL_COURSE_FORM,
+    })
+  }
+}
+
+export function expandTimeShopForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_TIME_SHOP_FORM,
+    })
+  }
+}
+
+export function minimizeTimeShopForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_TIME_SHOP_FORM,
+    })
+  }
+}
+
+export function expandCountShopForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_COUNT_SHOP_FORM,
+    })
+  }
+}
+
+export function minimizeCountShopForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_COUNT_SHOP_FORM,
     })
   }
 }
