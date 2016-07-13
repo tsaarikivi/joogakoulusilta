@@ -2,17 +2,18 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Item from './ShopItem.jsx'
+import Item from './CourseTypeItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
-class ShopList extends React.Component {
+class CourseTypeList extends React.Component {
+  
   componentWillMount() {
-    this.props.actions.fetchShopList()
+    this.props.actions.fetchCourseTypeList()
   }
 
   renderList(item) {
     return (
-      <Item key={item.key} item={item} />
+      <Item key={item.key} item={item}/>
     )
   }
 
@@ -31,10 +32,10 @@ class ShopList extends React.Component {
 
   renderExpandButton() {
     if(this.props.list.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeShopList()}>Piilota</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseTypeList()}>Piilota</button>
     }
     else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandShopList()}>Avaa</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.expandCourseTypeList()}>Avaa</button>
     }
   }
 
@@ -42,7 +43,7 @@ class ShopList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Kauppa</h2>
+          <h2 className="header-collapse">Kurssityypit</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
         </div>
@@ -52,11 +53,11 @@ class ShopList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.shopList }
+  return { list: state.courseTypeList }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopList)
+export default connect(mapStateToProps, mapDispatchToProps)(CourseTypeList)

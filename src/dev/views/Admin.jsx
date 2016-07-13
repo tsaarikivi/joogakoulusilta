@@ -6,6 +6,7 @@ import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
 import CourseForm from '../components/admin/CourseForm.jsx'
 import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
+import CourseTypeList from '../components/admin/CourseTypeList.jsx'
 import CourseList from '../components/admin/CourseList.jsx'
 import CourseTypeForm from '../components/admin/CourseTypeForm.jsx'
 import InstructorList from '../components/admin/InstructorList.jsx'
@@ -21,6 +22,7 @@ export default class Admin extends React.Component {
         <AdminList />
         <InstructorList />
         <UserList />
+        <CourseTypeList />
         <CourseList />
         <ShopList />
         <PlaceForm />

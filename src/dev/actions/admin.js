@@ -1,6 +1,7 @@
 import { 
   FETCH_USER_LIST,
   FETCH_ADMIN_LIST,
+  FETCH_COURSE_TYPE_LIST,
   FETCH_COURSE_LIST,
   FETCH_INSTRUCTOR_LIST,
   FETCH_SHOP_LIST,
@@ -9,6 +10,8 @@ import {
   MINIMIZE_ADMIN_LIST,
   EXPAND_USER_LIST,
   MINIMIZE_USER_LIST,
+  EXPAND_COURSE_TYPE_LIST,
+  MINIMIZE_COURSE_TYPE_LIST,
   EXPAND_COURSE_LIST,
   MINIMIZE_COURSE_LIST,
   EXPAND_INSTRUCTOR_LIST,
@@ -72,10 +75,30 @@ export function fetchAdminList() {
   }
 }
 
+export function fetchCourseTypeList() {
+  var list = []
+  return dispatch => {
+    firebase.database().ref('/courseTypes/').once('value', snapshot => {
+      var courseTypes = snapshot.val()
+      for (var key in courseTypes) {
+        if (courseTypes.hasOwnProperty(key)) {
+          let ItemWithKey = courseTypes[key]
+          ItemWithKey.key = key
+          list = list.concat(ItemWithKey)
+        }
+      }
+      dispatch({
+        type: FETCH_COURSE_TYPE_LIST,
+        payload: list
+      })
+    })
+  }
+}
+
 export function fetchCourseList() {
   var list = []
   return dispatch => {
-    firebase.database().ref('/courses/').once('value', snapshot => {
+    firebase.database().ref('/courses/').orderByChild('day').once('value', snapshot => {
       var courses = snapshot.val()
       for (var key in courses) {
         if (courses.hasOwnProperty(key)) {
@@ -193,6 +216,18 @@ export function unlockUser(key) {
   })
 }
 
+export function lockShopItem(key) {
+  return dispatch => firebase.database().ref('/shopItems/'+key).update({
+    locked: true
+  })
+}
+
+export function unlockShopItem(key) {
+  return dispatch => firebase.database().ref('/shopItems/'+key).update({
+    locked: null
+  })
+}
+
 export function makeInstructor(key) {
   return dispatch => firebase.database().ref('/users/'+key).update({
     instructor: true
@@ -229,6 +264,20 @@ export function expandUserList() {
 export function minimizeUserList() {
   return dispatch => { dispatch ({
     type: MINIMIZE_USER_LIST
+    })
+  }
+}
+
+export function expandCourseTypeList() {
+  return dispatch => { dispatch ({
+    type: EXPAND_COURSE_TYPE_LIST
+    })
+  }
+}
+
+export function minimizeCourseTypeList() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_COURSE_TYPE_LIST
     })
   }
 }

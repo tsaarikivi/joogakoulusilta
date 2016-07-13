@@ -22,6 +22,7 @@ import CourseFormReducer from './admin/courseFormReducer.js'
 import SpecialCourseFormReducer from './admin/specialCourseFormReducer.js'
 import ShopItemTimeFormReducer from './admin/shopItemTimeFormReducer.js'
 import ShopItemCountFormReducer from './admin/shopItemCountFormReducer.js'
+import CourseTypeListReducer from './admin/courseTypeListReducer.js'
 
 const combinedReducer = combineReducers({
   cart: CartReducer,
@@ -45,7 +46,8 @@ const combinedReducer = combineReducers({
   courseForm: CourseFormReducer,
   specialCourseFrom: SpecialCourseFormReducer,
   shopItemTimeForm: ShopItemTimeFormReducer,
-  shopItemCountForm: ShopItemCountFormReducer
+  shopItemCountForm: ShopItemCountFormReducer,
+  courseTypeList: CourseTypeListReducer
 })
 
 export default combinedReducer;

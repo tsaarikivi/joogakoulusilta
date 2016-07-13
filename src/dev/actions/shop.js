@@ -9,7 +9,7 @@ export function fetchShopItems() {
     ShopItemsRef.once('value', snapshot => {
       var shopItems = snapshot.val()
       for (var key in shopItems) {
-        if (shopItems.hasOwnProperty(key)) {
+        if (shopItems.hasOwnProperty(key) && !shopItems[key].locked) {
           let shopItemWithKey = shopItems[key]
           shopItemWithKey.key = key
           list = list.concat(shopItemWithKey)
