@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import AdminItem from './AdminItem.jsx'
+import Item from './AdminItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
 class AdminList extends React.Component {
@@ -11,17 +11,17 @@ class AdminList extends React.Component {
     this.props.actions.fetchAdminList()
   }
 
-  renderAdminList(admin) {
+  renderList(item) {
     return (
-      <AdminItem key={admin.key} admin={admin}/>
+      <Item key={item.key} item={item}/>
     )
   }
 
   renderContent() {
-    if (this.props.adminListShow) {
+    if (this.props.list.expanded) {
       return (
         <ul className="wide-list">
-          {this.props.adminList.map(this.renderAdminList)}
+          {this.props.list.list.map(this.renderList)}
         </ul>
       )
     }
@@ -31,7 +31,7 @@ class AdminList extends React.Component {
   }
 
   renderExpandButton() {
-    if(this.props.adminListShow) {
+    if(this.props.list.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeAdminList()}>Piilota</button>
     }
     else {
@@ -53,7 +53,7 @@ class AdminList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { adminList: state.adminList, adminListShow: state.adminListShow }
+  return { list: state.adminList }
 }
 
 function mapDispatchToProps(dispatch) {

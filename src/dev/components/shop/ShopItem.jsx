@@ -19,11 +19,25 @@ class ShopItem extends React.Component {
 
   }
 
+  renderExpire() {
+    if (this.props.item.type === "count") {
+      return (
+        <p className="item-expiration">Käyttöaikaa {this.props.item.expiresAfterDays} päivää</p>
+      )
+    }
+    else {
+      return (
+        <div></div>
+      )
+    }
+  }
+
   render() {
     return (
       <li>
         <h3 className="item-title">{this.props.item.title}</h3>
         <p className="item-desc">{this.props.item.desc}</p>
+        {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>
         <Link className="btn-small btn-blue" to="checkout" onClick={this.handleClick.bind(this)} >Osta</Link>
       </li>

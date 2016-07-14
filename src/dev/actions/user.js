@@ -118,15 +118,14 @@ export function finishedWithUserDetails(){
   }
 }
 
-export function createNewUser(user) {
-  console.log("ADDING USER:", user);
+export function createNewUser(user, firstname, lastname) {
+  console.log("ADDING USER:", user, firstname, lastname);
   let UIDUsersRef = firebase.database().ref('/users/'+user.uid)
   UIDUsersRef.update({
                   email: user.email,
                   uid: user.uid,
-                  alias: "alias",
-                  firstname: "firstname",
-                  lastname: "lastname",
+                  firstname: firstname,
+                  lastname: lastname,
   }, error => {
            if(error){
              console.error("Error writing new user to database", error);

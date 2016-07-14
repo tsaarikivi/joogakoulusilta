@@ -37,9 +37,9 @@
       font-weight: bold;
       padding: 0;
       margin: 5px 0 0;
-      line-height: 0;
+      line-height: 0.8;
       border: none;
-      background-color: #fefefe;
+      background-color: transparent;
       border-radius: 3px;
       &:hover {
         color: #444;
@@ -107,7 +107,6 @@
   margin: 0 auto;
   background: $container-color;
   padding: 60px 0;
-  text-align: center;
 }
 .bordered-container {
   border-bottom: 1px solid $item-border;

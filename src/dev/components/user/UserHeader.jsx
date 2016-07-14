@@ -46,7 +46,7 @@ export default class UserHeader extends React.Component {
     } else {
       return (
         <div>
-          <p>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
+          <p>Sinulla ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
         </div>
       )
     }
@@ -54,9 +54,9 @@ export default class UserHeader extends React.Component {
 
   render() {
     return (
-      <div class="container colored-container">
+      <div class="container bordered-container">
         <div className="content-container align-left">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
+          <h1>Hei, {this.props.curUsr.firstname}!</h1>
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>
