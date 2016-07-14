@@ -6,12 +6,29 @@ import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
-    console.log("props:", props);
-    this.props.actions.addCourse(props)
+    this.props.actions.addCourse(props, false)
+  }
+
+  renderCourseTypeOptions(item) {
+    return (
+      <option key={item.key} value={item.key} >{item.key}</option>
+    )
+  }
+
+  renderInstructorOptions(item) {
+    return (
+      <option key={item.key} value={item.uid} >{item.firstname} {item.lastname}</option>
+    )
+  }
+
+  renderPlaceOptions(item) {
+    return (
+      <option key={item.key} value={item.key} >{item.key}</option>
+    )
   }
 
   renderContent() {
-    const { fields: { day, start, end, maxCapacity }, handleSubmit } = this.props
+    const { fields: { day, start, end, maxCapacity, courseType, instructor, place }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -36,6 +53,24 @@ class CourseForm extends React.Component {
 
           <label htmlFor="courseMax">Maksimimäärä henkilöitä</label>
           <input type="number" name="courseMax" {...maxCapacity} placeholder="esim: 12 tai 1" />
+
+          <label htmlFor="courseType">Kurssityyppi</label>
+          <select name="courseType" {...courseType} value={courseType.value || ''}>
+            <option>-- Valitse kurssityyppi --</option>
+            {this.props.courseTypes.list.map(this.renderCourseTypeOptions)}
+          </select>
+
+          <label htmlFor="courseInstructor">Ohjaaja</label>
+          <select name="courseInstructor" {...instructor} value={instructor.value || ''}>
+            <option>-- Valitse ohjaaja --</option>
+            {this.props.instructors.list.map(this.renderInstructorOptions)}
+          </select>
+
+          <label htmlFor="coursePlace">Paikka</label>
+          <select name="coursePlace" {...place} value={place.value || ''}>
+            <option>-- Valitse paikka --</option>
+            {this.props.places.list.map(this.renderPlaceOptions)}
+          </select>
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
@@ -75,7 +110,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.courseForm }
+  return { cmp: state.courseForm, courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -84,6 +119,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'CourseForm',
-  fields: ['day', 'start', 'end', 'maxCapacity'],
+  fields: ['day', 'start', 'end', 'maxCapacity', 'courseType', 'instructor', 'place'],
   validate
 }, mapStateToProps, mapDispatchToProps)(CourseForm)
