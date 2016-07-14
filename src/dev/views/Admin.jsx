@@ -13,6 +13,7 @@ import InstructorList from '../components/admin/InstructorList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
 import PlaceForm from '../components/admin/PlaceForm.jsx'
+import PlaceList from '../components/admin/PlaceList.jsx'
 
 export default class Admin extends React.Component {
   render() {
@@ -22,6 +23,7 @@ export default class Admin extends React.Component {
         <AdminList />
         <InstructorList />
         <UserList />
+        <PlaceList />
         <CourseTypeList />
         <CourseList />
         <ShopList />

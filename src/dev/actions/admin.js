@@ -5,6 +5,7 @@ import {
   FETCH_COURSE_LIST,
   FETCH_INSTRUCTOR_LIST,
   FETCH_SHOP_LIST,
+  FETCH_PLACE_LIST,
 
   EXPAND_ADMIN_LIST,
   MINIMIZE_ADMIN_LIST,
@@ -18,6 +19,8 @@ import {
   MINIMIZE_INSTRUCTOR_LIST,
   EXPAND_SHOP_LIST,
   MINIMIZE_SHOP_LIST,
+  EXPAND_PLACE_LIST,
+  MINIMIZE_PLACE_LIST,
   
   EXPAND_PLACE_FORM,
   MINIMIZE_PLACE_FORM,
@@ -155,6 +158,26 @@ export function fetchShopList() {
   }
 }
 
+export function fetchPlaceList() {
+  var list = []
+  return dispatch => {
+    firebase.database().ref('/places/').once('value', snapshot => {
+      var places = snapshot.val()
+      for (var key in places) {
+        if (places.hasOwnProperty(key)) {
+          let ItemWithKey = places[key]
+          ItemWithKey.key = key
+          list = list.concat(ItemWithKey)
+        }
+      }
+      dispatch({
+        type: FETCH_PLACE_LIST,
+        payload: list
+      })
+    })
+  }
+}
+
 export function addPlace(data) {
   return dispatch => firebase.database().ref('/places/'+data.name).update({
     name: data.name,
@@ -163,24 +186,40 @@ export function addPlace(data) {
   })
 }
 
-export function addCourse(data) {
-  if(data.special === "0") {
-    data.special = false
-  } else {
-    data.special = true
-  }
+export function addCourse(data, special) {
+  var newPostKey = firebase.database().ref().child('/courses/').push().key
 
-  if(data.date === 'undefined' || data.date === "") {
-    data.date = null
-  }
+  var place = {}
+  firebase.database().ref('/places/'+data.place).on("value", snapshot => {
+    place = snapshot.val()
+    let updates = {};
+    updates['/courses/' + newPostKey + '/place/'] = place
+    firebase.database().ref().update(updates)
+  })
 
-  return dispatch => CoursesRef.push({
-    day: parseInt(data.day),
-    end: parseInt(data.end),
+  var instructor = {}
+  firebase.database().ref('/users/'+data.instructor).on("value", snapshot => {    
+    instructor = snapshot.val()
+    let updates = {};
+    updates['/courses/' + newPostKey + '/instructor/'] = instructor
+    firebase.database().ref().update(updates)
+  })
+
+  var courseType = {}
+  firebase.database().ref('/courseTypes/'+data.courseType).on("value", snapshot => {
+    courseType = snapshot.val()
+    let updates = {};
+    updates['/courses/' + newPostKey + '/courseType/'] = courseType
+    firebase.database().ref().update(updates)
+  })
+
+  return dispatch => firebase.database().ref('/courses/' + newPostKey).update({
+    special: special,
+    start: parseInt(data.start)*36000,
+    end: parseInt(data.end)*36000,
     maxCapacity: parseInt(data.maxCapacity),
-    special: data.special,
-    start: parseInt(data.start),
-    date: data.date
+    day: parseInt(data.day) || null,
+    date: data.date || null
   })
 }
 
@@ -320,6 +359,20 @@ export function expandShopList() {
 export function minimizeShopList() {
   return dispatch => { dispatch ({
     type: MINIMIZE_SHOP_LIST
+    })
+  }
+}
+
+export function expandPlaceList() {
+  return dispatch => { dispatch ({
+    type: EXPAND_PLACE_LIST
+    })
+  }
+}
+
+export function minimizePlaceList() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_PLACE_LIST
     })
   }
 }
