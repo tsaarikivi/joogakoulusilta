@@ -1,0 +1,85 @@
+@import 'variables.scss';
+
+button, a {
+  font-size: 13px;
+}
+
+.btn-small {
+  margin: 0 2px;
+  text-decoration: none;
+  color: $button-text;
+  border-radius: 3px;
+  border-style: none;
+  padding: 4px 7px;
+  box-shadow: 0 2px 1px $button-norm-shdw;
+  text-transform: uppercase;
+  transition: background 0.1s, box-shadow 0.1s, color 0.1s;
+  font-weight: bold;
+  &:hover {
+    background: $button-hover;
+    box-shadow: 0 3px 1px $button-hover-shdw;
+    color: $button-text;
+  }
+  &:active {
+    background: $button-active;
+    box-shadow: 0 3px 1px $button-active-shdw;
+    color: $button-text;
+  }
+}
+.btn-blue {
+  background: $button-blue-norm;
+}
+.btn-green {
+  background: $button-green-norm;
+}
+.btn-red {
+  background: $button-red-norm;
+}
+.btn-white {
+  background: $button-light-norm;
+  color: $button-blue-norm;
+}
+
+.text-link {
+  margin-top: 20px;
+  text-decoration: none;
+  color: $text-link-norm;
+  text-transform: uppercase;
+  transition: color 0.1s, background-color 0.1s;
+  font-weight: bold;
+  padding: 4px 7px;
+  border-radius: 3px;
+  &:hover {
+    color: $text-link-hover;
+    background-color: $text-link-bg;
+  }
+  &:active {
+    color: $text-link-active;
+  }
+}
+.back-btn {
+  display: inline-block;
+  float: left;
+  text-decoration: none;
+  margin: 8px;
+}
+a.text-link-white {
+  background-color: white;
+  color: $button-blue-norm;
+}
+
+.expand-btn {
+  display: inline-block;
+  border: none;
+  background-color: $container-color;
+  margin: 0 10px;
+  padding: 4px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  &:hover {
+    background-color: $text-link-bg;
+  }
+  &:active {
+    background-color: $text-link-norm;
+  }
+}

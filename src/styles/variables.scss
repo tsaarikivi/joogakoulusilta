@@ -1,15 +1,19 @@
-$body-color: #fff;
-$container-color: #f3f3f4;
+$body-color: #f7f8f9;
+$container-color: $body-color;
 $shadow-light: #dbdbdc;
+$container-border: #ddd;
+$text-white: #fafbfc;
 
 $fadeout-text: #999;
 
 $button-text: #fff;
-$button-norm: #22ccee;
+$button-blue-norm: #22aaff;
+$button-green-norm: #55ee66;
+$button-red-norm: #ee4455;
 $button-norm-shdw: #bfbfc0;
-$button-hover: #11bbdd;
+$button-hover: #778;
 $button-hover-shdw: #cfcfd0;
-$button-active: #00aacc;
+$button-active: #222;
 $button-active-shdw: #afafb0;
 $button-light-norm: #fafafa;
 $button-light-hover: #f4f4f4;
@@ -18,12 +22,23 @@ $button-light-active: #fff;
 $text-link-norm: #001155;
 $text-link-hover: #3377cc;
 $text-link-active: #66aaff;
+$text-link-bg: #eaeaea;
 
 $use-times: $button-active;
 
-$table-header: #dededf;
-$list-item: #fff;
-$list-item-hover: #aaeeff;
+$table-header: #e3e3e5;
+$list-item: #fafbfc;
+$list-item-hover: #e0f3ff;
 $item-shdw: #cfcfd0;
 $price: $button-active;
 $item-border: #ddd;
+
+$info-time: $button-blue-norm;
+$info-desc: #888;
+$info-place: #444;
+$info-instructor: $info-place;
+$info-reserved: $info-place;
+$info-participants: $info-desc;
+$info-keptweek: $info-time;
+$info-cantreserve: $info-time;
+$info-noreservations: $button-red-norm;

@@ -15,33 +15,38 @@ class User extends React.Component {
     router: React.PropTypes.object
   }
 
+  constructor(){
+    super();
+    this.countMount = 0;
+  }
+
   componentWillMount(){
-    console.log("User-will-mount:ACTIONS: ",this.props.actions);
-    console.log("User-will-mount:AUTH: ",this.props.auth);
     if( this.props.auth.uid ) {
-      this.props.actions.fetchUserDetails(this.props.auth.uid)
+      this.props.actions.fetchUserDetails(this.props.auth.uid);
+      this.props.actions.fetchUsersTransactions(this.props.auth.uid);
+      this.props.actions.fetchUsersBookings(this.props.auth.uid);
     }
     else {
       this.context.router.push('/');
     }
   }
 
+  componentWillUnmount(){
+    this.props.actions.finishedWithUserDetails();
+  }
+
   componentWillReceiveProps(nextProps){
-    console.log("USER_VIEW-next props:", nextProps);
     if(typeof(nextProps.auth.uid) == "undefined"){
       this.context.router.push('/');
     }
   }
 
-  componentWillUnmount(){
-    //this.props.actions.finishedWithUserDetails()
-    // This should be put to LOGOUT action.
-  }
 
   render() {
-    console.log("USER_VIEW:", this.props.auth, this.props.currentUser);
-    if( this.props.auth.uid ) {
-      if (this.props.currentUser.key != "0") {
+    if( this.props.auth.uid &&
+        this.props.currentUser.key != "0" &&
+        typeof(this.props.currentUser.transactions) != "undefined" &&
+        typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
               <UserHeader curUsr={this.props.currentUser}/>
@@ -51,14 +56,14 @@ class User extends React.Component {
             </div>
           );
       } else {
-        return (
-        <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
-        );
+          if (this.props.auth.uid){
+            return (
+              <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
+            );
+          } else {
+            return(<p> Ei käyttäjää</p>);
+          }
       }
-    }
-    else {
-      <p> Käyttäjä kirjautunut ulos.</p>
-    }
   }
 }
 

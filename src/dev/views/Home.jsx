@@ -14,14 +14,12 @@ class Home extends React.Component {
   }
 
   componentWillMount(){
-    console.log("HOME will mount - auth", this.props.auth);
     if(this.props.auth.uid) {
       this.context.router.push('user');
     }
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("HOME: nextProps:", nextProps);
     if(nextProps.auth.uid) {
       this.context.router.push('user');
     }

@@ -34,13 +34,13 @@ class TopBar extends React.Component {
     var button;
     if(this.props.auth.uid) {
       userText = <h4>Kirjautunut sähköpostilla: {this.props.auth.email}</h4>;
-      button = <button className="btn-small logout-btn" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>;
+      button = <button className="btn-small logout-btn btn-blue" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>;
     } else {
       userText = null;
-      button = <Link className="btn-small login-btn" to="login">Kirjaudu sisään</Link>;
+      button = <Link className="btn-small btn-blue" to="login">Kirjaudu sisään</Link>;
     }
     return (
-      <div class="authentication-bar">
+      <div class="authentication-bar container bordered-container">
         {userText}
         {button}
       </div>

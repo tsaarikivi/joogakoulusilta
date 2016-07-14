@@ -9,12 +9,12 @@ import * as actionCreators from '../../actions/courses.js'
 class Timetable extends React.Component {
 
   componentWillMount() {
-    this.props.actions.fetchTimetable()
+    this.props.actions.fetchTimetable();
   }
 
   render() {
     return (
-      <div class="container timetable-container">
+      <div class="container timetable-container bordered-container">
         <h2>Aikataulu</h2>
         <small>Klikkaa joogatuntia avataksesi lisätiedot ja varataksesi paikka tunnilta</small>
         <table>
@@ -115,7 +115,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timetable)

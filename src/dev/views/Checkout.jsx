@@ -31,7 +31,6 @@ class Checkout extends React.Component {
     console.log("JOOGASERVER: ", JOOGASERVER);
     console.log("JOOGAURL: ", JOOGAURL);
     firebase.auth().currentUser.getToken(true).then( idToken => {
-      console.log("IDTOKEN: ", idToken);
       axios.get(JOOGAURL + '?token=' + idToken)
       .then( response => {
         that.token = response.data;
@@ -100,7 +99,7 @@ class Checkout extends React.Component {
         return(
           <div>
             <p>Maksu onnistuneesti suoritettu...</p>
-            <Link className="btn-small" to="shop"> Takaisin kauppaan...</Link>
+            <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
           </div>
         )
     } else if(this.token === "error") {

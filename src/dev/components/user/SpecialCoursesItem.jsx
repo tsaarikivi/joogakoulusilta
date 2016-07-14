@@ -6,7 +6,7 @@ export default class SpecialCoursesItem extends React.Component {
       <li>
         <h3>KORJAA TITLE</h3>
         <p>{this.props.item.date}, klo {this.props.item.start} - {this.props.item.end}</p>
-        <a className="btn-small" href="#">Lisätietoja</a>
+        <a className="btn-small btn-blue" href="#">Lisätietoja</a>
       </li>
     );
   }
