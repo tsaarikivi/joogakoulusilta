@@ -5,6 +5,7 @@ import {
   FETCH_COURSE_LIST,
   FETCH_INSTRUCTOR_LIST,
   FETCH_SHOP_LIST,
+  FETCH_PLACE_LIST,
 
   EXPAND_ADMIN_LIST,
   MINIMIZE_ADMIN_LIST,
@@ -18,6 +19,8 @@ import {
   MINIMIZE_INSTRUCTOR_LIST,
   EXPAND_SHOP_LIST,
   MINIMIZE_SHOP_LIST,
+  EXPAND_PLACE_LIST,
+  MINIMIZE_PLACE_LIST,
   
   EXPAND_PLACE_FORM,
   MINIMIZE_PLACE_FORM,
@@ -149,6 +152,26 @@ export function fetchShopList() {
       }
       dispatch({
         type: FETCH_SHOP_LIST,
+        payload: list
+      })
+    })
+  }
+}
+
+export function fetchPlaceList() {
+  var list = []
+  return dispatch => {
+    firebase.database().ref('/places/').once('value', snapshot => {
+      var places = snapshot.val()
+      for (var key in places) {
+        if (places.hasOwnProperty(key)) {
+          let ItemWithKey = places[key]
+          ItemWithKey.key = key
+          list = list.concat(ItemWithKey)
+        }
+      }
+      dispatch({
+        type: FETCH_PLACE_LIST,
         payload: list
       })
     })
@@ -320,6 +343,20 @@ export function expandShopList() {
 export function minimizeShopList() {
   return dispatch => { dispatch ({
     type: MINIMIZE_SHOP_LIST
+    })
+  }
+}
+
+export function expandPlaceList() {
+  return dispatch => { dispatch ({
+    type: EXPAND_PLACE_LIST
+    })
+  }
+}
+
+export function minimizePlaceList() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_PLACE_LIST
     })
   }
 }
