@@ -22,11 +22,13 @@ class SpecialCourses extends React.Component {
     if (this.props.specialCoursesBanner.length > 0) {
       return (
         <div class="container">
-          <h2>Tulevia erityiskursseja</h2>
-          <ul class="narrow-list">
-            {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner)}
-          </ul>
-          <Link className="text-link" to="specialCourses">Lisää erityiskursseja</Link>
+          <div className="content-container">
+            <h2>Tulevia erityiskursseja</h2>
+            <ul class="narrow-list">
+              {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner)}
+            </ul>
+            <Link className="text-link" to="specialCourses">Lisää erityiskursseja</Link>
+          </div>
         </div>
       );
     }
