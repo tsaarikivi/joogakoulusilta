@@ -39,6 +39,7 @@ export function fetchShopItems() {
         payload: {items: list}
       })
     })
+    .catch(err => {console.error("Cant read shopitems: ", err);})
   }
 }
 
