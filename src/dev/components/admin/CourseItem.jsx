@@ -29,16 +29,30 @@ export default class CourseItem extends React.Component {
     
       default:
         dayTxt = "EI PVM"
+        if (item.date) {
+          dayTxt = item.date
+        }
         break;
     }
+    
 
     return (
       <div>
+        {this.renderSpecial()}
         <span className="item-item float-left">{item.courseType.name}</span>
         <span className="item-item float-left">{dayTxt}</span>
         <span className="item-item float-left">klo {item.start/36000} - {item.end/36000}</span>
       </div>
     )
+  }
+
+  renderSpecial() {
+    if (this.props.item.special) {
+      return <span className="item-item float-left">S</span>
+    }
+    else {
+      return <span className="item-item float-left">V</span>
+    }
   }
 
   renderButtons() {

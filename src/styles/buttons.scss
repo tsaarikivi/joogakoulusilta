@@ -41,7 +41,7 @@ button, a {
 }
 
 .text-link {
-  margin-top: 20px;
+  margin: 0;
   text-decoration: none;
   color: $text-link-norm;
   text-transform: uppercase;
@@ -59,6 +59,8 @@ button, a {
 }
 .back-btn {
   text-decoration: none;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 a.text-link-white {
   background-color: white;
