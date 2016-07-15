@@ -34,14 +34,12 @@ import {
   MINIMIZE_TIME_SHOP_FORM,
   EXPAND_COUNT_SHOP_FORM,
   MINIMIZE_COUNT_SHOP_FORM
-} from './actionTypes.js'
-
-const UsersRef = firebase.database().ref('/users/')
+} from './actionTypes.js' 
 
 export function fetchUserList() {
   var list = []
   return dispatch => {
-    UsersRef.once('value', snapshot => {
+    firebase.database().ref('/users/').once('value', snapshot => {
       var users = snapshot.val()
       for (var key in users) {
         if (users.hasOwnProperty(key)  && !users[key].instructor) {
@@ -56,27 +54,63 @@ export function fetchUserList() {
       })
     })
     .catch(err => {
-      console.error("ADMIN_ERR: fetch users: ", err);
+      console.error("ADMIN_ERR: fetch users fetchUserList: ", err);
     })
   }
+}
+
+function grabUser(key) {
+  firebase.database().ref('/users/' + key).once('value', snapshot => {
+    return snapshot.val()
+  })
+  .catch(err => {
+    console.error("ADMIN_ERR: fetch users grabUser: ", err);
+  })
 }
 
 export function fetchAdminList() {
   var list = []
   return dispatch => {
-    UsersRef.once('value', snapshot => {
+    firebase.database().ref('/specialUsers/').once('value', snapshot => {
       var users = snapshot.val()
       for (var key in users) {
         if (users.hasOwnProperty(key) && users[key].admin) {
-          let ItemWithKey = users[key]
-          ItemWithKey.key = key
-          list = list.concat(ItemWithKey)
+          let user = grabUser(key)
+          console.log("GRABBED USER :::: ", user);
+          user.key = key
+          list = list.concat(user)
         }
       }
       dispatch({
         type: FETCH_ADMIN_LIST,
         payload: list
       })
+    })
+    .catch(err => {
+      console.error("ADMIN_ERR: fetch specialUsers: ", err);
+    })
+  }
+}
+
+export function fetchInstructorList() {
+  var list = []
+  return dispatch => {
+    firebase.database().ref('/specialUsers/').once('value', snapshot => {
+      var users = snapshot.val()
+      for (var key in users) {
+        if (users.hasOwnProperty(key) && users[key].instructor) {
+          let user = grabUser(key)
+          user.key = key
+          list = list.concat(user)
+        }
+      }
+      dispatch({
+        type: FETCH_INSTRUCTOR_LIST,
+        payload: list
+      })
+    })
+    .catch(err => {
+      console.error("ADMIN_ERR: fetch specialUsers: ", err);
     })
   }
 }
@@ -98,6 +132,9 @@ export function fetchCourseTypeList() {
         payload: list
       })
     })
+    .catch(err => {
+      console.error("ERR: fetch courseTypes: ", err);
+    })
   }
 }
 
@@ -118,25 +155,8 @@ export function fetchCourseList() {
         payload: list
       })
     })
-  }
-}
-
-export function fetchInstructorList() {
-  var list = []
-  return dispatch => {
-    UsersRef.once('value', snapshot => {
-      var users = snapshot.val()
-      for (var key in users) {
-        if (users.hasOwnProperty(key) && users[key].instructor) {
-          let ItemWithKey = users[key]
-          ItemWithKey.key = key
-          list = list.concat(ItemWithKey)
-        }
-      }
-      dispatch({
-        type: FETCH_INSTRUCTOR_LIST,
-        payload: list
-      })
+    .catch(err => {
+      console.error("ERR: fetch courses: ", err);
     })
   }
 }
@@ -158,6 +178,9 @@ export function fetchShopList() {
         payload: list
       })
     })
+    .catch(err => {
+      console.error("ERR: fetch shopItems: ", err);
+    })
   }
 }
 
@@ -178,39 +201,55 @@ export function fetchPlaceList() {
         payload: list
       })
     })
+    .catch(err => {
+      console.error("ERR: fetch places: ", err);
+    })
   }
 }
 
 export function addPlace(data) {
-  return dispatch => firebase.database().ref('/places/'+data.name).update({
+  return dispatch => firebase.database().ref('/places/' + data.name).update({
     name: data.name,
     desc: data.desc,
     address: data.address
+  })
+  .catch(err => {
+    console.error("ERR: update; addPlace: ", err);
   })
 }
 
 export function addCourse(data, special) {
   var newPostKey = firebase.database().ref().child('/courses/').push().key
 
-  firebase.database().ref('/places/'+data.place).on("value", snapshot => {
+  firebase.database().ref('/places/'+data.place).once("value", snapshot => {
     let place = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/place/'] = place
     firebase.database().ref().update(updates)
   })
+  .catch(err => {
+    console.error("ERR: addCourse@places/place: ", err);
+  })
 
-  firebase.database().ref('/users/'+data.instructor).on("value", snapshot => {
+  firebase.database().ref('/users/'+data.instructor).once("value", snapshot => {
     let instructor = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/instructor/'] = instructor
     firebase.database().ref().update(updates)
   })
+  .catch(err => {
+    console.error("ERR: addCourse@users/instructor: ", err);
+  })
 
-  firebase.database().ref('/courseTypes/'+data.courseType).on("value", snapshot => {
+
+  firebase.database().ref('/courseTypes/'+data.courseType).once("value", snapshot => {
     let courseType = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/courseType/'] = courseType
     firebase.database().ref().update(updates)
+  })
+  .catch(err => {
+    console.error("ERR: addCourse@courseTypes/courseType: ", err);
   })
 
   return dispatch => firebase.database().ref('/courses/' + newPostKey).update({
@@ -221,17 +260,23 @@ export function addCourse(data, special) {
     day: parseInt(data.day) || null,
     date: data.date || null
   })
+  .catch(err => {
+    console.error("ERR: update; addCourse: ", err);
+  })
 }
 
 export function addCourseType(data) {
-  return dispatch => firebase.database().ref('/courseTypes/'+data.name).update({
+  return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
     name: data.name,
     desc: data.desc
+  })
+  .catch(err => {
+    console.error("ERR: update; addCourseType: ", err);
   })
 }
 
 export function addShopItem(data, type) {
-  return dispatch => firebase.database().ref('/shopItems/'+data.title).update({
+  return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
     title: data.title,
     desc: data.desc,
     price: data.price,
@@ -240,42 +285,63 @@ export function addShopItem(data, type) {
     usetimes: data.usetimes || null,
     usedays: data.usedays || null
   })
+  .catch(err => {
+    console.error("ERR: update; addShopItem: ", err);
+  })
 }
 
 export function lockUser(key) {
-  return dispatch => firebase.database().ref('/users/'+key).update({
+  return dispatch => firebase.database().ref('/users/' + key).update({
     locked: true,
     instructor: null
+  })
+  .catch(err => {
+    console.error("ERR: update; lockUser: ", err);
   })
 }
 
 export function unlockUser(key) {
-  return dispatch => firebase.database().ref('/users/'+key).update({
+  return dispatch => firebase.database().ref('/users/' + key).update({
     locked: null
+  })
+  .catch(err => {
+    console.error("ERR: update; unlockUser: ", err);
   })
 }
 
 export function lockShopItem(key) {
-  return dispatch => firebase.database().ref('/shopItems/'+key).update({
+  return dispatch => firebase.database().ref('/shopItems/' + key).update({
     locked: true
+  })
+  .catch(err => {
+    console.error("ERR: update; lockShopItem: ", err);
   })
 }
 
 export function unlockShopItem(key) {
-  return dispatch => firebase.database().ref('/shopItems/'+key).update({
+  return dispatch => firebase.database().ref('/shopItems/' + key).update({
     locked: null
+  })
+  .catch(err => {
+    console.error("ERR: update; unlockShopItem: ", err);
   })
 }
 
 export function makeInstructor(key) {
-  return dispatch => firebase.database().ref('/users/'+key).update({
+  return dispatch => firebase.database().ref('/specialUsers/' + key).update({
     instructor: true
+  })
+  .catch(err => {
+    console.error("ERR: update; makeInstructor: ", err);
   })
 }
 
 export function unmakeInstructor(key) {
-  return dispatch => firebase.database().ref('/users/'+key).update({
+  return dispatch => firebase.database().ref('/specialUsers/' + key).update({
     instructor: null
+  })
+  .catch(err => {
+    console.error("ERR: update; unmakeInstructor: ", err);
   })
 }
 
