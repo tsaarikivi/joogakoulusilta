@@ -10,11 +10,13 @@ let surname = null;
 export function authListener() {
   return dispatch => {
     Auth.onAuthStateChanged( userdata => {
+      console.log("Userdata: ", userdata);
       if (userdata) {
         var user = {}
         user.email = userdata.email;
         user.uid = userdata.uid;
         user.userdata = userdata;
+        console.log("USER: ", user.uid, user.email);
         dispatch({
           type: ADD_USER,
           payload: user

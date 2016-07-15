@@ -1,9 +1,11 @@
 {
   "rules": {
     "users": {
+      ".read" : "auth.uid === 'joogaserver' || auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'",
+      ".write" : "auth.uid === 'joogaserver'  || auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'",
       "$userId": {
-        ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-        ".write": "auth.uid === 'joogaserver' || auth.uid === $userId"
+        ".read": "auth.uid === $userId",
+        ".write": "auth.uid === $userId"
       }
     },
     "bookingsbycourse":{

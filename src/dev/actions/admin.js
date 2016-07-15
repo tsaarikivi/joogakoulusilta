@@ -1,4 +1,4 @@
-import { 
+import {
   FETCH_USER_LIST,
   FETCH_ADMIN_LIST,
   FETCH_COURSE_TYPE_LIST,
@@ -21,7 +21,7 @@ import {
   MINIMIZE_SHOP_LIST,
   EXPAND_PLACE_LIST,
   MINIMIZE_PLACE_LIST,
-  
+
   EXPAND_PLACE_FORM,
   MINIMIZE_PLACE_FORM,
   EXPAND_COURSE_TYPE_FORM,
@@ -54,6 +54,9 @@ export function fetchUserList() {
         type: FETCH_USER_LIST,
         payload: list
       })
+    })
+    .catch(err => {
+      console.error("ADMIN_ERR: fetch users: ", err);
     })
   }
 }
@@ -196,7 +199,7 @@ export function addCourse(data, special) {
     firebase.database().ref().update(updates)
   })
 
-  firebase.database().ref('/users/'+data.instructor).on("value", snapshot => {    
+  firebase.database().ref('/users/'+data.instructor).on("value", snapshot => {
     let instructor = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/instructor/'] = instructor
