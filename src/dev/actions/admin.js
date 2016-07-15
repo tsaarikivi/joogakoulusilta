@@ -75,7 +75,6 @@ export function fetchAdminList() {
 
       for (var key in specialusers) {
         if (specialusers[key].admin) {
-          console.log("GRABBED USER :::: ", users[key]);
           users[key].key = key
           list = list.concat(users[key])
         }
@@ -109,7 +108,6 @@ export function fetchInstructorList() {
 
       for (var key in specialusers) {
         if (specialusers[key].instructor) {
-          console.log("GRABBED USER :::: ", users[key]);
           users[key].key = key
           list = list.concat(users[key])
         }
@@ -231,52 +229,38 @@ export function addPlace(data) {
 }
 
 export function addCourse(data, special) {
-  var newPostKey = firebase.database().ref().child('/courses/').push().key
-
+  var courseType = Object.assign({})
+  var instructor = Object.assign({})
+  var place = Object.assign({})
 //TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
 
-  firebase.database().ref('/places/'+data.place).on("value", snapshot => {
-    let place = snapshot.val()
-    let updates = {};
-    updates['/courses/' + newPostKey + '/place/'] = place
-    firebase.database().ref().update(updates)
-  })
-  .catch(err => {
-    console.error("ERR: addCourse@places/place: ", err);
-  })
+  return dispatch => {
+    firebase.database().ref('/places/'+data.place).once("value")
+    .then( snapshot => {
+      place = snapshot.val()
+      return firebase.database().ref('/users/'+data.instructor).once("value")
+    })
+    .then( snapshot => {
+      instructor = snapshot.val()
+      return firebase.database().ref('/courseTypes/'+data.courseType).once("value")
+    })
+    .then( snapshot => {
+      courseType = snapshot.val()
+      instructor.uid = null
 
-  firebase.database().ref('/users/'+data.instructor).once("value", snapshot => {
-    let instructor = snapshot.val()
-    let updates = {};
-    updates['/courses/' + newPostKey + '/instructor/'] = instructor
-    firebase.database().ref().update(updates)
-  })
-  .catch(err => {
-    console.error("ERR: addCourse@users/instructor: ", err);
-  })
-
-
-  firebase.database().ref('/courseTypes/'+data.courseType).once("value", snapshot => {
-    let courseType = snapshot.val()
-    let updates = {};
-    updates['/courses/' + newPostKey + '/courseType/'] = courseType
-    firebase.database().ref().update(updates)
-  })
-  .catch(err => {
-    console.error("ERR: addCourse@courseTypes/courseType: ", err);
-  })
-
-  return dispatch => firebase.database().ref('/courses/' + newPostKey).update({
-    special: special,
-    start: parseInt(data.start)*36000,
-    end: parseInt(data.end)*36000,
-    maxCapacity: parseInt(data.maxCapacity),
-    day: parseInt(data.day) || null,
-    date: data.date || null
-  })
-  .catch(err => {
-    console.error("ERR: update; addCourse: ", err);
-  })
+      firebase.database().ref('/courses/').push({
+        special: special,
+        start: parseInt(data.start)*36000,
+        end: parseInt(data.end)*36000,
+        maxCapacity: parseInt(data.maxCapacity),
+        day: parseInt(data.day) || null,
+        date: data.date || null,
+        place: place,
+        instructor: instructor,
+        courseType: courseType
+      })
+    })
+  }
 }
 
 export function addCourseType(data) {
