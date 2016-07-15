@@ -1,6 +1,6 @@
 import { FETCH_INSTRUCTOR_LIST, EXPAND_INSTRUCTOR_LIST, MINIMIZE_INSTRUCTOR_LIST } from '../../actions/actionTypes.js'
 
-const INITIAL_STATE = {expanded: false}
+const INITIAL_STATE = {expanded: false, list: []}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

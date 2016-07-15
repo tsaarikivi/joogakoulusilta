@@ -1,6 +1,6 @@
 import { FETCH_COURSE_LIST, EXPAND_COURSE_LIST, MINIMIZE_COURSE_LIST } from '../../actions/actionTypes.js'
 
-const INITIAL_STATE = {expanded: false}
+const INITIAL_STATE = {expanded: false, list: []}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
