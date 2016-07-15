@@ -1,9 +1,20 @@
 import axios from "axios"
 
-import { FETCH_SHOP_ITEMS, ADD_TO_CART, GET_CLIENT_TOKEN, DO_PURCHASE_TRANSACTION, CHECKOUT_ERROR } from './actionTypes.js'
+import { FETCH_SHOP_ITEMS, ADD_TO_CART, GET_CLIENT_TOKEN, DO_PURCHASE_TRANSACTION, CHECKOUT_ERROR, CHECKOUT_TIMEOUT } from './actionTypes.js'
 
 console.log("GLOBAL: ", global);
 const ShopItemsRef = firebase.database().ref('/shopItems/')
+
+export function waitForMilliseconds(milliseconds){
+  return dispatch => {
+    setTimeout(() => {
+      dispatch({
+        type: CHECKOUT_TIMEOUT,
+        payload: {phase: "timeout"}
+      })
+    }, milliseconds);
+  }
+}
 
 export function fetchShopItems() {
   var list = []
