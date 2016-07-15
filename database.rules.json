@@ -1,9 +1,11 @@
 {
   "rules": {
     "users": {
+      ".read" : "auth.uid === 'joogaserver' || root.child('users').child(auth.uid).child('admin').val() == true",
+      ".write" : "auth.uid === 'joogaserver'  || root.child('users').child(auth.uid).child('admin').val() == true",
       "$userId": {
-        ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-        ".write": "auth.uid === 'joogaserver' || auth.uid === $userId"
+        ".read": "auth.uid === $userId",
+        ".write": "auth.uid === $userId"
       }
     },
     "bookingsbycourse":{
@@ -24,23 +26,23 @@
     },
     "courseTypes": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('users').child(auth.uid).child('admin').val() == true"
     },
     "courses": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('users').child(auth.uid).child('admin').val() == true"
     },
     "places": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('users').child(auth.uid).child('admin').val() == true"
     },
     "instructors": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('users').child(auth.uid).child('admin').val() == true"
     },
     "shopItems": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('users').child(auth.uid).child('admin').val() == true"
     }
   }
 }
