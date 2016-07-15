@@ -13,7 +13,6 @@ class ShopItem extends React.Component {
 
   handleClick(e){
     e.preventDefault();
-    console.log("EVENT:: ",e);
     this.props.actions.addToCart(this.props.item);
     this.context.router.push('checkout');
 

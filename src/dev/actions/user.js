@@ -106,7 +106,6 @@ export function fetchUserDetails(uid) {
 }
 
 export function finishedWithUserDetails(){
-  console.log("ACTION: finished with user called");
   if(UserRef) UserRef.off('value');
   if(TransactionsRef) TransactionsRef.off('value');
   if(BookingsRef) BookingsRef.off('value')
@@ -119,7 +118,6 @@ export function finishedWithUserDetails(){
 }
 
 export function createNewUser(user, firstname, lastname) {
-  console.log("ADDING USER:", user, firstname, lastname);
   let UIDUsersRef = firebase.database().ref('/users/'+user.uid)
   UIDUsersRef.update({
                   email: user.email,

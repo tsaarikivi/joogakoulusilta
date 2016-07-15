@@ -16,6 +16,11 @@ class Checkout extends React.Component {
     router: React.PropTypes.object
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.shopItems.phase === "timeout"){
+      this.context.router.push('user');
+    }
+  }
 
   componentWillMount(){
     this.props.actions.getClientTokenFromBraintree();
@@ -34,45 +39,68 @@ class Checkout extends React.Component {
     this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
   }
 
+//=================================================================
+//Render logic
+//=================================================================
 
+  renderStartPhase(){
+    return(
+      <div>Alustetaan maksuyhteyttä...</div>
+    )
+  }
+
+  renderDonePhase(){
+    this.props.actions.waitForMilliseconds(5*1000);
+    return(
+      <div>
+        <p>Maksu onnistuneesti suoritettu...</p>
+        <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
+      </div>
+    )
+  }
+
+  renderError(){
+    return(
+      <div>Maksuyhteydessä ongelmia...</div>
+    )
+  }
+
+  renderPayment(){
+    return (
+          <div>
+            <p>Valitse maksutapa ja vahvista maksu.</p>
+            <p class='test-instruction' >Testaa: <code>4111 1111 1111 1111</code></p>
+            <form action='/transactions' method='POST'>
+                <DropIn
+                    braintree={Braintree}
+                    clientToken={this.props.shopItems.token}
+                    onReady={this.onReady}
+                    onError={this.onError}
+                    onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
+                />
+              <br></br>
+              <p>{this.props.shopItems.cart.title}</p><br></br>
+              <p>Hinta: {this.props.shopItems.cart.price} € </p>
+              <input type='submit' value='Vahvista:'></input>
+            </form>
+          </div>
+    );
+  }
 
   render() {
-    console.log("CHECKOUT_RENDER:", this.props.shopItems);
-    if(this.props.shopItems.phase === "") {
-      return(
-        <div>Alustetaan maksuyhteyttä...</div>
-      )
-    } else if(this.props.shopItems.phase === "done") {
-        return(
-          <div>
-            <p>Maksu onnistuneesti suoritettu...</p>
-            <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
-          </div>
-        )
-    } else if(this.props.shopItems.phase === "error") {
-      return(
-        <div>Maksuyhteydessä ongelmia...</div>
-      )
-    } else {
-      return (
-            <div>
-              <p>Valitse maksutapa ja vahvista maksu.</p>
-              <p class='test-instruction' >Testaa: <code>4111 1111 1111 1111</code></p>
-              <form action='/transactions' method='POST'>
-                  <DropIn
-                      braintree={Braintree}
-                      clientToken={this.props.shopItems.token}
-                      onReady={this.onReady}
-                      onError={this.onError}
-                      onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
-                  />
-                <br></br>
-                <p>{this.props.shopItems.cart.title}</p><br></br>
-                <p>Hinta: {this.props.shopItems.cart.price} € </p>
-                <input type='submit' value='Vahvista:'></input>
-              </form>
-            </div>
-      );
+    switch(this.props.shopItems.phase){
+      case "start":
+        return this.renderStartPhase()
+      case "tokenReceived":
+        return this.renderPayment()
+      case "done":
+        return this.renderDonePhase()
+      case "error":
+        return this.renderError()
+      case "timeout":
+        return(<p> Palataan takaisin päänäkymään.</p>)
+      default:
+      return (<p>ERROR</p>)
     }
   }
 }

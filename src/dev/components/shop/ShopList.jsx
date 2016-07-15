@@ -17,7 +17,6 @@ class ShopList extends React.Component {
   }
 
   render() {
-    console.log("ITEMS: ", this.props.shopItems);
     return (
       <div className="container">
         <div className="content-container align-left">
