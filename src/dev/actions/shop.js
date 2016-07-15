@@ -23,7 +23,7 @@ export function waitForMilliseconds(milliseconds){
 }
 
 export function fetchShopItems() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     ShopItemsRef.once('value', snapshot => {
       var shopItems = snapshot.val()

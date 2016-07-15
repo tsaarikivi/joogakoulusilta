@@ -37,7 +37,7 @@ import {
 } from './actionTypes.js'
 
 export function fetchUserList() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     firebase.database().ref('/users/').once('value', snapshot => {
       var users = snapshot.val()
@@ -59,30 +59,19 @@ export function fetchUserList() {
   }
 }
 
-function grabUser(key) {
-  firebase.database().ref('/users/' + key).once('value', snapshot => {
-    return snapshot.val()
-  })
-  .catch(err => {
-    console.error("ADMIN_ERR: fetch users grabUser: ", err);
-  })
-}
-
 export function fetchAdminList() {
-  var list = []
-  list = Object.assign([])
+  var list = Object.assign([])
+  var specialusers = Object.assign({})
+  var users = Object.assign({})
+
   return dispatch => {
-    firebase.database().ref('/specialUsers/').once('value')
+    firebase.database().ref('/users/').once('value')
     .then( snapshot => {
-      var specialusers = snapshot.val()
-      return firebase.database().ref('/users/').once('value')
+      users = snapshot.val()
+      return firebase.database().ref('/specialUsers/').once('value')
     })
     .then( snapshot => {
-      var users = snapshot.val()
-    })
-    .catch(err => {
-      console.error("FETCH USERS ERROR: ", err);
-    })
+      specialusers = snapshot.val()
 
       for (var key in specialusers) {
         if (specialusers[key].admin) {
@@ -97,34 +86,49 @@ export function fetchAdminList() {
         payload: list
       })
 
+    })
+    .catch(err => {
+      console.error("FETCH USERS ERROR: ", err);
+    })        
   }
 }
 
 export function fetchInstructorList() {
-  var list = []
+  var list = Object.assign([])
+  var specialusers = Object.assign({})
+  var users = Object.assign({})
+
   return dispatch => {
-    firebase.database().ref('/specialUsers/').once('value', snapshot => {
-      var users = snapshot.val()
-      for (var key in users) {
-        if (users.hasOwnProperty(key) && users[key].instructor) {
-          let user = grabUser(key)
-          user.key = key
-          list = list.concat(user)
+    firebase.database().ref('/users/').once('value')
+    .then( snapshot => {
+      users = snapshot.val()
+      return firebase.database().ref('/specialUsers/').once('value')
+    })
+    .then( snapshot => {
+      specialusers = snapshot.val()
+
+      for (var key in specialusers) {
+        if (specialusers[key].instructor) {
+          console.log("GRABBED USER :::: ", users[key]);
+          users[key].key = key
+          list = list.concat(users[key])
         }
       }
+
       dispatch({
         type: FETCH_INSTRUCTOR_LIST,
         payload: list
       })
+
     })
     .catch(err => {
-      console.error("ADMIN_ERR: fetch specialUsers: ", err);
-    })
+      console.error("FETCH USERS ERROR: ", err);
+    })        
   }
 }
 
 export function fetchCourseTypeList() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     firebase.database().ref('/courseTypes/').once('value', snapshot => {
       var courseTypes = snapshot.val()
@@ -147,7 +151,7 @@ export function fetchCourseTypeList() {
 }
 
 export function fetchCourseList() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     firebase.database().ref('/courses/').orderByChild('day').once('value', snapshot => {
       var courses = snapshot.val()
@@ -170,7 +174,7 @@ export function fetchCourseList() {
 }
 
 export function fetchShopList() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     firebase.database().ref('/shopItems/').once('value', snapshot => {
       var shopItems = snapshot.val()
@@ -193,7 +197,7 @@ export function fetchShopList() {
 }
 
 export function fetchPlaceList() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     firebase.database().ref('/places/').once('value', snapshot => {
       var places = snapshot.val()

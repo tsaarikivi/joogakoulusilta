@@ -7,7 +7,7 @@ import { FETCH_TIMETABLE,
 const CoursesRef = firebase.database().ref('/courses/')
 
 export function fetchSpecialCourses() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
@@ -27,7 +27,7 @@ export function fetchSpecialCourses() {
 }
 
 export function fetchSpecialCoursesBanner() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
@@ -47,7 +47,7 @@ export function fetchSpecialCoursesBanner() {
 }
 
 export function fetchTimetable() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     CoursesRef.orderByChild('start').once('value', snapshot => {
       var courses = snapshot.val()
