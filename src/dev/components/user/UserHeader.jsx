@@ -56,7 +56,7 @@ export default class UserHeader extends React.Component {
     return (
       <div class="container bordered-container">
         <div className="content-container align-left">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
+          <h1>Hei, {this.props.curUsr.firstname}!</h1>
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>

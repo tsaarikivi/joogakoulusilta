@@ -17,11 +17,12 @@ class ShopList extends React.Component {
   }
 
   render() {
+    console.log("ITEMS: ", this.props.shopItems);
     return (
       <div className="container">
         <div className="content-container align-left">
           <ul className="wide-list">
-            {this.props.shopItems.map(this.renderShopItems)}
+            {this.props.shopItems.items.map(this.renderShopItems)}
           </ul>
         </div>
       </div>

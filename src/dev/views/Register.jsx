@@ -7,8 +7,6 @@ import * as actionCreators from '../actions/auth.js'
 
 class Register extends React.Component {
 
-
-
   constructor(){
     super();
     this.errorText = ""
@@ -24,13 +22,14 @@ class Register extends React.Component {
     }
   }
 
-
   handleRegister = (e) => {
     e.preventDefault();
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    console.log("handle register:", email, password);
-    this.props.actions.register(email, password);
+    var firstName = document.getElementById("firstName").value;
+    var surname = document.getElementById("surname").value;
+    console.log("handle register:", email, password, firstName, surname);
+    this.props.actions.register(email, password, firstName, surname);
   }
 
   render() {
@@ -50,6 +49,10 @@ class Register extends React.Component {
               <input id="email" type="email" name="email" placeholder="Sähköposti"/>
               <label>Salasana</label>
               <input id="password" type="password" name="password" placeholder="Salasana"/>
+              <label>Etunimi</label>
+              <input id="firstName" type="text" name="firstName" placeholder="Etunimi"/>
+              <label>Sukunimi</label>
+              <input id="surname" type="text" name="surname" placeholder="Sukunimi"/>
               <br/>
               <button className="btn-small btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
               <br/>
