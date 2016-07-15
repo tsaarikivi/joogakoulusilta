@@ -189,25 +189,22 @@ export function addPlace(data) {
 export function addCourse(data, special) {
   var newPostKey = firebase.database().ref().child('/courses/').push().key
 
-  var place = {}
   firebase.database().ref('/places/'+data.place).on("value", snapshot => {
-    place = snapshot.val()
+    let place = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/place/'] = place
     firebase.database().ref().update(updates)
   })
 
-  var instructor = {}
   firebase.database().ref('/users/'+data.instructor).on("value", snapshot => {    
-    instructor = snapshot.val()
+    let instructor = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/instructor/'] = instructor
     firebase.database().ref().update(updates)
   })
 
-  var courseType = {}
   firebase.database().ref('/courseTypes/'+data.courseType).on("value", snapshot => {
-    courseType = snapshot.val()
+    let courseType = snapshot.val()
     let updates = {};
     updates['/courses/' + newPostKey + '/courseType/'] = courseType
     firebase.database().ref().update(updates)
