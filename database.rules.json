@@ -24,28 +24,23 @@
     },
     "coursetypes": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
     },
     "courses": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
     },
     "places": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
     },
     "instructors": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
     },
     "shopitems": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' || auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
     }
   }
 }
