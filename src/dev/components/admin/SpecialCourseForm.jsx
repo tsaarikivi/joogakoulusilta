@@ -6,7 +6,6 @@ import * as actionCreators from '../../actions/admin.js'
 
 class SpecialCourseForm extends React.Component {
   onSubmit(props) {
-    console.log("props:", props);
     this.props.actions.addCourse(props, true)
   }
 
@@ -83,7 +82,6 @@ class SpecialCourseForm extends React.Component {
   }
 
   render() {
-    console.log("PROPS: ", this.props);
     return (
       <div className="container bordered-container">
         <div className="content-container">
