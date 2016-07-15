@@ -6,6 +6,7 @@ import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
+    console.log("PROPS: ", props);
     this.props.actions.addCourse(props, false)
   }
 
@@ -17,7 +18,7 @@ class CourseForm extends React.Component {
 
   renderInstructorOptions(item) {
     return (
-      <option key={item.key} value={item.uid} >{item.firstname} {item.lastname}</option>
+      <option key={item.key} value={item.key} >{item.firstname} {item.lastname}</option>
     )
   }
 
@@ -32,7 +33,7 @@ class CourseForm extends React.Component {
 
     if (this.props.cmp.expanded) {
       return (
-        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>        
+        <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="courseDay">Viikonpäivä</label>
           <select name="courseDay" {...day} value={day.value || ''}>
             <option>-- Valitse päivä --</option>
@@ -90,13 +91,13 @@ class CourseForm extends React.Component {
     }
   }
 
-  render() {    
+  render() {
     return (
       <div className="container bordered-container">
         <div className="content-container">
           <h2 className="header-collapse">Luo uusi vakiokurssi</h2>
           {this.renderExpandButton()}
-          {this.renderContent()}   
+          {this.renderContent()}
         </div>
       </div>
     )

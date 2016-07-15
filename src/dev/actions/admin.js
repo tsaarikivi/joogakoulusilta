@@ -192,6 +192,8 @@ export function addPlace(data) {
 export function addCourse(data, special) {
   var newPostKey = firebase.database().ref().child('/courses/').push().key
 
+//TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
+
   firebase.database().ref('/places/'+data.place).on("value", snapshot => {
     let place = snapshot.val()
     let updates = {};
