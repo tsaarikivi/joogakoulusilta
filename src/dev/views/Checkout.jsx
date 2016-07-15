@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios"
 import { Link } from "react-router"
 
 import { bindActionCreators } from 'redux'
@@ -17,33 +16,9 @@ class Checkout extends React.Component {
     router: React.PropTypes.object
   }
 
-  constructor(){
-    super();
-    this.token = "";
-    this.getClientToken();
-    console.log(global);
-  }
 
-  getClientToken() {
-    let that = this;
-    console.log("requesting client token");
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER+'/clientToken'
-    console.log("JOOGASERVER: ", JOOGASERVER);
-    console.log("JOOGAURL: ", JOOGAURL);
-    firebase.auth().currentUser.getToken(true).then( idToken => {
-      axios.get(JOOGAURL + '?token=' + idToken)
-      .then( response => {
-        that.token = response.data;
-        console.log("RESPONSE",response);
-        that.forceUpdate()
-      })
-      .catch( error => {
-        that.token = "error"
-        console.error("TOKEN_ERROR:", error);
-      });
-    }).catch( error => {
-      console.error("Failde to get authentication token for current user: ", error);
-    });
+  componentWillMount(){
+    this.props.actions.getClientTokenFromBraintree();
   }
 
   onReady() {
@@ -52,57 +27,29 @@ class Checkout extends React.Component {
 
   onError(err) {
         console.error(err);
+        this.props.actions.checkoutError(err);
   }
 
   onPaymentMethodReceived(payload) {
-    console.log("Payment method received. Sending nonce to server");
-    let that = this;
-    console.log("Checkout_PROPS::", this.props);
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER+'/checkout'
-    console.log("JOOGASERVER: ", JOOGASERVER);
-    console.log("JOOGAURL: ", JOOGAURL);
-
-    firebase.auth().currentUser.getToken(true).then( idToken => {
-      console.log("IDTOKEN: ", idToken);
-
-      axios.post(JOOGAURL,
-        {
-          payment_method_nonce: payload.nonce,
-          item_key: this.props.cart.key,
-          current_user: idToken
-        })
-      .then( result => {
-        console.log("Checkout DONE: " + result);
-        that.token = "done";
-        that.forceUpdate();
-      })
-      .catch( error => {
-        console.log("CHECKOUT_ERROR:");
-        console.error(error);
-        that.token = "error";
-        that.forceUpdate();
-      })
-    }).catch( error => {
-      console.error("Failde to get authentication token for current user: ", error);
-    });
-
+    this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
   }
 
 
 
   render() {
-    if(this.token === "") {
+    console.log("CHECKOUT_RENDER:", this.props.shopItems);
+    if(this.props.shopItems.phase === "") {
       return(
         <div>Alustetaan maksuyhteyttä...</div>
       )
-    } else if(this.token === "done") {
+    } else if(this.props.shopItems.phase === "done") {
         return(
           <div>
             <p>Maksu onnistuneesti suoritettu...</p>
             <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
           </div>
         )
-    } else if(this.token === "error") {
+    } else if(this.props.shopItems.phase === "error") {
       return(
         <div>Maksuyhteydessä ongelmia...</div>
       )
@@ -114,14 +61,14 @@ class Checkout extends React.Component {
               <form action='/transactions' method='POST'>
                   <DropIn
                       braintree={Braintree}
-                      clientToken={this.token}
+                      clientToken={this.props.shopItems.token}
                       onReady={this.onReady}
                       onError={this.onError}
                       onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
                   />
                 <br></br>
-                <p>{this.props.cart.title}</p><br></br>
-                <p>Hinta: {this.props.cart.price} € </p>
+                <p>{this.props.shopItems.cart.title}</p><br></br>
+                <p>Hinta: {this.props.shopItems.cart.price} € </p>
                 <input type='submit' value='Vahvista:'></input>
               </form>
             </div>
@@ -135,7 +82,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { cart: state.cart, currentUser: state.currentUser }
+  return { shopItems: state.shopItems, currentUser: state.currentUser }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

@@ -1,4 +1,6 @@
-import { FETCH_SHOP_ITEMS, ADD_TO_CART_AND_CHECKOUT } from './actionTypes.js'
+import axios from "axios"
+
+import { FETCH_SHOP_ITEMS, ADD_TO_CART, GET_CLIENT_TOKEN, DO_PURCHASE_TRANSACTION, CHECKOUT_ERROR } from './actionTypes.js'
 
 console.log("GLOBAL: ", global);
 const ShopItemsRef = firebase.database().ref('/shopItems/')
@@ -17,7 +19,7 @@ export function fetchShopItems() {
       }
       dispatch({
         type: FETCH_SHOP_ITEMS,
-        payload: list
+        payload: {items: list}
       })
     })
   }
@@ -25,12 +27,77 @@ export function fetchShopItems() {
 
 export function addToCart(item){
   return dispatch => { dispatch ({
-    type: ADD_TO_CART_AND_CHECKOUT,
-    payload: item
+    type: ADD_TO_CART,
+    payload: {cart: item}
+    })
+  }
+}
+
+export function checkoutError(error){
+  return dispatch => {
+    dispatch({
+      type: CHECKOUT_ERROR,
+      payload: {error: {code: 30, message: "Checkout error: " + error.toString()}}
     })
   }
 }
 
 export function removeShopItem(key) {
   return dispatch => ShopItemsRef.child(key).remove()
+}
+
+export function getClientTokenFromBraintree(){
+  return dispatch => {
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER+'/clientToken'
+    console.log("JOOGASERVER: ", JOOGASERVER);
+    console.log("JOOGAURL: ", JOOGAURL);
+    firebase.auth().currentUser.getToken(true)
+    .then( idToken => {
+      return axios.get(JOOGAURL + '?token=' + idToken)
+    })
+    .then( response => {
+      dispatch({
+        type: GET_CLIENT_TOKEN,
+        payload: {token: response.data, phase: "tokenReceived"}
+      })
+    })
+    .catch( error => {
+        console.error("TOKEN_ERROR:", error);
+        dispatch({
+          type: CHECKOUT_ERROR,
+          payload: {error: {code: 10, message: "ClientToken error: " + error.toString()}}
+        })
+    });
+  }
+}
+
+export function doPurchaseTransaction(nonce, clientKey) {
+  return dispatch => {
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER+'/checkout'
+    console.log("JOOGASERVER: ", JOOGASERVER);
+    console.log("JOOGAURL: ", JOOGAURL);
+
+    firebase.auth().currentUser.getToken(true)
+    .then( idToken => {
+      return axios.post(JOOGAURL,
+        {
+          payment_method_nonce: nonce,
+          item_key: clientKey,
+          current_user: idToken
+        })
+    })
+    .then( result => {
+      dispatch({
+        type: DO_PURCHASE_TRANSACTION,
+        payload: { cart: {}, phase: "done", purchaseResult: result, error: {code: 0, message: "no error"} }
+      })
+    })
+    .catch( error => {
+      console.error("PURCHASE ERROR",error);
+      dispatch({
+        type: CHECKOUT_ERROR,
+        payload: {error: {code: 20, message: "ClientToken error: " + error.toString()}}
+      })
+    })
+  }
 }
