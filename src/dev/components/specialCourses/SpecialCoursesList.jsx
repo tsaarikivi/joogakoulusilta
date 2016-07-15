@@ -19,10 +19,12 @@ class SpecialCoursesList extends React.Component {
 
   render() {
     return (
-      <div className="container align-left">
-        <ul className="wide-list">
-          {this.props.specialCourses.map(this.renderSpecialCourseItems)}
-        </ul>
+      <div className="container">
+        <div className="content-container">
+          <ul className="wide-list">
+            {this.props.specialCourses.map(this.renderSpecialCourseItems)}
+          </ul>
+        </div>
       </div>
     );
   }
