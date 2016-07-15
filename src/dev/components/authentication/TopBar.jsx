@@ -17,11 +17,8 @@ class TopBar extends React.Component {
 
   handleLogout = (e) => {
     e.preventDefault();
-    console.log("Logging out.");
     if(this.props.auth.uid){
-      console.log("11111");
       this.props.authActions.logout();
-      console.log("22222");
       this.props.userActions.finishedWithUserDetails();
     }
     else {

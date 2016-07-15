@@ -20,7 +20,7 @@ export function postCancellation(item, txRef, courseInfo){
           transactionReference: txRef
         })
         .then( response => {
-          console.log(response.data);
+          console.log(response.data); // TODO: process the response data and do the needed...
         })
         .catch( error => {
           console.error(error);
@@ -56,7 +56,6 @@ export function postReservation(forward, courseInfo){
 }
 
 function processBookings(inputBookings, uid, bookings, userbookings){
-  console.log("processBookings: ", inputBookings, uid);
   let instanceId;
   let instanceObj;
   let booking = {}
@@ -64,7 +63,6 @@ function processBookings(inputBookings, uid, bookings, userbookings){
   let index = 0;
   for (instanceId in inputBookings){
     //Booking is in the future - it counts!!
-    console.log("instance id: ", instanceId, Date.now());
     if(instanceId > Date.now()){
       booking.instance = instanceId;
       booking.reservations = 0;
@@ -74,11 +72,9 @@ function processBookings(inputBookings, uid, bookings, userbookings){
         booking.reservations++;
         booking.participants.push(instanceObj[user].user);
         if(user === uid){
-          console.log("Push to userbookings: ");
           userbookings.push(Object.assign({item: instanceId, txRef: instanceObj[user].transactionReference}));
         }
       }
-      console.log("Push to bookings: ");
       bookings.push(Object.assign({},booking))
       index++;
     }
@@ -90,8 +86,6 @@ function processBookings(inputBookings, uid, bookings, userbookings){
 export function fetchCourseBookings(coursekey, uid) {
   var bookings = [];
   var userbookings= [];
-
-  console.log("FETCHCOURSEBOOKINGS", coursekey, uid);
 
   BookingsRef = firebase.database().ref('/bookingsbycourse/'+coursekey);
   return dispatch => {

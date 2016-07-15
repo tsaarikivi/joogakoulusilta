@@ -1,8 +1,14 @@
 import axios from "axios"
 
-import { FETCH_SHOP_ITEMS, ADD_TO_CART, GET_CLIENT_TOKEN, DO_PURCHASE_TRANSACTION, CHECKOUT_ERROR, CHECKOUT_TIMEOUT } from './actionTypes.js'
+import {
+  START_CHECKOUT_FLOW,
+  FETCH_SHOP_ITEMS,
+  ADD_TO_CART,
+  GET_CLIENT_TOKEN,
+  DO_PURCHASE_TRANSACTION,
+  CHECKOUT_ERROR,
+  CHECKOUT_TIMEOUT } from './actionTypes.js'
 
-console.log("GLOBAL: ", global);
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
 export function waitForMilliseconds(milliseconds){
@@ -59,6 +65,10 @@ export function removeShopItem(key) {
 
 export function getClientTokenFromBraintree(){
   return dispatch => {
+    dispatch({
+      type: START_CHECKOUT_FLOW,
+      payload: {phase: "start"}
+    })
     let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER+'/clientToken'
     console.log("JOOGASERVER: ", JOOGASERVER);
     console.log("JOOGAURL: ", JOOGAURL);

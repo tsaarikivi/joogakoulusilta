@@ -16,6 +16,11 @@ class Checkout extends React.Component {
     router: React.PropTypes.object
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.shopItems.phase === "timeout"){
+      this.context.router.push('user');
+    }
+  }
 
   componentWillMount(){
     this.props.actions.getClientTokenFromBraintree();
@@ -83,7 +88,6 @@ class Checkout extends React.Component {
   }
 
   render() {
-    console.log("CHECKOUT_RENDER:", this.props.shopItems);
     switch(this.props.shopItems.phase){
       case "start":
         return this.renderStartPhase()
@@ -94,7 +98,7 @@ class Checkout extends React.Component {
       case "error":
         return this.renderError()
       case "timeout":
-        this.context.router.push('user');
+        return(<p> Palataan takaisin päänäkymään.</p>)
       default:
       return (<p>ERROR</p>)
     }

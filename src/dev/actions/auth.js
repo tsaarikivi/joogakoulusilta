@@ -15,7 +15,6 @@ export function authListener() {
         user.email = userdata.email;
         user.uid = userdata.uid;
         user.userdata = userdata;
-        console.log("USER:", user);
         dispatch({
           type: ADD_USER,
           payload: user
@@ -53,7 +52,6 @@ export function login(email, password) {
 export function logout() {
   return dispatch => {
     Auth.signOut().then( () => {
-      console.log("SIGN OUT SUCCESS!");
     }, error => {
       if(error){
         dispatch({

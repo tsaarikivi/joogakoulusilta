@@ -13,7 +13,6 @@ class Register extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("NEXT PROPS:", nextProps);
     if(nextProps.auth.error.code != 0){
       this.errorText = nextProps.auth.error.message;
     }
@@ -28,7 +27,6 @@ class Register extends React.Component {
     var password = document.getElementById("password").value;
     var firstName = document.getElementById("firstName").value;
     var surname = document.getElementById("surname").value;
-    console.log("handle register:", email, password, firstName, surname);
     this.props.actions.register(email, password, firstName, surname);
   }
 
