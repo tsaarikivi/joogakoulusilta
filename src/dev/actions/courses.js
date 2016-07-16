@@ -49,7 +49,7 @@ export function fetchSpecialCoursesBanner() {
 export function fetchTimetable() {
   var list = Object.assign([])
   return dispatch => {
-    CoursesRef.orderByChild('start').once('value', snapshot => {
+    CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
       for (var key in courses) {
         if (courses.hasOwnProperty(key) && !courses[key].special) {
@@ -58,6 +58,12 @@ export function fetchTimetable() {
           list = list.concat(courseItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        if (a.start && b.start) {
+          return a.start - b.start
+        }        
+        return 0
+      })
       dispatch({
         type: FETCH_TIMETABLE,
         payload: list

@@ -48,6 +48,17 @@ export function fetchUserList() {
           list = list.concat(ItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        let nma = a.firstname.toUpperCase()
+        let nmb = b.firstname.toUpperCase()
+        if (nma < nmb) {
+          return -1
+        }
+        if (nma > nmb) {
+          return 1
+        }
+        return 0
+      })
       dispatch({
         type: FETCH_USER_LIST,
         payload: list
@@ -79,7 +90,17 @@ export function fetchAdminList() {
           list = list.concat(users[key])
         }
       }
-
+      list.sort(function(a, b) {
+        let nma = a.firstname.toUpperCase()
+        let nmb = b.firstname.toUpperCase()
+        if (nma < nmb) {
+          return -1
+        }
+        if (nma > nmb) {
+          return 1
+        }
+        return 0
+      })
       dispatch({
         type: FETCH_ADMIN_LIST,
         payload: list
@@ -112,7 +133,17 @@ export function fetchInstructorList() {
           list = list.concat(users[key])
         }
       }
-
+      list.sort(function(a, b) {
+        let nma = a.firstname.toUpperCase()
+        let nmb = b.firstname.toUpperCase()
+        if (nma < nmb) {
+          return -1
+        }
+        if (nma > nmb) {
+          return 1
+        }
+        return 0
+      })
       dispatch({
         type: FETCH_INSTRUCTOR_LIST,
         payload: list
@@ -137,6 +168,17 @@ export function fetchCourseTypeList() {
           list = list.concat(ItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        let nma = a.name.toUpperCase()
+        let nmb = b.name.toUpperCase()
+        if (nma < nmb) {
+          return -1
+        }
+        if (nma > nmb) {
+          return 1
+        }
+        return 0
+      })
       dispatch({
         type: FETCH_COURSE_TYPE_LIST,
         payload: list
@@ -151,7 +193,7 @@ export function fetchCourseTypeList() {
 export function fetchCourseList() {
   var list = Object.assign([])
   return dispatch => {
-    firebase.database().ref('/courses/').orderByChild('day').once('value', snapshot => {
+    firebase.database().ref('/courses/').once('value', snapshot => {
       var courses = snapshot.val()
       for (var key in courses) {
         if (courses.hasOwnProperty(key)) {
@@ -160,6 +202,12 @@ export function fetchCourseList() {
           list = list.concat(ItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        if (a.day && b.day) {
+          return a.day - b.day
+        }        
+        return 1
+      })
       dispatch({
         type: FETCH_COURSE_LIST,
         payload: list
@@ -183,6 +231,12 @@ export function fetchShopList() {
           list = list.concat(ItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        if (a.price && b.price) {
+          return a.price - b.price
+        }        
+        return 0
+      })
       dispatch({
         type: FETCH_SHOP_LIST,
         payload: list
@@ -206,6 +260,17 @@ export function fetchPlaceList() {
           list = list.concat(ItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        let nma = a.name.toUpperCase()
+        let nmb = b.name.toUpperCase()
+        if (nma < nmb) {
+          return -1
+        }
+        if (nma > nmb) {
+          return 1
+        }
+        return 0
+      })
       dispatch({
         type: FETCH_PLACE_LIST,
         payload: list
