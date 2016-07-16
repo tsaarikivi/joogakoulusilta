@@ -12,6 +12,7 @@ import Register from './dev/views/Register.jsx'
 import Shop from './dev/views/Shop.jsx'
 import SpecialCourses from './dev/views/SpecialCourses.jsx'
 import User from './dev/views/User.jsx'
+import UserProfile from './dev/views/UserProfile.jsx'
 
 export default (
   <Route path="/" component={Layout}>
@@ -24,5 +25,6 @@ export default (
     <Route path="register" component={Register}> </Route>
     <Route path="checkout" component={Checkout}> </Route>
     <Route path="specialCourses" component={SpecialCourses}></Route>
+    <Route path="userProfile" component={UserProfile}></Route>
   </Route>
 )

@@ -6,6 +6,18 @@ var UserRef;
 var TransactionsRef;
 var BookingsRef;
 
+export function updateUserDetails(user){
+  return dispatch => {
+    firebase.database().ref('/users/'+user.uid).update(user)
+    .catch(err => {
+      dispatch({
+        type: USER_ERROR,
+        payload: err
+      })
+    })
+  }
+}
+
 export function fetchUsersBookings(uid){
   return dispatch => {
     var bkn = null;

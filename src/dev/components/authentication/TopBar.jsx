@@ -29,17 +29,22 @@ class TopBar extends React.Component {
   render() {
     var userText;
     var button;
+    var profile;
     if(this.props.auth.uid) {
       userText = <h4>Kirjautunut sähköpostilla: {this.props.auth.email}</h4>;
       button = <button className="btn-small logout-btn btn-blue" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>;
+      profile =  <Link className="btn-small btn-blue" to="userProfile">Käyttäjätiedot</Link>
+
     } else {
       userText = null;
+      profile = null;
       button = <Link className="btn-small btn-blue" to="login">Kirjaudu sisään</Link>;
     }
     return (
       <div class="authentication-bar container bordered-container centered">
         {userText}
         {button}
+        {profile}
       </div>
     );
   }
