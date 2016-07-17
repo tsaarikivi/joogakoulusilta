@@ -21,11 +21,13 @@ class CourseInfo extends React.Component {
   componentWillReceiveProps(nextProps){
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
+    console.log("CIPROPS:", nextProps);
     if(nextProps.courseInfo && !this.fetchStarted){
       this.fetchStarted = true;
       this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
     }
   }
+
 
   makeReservation(forward) {
     this.props.bookingsActions.postReservation(forward, this.props.courseInfo)

@@ -26,26 +26,39 @@ export function fetchUsersBookings(uid){
     var allBookings;
     var booking = {};
     var returnList = [];
-    BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
-    BookingsRef.on('value', snapshot => {
-      allCourses = snapshot.val();
-      returnList = Object.assign([]);
-      for (oneCourse in allCourses){
-        allBookings = allCourses[oneCourse]
-        for(oneBooking in allBookings){
-          booking = Object.assign({},allBookings[oneBooking]);
-          booking.course = oneCourse;
-          returnList.push(booking);
+    var courseInfo = {}
+    firebase.database().ref('/courses/').once('value')
+    .then( snapshot => {
+      courseInfo = snapshot.val()
+      BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
+      BookingsRef.on('value', snapshot => {
+        allCourses = snapshot.val();
+        returnList = Object.assign([]);
+        for (oneCourse in allCourses){
+          allBookings = allCourses[oneCourse]
+          for(oneBooking in allBookings){
+            booking = Object.assign({},allBookings[oneBooking]);
+            booking.course = oneCourse;
+            booking.courseInfo = courseInfo[oneCourse];
+            booking.courseInfo.key = oneCourse;
+            returnList.push(booking);
+          }
         }
-      }
-      returnList.sort((a, b) => { return a.courseTime - b.courseTime })
+        returnList.sort((a, b) => { return a.courseTime - b.courseTime })
 
-      dispatch({
-        type: UPDATE_USERS_BOOKINGS,
-        payload: {bookings: returnList}
+        dispatch({
+          type: UPDATE_USERS_BOOKINGS,
+          payload: {bookings: returnList}
+        })
+      }, err => {
+        console.error("Failed getting bookings: ",uid, err);
+        dispatch({
+          type: USER_ERROR,
+          payload: err
+        })
       })
     }, err => {
-      console.error("Failed getting bookings: ",uid, err);
+      console.error("Failed getting course info: ",uid, err);
       dispatch({
         type: USER_ERROR,
         payload: err

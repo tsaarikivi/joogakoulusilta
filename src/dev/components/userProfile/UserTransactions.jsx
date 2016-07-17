@@ -1,8 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import * as actionCreators from '../../actions/user.js'
 import UserTransaction from './UserTransaction.jsx'
 
 class UserTransactions extends React.Component {
@@ -48,8 +45,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
 
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch)}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserTransactions)
+export default connect(mapStateToProps, null)(UserTransactions)

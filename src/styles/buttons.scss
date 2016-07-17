@@ -10,13 +10,21 @@
   }
 
   .btn-small {
-    margin: 0 2px;  
-    padding: 1vw 1.2vw;    
+    margin: 0 2px;
+    padding: 1vw 1.2vw;
+  }
+
+  .btn-right {
+    float: right;;
+  }
+
+  .btn-left {
+    float: left;;
   }
 
   .text-link {
     margin: 0;
-    padding: 1vw 1.2vw;  
+    padding: 1vw 1.2vw;
   }
   .back-btn {
     display: inline-block;
@@ -24,9 +32,9 @@
   }
 
   .expand-btn {
-    display: inline-block;  
+    display: inline-block;
     margin: 0 1.5vw;
-    padding: 1vw 1.2vw;  
+    padding: 1vw 1.2vw;
   }
 }
 
@@ -40,8 +48,16 @@
   }
 
   .btn-small {
-    margin: 0 2px;  
-    padding: 4px 7px;    
+    margin: 0 2px;
+    padding: 4px 7px;
+  }
+  
+  .btn-right {
+    float: right;;
+  }
+
+  .btn-left {
+    float: left;;
   }
 
   .text-link {
@@ -54,7 +70,7 @@
   }
 
   .expand-btn {
-    display: inline-block;  
+    display: inline-block;
     margin: 0 10px;
     padding: 4px 7px;
   }

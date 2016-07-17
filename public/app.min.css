@@ -362,6 +362,14 @@ table tr {
     width: 100%;
     max-width: 800px;
     margin: 0 auto; }
+  .transaction-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto; }
+  .booking-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto; }
   .colored-container h1 {
     padding: 0; }
   .main-header-container h1 {
@@ -436,6 +444,10 @@ table tr {
   .btn-small {
     margin: 0 2px;
     padding: 1vw 1.2vw; }
+  .btn-right {
+    float: right; }
+  .btn-left {
+    float: left; }
   .text-link {
     margin: 0;
     padding: 1vw 1.2vw; }
@@ -453,6 +465,10 @@ table tr {
   .btn-small {
     margin: 0 2px;
     padding: 4px 7px; }
+  .btn-right {
+    float: right; }
+  .btn-left {
+    float: left; }
   .text-link {
     margin: 0;
     padding: 4px 7px; }

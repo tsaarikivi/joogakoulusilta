@@ -38,7 +38,7 @@ class UserProfile extends React.Component {
   render() {
     return(
       <div>
-        <ProfileHeader/>
+        <ProfileHeader userError={this.props.currentUser.error}/>
         <UserDataForm/>
         <UserBookings/>
         <UserTransactions/>
