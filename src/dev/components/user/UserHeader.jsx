@@ -56,7 +56,8 @@ export default class UserHeader extends React.Component {
     return (
       <div class="container bordered-container">
         <div className="content-container align-left">
-          <h1>Hei, {this.props.curUsr.firstname}!</h1>
+          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
+          <Link className="text-link float-right" to="userProfile">Muuta tietojasi</Link>
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>

@@ -50,8 +50,7 @@ class User extends React.Component {
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
-              <UserHeader curUsr={this.props.currentUser}/>
-              <Link className="btn-small btn-blue" to="userInformation">Muuta tietojasi</Link>
+              <UserHeader curUsr={this.props.currentUser}/>              
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />

@@ -31,7 +31,8 @@ class ChangeInformation extends React.Component {
   render() {
     return (
       <div class="container">
-        <Link className="btn-small btn-blue" to="user">Takaisin</Link>
+        <div className="content-container">
+          <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
           <form>
             <h1>Käyttäjätiedot</h1>
             <label>Sähköposti</label>
@@ -47,6 +48,7 @@ class ChangeInformation extends React.Component {
             <br/>
             <b>{this.errorText}</b>
           </form>
+        </div>
       </div>
     );
   }

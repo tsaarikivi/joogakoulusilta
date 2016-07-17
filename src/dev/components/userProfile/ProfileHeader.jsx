@@ -8,10 +8,12 @@ export default class ProfileHeader extends React.Component {
       errorData = <p>Error: {this.props.userError.code} {this.props.userError.message}</p>
     }
     return (
-      <div class="container bordered-container centered">
-        <Link className="btn-small btn-blue btn-left" to="user">Takaisin</Link>
-        <h2 className="header-collapse">Käyttäjän hallinnointi.</h2>
+      <div class="container bordered-container">
+        <div className="content-container">
+        <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
+        <h1>Käyttäjän hallinnointi.</h1>
         {errorData}
+        </div>
       </div>
     );
   }
