@@ -78,7 +78,7 @@ table {
     background: $list-item;
     border-radius: 3px;
     border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
+    box-shadow: 0 2px 0 0 $item-shdw;
     box-sizing: border-box;
     td {
       border-top: 1px solid $item-border;

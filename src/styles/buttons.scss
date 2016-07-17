@@ -69,18 +69,18 @@
   color: $button-text;
   border-radius: 3px;
   border-style: none;
-  box-shadow: 0 2px 1px $button-norm-shdw;
+  box-shadow: 0 2px 1px 0 $button-norm-shdw;
   text-transform: uppercase;
   transition: background 0.1s, box-shadow 0.1s, color 0.1s;
   font-weight: bold;
   &:hover {
     background: $button-hover;
-    box-shadow: 0 3px 1px $button-hover-shdw;
+    box-shadow: 0 3px 1px 0 $button-hover-shdw;
     color: $button-text;
   }
   &:active {
     background: $button-active;
-    box-shadow: 0 3px 1px $button-active-shdw;
+    box-shadow: 0 3px 1px 0 $button-active-shdw;
     color: $button-text;
   }
 }

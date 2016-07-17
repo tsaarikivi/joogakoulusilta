@@ -132,7 +132,7 @@ ul.wide-list {
     background: $list-item;
     border-radius: 3px;
     border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
+    box-shadow: 0 2px 0 0 $item-shdw;
   }
 }
 
@@ -141,7 +141,7 @@ ul.wide-list {
     background: $list-item;
     border-radius: 3px;
     border: 1px solid $item-border;
-    box-shadow: 0 2px 1px $item-shdw;
+    box-shadow: 0 2px 0 0 $item-shdw;
   }
 }
 .special-course-item {
