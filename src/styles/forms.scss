@@ -1,0 +1,91 @@
+@import 'variables.scss';
+
+/////////////////////////////////////////////////////
+// MOBILE
+/////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  form {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+    input, label, textarea {
+      margin-bottom: 5px;
+    }
+    label {
+      width: 100%;
+      font-size: 4.1vw;
+    }
+    input, textarea, select {
+      vertical-align: text-top;
+      width: 100%;
+      margin-bottom: 1vw;
+      text-indent: 1vw;
+    }
+    input, select {
+      height: 8vw;
+    }
+    textarea {
+      height: 22vh;
+    }
+    button[type="submit"] {
+      margin-top: 3vw;
+    }
+  }
+}
+
+/////////////////////////////////////////////////////
+// DESKTOP
+/////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  form {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+    input, label, textarea {
+      margin-bottom: 5px;
+    }
+    label {
+      width: 100%;
+      font-size: 13px;
+    }
+    input, textarea, select {
+      vertical-align: text-top;
+      width: 100%;
+      margin-bottom: 5px;
+      text-indent: 5px;
+    }
+    input, select {
+      height: 28px;
+    }
+    textarea {
+      height: 120px;
+    }
+    button[type="submit"] {
+      margin-top: 14px;
+    }
+  }
+}
+
+/////////////////////////////////////////////////////
+// ALL
+/////////////////////////////////////////////////////
+
+form {
+  input, textarea, select {
+    box-sizing: border-box;
+    background: white;
+    border-radius: 3px;
+    border: 1px solid $item-border;
+  }
+  textarea {
+    resize: none;
+  }
+  .form-error {
+    color: red;
+  }
+}

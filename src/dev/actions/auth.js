@@ -4,23 +4,30 @@ import { createNewUser } from './user.js'
 const Auth = firebase.auth();
 
 let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
+let firstName = null;
+let surname = null;
 
 export function authListener() {
   return dispatch => {
     Auth.onAuthStateChanged( userdata => {
+      console.log("Userdata: ", userdata);
       if (userdata) {
         var user = {}
         user.email = userdata.email;
         user.uid = userdata.uid;
         user.userdata = userdata;
-        console.log("USER:", user);
+        console.log("USER: ", user.uid, user.email);
         dispatch({
           type: ADD_USER,
           payload: user
         })
         if(registeringUser){
+          let first = firstName;
+          let sur = surname;
           registeringUser = false;
-          createNewUser(user);
+          firstName = null;
+          surname = null;
+          createNewUser(user, first, sur);
         }
       } else {
         dispatch({
@@ -47,7 +54,6 @@ export function login(email, password) {
 export function logout() {
   return dispatch => {
     Auth.signOut().then( () => {
-      console.log("SIGN OUT SUCCESS!");
     }, error => {
       if(error){
         dispatch({
@@ -60,9 +66,12 @@ export function logout() {
 
 }
 
-export function register(email, password) {
+export function register(email, password, fName, sName) {
 
   registeringUser = true;
+  firstName = fName;
+  surname = sName;
+
   return dispatch => {
     Auth.createUserWithEmailAndPassword(email, password).catch( error => {
       if(error){

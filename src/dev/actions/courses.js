@@ -7,7 +7,7 @@ import { FETCH_TIMETABLE,
 const CoursesRef = firebase.database().ref('/courses/')
 
 export function fetchSpecialCourses() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
@@ -27,7 +27,7 @@ export function fetchSpecialCourses() {
 }
 
 export function fetchSpecialCoursesBanner() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
@@ -47,44 +47,29 @@ export function fetchSpecialCoursesBanner() {
 }
 
 export function fetchTimetable() {
-  var list = []
+  var list = Object.assign([])
   return dispatch => {
-    CoursesRef.orderByChild('start').once('value', snapshot => {
+    CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
       for (var key in courses) {
-        if (courses.hasOwnProperty(key) && !courses[key].special && list.length < 3) {
+        if (courses.hasOwnProperty(key) && !courses[key].special) {
           let courseItemWithKey = courses[key]
           courseItemWithKey.key = key
           list = list.concat(courseItemWithKey)
         }
       }
+      list.sort(function(a, b) {
+        if (a.start && b.start) {
+          return a.start - b.start
+        }        
+        return 0
+      })
       dispatch({
         type: FETCH_TIMETABLE,
         payload: list
       })
     })
   }
-}
-
-export function addCourse(data) {
-  if(data.special === "0") {
-    data.special = false
-  } else {
-    data.special = true
-  }
-
-  if(data.date === 'undefined' || data.date === "") {
-    data.date = null
-  }
-
-  return dispatch => CoursesRef.push({
-    day: parseInt(data.day),
-    end: parseInt(data.end),
-    maxCapacity: parseInt(data.maxCapacity),
-    special: data.special,
-    start: parseInt(data.start),
-    date: data.date
-  })
 }
 
 export function putCourseInfo(course) {

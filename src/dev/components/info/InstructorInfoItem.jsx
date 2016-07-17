@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 
 export default class InstructorInfoItem extends React.Component {
 
@@ -10,4 +10,4 @@ export default class InstructorInfoItem extends React.Component {
       </li>
     )
   }
-}
+}*/

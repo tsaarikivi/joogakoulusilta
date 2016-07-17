@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -37,4 +37,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InstructorInfo)
+export default connect(mapStateToProps, mapDispatchToProps)(InstructorInfo)*/

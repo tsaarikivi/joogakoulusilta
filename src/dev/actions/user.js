@@ -6,21 +6,59 @@ var UserRef;
 var TransactionsRef;
 var BookingsRef;
 
+export function updateUserDetails(user){
+  return dispatch => {
+    firebase.database().ref('/users/'+user.uid).update(user)
+    .catch(err => {
+      dispatch({
+        type: USER_ERROR,
+        payload: err
+      })
+    })
+  }
+}
+
 export function fetchUsersBookings(uid){
   return dispatch => {
-    var bkn = {message: "no bookings"};
-    BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
-    BookingsRef.on('value', snapshot => {
-      bkn = snapshot.val();
-      if(!bkn){
-        bkn = {0: "ei varauksia"};
-      }
-      dispatch({
-        type: UPDATE_USERS_BOOKINGS,
-        payload: {bookings: bkn}
+    var oneCourse;
+    var allCourses;
+    var oneBooking;
+    var allBookings;
+    var booking = {};
+    var returnList = [];
+    var courseInfo = {}
+    firebase.database().ref('/courses/').once('value')
+    .then( snapshot => {
+      courseInfo = snapshot.val()
+      BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
+      BookingsRef.on('value', snapshot => {
+        allCourses = snapshot.val();
+        returnList = Object.assign([]);
+        for (oneCourse in allCourses){
+          allBookings = allCourses[oneCourse]
+          for(oneBooking in allBookings){
+            booking = Object.assign({},allBookings[oneBooking]);
+            booking.course = oneCourse;
+            booking.courseInfo = courseInfo[oneCourse];
+            booking.courseInfo.key = oneCourse;
+            returnList.push(booking);
+          }
+        }
+        returnList.sort((a, b) => { return a.courseTime - b.courseTime })
+
+        dispatch({
+          type: UPDATE_USERS_BOOKINGS,
+          payload: {bookings: returnList}
+        })
+      }, err => {
+        console.error("Failed getting bookings: ",uid, err);
+        dispatch({
+          type: USER_ERROR,
+          payload: err
+        })
       })
     }, err => {
-      console.error("Failed getting bookings: ",uid, err);
+      console.error("Failed getting course info: ",uid, err);
       dispatch({
         type: USER_ERROR,
         payload: err
@@ -38,12 +76,13 @@ export function fetchUsersTransactions(uid){
       let now = Date.now();
       let all = snapshot.val();
       let one;
-      var details={};
+      var trxdetails={};
       for (one in all){
-        details = Object.assign({}); //Need new object to be pushed to arrays
-        details.puchasetime = one;
-        details.type = all[one].type;
-        details.expires = all[one].expires;
+        trxdetails = Object.assign({}); //Need new object to be pushed to arrays
+        trxdetails.purchasetime = one;
+        trxdetails.type = all[one].type;
+        trxdetails.expires = all[one].expires;
+        trxdetails.shopItem = all[one].shopItem;
         switch(all[one].type){
           case "time":
             if(all[one].expires > now){
@@ -51,8 +90,8 @@ export function fetchUsersTransactions(uid){
             }
           break;
           case "count":
-            details.unusedtimes = all[one].unusedtimes;
-            details.usetimes = all[one].usetimes;
+            trxdetails.unusedtimes = all[one].unusedtimes;
+            trxdetails.usetimes = all[one].usetimes;
             if(all[one].expires > now){
               trx.count += all[one].unusedtimes;
             }
@@ -66,12 +105,15 @@ export function fetchUsersTransactions(uid){
             console.error("undefined transaction type: ",uid , all[one]);
           break;
         }
-        if(details.expires > now){
-          trx.details.valid.push(details);
+        if(trxdetails.expires > now){
+          trx.details.valid.push(trxdetails);
         } else {
-          trx.details.expired.push(details);
+          trx.details.expired.push(trxdetails);
         }
       }
+      trx.details.valid.sort((a,b)=>{return a.expires - b.expires});
+      trx.details.expired.sort((a,b)=>{return a.expires - b.expires});
+
       dispatch({
         type: UPDATE_USERS_TRANSACTIONS,
         payload: {transactions: trx}
@@ -88,7 +130,6 @@ export function fetchUsersTransactions(uid){
 
 export function fetchUserDetails(uid) {
   UserRef = firebase.database().ref('/users/'+uid);
-  console.log("UUUUSEEERRR: ", UserRef);
   var usr = null;
   let tmp = null
   return dispatch => {
@@ -110,10 +151,9 @@ export function fetchUserDetails(uid) {
 }
 
 export function finishedWithUserDetails(){
-  console.log("ACTION: finished with user called");
-  UserRef.off('value');
-  TransactionsRef.off('value');
-  BookingsRef.off('value')
+  if(UserRef) UserRef.off('value');
+  if(TransactionsRef) TransactionsRef.off('value');
+  if(BookingsRef) BookingsRef.off('value')
   return dispatch => {
       dispatch({
       type: STOP_UPDATING_USER_DETAILS_FROM_DB,
@@ -122,15 +162,13 @@ export function finishedWithUserDetails(){
   }
 }
 
-export function createNewUser(user) {
-  console.log("ADDING USER:", user);
+export function createNewUser(user, firstname, lastname) {
   let UIDUsersRef = firebase.database().ref('/users/'+user.uid)
   UIDUsersRef.update({
                   email: user.email,
                   uid: user.uid,
-                  alias: "alias",
-                  firstname: "firstname",
-                  lastname: "lastname",
+                  firstname: firstname,
+                  lastname: lastname,
   }, error => {
            if(error){
              console.error("Error writing new user to database", error);

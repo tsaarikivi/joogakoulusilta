@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -15,9 +16,12 @@ class User extends React.Component {
     router: React.PropTypes.object
   }
 
+  constructor(){
+    super();
+    this.countMount = 0;
+  }
+
   componentWillMount(){
-    //console.log("User-will-mount:ACTIONS: ",this.props.actions);
-    //console.log("User-will-mount:AUTH: ",this.props.auth);
     if( this.props.auth.uid ) {
       this.props.actions.fetchUserDetails(this.props.auth.uid);
       this.props.actions.fetchUsersTransactions(this.props.auth.uid);
@@ -28,8 +32,11 @@ class User extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.props.actions.finishedWithUserDetails();
+  }
+
   componentWillReceiveProps(nextProps){
-    //console.log("USER_VIEW-next props:", nextProps);
     if(typeof(nextProps.auth.uid) == "undefined"){
       this.context.router.push('/');
     }
@@ -37,23 +44,26 @@ class User extends React.Component {
 
 
   render() {
-    console.log("USER_BOOKINGS: ", this.props.currentUser.bookings);
     if( this.props.auth.uid &&
         this.props.currentUser.key != "0" &&
         typeof(this.props.currentUser.transactions) != "undefined" &&
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
-              <UserHeader curUsr={this.props.currentUser}/>
+              <UserHeader curUsr={this.props.currentUser}/>              
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />
             </div>
           );
       } else {
-        return (
-          <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
-        );
+          if (this.props.auth.uid){
+            return (
+              <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
+            );
+          } else {
+            return(<p> Ei käyttäjää</p>);
+          }
       }
   }
 }

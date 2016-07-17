@@ -1,44 +1,182 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import axios from 'axios'
-
-import * as actionCreators from '../../actions/courses.js'
+import { getCourseTimeGMT, hasDayPassed, timeToMoment } from '../../helpers/timeHelper.js'
+import {removeCourseInfo} from '../../actions/courses.js'
+import * as bookingsActionCreators from '../../actions/bookings.js'
 
 class CourseInfo extends React.Component {
 
+  constructor(){
+    super();
+    this.fetchStarted = false;
+  }
+
+  componentWillMount(){
+  }
+
+  componentWillUnMount(){
+  }
+
+  componentWillReceiveProps(nextProps){
+    //Fetching is started only when CourseInfo is pushed to this component.
+    // Do it only once to avoid recursion. Therefore set flag fetchStarted.
+    console.log("CIPROPS:", nextProps);
+    if(nextProps.courseInfo && !this.fetchStarted){
+      this.fetchStarted = true;
+      this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
+    }
+  }
+
+
   makeReservation(forward) {
-    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER+'/reserveSlot'
-    console.log("JOOGASERVER: ", JOOGASERVER);
-    console.log("JOOGAURL: ", JOOGAURL);
-    var that = this;
-    console.log("CLICK", this.props);
+    this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
+  }
 
-    firebase.auth().currentUser.getToken(true).then( idToken => {
-      console.log("IDTOKEN: ", idToken);
-
-      axios.post(
-        JOOGAURL, {
-          user: idToken,
-          courseInfo: that.props.courseInfo,
-          weeksForward: forward
-        })
-        .then( response => {
-          console.log(response);
-        })
-        .catch( error => {
-          console.log(error);
-        });
-
-      }).catch( error => {
-        console.error("Failde to get authentication token for current user: ", error);
-      });
+  cancelReservation(item, txRef) {
+    this.props.bookingsActions.postCancellation(item, txRef, this.props.courseInfo)
   }
 
   exitContainer() {
-    this.props.actions.removeCourseInfo()
-    console.log("REMOVED COURSE INFO STATE")
+    this.props.courseActions.removeCourseInfo()
+    this.props.bookingsActions.stopfetchCourseBookings()
+    this.fetchStarted = false;
   }
+
+  userCanBook(){
+    return (this.props.currentUser.transactions.count > 0 || this.props.currentUser.transactions.time > Date.now()) ? true : false;
+  }
+  //========================================================================
+  //========================================================================
+  //========================================================================
+  usersReservations(){
+    let outStr = "";
+    let item = 0;
+    let txRef = 0;
+    let time = new Date();
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.user.length > 0){
+          item = this.props.courseInfo.bookings.user[0].item;
+          time.setTime(item);
+          outStr += time.toString() + " | " + item;
+          txRef = this.props.courseInfo.bookings.user[0].txRef;
+      }
+    }
+    if(outStr === ""){
+        return(<p className="info-noreservations">Et ole ilmoittautunut tälle kurssille.</p>);
+    } else {
+      return(
+        <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
+      );
+    }
+  }
+
+  //========================================================================
+  //========================================================================
+  //========================================================================
+  participants(bookingIndex){
+    let adjustedIndex;
+    //=======================================
+    if (hasDayPassed(this.props.courseInfo.day)){
+      if(bookingIndex == 0){
+        return(<div></div>); //Not listing past participants.
+      }
+      else {
+        adjustedIndex = bookingIndex - 1;
+      }
+    } else {
+      adjustedIndex = bookingIndex;
+    }
+    //========================================
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.all.length > adjustedIndex){
+        let participantlist = "";
+        let date = new Date();
+        date.setTime(this.props.courseInfo.bookings.all[adjustedIndex].instance);
+        this.props.courseInfo.bookings.all[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
+        return(
+          <div>
+            <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
+            <p className="info-participants">Osallistujat: {participantlist}</p>
+          </div>
+        );
+      }
+    }
+    else {
+      return(
+        <div>
+          <p className="info-reserved">Ei ilmoittautuneita.</p>
+        </div>
+      )
+    }
+  }
+
+  //========================================================================
+  //========================================================================
+  //========================================================================
+  reservationButton(weekIndex){
+    let dayStr = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString();
+    let millisecondsStart = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
+    let millisecondsEnd = getCourseTimeGMT(weekIndex, this.props.courseInfo.end, this.props.courseInfo.day).getTime()
+    if(weekIndex == 0){
+      if (hasDayPassed(this.props.courseInfo.day)){
+        return(
+          <div>
+            <p className="info-keptweek">Tämän viikon kurssi on jo pidetty.</p>
+          </div>
+        )
+      }
+    } else {
+      if (!hasDayPassed(this.props.courseInfo.day) && timeToMoment(millisecondsStart) < 1*60*60*1000){
+        return(
+          <div>
+            <p className="info-keptweek">Ensi viikon kurssia ei voi vielä varata.</p>
+          </div>
+        )
+      }
+    }
+    if(!this.userCanBook()){
+      return(<div>
+              <p className="info-cantreserve">Sinulla ei ole oikeutta varata. Mene kauppaan</p>
+            </div>
+    );
+    }
+    if(this.props.courseInfo.bookings){
+      if(this.props.courseInfo.bookings.user.length > 0){
+          //TODO: tarkista että onko juuri tälle viikolle ilmoitauduttu
+              return(
+                <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+              );
+      }
+    }
+    if (weekIndex === 0){
+      if(timeToMoment(millisecondsEnd) < 0){
+        return(
+          <p> Tämän viikon kurssin on jo pidetty</p>
+        );
+      }
+      if(timeToMoment(millisecondsStart) < 0 && millisecondsEnd > 0){
+        return(
+          <p> Kurssi on jo käynnissä </p>
+        );
+      }
+      if(timeToMoment(millisecondsStart) < 1*60*60*1000){
+        return(
+          <p> Kurssin alkuun aikaa alle tunti. Varauksia ei voi tehdä. Kurssi alkaa: {dayStr}</p>
+        );
+      }
+    }
+
+      return(
+            <div>
+              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
+                { dayStr }
+                { millisecondsStart }
+              </button>
+            </div>
+          );
+  }
+
 
   render() {
     if(this.props.courseInfo) {
@@ -46,17 +184,22 @@ class CourseInfo extends React.Component {
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
-            <h3>{this.props.courseInfo.courseType.name}</h3>
-            <p>{this.props.courseInfo.courseType.desc}</p>
-            <hr/>
-            <p>Klo {this.props.courseInfo.start} - {this.props.courseInfo.end}</p>
-            <p>Sijainti {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-            <hr/>
-            <p>Joogaopettaja {this.props.courseInfo.instructor.name}</p>
-            <hr/>
-            <p>Ilmoittautuneita 00 /{this.props.courseInfo.maxCapacity}</p>
-            <button className="btn-small btn-blue" onClick={() => this.makeReservation(0)} >Ilmoittaudu tälle viikolle</button>
-            <button className="btn-small btn-blue" onClick={() => this.makeReservation(1)} >Ilmoittaudu seuraavalle viikolle</button>
+            <div className="info-info-container">
+              <h3>{this.props.courseInfo.courseType.name}</h3>
+              <p className="info-time">Klo {getCourseTimeGMT(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeGMT(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
+              <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
+              <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+              <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              {this.usersReservations()}
+            </div>
+            <span className="week-info-container">
+              {this.reservationButton(0)}
+              {this.participants(0)}
+            </span>
+            <span className="week-info-container">
+              {this.reservationButton(1)}
+              {this.participants(1)}
+            </span>
           </div>
         </div>
       )
@@ -69,11 +212,12 @@ class CourseInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { courseInfo: state.courseInfo, currentUser: state.currentUser }
+  return {  courseInfo: state.courseInfo, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return { courseActions: bindActionCreators({removeCourseInfo}, dispatch),
+           bookingsActions: bindActionCreators(bookingsActionCreators, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseInfo)

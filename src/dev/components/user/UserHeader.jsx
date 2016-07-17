@@ -18,7 +18,6 @@ export default class UserHeader extends React.Component {
     }
     this.count = this.props.curUsr.transactions.count;
     this.firstexpire.setTime(this.props.curUsr.transactions.firstexpire);
-    console.log("HEADER: ", this.props, this.onkoAikaa, this.aikaLoppuu);
   }
 
   componentWillReceiveProps(nextProps){
@@ -28,38 +27,42 @@ export default class UserHeader extends React.Component {
     }
     this.count = nextProps.curUsr.transactions.count;
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
-    console.log("HEADER: ", nextProps, this.onkoAikaa, this.aikaLoppuu);
+  }
+
+  renderContent() {
+    if(this.onkoAikaa){
+      return (
+        <div>
+          <p>Voit käyttää kurssitarjontaamme <span className="use-times"> {this.aikaLoppuu.toString()} </span> asti.</p>
+        </div>
+      )
+    }
+    else if(this.count > 0){
+      return (
+        <div>
+          <p>Sinulla on <span className="use-times">{this.count}</span> kertalippua käytettävissä. Ensimmäinen vanhenee <span className="use-times"> {this.firstexpire.toString()} </span>.</p>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <p>Sinulla ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
+        </div>
+      )
+    }
   }
 
   render() {
-
-    if(this.onkoAikaa){
-      return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Voit käyttää kurssitarjontaamme <span class="use-times"> {this.aikaLoppuu.toString()} </span> asti.</h2>
-          <Link className="text-link" to="shop">Kauppaan</Link>
+    return (
+      <div class="container bordered-container">
+        <div className="content-container align-left">
+          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
+          <Link className="text-link float-right" to="userProfile">Muuta tietojasi</Link>
+          {this.renderContent()}
+          <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>
-      );
-    }
-      if(this.count > 0){
-        return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Sinulla on <span class="use-times">{this.count}</span> kertalippua käytettävissä</h2>
-          <h2>Ensimmäinen vanhenee <span class="use-times"> {this.firstexpire.toString()} </span>.</h2>
-          <Link className="text-link" to="shop">Kauppaan</Link>
-        </div>
-      );
-    } else {
-      return (
-        <div class="container">
-          <h1>Hei, {this.props.curUsr.email}!</h1>
-          <h2>Sinulla on ei ole kertalippuja käytettävissä, eikä aikaa.</h2>
-          <h2>Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</h2>
-          <Link className="text-link" to="shop">Kauppaan</Link>
-        </div>
-      );
-    }
+      </div>
+    )
   }
+
 }
