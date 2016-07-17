@@ -1,28 +1,86 @@
 @import 'variables.scss';
 
-button, a {
-  font-size: 13px;
+//////////////////////////////////////////////////////////////
+// MOBILE
+//////////////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  button, a {
+    font-size: 3.6vw;
+  }
+
+  .btn-small {
+    margin: 0 2px;  
+    padding: 1vw 1.2vw;    
+  }
+
+  .text-link {
+    margin: 0;
+    padding: 1vw 1.2vw;  
+  }
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 1.5vw;
+  }
+
+  .expand-btn {
+    display: inline-block;  
+    margin: 0 1.5vw;
+    padding: 1vw 1.2vw;  
+  }
 }
 
+//////////////////////////////////////////////////////////////
+// DESKTOP
+//////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  button, a {
+    font-size: 13px;
+  }
+
+  .btn-small {
+    margin: 0 2px;  
+    padding: 4px 7px;    
+  }
+
+  .text-link {
+    margin: 0;
+    padding: 4px 7px;
+  }
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .expand-btn {
+    display: inline-block;  
+    margin: 0 10px;
+    padding: 4px 7px;
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// ALL
+//////////////////////////////////////////////////////////////
+
 .btn-small {
-  margin: 0 2px;
   text-decoration: none;
   color: $button-text;
   border-radius: 3px;
   border-style: none;
-  padding: 4px 7px;
-  box-shadow: 0 2px 1px $button-norm-shdw;
+  box-shadow: 0 2px 1px 0 $button-norm-shdw;
   text-transform: uppercase;
   transition: background 0.1s, box-shadow 0.1s, color 0.1s;
   font-weight: bold;
   &:hover {
     background: $button-hover;
-    box-shadow: 0 3px 1px $button-hover-shdw;
+    box-shadow: 0 3px 1px 0 $button-hover-shdw;
     color: $button-text;
   }
   &:active {
     background: $button-active;
-    box-shadow: 0 3px 1px $button-active-shdw;
+    box-shadow: 0 3px 1px 0 $button-active-shdw;
     color: $button-text;
   }
 }
@@ -41,13 +99,11 @@ button, a {
 }
 
 .text-link {
-  margin: 0;
   text-decoration: none;
   color: $text-link-norm;
   text-transform: uppercase;
   transition: color 0.1s, background-color 0.1s;
   font-weight: bold;
-  padding: 4px 7px;
   border-radius: 3px;
   &:hover {
     color: $text-link-hover;
@@ -57,22 +113,19 @@ button, a {
     color: $text-link-active;
   }
 }
-.back-btn {
-  text-decoration: none;
-  display: inline-block;
-  margin-bottom: 10px;
-}
+
 a.text-link-white {
   background-color: white;
   color: $button-blue-norm;
 }
 
+.back-btn {
+  text-decoration: none;
+}
+
 .expand-btn {
-  display: inline-block;
   border: none;
   background-color: $container-color;
-  margin: 0 10px;
-  padding: 4px 7px;
   border-radius: 3px;
   text-transform: uppercase;
   &:hover {
