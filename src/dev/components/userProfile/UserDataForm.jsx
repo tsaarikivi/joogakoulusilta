@@ -11,7 +11,6 @@ class UserDataForm extends React.Component {
   }
 
   onSubmit(props) {
-    console.log("props:", props);
     var user = {
       uid: this.props.auth.uid,
       firstname: props.firstname,
@@ -21,12 +20,7 @@ class UserDataForm extends React.Component {
     this.props.actions.updateUserDetails(user)
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log("PROPSEJA tulee: ", nextProps);
-  }
-
   renderContent() {
-    console.log("RENDERCONTENT:", this.props);
     if(!this.props.currentUser) return( <div></div>)
 
     const { fields: { firstname, lastname, alias }, handleSubmit, load } = this.props

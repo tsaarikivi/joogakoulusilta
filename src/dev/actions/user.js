@@ -20,13 +20,29 @@ export function updateUserDetails(user){
 
 export function fetchUsersBookings(uid){
   return dispatch => {
-    var bkn = null;
+    var oneCourse;
+    var allCourses;
+    var oneBooking;
+    var allBookings;
+    var booking = {};
+    var returnList = [];
     BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
     BookingsRef.on('value', snapshot => {
-      bkn = snapshot.val();
+      allCourses = snapshot.val();
+      returnList = Object.assign([]);
+      for (oneCourse in allCourses){
+        allBookings = allCourses[oneCourse]
+        for(oneBooking in allBookings){
+          booking = Object.assign({},allBookings[oneBooking]);
+          booking.course = oneCourse;
+          returnList.push(booking);
+        }
+      }
+
+
       dispatch({
         type: UPDATE_USERS_BOOKINGS,
-        payload: {bookings: bkn}
+        payload: {bookings: returnList}
       })
     }, err => {
       console.error("Failed getting bookings: ",uid, err);

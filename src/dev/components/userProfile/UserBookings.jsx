@@ -3,13 +3,21 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../../actions/user.js'
+import UserBooking from './UserBooking.jsx'
 
 class UserBookings extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
   }
+  componentWillReceiveProps(nextProps){
+    console.log("PROPSEJA tulee: ", nextProps);
+  }
 
+
+  renderBookings(item){
+    return(<UserBooking key={item.courseTime} item={item}/>)
+  }
 
   render() {
     var errorData = null;
@@ -17,16 +25,20 @@ class UserBookings extends React.Component {
       if (this.props.currentUser.error.code != 0){
         errorData = <p>Error: {this.props.currentUser.error.message}</p>
       }
-    }
-    return (
-      <div className="container bordered-container">
-        <div className="content-container">
-          {errorData}
-          <h2 className="header-collapse">Kurssivarauksesi</h2>
+      return (
+        <div className="container bordered-container">
+          <div className="content-container">
+            {errorData}
+            <h2 className="header-collapse">Kurssivarauksesi</h2>
+              <ul className="wide-list">
+                {this.props.currentUser.bookings.map(this.renderBookings)}
+              </ul>
 
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
+    return(<div/>)
   }
 }
 

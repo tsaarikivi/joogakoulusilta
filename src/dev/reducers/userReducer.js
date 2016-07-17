@@ -6,7 +6,7 @@ import {
   STOP_UPDATING_USER_DETAILS_FROM_DB
 } from '../actions/actionTypes.js'
 
-const INITIAL_STATE = {key: "0", error: {code: 0, message: "ok"}}
+const INITIAL_STATE = {key: "0", error: {code: 0, message: "ok"}, bookings: [], transactions: []}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
