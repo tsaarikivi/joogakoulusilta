@@ -15,8 +15,7 @@
         width: 100%;
         display: inline-block;
         vertical-align: text-top;
-        padding: 2%;
-        box-sizing: border-box;
+        padding: 2%;        
       }
       .info-info-container {
         margin: 0 2%;
@@ -135,6 +134,8 @@
         display: inline-block;
         vertical-align: text-top;
         padding: 1%;
+        border: 1px solid $item-border;
+        border-radius: 3px;
       }
       .info-info-container {
         margin: 0 2%;
@@ -254,6 +255,7 @@
     .week-info-container {
       background-color: white;
       box-shadow: 0 2px 0 0 $item-shdw;
+      box-sizing: border-box;
     }
     .exit-btn {
       color: $button-red-norm;
