@@ -14,19 +14,19 @@
         margin: 0 0 4vw;
         width: 100%;
         display: inline-block;
-        vertical-align: text-top;      
+        vertical-align: text-top;
         padding: 2%;
         box-sizing: border-box;
       }
       .info-info-container {
         margin: 0 2%;
       }
-      .exit-btn {      
+      .exit-btn {
         float: right;
-        font-size: 10vw;      
+        font-size: 10vw;
         padding: 0;
         margin: 0 3vw 0;
-        line-height: 0.8;      
+        line-height: 0.8;
       }
       p {
         font-size: 4.1vw;
@@ -35,10 +35,10 @@
         margin: 0.6vw 0 0;
         padding: 0;
       }
-      .info-time {      
+      .info-time {
         margin-bottom: 0;
       }
-      .info-place {      
+      .info-place {
         margin: 0;
       }
       .info-instructor {
@@ -74,7 +74,7 @@
       padding: 0;
     }
     h2 {
-      font-size: 4.6vw;      
+      font-size: 4.6vw;
     }
     h3 {
       font-size: 4.1vw;
@@ -95,6 +95,18 @@
     margin: 0 auto;
     box-sizing: border-box;
     padding: 0;
+  }
+  .transaction-container {
+    width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10;
+  }
+  .booking-container {
+    width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10;
   }
   .colored-container {
     h1 {
@@ -121,18 +133,18 @@
         margin: 0 1%;
         width: 46%;
         display: inline-block;
-        vertical-align: text-top;      
-        padding: 1%;      
+        vertical-align: text-top;
+        padding: 1%;
       }
       .info-info-container {
         margin: 0 2%;
       }
-      .exit-btn {      
+      .exit-btn {
         float: right;
-        font-size: 28px;      
+        font-size: 28px;
         padding: 0;
         margin: 5px 0 0;
-        line-height: 0.8;      
+        line-height: 0.8;
       }
       p {
         font-size: 14px;
@@ -141,10 +153,10 @@
         margin: 5px 0 0;
         padding: 0;
       }
-      .info-time {      
+      .info-time {
         margin-bottom: 0;
       }
-      .info-place {      
+      .info-place {
         margin: 0;
       }
       .info-instructor {
@@ -224,7 +236,7 @@
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
   .course-info {
-    background-color: $body-color;        
+    background-color: $body-color;
     box-shadow: 0 3px 10px #444;
     .week-info-container {
       background-color: white;

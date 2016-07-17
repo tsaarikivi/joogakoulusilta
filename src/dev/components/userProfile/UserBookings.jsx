@@ -29,7 +29,7 @@ class UserBookings extends React.Component {
         <div className="container bordered-container">
           <div className="content-container">
             {errorData}
-            <h2 className="header-collapse">Kurssivarauksesi</h2>
+            <h2 className="header-collapse">Kurssihistoriasi ja varauksesi</h2>
               <ul className="wide-list">
                 {this.props.currentUser.bookings.map(this.renderBookings)}
               </ul>

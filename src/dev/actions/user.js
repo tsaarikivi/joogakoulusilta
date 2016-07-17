@@ -38,7 +38,7 @@ export function fetchUsersBookings(uid){
           returnList.push(booking);
         }
       }
-
+      returnList.sort((a, b) => { return a.courseTime - b.courseTime })
 
       dispatch({
         type: UPDATE_USERS_BOOKINGS,
@@ -66,9 +66,10 @@ export function fetchUsersTransactions(uid){
       var trxdetails={};
       for (one in all){
         trxdetails = Object.assign({}); //Need new object to be pushed to arrays
-        trxdetails.puchasetime = one;
+        trxdetails.purchasetime = one;
         trxdetails.type = all[one].type;
         trxdetails.expires = all[one].expires;
+        trxdetails.shopItem = all[one].shopItem;
         switch(all[one].type){
           case "time":
             if(all[one].expires > now){
@@ -97,6 +98,9 @@ export function fetchUsersTransactions(uid){
           trx.details.expired.push(trxdetails);
         }
       }
+      trx.details.valid.sort((a,b)=>{return a.expires - b.expires});
+      trx.details.expired.sort((a,b)=>{return a.expires - b.expires});
+
       dispatch({
         type: UPDATE_USERS_TRANSACTIONS,
         payload: {transactions: trx}

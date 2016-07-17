@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/user.js'
 
 import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
-class UserBooking extends React.Component {
+class UserTransaction extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
@@ -15,9 +15,15 @@ class UserBooking extends React.Component {
 
   render() {
 
+    var unused = "";
+    if(this.props.item.type === "count"){
+      unused = "Käyttämättä: " + this.props.item.unusedtimes + "/" + this.props.item.usetimes + " -- "
+    }
+
     return (
-        <div className="booking-container">
-          <p>{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+        <div className="transaction-container">
+          <p>Ostettu: {this.props.item.shopItem.title} -- {getDayStrMs(this.props.item.purchasetime)} </p>
+          <p>{unused}Voimassa: {getDayStrMs(this.props.item.expires)} </p>
         </div>
     )
   }
@@ -32,4 +38,4 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserBooking)
+export default connect(mapStateToProps, mapDispatchToProps)(UserTransaction)

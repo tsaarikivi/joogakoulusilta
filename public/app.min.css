@@ -4,7 +4,7 @@ example:
 @import 'fonts.scss';*/
 @media screen and (max-width: 799px) {
   form {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     padding: 0;
     text-align: left; }
@@ -70,7 +70,7 @@ form .form-error {
     .narrow-list li {
       width: 100%;
       display: inline-block;
-      margin: 0 1vw 0 0;
+      margin: 0;
       padding: 6vw 0;
       text-align: center; }
       .narrow-list li h3 {
@@ -146,13 +146,13 @@ ul.wide-list li {
   background: #fafbfc;
   border-radius: 3px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 1px #cfcfd0; }
+  box-shadow: 0 2px 0 0 #cfcfd0; }
 
 .narrow-list li {
   background: #fafbfc;
   border-radius: 3px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 1px #cfcfd0; }
+  box-shadow: 0 2px 0 0 #cfcfd0; }
 
 .special-course-item:hover {
   background: #e0f3ff;
@@ -209,7 +209,7 @@ table tr {
   background: #fafbfc;
   border-radius: 3px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 1px #cfcfd0;
+  box-shadow: 0 2px 0 0 #cfcfd0;
   box-sizing: border-box; }
   table tr td {
     border-top: 1px solid #ddd;
@@ -222,22 +222,23 @@ table tr {
 
 @media screen and (max-width: 799px) {
   .course-info-container .course-info {
-    margin: 10vw auto;
-    padding: 0;
+    margin: 0 auto;
+    padding: 5vw 0;
     width: 100%; }
     .course-info-container .course-info .week-info-container {
-      margin: 0 1%;
-      width: 46%;
+      margin: 0 0 4vw;
+      width: 100%;
       display: inline-block;
       vertical-align: text-top;
-      padding: 1%; }
+      padding: 2%;
+      box-sizing: border-box; }
     .course-info-container .course-info .info-info-container {
       margin: 0 2%; }
     .course-info-container .course-info .exit-btn {
       float: right;
       font-size: 10vw;
       padding: 0;
-      margin: 1vw 5vw 0;
+      margin: 0 3vw 0;
       line-height: 0.8; }
     .course-info-container .course-info p {
       font-size: 4.1vw; }
@@ -285,11 +286,22 @@ table tr {
     margin: 0 auto;
     box-sizing: border-box;
     padding: 0; }
+  .transaction-container {
+    width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10; }
+  .booking-container {
+    width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10; }
   .colored-container h1 {
     padding: 0; } }
 
 @media screen and (min-width: 800px) {
   .course-info-container .course-info {
+    border-radius: 3px;
     margin: 50px auto;
     padding: 20px;
     width: 100%;
@@ -366,11 +378,10 @@ table tr {
   background-color: rgba(0, 0, 0, 0.4); }
   .course-info-container .course-info {
     background-color: #f7f8f9;
-    border-radius: 3px;
     box-shadow: 0 3px 10px #444; }
     .course-info-container .course-info .week-info-container {
       background-color: white;
-      box-shadow: 0 2px 1px #cfcfd0; }
+      box-shadow: 0 2px 0 0 #cfcfd0; }
     .course-info-container .course-info .exit-btn {
       color: #ee4455;
       font-weight: bold;
@@ -458,17 +469,17 @@ table tr {
   color: #fff;
   border-radius: 3px;
   border-style: none;
-  box-shadow: 0 2px 1px #bfbfc0;
+  box-shadow: 0 2px 1px 0 #bfbfc0;
   text-transform: uppercase;
   transition: background 0.1s, box-shadow 0.1s, color 0.1s;
   font-weight: bold; }
   .btn-small:hover {
     background: #778;
-    box-shadow: 0 3px 1px #cfcfd0;
+    box-shadow: 0 3px 1px 0 #cfcfd0;
     color: #fff; }
   .btn-small:active {
     background: #222;
-    box-shadow: 0 3px 1px #afafb0;
+    box-shadow: 0 3px 1px 0 #afafb0;
     color: #fff; }
 
 .btn-blue {

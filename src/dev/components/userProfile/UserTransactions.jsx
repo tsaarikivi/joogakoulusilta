@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../../actions/user.js'
+import UserTransaction from './UserTransaction.jsx'
 
 class UserTransactions extends React.Component {
 
@@ -10,6 +11,9 @@ class UserTransactions extends React.Component {
     router: React.PropTypes.object
   }
 
+  renderTransaction(item){
+    return(<UserTransaction key={item.purchasetime} item={item}/>)
+  }
 
   render() {
     var errorData = null;
@@ -23,6 +27,15 @@ class UserTransactions extends React.Component {
         <div className="content-container">
           {errorData}
           <h2 className="header-collapse">Ostohistoriasi</h2>
+          <p></p>
+          <h3 className="header-collapse">Voimassaolevat</h3>
+            <ul className="wide-list">
+              {this.props.currentUser.transactions.details.valid.map(this.renderTransaction)}
+            </ul>
+          <h3 className="header-collapse">Vanhentuneet</h3>
+            <ul className="wide-list">
+              {this.props.currentUser.transactions.details.expired.map(this.renderTransaction)}
+            </ul>
 
         </div>
       </div>

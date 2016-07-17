@@ -33,3 +33,15 @@ export function getCourseTimeGMT(weeksForward, timeOfStart, dayNumber){
 
   return JHLP.courseTime;
 }
+
+export function getDayStrMs(ms){
+  let day = new Date();
+  day.setTime(ms);
+  return day.getDate() + "." + day.getMonth() + "." + day.getFullYear()
+}
+
+export function getTimeStrMs(ms){
+  let day = new Date();
+  day.setTime(ms)
+  return day.toTimeString()
+}
