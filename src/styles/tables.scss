@@ -1,35 +1,88 @@
 @import 'variables.scss';
 
+/////////////////////////////////////////////////////
+// MOBILE
+/////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  table {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    tr {
+      vertical-align: text-top;
+      margin: 0 auto 5vw;
+      width: 100%;
+      display: inline-block;
+      th, td {
+        width: 100%;
+        display: block;
+      }
+      td {      
+        padding: 2vw 0;
+        h3 {
+          margin: 0;
+          padding: 0;
+          font-size: 4.1vw;
+        }
+        p {
+          margin: 0;
+          padding: 0;
+          font-size: 4.1vw;
+        }      
+      }    
+    }
+  }
+}
+
+/////////////////////////////////////////////////////
+// DESKTOP
+/////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  table {
+    margin: 0 auto;
+    padding: 0;
+    tr {
+      vertical-align: text-top;
+      margin: 0 5px 10px;
+      width: 23%;
+      display: inline-block;    
+      th, td {
+        width: 100%;
+        display: block;
+      }
+      td {      
+        padding: 5px 0;
+        h3 {
+          margin: 0;
+          padding: 0;
+          font-size: 15px;
+        }
+        p {
+          margin: 0;
+          padding: 0;
+          font-size: 13px;
+        }      
+      }    
+    }
+  }
+}
+
+/////////////////////////////////////////////////////
+// ALL
+/////////////////////////////////////////////////////
+
 table {
-  margin: 0 auto;
-  padding: 0;
   tr {
-    vertical-align: text-top;
-    margin: 0 5px 10px;
-    width: 23%;
-    display: inline-block;
     background: $list-item;
     border-radius: 3px;
     border: 1px solid $item-border;
     box-shadow: 0 2px 1px $item-shdw;
-    th, td {
-      width: 100%;
-      display: block;
-    }
+    box-sizing: border-box;
     td {
       border-top: 1px solid $item-border;
       transition: background 0.1s;
-      padding: 5px 0;
-      h3 {
-        margin: 0;
-        padding: 0;
-        font-size: 15px;
-      }
-      p {
-        margin: 0;
-        padding: 0;
-        font-size: 13px;
-      }
       &:hover {
         background: $list-item-hover;
         cursor: pointer;
