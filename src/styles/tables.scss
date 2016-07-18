@@ -45,7 +45,7 @@
     padding: 0;
     tr {
       vertical-align: text-top;
-      margin: 0 5px 10px;
+      margin: 0 5px 20px;
       width: 23%;
       display: inline-block;    
       th, td {
@@ -75,21 +75,33 @@
 
 table {
   tr {
-    background: $list-item;
+    background: $white;
     border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 0 0 $item-shdw;
     box-sizing: border-box;
+    border: none;
+    box-shadow: 0 1px 4px $shadow;  
     td {
-      border-top: 1px solid $item-border;
+      padding: 12px 0;
+      border-top: 1px solid $border;
       transition: background 0.1s;
+      box-sizing: border-box;
+      .table-course {
+        color: $text-fade;
+      }
+      .table-time {
+        color: $text-dark;
+      }
       &:hover {
-        background: $list-item-hover;
+        background: $lightblue;
         cursor: pointer;
       }
     }
     th {
-      background: $table-header;
+      background: $lightgray;
+      border: none;
+      box-sizing: border-box;
+      font-weight: 500;
+      color: $text-dark;
     }
   }
 }

@@ -62,7 +62,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #333;
+  color: $text-dark;
 }
 
 .header-collapse {
@@ -89,10 +89,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .use-times {
-  color: $use-times;
+  color: $text-dark;
 }
 
 .item-price {
-  color: $price;
+  color: $text-dark;
   font-weight: bold;
 }

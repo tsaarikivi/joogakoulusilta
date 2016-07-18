@@ -78,14 +78,14 @@
 form {
   input, textarea, select {
     box-sizing: border-box;
-    background: white;
+    background: $white;
     border-radius: 3px;
-    border: 1px solid $item-border;
+    border: 1px solid $border;
   }
   textarea {
     resize: none;
   }
   .form-error {
-    color: red;
+    color: $red;
   }
 }
