@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import UserBooking from './UserBooking.jsx'
+import { getDayStrMs, getTimeStrMs } from '../../helpers/timeHelper.js'
 
 class UserCourseHistory extends React.Component {
 
@@ -13,8 +13,8 @@ class UserCourseHistory extends React.Component {
 
   renderEntry(item){
     return(
-      <div className="booking-container">
-        <p>{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+      <div key={item.courseTime} className="booking-container">
+        <p>{item.courseName} {getDayStrMs(item.courseTime)} {getTimeStrMs(item.courseTime)}</p>
       </div>
     )
   }

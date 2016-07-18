@@ -14,6 +14,10 @@ const INITIAL_STATE = {
   },
   bookings: [],
   history: [],
+  roles:{
+    admin: false,
+    instructor: false
+  },
   transactions: {
     details: {
       expired: [],

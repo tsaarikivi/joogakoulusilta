@@ -6,7 +6,6 @@ import * as actionCreators from '../actions/user.js'
 
 import ProfileHeader from '../components/userProfile/ProfileHeader.jsx'
 import UserDataForm from '../components/userProfile/UserDataForm.jsx'
-import UserBookings from '../components/userProfile/UserBookings.jsx'
 import UserCourseHistory from '../components/userProfile/UserCourseHistory.jsx'
 import UserTransactions from '../components/userProfile/UserTransactions.jsx'
 
@@ -41,7 +40,6 @@ class UserProfile extends React.Component {
       <div>
         <ProfileHeader userError={this.props.currentUser.error}/>
         <UserDataForm/>
-        <UserBookings/>
         <UserTransactions/>
         <UserCourseHistory/>
       </div>

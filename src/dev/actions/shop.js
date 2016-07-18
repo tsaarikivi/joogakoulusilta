@@ -4,13 +4,66 @@ import {
     START_CHECKOUT_FLOW,
     FETCH_SHOP_ITEMS,
     ADD_TO_CART,
+    BUY_WITH_CASH,
     GET_CLIENT_TOKEN,
     DO_PURCHASE_TRANSACTION,
     CHECKOUT_ERROR,
-    CHECKOUT_TIMEOUT
+    CHECKOUT_TIMEOUT,
+    EXECUTE_CASH_PURCHASE
 } from './actionTypes.js'
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
+
+export function buyWithCash(){
+  return dispatch => {
+    dispatch({
+      type: BUY_WITH_CASH,
+      payload: {phase: "cashPayment"}
+    })
+  }
+}
+
+export function executeCashPurchase(forUsr, itemKey){
+  return dispatch => {
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
+
+    firebase.auth().currentUser.getToken(true)
+        .then(idToken => {
+            return axios.post(JOOGAURL, {
+                for_user: forUsr,
+                item_key: itemKey,
+                current_user: idToken
+            })
+        })
+        .then(result => {
+          console.log("EXECUTE_CASH_PURCHASE:", forUsr, itemKey);
+          dispatch({
+            type: EXECUTE_CASH_PURCHASE,
+            payload: {
+                cart: {},
+                phase: "done",
+                purchaseResult: result,
+                error: {
+                    code: 0,
+                    message: "no error"
+                }
+              }
+          })
+        })
+        .catch(error => {
+            console.error("CASH ERROR", error);
+            dispatch({
+                type: CHECKOUT_ERROR,
+                payload: {
+                    error: {
+                        code: 40,
+                        message: "Cash error: " + error.toString()
+                    }
+                }
+            })
+        })
+  }
+}
 
 export function waitForMilliseconds(milliseconds) {
     return dispatch => {
@@ -84,7 +137,7 @@ export function getClientTokenFromBraintree() {
         dispatch({
             type: START_CHECKOUT_FLOW,
             payload: {
-                phase: "start"
+                phase: "braintreePayment",
             }
         })
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER + '/clientToken'
@@ -149,7 +202,7 @@ export function doPurchaseTransaction(nonce, clientKey) {
                     payload: {
                         error: {
                             code: 20,
-                            message: "ClientToken error: " + error.toString()
+                            message: "Purchase error: " + error.toString()
                         }
                     }
                 })

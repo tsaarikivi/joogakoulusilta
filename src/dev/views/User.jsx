@@ -9,7 +9,7 @@ import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
-import UserBookings from '../components/userProfile/UserBookings.jsx'
+import UserBookings from '../components/user/UserBookings.jsx'
 
 
 class User extends React.Component {
@@ -53,7 +53,7 @@ class User extends React.Component {
         return (
             <div>
               <UserHeader curUsr={this.props.currentUser}/>
-              <UserBookings/>          
+              <UserBookings/>
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />
