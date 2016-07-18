@@ -114,7 +114,11 @@ export function addToCart(item) {
         dispatch({
             type: ADD_TO_CART,
             payload: {
-                cart: item
+                cart: item,
+                error: {
+                  code: 0,
+                  message: "no error"
+                }
             }
         })
     }
