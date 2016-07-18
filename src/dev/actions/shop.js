@@ -18,7 +18,13 @@ export function buyWithCash(){
   return dispatch => {
     dispatch({
       type: BUY_WITH_CASH,
-      payload: {phase: "cashPayment"}
+      payload: {
+        phase: "cashPayment",
+        error: {
+          code: 0,
+          message: "no error"
+        }
+      }
     })
   }
 }

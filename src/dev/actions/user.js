@@ -1,4 +1,9 @@
-import { UPDATE_USERS_BOOKINGS, UPDATE_USERS_TRANSACTIONS, USER_ERROR, USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
+import {
+  UPDATE_USERS_BOOKINGS,
+  UPDATE_USERS_TRANSACTIONS,
+  USER_ERROR,
+  USER_DETAILS_UPDATED_IN_DB,
+  STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
 
 const Auth = firebase.auth();
 
@@ -89,6 +94,7 @@ export function fetchUsersTransactions(uid){
         trxdetails.purchasetime = one;
         trxdetails.type = all[one].type;
         trxdetails.expires = all[one].expires;
+        trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
         trxdetails.shopItem = all[one].shopItem;
         switch(all[one].type){
           case "time":
