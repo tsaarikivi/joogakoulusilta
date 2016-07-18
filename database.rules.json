@@ -1,52 +1,56 @@
 {
-  "rules": {
-    "users": {
-      ".read" : "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
-      ".write" : "auth.uid === 'joogaserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
-      "$userId": {
-        ".read": "auth.uid === $userId",
-        ".write": "auth.uid === $userId"
-      }
-    },
-    "bookingsbycourse":{
+    "rules": {
+        "users": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "auth.uid === 'joogaserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            "$userId": {
+                ".read": "auth.uid === $userId",
+                ".write": "auth.uid === $userId"
+            }
+        },
+        "bookingsbycourse": {
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"
-    },
-    "specialUsers":{
+        },
+        "specialUsers": {
             ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
-    },
-    "bookingsbyuser": {
-      "$userId": {
-        ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-        ".write": "auth.uid === 'joogaserver'"
-      }
-    },
-    "transactions": {
-      "$userId": {
-        ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-        ".write": "auth.uid === 'joogaserver'"
-      }
-    },
-    "courseTypes": {
-      ".read": "auth != null",
-      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
-    },
-    "courses": {
-      ".read": "auth != null",
-      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
-    },
-    "places": {
-      ".read": "auth != null",
-      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
-    },
-    "instructors": {
-      ".read": "auth != null",
-      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
-    },
-    "shopItems": {
-      ".read": "auth != null",
-      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            }
+        },
+        "bookingsbyuser": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
+        "transactions": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
+        "courseTypes": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "courses": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "places": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "instructors": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "shopItems": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        }
     }
-  }
 }
