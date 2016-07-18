@@ -7,6 +7,7 @@ import * as actionCreators from '../actions/user.js'
 import ProfileHeader from '../components/userProfile/ProfileHeader.jsx'
 import UserDataForm from '../components/userProfile/UserDataForm.jsx'
 import UserBookings from '../components/userProfile/UserBookings.jsx'
+import UserCourseHistory from '../components/userProfile/UserCourseHistory.jsx'
 import UserTransactions from '../components/userProfile/UserTransactions.jsx'
 
 class UserProfile extends React.Component {
@@ -42,6 +43,7 @@ class UserProfile extends React.Component {
         <UserDataForm/>
         <UserBookings/>
         <UserTransactions/>
+        <UserCourseHistory/>
       </div>
     );
   }

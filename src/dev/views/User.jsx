@@ -9,6 +9,8 @@ import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
+import UserBookings from '../components/userProfile/UserBookings.jsx'
+
 
 class User extends React.Component {
 
@@ -50,7 +52,8 @@ class User extends React.Component {
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
-              <UserHeader curUsr={this.props.currentUser}/>              
+              <UserHeader curUsr={this.props.currentUser}/>
+              <UserBookings/>          
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />

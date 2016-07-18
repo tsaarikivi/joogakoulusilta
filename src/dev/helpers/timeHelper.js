@@ -37,11 +37,22 @@ export function getCourseTimeGMT(weeksForward, timeOfStart, dayNumber){
 export function getDayStrMs(ms){
   let day = new Date();
   day.setTime(ms);
-  return day.getDate() + "." + day.getMonth() + "." + day.getFullYear()
+  return getDayStr(day)
 }
 
 export function getTimeStrMs(ms){
   let day = new Date();
   day.setTime(ms)
-  return day.toTimeString()
+  return getTimeStr(day)
+}
+
+export function getDayStr(day){
+  let month = day.getMonth()+1
+  let weekday = day.getDay();
+  let weekdays = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai']
+  return weekdays[weekday] + " " + day.getDate() + "." + month + "." + day.getFullYear()
+}
+
+export function getTimeStr(day){
+  return day.toTimeString().slice(0,5)
 }

@@ -2,26 +2,30 @@ import React from 'react'
 import { connect } from 'react-redux'
 import UserBooking from './UserBooking.jsx'
 
-class UserBookings extends React.Component {
+class UserCourseHistory extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
   }
   componentWillReceiveProps(nextProps){
-    //console.log("PROPSEJA tulee: ", nextProps);
+    console.log("PROPSEJA tulee: ", nextProps);
   }
 
-  renderBookings(item){
-    return(<UserBooking key={item.courseTime} item={item}/>)
+  renderEntry(item){
+    return(
+      <div className="booking-container">
+        <p>{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+      </div>
+    )
   }
 
   render() {
       return (
         <div className="container bordered-container">
           <div className="content-container">
-            <h2 className="header-collapse">Tulevat varauksesi</h2>
+            <h2 className="header-collapse">Kurssihistoriasi</h2>
               <ul className="wide-list">
-                {this.props.currentUser.bookings.map(this.renderBookings)}
+                {this.props.currentUser.history.map(this.renderEntry)}
               </ul>
           </div>
         </div>
@@ -34,4 +38,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
 
-export default connect(mapStateToProps, null)(UserBookings)
+export default connect(mapStateToProps, null)(UserCourseHistory)

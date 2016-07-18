@@ -25,7 +25,8 @@ export function fetchUsersBookings(uid){
     var oneBooking;
     var allBookings;
     var booking = {};
-    var returnList = [];
+    var returnListBookings = [];
+    var returnListHistory = [];
     var courseInfo = {}
     firebase.database().ref('/courses/').once('value')
     .then( snapshot => {
@@ -33,7 +34,8 @@ export function fetchUsersBookings(uid){
       BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
       BookingsRef.on('value', snapshot => {
         allCourses = snapshot.val();
-        returnList = Object.assign([]);
+        returnListBookings = Object.assign([]);
+        returnListHistory = Object.assign([]);
         for (oneCourse in allCourses){
           allBookings = allCourses[oneCourse]
           for(oneBooking in allBookings){
@@ -41,14 +43,19 @@ export function fetchUsersBookings(uid){
             booking.course = oneCourse;
             booking.courseInfo = courseInfo[oneCourse];
             booking.courseInfo.key = oneCourse;
-            returnList.push(booking);
+            if(booking.courseTime < Date.now()){
+              returnListHistory.push(booking)
+            } else{
+              returnListBookings.push(booking);
+            }
           }
         }
-        returnList.sort((a, b) => { return a.courseTime - b.courseTime })
+        returnListBookings.sort((a, b) => { return a.courseTime - b.courseTime })
+        returnListHistory.sort((a, b) => { return a.courseTime - b.courseTime })
 
         dispatch({
           type: UPDATE_USERS_BOOKINGS,
-          payload: {bookings: returnList}
+          payload: {bookings: returnListBookings, history: returnListHistory}
         })
       }, err => {
         console.error("Failed getting bookings: ",uid, err);
@@ -136,9 +143,13 @@ export function fetchUserDetails(uid) {
     UserRef.on('value', snapshot => {
       usr = snapshot.val();
       usr.key = snapshot.key;
-      dispatch({
-        type: USER_DETAILS_UPDATED_IN_DB,
-        payload: usr
+      firebase.database().ref('/specialUsers/'+usr.key).once('value')
+      .then(snapshot => {
+        usr.roles = snapshot.val()
+        dispatch({
+          type: USER_DETAILS_UPDATED_IN_DB,
+          payload: usr
+        })
       })
     }, err => {
       console.error("Getting user data failed: ", err);
