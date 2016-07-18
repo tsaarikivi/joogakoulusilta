@@ -40,13 +40,14 @@ class TopBar extends React.Component {
       profile = null;
       button = <Link className="btn-small btn-blue" to="login">Kirjaudu sisään</Link>;
     }
-    return (
+    /*return (
       <div class="authentication-bar container bordered-container centered">
         {userText}
         {button}
         {profile}
       </div>
-    );
+    );*/
+    return <div></div>
   }
 }
 
