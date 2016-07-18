@@ -174,17 +174,19 @@ export function fetchUserDetails(uid) {
             usr.key = snapshot.key;
             firebase.database().ref('/specialUsers/' + usr.key).once('value')
                 .then(snapshot => {
+                    usr.roles = {
+                        admin: false,
+                        instructor: false
+                    }
                     if (snapshot.val()) {
-                        usr.roles = {
-                            admin: snapshot.val().admin || false,
-                            instructor: snapshot.val().instructor || false
+                        if (snapshot.val().admin) {
+                            usr.roles.admin = snapshot.val().admin
                         }
-                    } else {
-                        usr.roles = {
-                            admin: false,
-                            instructor: false
+                        if (snapshot.val().instructor) {
+                            usr.roles.instructor = snapshot.val().instructor
                         }
                     }
+                    console.log("Mitä tässä menee:", usr)
                     dispatch({
                         type: USER_DETAILS_UPDATED_IN_DB,
                         payload: usr
