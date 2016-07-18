@@ -10,8 +10,8 @@ export default class PlaceItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="item-item float-left">{this.props.item.name}</span>
-        <span className="item-item float-left">{this.props.item.address}</span>
+        <span className="item-row">{this.props.item.name}</span>
+        <span className="item-row">{this.props.item.address}</span>
       </li>
     )
   }

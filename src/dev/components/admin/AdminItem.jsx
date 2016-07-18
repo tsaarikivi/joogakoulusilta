@@ -9,7 +9,8 @@ export default class AdminItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{item.firstname} {item.lastname} {item.email}</span>
+        <span className="item-row">{item.firstname} {item.lastname}</span>
+        <span className="item-row">{item.email}</span>
       </li>
     )
   }

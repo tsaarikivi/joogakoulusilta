@@ -9,7 +9,9 @@ class InstructorItem extends React.Component {
 
     //TODO: Add proper buttons and functionality
     return(
-      <button className="btn-small btn-red float-right" onClick={() => this.props.actions.unmakeInstructor(this.props.item.uid)}>Poista Joogaopettaja</button>
+      <span className="item-row">
+        <button className="btn-small btn-red" onClick={() => this.props.actions.unmakeInstructor(this.props.item.uid)}>Poista Joogaopettaja</button> 
+      </span>
     )
   }
   
@@ -20,7 +22,8 @@ class InstructorItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{item.firstname} {item.lastname} {item.email}</span>
+        <span className="item-row">{item.firstname} {item.lastname}</span>
+        <span className="item-row">{item.email}</span>
         {this.renderButtons()}
       </li>
     )

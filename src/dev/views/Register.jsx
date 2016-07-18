@@ -41,6 +41,7 @@ class Register extends React.Component {
     } else {
       return (
         <div class="container">
+          <div className="content-container">
             <form>
               <h1>Rekisteröidy käyttäjäksi</h1>
               <label>Sähköposti</label>
@@ -56,6 +57,7 @@ class Register extends React.Component {
               <br/>
               <b>{this.errorText}</b>
             </form>
+          </div>  
         </div>
       );
     }

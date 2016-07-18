@@ -39,19 +39,19 @@ export default class CourseItem extends React.Component {
     return (
       <div>
         {this.renderSpecial()}
-        <span className="item-item float-left">{item.courseType.name}</span>
-        <span className="item-item float-left">{dayTxt}</span>
-        <span className="item-item float-left">klo {item.start/36000} - {item.end/36000}</span>
+        <span className="item-row">{item.courseType.name}</span>
+        <span className="item-row">{dayTxt}</span>
+        <span className="item-row">klo {item.start/36000} - {item.end/36000}</span>
       </div>
     )
   }
 
   renderSpecial() {
     if (this.props.item.special) {
-      return <span className="item-item float-left">S</span>
+      return <span className="item-row">S</span>
     }
     else {
-      return <span className="item-item float-left">V</span>
+      return <span className="item-row">V</span>
     }
   }
 
@@ -60,8 +60,12 @@ export default class CourseItem extends React.Component {
     //TODO: Add proper buttons and functionality
     return (
       <div>
-        <button className="btn-small btn-red float-right">Poista</button>
-        <button className="btn-small btn-blue float-right">Muokkaa</button>        
+        <span className="item-row">
+          <button className="btn-small btn-red">Poista</button>
+        </span>
+        <span className="item-row">
+          <button className="btn-small btn-blue">Muokkaa</button>
+        </span>     
       </div>      
     )
     

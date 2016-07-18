@@ -22,7 +22,6 @@
     }
   }
   .text-list-item {
-    height: 8vw;
     span {
       margin-top: 3vw;
       font-size: 3.5vw;
@@ -79,7 +78,6 @@
     }
   }
   .text-list-item {
-    height: 40px;
     span {
       margin-top: 14px;
       font-size: 12px;
@@ -133,6 +131,10 @@ ul.wide-list {
     border-radius: 3px;
     border: 1px solid $item-border;
     box-shadow: 0 2px 0 0 $item-shdw;
+    .item-row {
+      width: 100%;
+      display: inline-block;
+    }
   }
 }
 

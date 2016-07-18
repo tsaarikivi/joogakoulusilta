@@ -10,10 +10,10 @@ class ShopItem extends React.Component {
     //TODO: fix according !user.locked
     //TODO: add button functionality
     if (this.props.item.locked) {
-      return <button className="btn-small btn-green float-right" onClick={() => this.props.actions.unlockShopItem(this.props.item.key)}>Ota käyttöön</button>      
+      return <button className="btn-small btn-green" onClick={() => this.props.actions.unlockShopItem(this.props.item.key)}>Ota käyttöön</button>      
     }
     else {
-      return <button className="btn-small btn-red float-right" onClick={() => this.props.actions.lockShopItem(this.props.item.key)}>Poista käytöstä</button>
+      return <button className="btn-small btn-red" onClick={() => this.props.actions.lockShopItem(this.props.item.key)}>Poista käytöstä</button>
     }
   }
   
@@ -22,8 +22,10 @@ class ShopItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{this.props.item.title}</span>
-        {this.renderButtons()}
+        <span className="item-row">{this.props.item.title}</span>
+        <span className="item-row">
+          {this.renderButtons()}
+        </span>
       </li>
     )
   }

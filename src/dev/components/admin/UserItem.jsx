@@ -11,13 +11,21 @@ class UserItem extends React.Component {
     //TODO: add button functionality
 
     if (this.props.item.locked) {
-      return <button className="btn-small btn-green float-right" onClick={() => this.props.actions.unlockUser(this.props.item.uid)}>Aktivoi</button>
+      return (
+        <span className="item-row">
+          <button className="btn-small btn-green float-right" onClick={() => this.props.actions.unlockUser(this.props.item.uid)}>Aktivoi</button>
+        </span>
+      )
     }
     else {      
       return (
         <div>
-          <button className="btn-small btn-red float-right" onClick={() => this.props.actions.lockUser(this.props.item.uid)}>Lukitse</button>
-          <button className="btn-small btn-blue float-right" onClick={() => this.props.actions.makeInstructor(this.props.item.uid)}>Joogaopettajaksi</button>
+          <span className="item-row">
+            <button className="btn-small btn-red" onClick={() => this.props.actions.lockUser(this.props.item.uid)}>Lukitse</button>
+          </span>
+          <span className="item-row">
+            <button className="btn-small btn-blue" onClick={() => this.props.actions.makeInstructor(this.props.item.uid)}>Joogaopettajaksi</button>
+          </span>
         </div>        
       )
     }
@@ -30,7 +38,8 @@ class UserItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{item.firstname} {item.lastname} {item.email}</span>
+        <span className="item-row">{item.firstname} {item.lastname}</span>
+        <span className="item-row">{item.email}</span>
         {this.renderButtons()}
       </li>
     )
