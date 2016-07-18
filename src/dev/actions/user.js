@@ -170,67 +170,67 @@ export function fetchUserDetails(uid) {
     let tmp = null
     return dispatch => {
         UserRef.on('value', snapshot => {
-                usr = snapshot.val();
-                usr.key = snapshot.key;
-                firebase.database().ref('/specialUsers/' + usr.key).once('value')
-                    .then(snapshot => {
-                            if (snapshot.val()) {
-                                usr.roles = {
-                                    admin: snapshot.val().admin || false,
-                                    instructor: snapshot.val().instructor || false
-                                }
-                            } else {
-                                usr.roles = {
-                                    admin: false,
-                                    instructor: false
-                                }
-                            }
-                                dispatch({
-                                    type: USER_DETAILS_UPDATED_IN_DB,
-                                    payload: usr
-                                })
-                            })
-                    }, err => {
-                        console.error("Getting user data failed: ", err);
-                        dispatch({
-                            type: USER_ERROR,
-                            payload: err
-                        })
-                    })
-        }
-    }
-
-    export function finishedWithUserDetails() {
-        if (UserRef) UserRef.off('value');
-        if (TransactionsRef) TransactionsRef.off('value');
-        if (BookingsRef) BookingsRef.off('value')
-        return dispatch => {
-            dispatch({
-                type: STOP_UPDATING_USER_DETAILS_FROM_DB,
-                payload: null
-            })
-        }
-    }
-
-    export function createNewUser(user, firstname, lastname) {
-        let UIDUsersRef = firebase.database().ref('/users/' + user.uid)
-        UIDUsersRef.update({
-            email: user.email,
-            uid: user.uid,
-            firstname: firstname,
-            lastname: lastname,
-        }, error => {
-            if (error) {
-                console.error("Error writing new user to database", error);
-                dispatch({
-                    type: AUTH_ERROR,
-                    payload: {
-                        error: {
-                            code: error.code,
-                            message: error.message
+            usr = snapshot.val();
+            usr.key = snapshot.key;
+            firebase.database().ref('/specialUsers/' + usr.key).once('value')
+                .then(snapshot => {
+                    if (snapshot.val()) {
+                        usr.roles = {
+                            admin: snapshot.val().admin || false,
+                            instructor: snapshot.val().instructor || false
+                        }
+                    } else {
+                        usr.roles = {
+                            admin: false,
+                            instructor: false
                         }
                     }
+                    dispatch({
+                        type: USER_DETAILS_UPDATED_IN_DB,
+                        payload: usr
+                    })
                 })
-            }
+        }, err => {
+            console.error("Getting user data failed: ", err);
+            dispatch({
+                type: USER_ERROR,
+                payload: err
+            })
         })
     }
+}
+
+export function finishedWithUserDetails() {
+    if (UserRef) UserRef.off('value');
+    if (TransactionsRef) TransactionsRef.off('value');
+    if (BookingsRef) BookingsRef.off('value')
+    return dispatch => {
+        dispatch({
+            type: STOP_UPDATING_USER_DETAILS_FROM_DB,
+            payload: null
+        })
+    }
+}
+
+export function createNewUser(user, firstname, lastname) {
+    let UIDUsersRef = firebase.database().ref('/users/' + user.uid)
+    UIDUsersRef.update({
+        email: user.email,
+        uid: user.uid,
+        firstname: firstname,
+        lastname: lastname,
+    }, error => {
+        if (error) {
+            console.error("Error writing new user to database", error);
+            dispatch({
+                type: AUTH_ERROR,
+                payload: {
+                    error: {
+                        code: error.code,
+                        message: error.message
+                    }
+                }
+            })
+        }
+    })
+}
