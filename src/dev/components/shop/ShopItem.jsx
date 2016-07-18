@@ -13,8 +13,16 @@ class ShopItem extends React.Component {
 
   handleClick(e){
     e.preventDefault();
-    console.log("EVENT:: ",e);
     this.props.actions.addToCart(this.props.item);
+    this.props.actions.getClientTokenFromBraintree()
+    this.context.router.push('checkout');
+
+  }
+
+  cashPurchase(e){
+    e.preventDefault();
+    this.props.actions.addToCart(this.props.item);
+    this.props.actions.buyWithCash();
     this.context.router.push('checkout');
 
   }
@@ -33,6 +41,10 @@ class ShopItem extends React.Component {
   }
 
   render() {
+    let admin = null;
+    if(this.props.admin){
+      admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+    }
     return (
       <li>
         <h3 className="item-title">{this.props.item.title}</h3>
@@ -40,6 +52,7 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>
         <Link className="btn-small btn-blue" to="checkout" onClick={this.handleClick.bind(this)} >Osta</Link>
+        {admin}
       </li>
     );
   }

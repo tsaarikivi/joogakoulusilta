@@ -1,14 +1,20 @@
 {
   "rules": {
     "users": {
+      ".read" : "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+      ".write" : "auth.uid === 'joogaserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
       "$userId": {
-        ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-        ".write": "auth.uid === 'joogaserver' || auth.uid === $userId"
+        ".read": "auth.uid === $userId",
+        ".write": "auth.uid === $userId"
       }
     },
     "bookingsbycourse":{
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"
+    },
+    "specialUsers":{
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     },
     "bookingsbyuser": {
       "$userId": {
@@ -22,30 +28,25 @@
         ".write": "auth.uid === 'joogaserver'"
       }
     },
-    "coursetypes": {
+    "courseTypes": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     },
     "courses": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     },
     "places": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     },
     "instructors": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     },
-    "shopitems": {
+    "shopItems": {
       ".read": "auth != null",
-      ".write": "auth.uid === 'IBSnkg7XZjMfBfOm0XSnBYDVSJs1' ||
-                auth.uid === 'wf7BZvoo9xS5GBN7BeETtrQtdnZ2'"
+      ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
     }
   }
 }

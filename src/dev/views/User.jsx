@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -8,6 +9,8 @@ import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
+import UserBookings from '../components/user/UserBookings.jsx'
+
 
 class User extends React.Component {
 
@@ -50,6 +53,7 @@ class User extends React.Component {
         return (
             <div>
               <UserHeader curUsr={this.props.currentUser}/>
+              <UserBookings/>
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />

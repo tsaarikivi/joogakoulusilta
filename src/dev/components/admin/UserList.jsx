@@ -17,10 +17,10 @@ class UserList extends React.Component {
   }
 
   renderContent() {
-    if (this.props.list.expanded) {
+    if (this.props.list.expanded || this.props.shopItems.phase === "cashPayment") {
       return (
         <ul className="wide-list">
-          {this.props.list.list.map(this.renderList)}
+          {this.props.list.list.map(this.renderList.bind(this))}
         </ul>
       )
     }
@@ -30,6 +30,7 @@ class UserList extends React.Component {
   }
 
   renderExpandButton() {
+    if(this.props.shopItems.phase === "cashPayment") return null;
     if(this.props.list.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeUserList()}>Piilota</button>
     }
@@ -52,7 +53,7 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.userList }
+  return { list: state.userList, shopItems: state.shopItems }
 }
 
 function mapDispatchToProps(dispatch) {

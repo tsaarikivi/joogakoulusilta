@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router"
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as authActionCreators from '../../actions/auth.js'
+import * as userActionCreators from '../../actions/user.js'
+import {getDayStr,getTimeStr} from '../../helpers/timeHelper.js'
 
-export default class UserHeader extends React.Component {
+class UserHeader extends React.Component {
 
   constructor(){
     super();
@@ -29,18 +34,29 @@ export default class UserHeader extends React.Component {
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+    if(this.props.auth.uid){
+      this.props.authActions.logout();
+      this.props.userActions.finishedWithUserDetails();
+    }
+    else {
+      console.log("User not logged in. No action taken.");
+    }
+  }
+
   renderContent() {
     if(this.onkoAikaa){
       return (
         <div>
-          <p>Voit käyttää kurssitarjontaamme <span className="use-times"> {this.aikaLoppuu.toString()} </span> asti.</p>
+          <p>Voit käyttää kurssitarjontaamme <span className="use-times"> {getDayStr(this.aikaLoppuu)} </span> asti.</p>
         </div>
       )
     }
     else if(this.count > 0){
       return (
         <div>
-          <p>Sinulla on <span className="use-times">{this.count}</span> kertalippua käytettävissä. Ensimmäinen vanhenee <span className="use-times"> {this.firstexpire.toString()} </span>.</p>
+          <p>Sinulla on <span className="use-times">{this.count}</span> kertalippua käytettävissä. Ensimmäinen vanhenee <span className="use-times"> {getDayStr(this.firstexpire)} </span>.</p>
         </div>
       )
     } else {
@@ -53,10 +69,18 @@ export default class UserHeader extends React.Component {
   }
 
   render() {
+    var admin = null;
+    if(this.props.curUsr.roles.admin = true){
+      admin = <Link className="text-link float-right" to="admin">Admin</Link>
+    }
     return (
       <div class="container bordered-container">
         <div className="content-container align-left">
-          <h1>Hei, {this.props.curUsr.firstname}!</h1>
+          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
+          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>
+          <button className="text-link float-right" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
+          <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
+          {admin}
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>
@@ -65,3 +89,15 @@ export default class UserHeader extends React.Component {
   }
 
 }
+function mapStateToProps(state) {
+  return { auth: state.auth }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    authActions: bindActionCreators(authActionCreators, dispatch),
+    userActions: bindActionCreators(userActionCreators, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserHeader)

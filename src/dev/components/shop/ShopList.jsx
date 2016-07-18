@@ -3,38 +3,58 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import ShopItem from './ShopItem.jsx'
-import * as actionCreators from '../../actions/shop.js'
+import * as shopActionCreators from '../../actions/shop.js'
+import * as userActionCreators from '../../actions/user.js'
 
 class ShopList extends React.Component {
   componentWillMount() {
-    this.props.actions.fetchShopItems()
+    this.props.userActions.fetchUserDetails(this.props.auth.uid)
+    this.props.shopActions.fetchShopItems()
+  }
+  componentWillUnmount(){
+    this.props.userActions.finishedWithUserDetails()
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log("PROPSEJA tulee: ", nextProps);
   }
 
   renderShopItems(item) {
     return (
-      <ShopItem key={item.key} item={item}/>
+      <ShopItem key={item.key} item={item} admin={this.props.currentUser.roles.admin}/>
     )
   }
 
   render() {
-    return (
-      <div className="container">
-        <div className="content-container align-left">
-          <ul className="wide-list">
-            {this.props.shopItems.map(this.renderShopItems)}
-          </ul>
+    if(this.props.shopItems.items.length > 0){
+      return (
+        <div className="container">
+          <div className="content-container align-left">
+            <ul className="wide-list">
+              {this.props.shopItems.items.map(this.renderShopItems.bind(this))}
+            </ul>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+        return(<p>Ladataan kaupalistaa...</p>)
+    }
   }
 }
 
 function mapStateToProps(state) {
-  return { shopItems: state.shopItems }
+  return {
+    shopItems: state.shopItems,
+    currentUser: state.currentUser,
+    auth: state.auth
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return {
+    shopActions: bindActionCreators(shopActionCreators, dispatch),
+    userActions: bindActionCreators(userActionCreators, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopList)

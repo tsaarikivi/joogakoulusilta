@@ -2,13 +2,14 @@ import React from "react";
 
 export default class SpecialCoursesItem extends React.Component {
   render() {
+    const { item } = this.props
     return (
       <li>
-        <h3 className="item-title">KORJAA TITLE</h3>
-        <p className="item-time">{this.props.item.date}, {this.props.item.start} - {this.props.item.end}</p>
-        <p className="item-desc">KORJAA DESC</p>
-        <p className="item-instructor">KORJAA VETÄJÄ</p>
-        <p className="item-users">Ilmoittautuneet: KORJAA USERS /{this.props.item.maxCapacity}</p>
+        <h3 className="item-title">{item.courseType.name}</h3>
+        <p className="item-time">{item.date}, klo {item.start/36000} - {item.end/36000}</p>
+        <p className="item-desc">{item.courseType.desc}</p>
+        <p className="item-instructor">Joogaopettaja: {item.instructor.firstname} {item.instructor.lastname}</p>
+        <p className="item-users">Ilmoittautuneet: X/{item.maxCapacity}</p>
         <a href="#" className="btn-small btn-blue">Ilmoittaudu</a>
       </li>
     );

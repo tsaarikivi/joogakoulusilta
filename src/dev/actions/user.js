@@ -1,4 +1,9 @@
-import { UPDATE_USERS_BOOKINGS, UPDATE_USERS_TRANSACTIONS, USER_ERROR, USER_DETAILS_UPDATED_IN_DB, STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
+import {
+  UPDATE_USERS_BOOKINGS,
+  UPDATE_USERS_TRANSACTIONS,
+  USER_ERROR,
+  USER_DETAILS_UPDATED_IN_DB,
+  STOP_UPDATING_USER_DETAILS_FROM_DB } from './actionTypes.js'
 
 const Auth = firebase.auth();
 
@@ -6,18 +11,66 @@ var UserRef;
 var TransactionsRef;
 var BookingsRef;
 
+export function updateUserDetails(user){
+  return dispatch => {
+    firebase.database().ref('/users/'+user.uid).update(user)
+    .catch(err => {
+      dispatch({
+        type: USER_ERROR,
+        payload: err
+      })
+    })
+  }
+}
+
 export function fetchUsersBookings(uid){
   return dispatch => {
-    var bkn = null;
-    BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
-    BookingsRef.on('value', snapshot => {
-      bkn = snapshot.val();
-      dispatch({
-        type: UPDATE_USERS_BOOKINGS,
-        payload: {bookings: bkn}
+    var oneCourse;
+    var allCourses;
+    var oneBooking;
+    var allBookings;
+    var booking = {};
+    var returnListBookings = [];
+    var returnListHistory = [];
+    var courseInfo = {}
+    firebase.database().ref('/courses/').once('value')
+    .then( snapshot => {
+      courseInfo = snapshot.val()
+      BookingsRef = firebase.database().ref('/bookingsbyuser/'+uid);
+      BookingsRef.on('value', snapshot => {
+        allCourses = snapshot.val();
+        returnListBookings = Object.assign([]);
+        returnListHistory = Object.assign([]);
+        for (oneCourse in allCourses){
+          allBookings = allCourses[oneCourse]
+          for(oneBooking in allBookings){
+            booking = Object.assign({},allBookings[oneBooking]);
+            booking.course = oneCourse;
+            booking.courseInfo = courseInfo[oneCourse];
+            booking.courseInfo.key = oneCourse;
+            if(booking.courseTime < Date.now()){
+              returnListHistory.push(booking)
+            } else{
+              returnListBookings.push(booking);
+            }
+          }
+        }
+        returnListBookings.sort((a, b) => { return a.courseTime - b.courseTime })
+        returnListHistory.sort((a, b) => { return a.courseTime - b.courseTime })
+
+        dispatch({
+          type: UPDATE_USERS_BOOKINGS,
+          payload: {bookings: returnListBookings, history: returnListHistory}
+        })
+      }, err => {
+        console.error("Failed getting bookings: ",uid, err);
+        dispatch({
+          type: USER_ERROR,
+          payload: err
+        })
       })
     }, err => {
-      console.error("Failed getting bookings: ",uid, err);
+      console.error("Failed getting course info: ",uid, err);
       dispatch({
         type: USER_ERROR,
         payload: err
@@ -38,9 +91,11 @@ export function fetchUsersTransactions(uid){
       var trxdetails={};
       for (one in all){
         trxdetails = Object.assign({}); //Need new object to be pushed to arrays
-        trxdetails.puchasetime = one;
+        trxdetails.purchasetime = one;
         trxdetails.type = all[one].type;
         trxdetails.expires = all[one].expires;
+        trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
+        trxdetails.shopItem = all[one].shopItem;
         switch(all[one].type){
           case "time":
             if(all[one].expires > now){
@@ -69,6 +124,9 @@ export function fetchUsersTransactions(uid){
           trx.details.expired.push(trxdetails);
         }
       }
+      trx.details.valid.sort((a,b)=>{return a.expires - b.expires});
+      trx.details.expired.sort((a,b)=>{return a.expires - b.expires});
+
       dispatch({
         type: UPDATE_USERS_TRANSACTIONS,
         payload: {transactions: trx}
@@ -84,6 +142,7 @@ export function fetchUsersTransactions(uid){
 }
 
 export function fetchUserDetails(uid) {
+  console.log("FETCH USER DETAILS");
   UserRef = firebase.database().ref('/users/'+uid);
   var usr = null;
   let tmp = null
@@ -91,9 +150,13 @@ export function fetchUserDetails(uid) {
     UserRef.on('value', snapshot => {
       usr = snapshot.val();
       usr.key = snapshot.key;
-      dispatch({
-        type: USER_DETAILS_UPDATED_IN_DB,
-        payload: usr
+      firebase.database().ref('/specialUsers/'+usr.key).once('value')
+      .then(snapshot => {
+        usr.roles = snapshot.val()
+        dispatch({
+          type: USER_DETAILS_UPDATED_IN_DB,
+          payload: usr
+        })
       })
     }, err => {
       console.error("Getting user data failed: ", err);
@@ -106,7 +169,6 @@ export function fetchUserDetails(uid) {
 }
 
 export function finishedWithUserDetails(){
-  console.log("ACTION: finished with user called");
   if(UserRef) UserRef.off('value');
   if(TransactionsRef) TransactionsRef.off('value');
   if(BookingsRef) BookingsRef.off('value')
@@ -119,7 +181,6 @@ export function finishedWithUserDetails(){
 }
 
 export function createNewUser(user, firstname, lastname) {
-  console.log("ADDING USER:", user, firstname, lastname);
   let UIDUsersRef = firebase.database().ref('/users/'+user.uid)
   UIDUsersRef.update({
                   email: user.email,
