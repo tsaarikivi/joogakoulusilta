@@ -13,9 +13,9 @@ class UserCourseHistory extends React.Component {
 
   renderEntry(item){
     return(
-      <div key={item.courseTime} className="booking-container">
+      <li key={item.courseTime} className="booking-container">
         <p>{item.courseName} {getDayStrMs(item.courseTime)} {getTimeStrMs(item.courseTime)}</p>
-      </div>
+      </li>
     )
   }
 
