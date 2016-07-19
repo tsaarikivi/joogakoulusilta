@@ -62,7 +62,7 @@
 
   .text-link {
     margin: 0;
-    padding: 4px 7px;
+    padding: 7px 11px;
   }
   .back-btn {
     display: inline-block;
@@ -72,7 +72,7 @@
   .expand-btn {
     display: inline-block;
     margin: 0 10px;
-    padding: 4px 7px;
+    padding: 7px 11px;
   }
 }
 
@@ -88,7 +88,6 @@
   box-sizing: border-box;
   text-transform: uppercase;
   transition: background 0.1s, color 0.1s;
-  font-weight: bold;
 }
 .btn-blue {
   background: $blue; /* For browsers that do not support gradients */
@@ -170,7 +169,6 @@
   color: $link;
   text-transform: uppercase;
   transition: color 0.1s, background-color 0.1s;
-  font-weight: bold;
   border-radius: 3px;
   &:hover {
     color: $link-hover;

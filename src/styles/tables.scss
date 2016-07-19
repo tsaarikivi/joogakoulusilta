@@ -76,20 +76,19 @@
 table {
   tr {
     background: $white;
-    border-radius: 3px;
+    border-radius: 5px;
     box-sizing: border-box;
-    border: none;
-    box-shadow: 0 1px 4px $shadow;  
+    border: 1px solid $border;
     td {
       padding: 12px 0;
       border-top: 1px solid $border;
       transition: background 0.1s;
       box-sizing: border-box;
       .table-course {
-        color: $text-fade;
+        color: $text-dark;
       }
       .table-time {
-        color: $text-dark;
+        color: $text-fade;
       }
       &:hover {
         background: $lightblue;
@@ -100,7 +99,6 @@ table {
       background: $lightgray;
       border: none;
       box-sizing: border-box;
-      font-weight: 500;
       color: $text-dark;
     }
   }

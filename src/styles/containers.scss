@@ -221,6 +221,12 @@
       margin-top: 12px;
     }
   }
+  .register-container {
+    p {
+      margin: 8px 0 2px;
+      padding: 0;
+    }
+  }
 
   .transaction-container {
     width: 100%;
@@ -272,7 +278,6 @@
     }
     .exit-btn {
       color: $red;
-      font-weight: bold;
       border: none;
       background-color: transparent;
       border-radius: 3px;
