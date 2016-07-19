@@ -8,6 +8,11 @@ import Logo from '../components/logos/JoogakouluLogo.jsx'
 
 class Register extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
+
   constructor(){
     super();
     this.errorText = ""
@@ -24,6 +29,9 @@ class Register extends React.Component {
     }
     else {
       this.errorText = "";
+    }
+    if(nextProps.auth.timeout === true){
+      this.context.router.push('/user/')
     }
   }
 
@@ -42,6 +50,7 @@ class Register extends React.Component {
 
   render() {
     if(this.props.auth.uid){
+      this.props.actions.waitForMilliseconds(5*1000);
       return(
         <div class="container">
           <Logo />
@@ -53,7 +62,7 @@ class Register extends React.Component {
         
       );
     }
-    if(this.registerStarted === true){
+    if(this.registerStarted === true && this.props.auth.error.code === 0){
       return(
         <div class="container">
           <Logo />

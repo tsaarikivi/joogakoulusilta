@@ -1,7 +1,8 @@
 import {
     ADD_USER,
     REMOVE_USER,
-    AUTH_ERROR
+    AUTH_ERROR,
+    AUTH_TIMEOUT
 } from './actionTypes.js'
 import {
     createNewUser
@@ -13,6 +14,19 @@ let registeringUser = false; //This is a flag to differentiate if user is authen
 let firstName = null;
 let surname = null;
 let alias = null;
+
+export function waitForMilliseconds(milliseconds) {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch({
+                type: AUTH_TIMEOUT,
+                payload: {
+                    timeout: true
+                }
+            })
+        }, milliseconds);
+    }
+}
 
 export function authListener() {
     return dispatch => {
