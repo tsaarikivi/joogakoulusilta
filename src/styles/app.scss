@@ -17,10 +17,6 @@ example:
 //////////////////////////////////////////////////////////////
 
 @media screen and (max-width: 799px) {
-  .test-instruction {
-    font-size: .5em
-  }
-
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 2vw 0;    
@@ -32,21 +28,67 @@ example:
 //////////////////////////////////////////////////////////////
 
 @media screen and (min-width: 800px) {
-  .test-instruction {
-    font-size: .5em
-  }
-
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 10px 0;
   }
+
+  h1 {
+    font-size: 30px;
+    span, div {
+      font-size: 30px;
+    }
+  }
+  h2 {
+    font-size: 25px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 19px;
+  }
+  h6 {
+    font-size: 18px;
+  }
+  p {
+    font-size: 14px;
+  }
+  span {
+    font-size: 14px;
+  }
+  div {
+    font-size: 14px;
+  }
+  label {
+    font-size: 14px;
+  }
+  th {
+    font-size: 14px;
+  }
+  td {
+    font-size: 14px;
+  }
+  a, button {
+    font-size: 14px;
+  }
+  input, textarea, select {
+    font-size: 14px;
+  }
+  small {
+    font-size: 13px;
+  }
+
 }
 
 //////////////////////////////////////////////////////////////
 // ALL
 //////////////////////////////////////////////////////////////
 
-button, a, select, textarea, body {
+button, a, select, textarea, body, input {
   font-family: 'Raleway', sans-serif;
 }
 
@@ -76,6 +118,9 @@ button {
 }
 a {
   font-weight: 500;
+}
+input, textarea, select {
+  font-weight: 400;
 }
 
 .header-collapse {

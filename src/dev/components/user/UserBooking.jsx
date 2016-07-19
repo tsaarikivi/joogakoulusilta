@@ -29,10 +29,12 @@ class UserBooking extends React.Component {
     }
 
     return (
-        <div className="booking-container">
-          <p>{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
-          {cancelButton}
-        </div>
+        <li className="booking-container">
+          <span className="item-row">
+            <p className="header-collapse onerow-item">{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+            {cancelButton}
+          </span>
+        </li>
     )
   }
 }

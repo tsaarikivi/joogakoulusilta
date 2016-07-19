@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import * as actionCreators from '../actions/user.js'
 
+import ContactInfo from '../components/home/ContactInfo.jsx'
 import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
@@ -57,6 +58,7 @@ class User extends React.Component {
               <Timetable/>
               <CourseInfo />
               <SpecialCourses />
+              <ContactInfo />
             </div>
           );
       } else {

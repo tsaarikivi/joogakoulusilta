@@ -21,7 +21,7 @@ class SpecialCourses extends React.Component {
   render() {
     if (this.props.specialCoursesBanner.length > 0) {
       return (
-        <div class="container">
+        <div class="container bordered-container">
           <div className="content-container">
             <h2>Tulevia erityiskursseja</h2>
             <ul class="narrow-list">

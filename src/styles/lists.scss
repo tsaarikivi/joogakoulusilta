@@ -24,7 +24,6 @@
   .text-list-item {
     span {
       margin-top: 3vw;
-      font-size: 3.5vw;
     }
     button {
       margin-top: 2vw;
@@ -42,14 +41,7 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 4.1vw;
-      }
-    }
-  }
-
-  .item-expiration {
-    font-size: 4.1vw;
+    }    
   }
 
   .item-item {
@@ -80,7 +72,6 @@
   .text-list-item {
     span {
       margin-top: 14px;
-      font-size: 12px;
     }
     button {
       margin-top: 6px;
@@ -98,14 +89,10 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 14px;
-      }
     }
-  }
-
-  .item-expiration {
-    font-size: 14px;
+    .onerow-item {
+      margin: 8px 0 0 0;
+    }
   }
 
   .item-item {

@@ -27,7 +27,6 @@
         line-height: 0.8;
       }
       p {
-        font-size: 4.1vw;
       }
       h3 {
         margin: 0.6vw 0 0;
@@ -66,26 +65,16 @@
     margin: 0;
     padding: 8vw 0;
     h1 {
-      font-size: 5vw;
+
       line-height: 0.7;
       margin: 0;
       padding: 0;
-    }
-    h2 {
-      font-size: 4.6vw;
-    }
-    h3 {
-      font-size: 4.1vw;
-    }
-    p {
-      font-size: 4.1vw;
     }
     small {
       width: 80%;
       margin-left: auto;
       margin-right: auto;
       padding: 0;
-      font-size: 3.5vw;
     }
   }
   .content-container {
@@ -121,17 +110,18 @@
 @media screen and (min-width: 800px) {
   .course-info-container {
     .course-info {
-      border-radius: 3px;
+      border-radius: 5px;
       margin: 50px auto;
       padding: 20px;
       width: 100%;
       max-width: 500px;
       border: 1px solid #888;
       .week-info-container {
-        margin: 0 1%;
-        width: 46%;
+        margin: 0 0 10px;
+        width: 100%;
         display: inline-block;
         vertical-align: text-top;
+        box-sizing: border-box;
         padding: 1%;        
       }
       .info-info-container {
@@ -139,13 +129,10 @@
       }
       .exit-btn {
         float: right;
-        font-size: 28px;
-        padding: 0;
-        margin: 5px 0 0;
+        font-size: 30px;
+        margin: 0;
         line-height: 0.8;
-      }
-      p {
-        font-size: 14px;
+        font-weight: 600;
       }
       h3 {
         margin: 5px 0 0;
@@ -184,22 +171,9 @@
     margin: 0 auto;
     padding: 60px 0;
     h1 {
-      font-size: 24px;
       line-height: 0.7;
       margin: 0;
       padding: 0;
-    }
-    h2 {
-      font-size: 22px;
-    }
-    h3 {
-      font-size: 15px;
-    }
-    p {
-      font-size: 15px;
-    }
-    small {
-      font-size: 12px;
     }
   }
   .content-container {
@@ -245,12 +219,6 @@
       padding: 0;
     }
   }
-
-  .main-header-container {
-    h1 {
-      font-size: 50px;
-    }
-  }
 }
 
 /////////////////////////////////////////////////////
@@ -271,10 +239,9 @@
     box-shadow: 0 3px 10px $text-dark;
     .week-info-container {
       background-color: $white;
-      box-shadow: 0 2px 0 0 $shadow;
       box-sizing: border-box;
       border: 1px solid $border;
-      border-radius: 3px;
+      border-radius: 5px;
     }
     .exit-btn {
       color: $red;
