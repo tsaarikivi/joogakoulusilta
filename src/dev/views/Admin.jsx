@@ -23,10 +23,14 @@ import InfoList from '../components/admin/InfoList.jsx'
 
 class Admin extends React.Component {
 
-constructor(){
-  super()
-  this.allowShow = false;
-}
+ constructor(){
+   super()
+   this.allowShow = false;
+ }
+
+ static contextTypes = {
+    router: React.PropTypes.object
+  }
 
  componentWillMount(){
     if( this.props.auth.uid ) {

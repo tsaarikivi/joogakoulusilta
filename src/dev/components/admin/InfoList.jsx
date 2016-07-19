@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Item from './InstructorItem.jsx'
+import Item from './InfoItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
 class InfoList extends React.Component {
