@@ -72,8 +72,7 @@ renderCashPayment(){
   renderPayment(){
     return (
           <div>
-            <p>Valitse maksutapa ja vahvista maksu.</p>
-            <p class='test-instruction' >Testaa: <code>4111 1111 1111 1111</code></p>
+            <p className="centered">Valitse maksutapa ja vahvista maksu.</p>
             <form action='/transactions' method='POST'>
                 <DropIn
                     braintree={Braintree}
@@ -85,7 +84,7 @@ renderCashPayment(){
               <br></br>
               <p>{this.props.shopItems.cart.title}</p><br></br>
               <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' value='Vahvista:'></input>
+              <input type='submit' className="btn-small btn-blue" value='Vahvista!'></input>
             </form>
           </div>
     );
