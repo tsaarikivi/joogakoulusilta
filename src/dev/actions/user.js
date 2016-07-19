@@ -25,6 +25,7 @@ export function updateUserDetails(user) {
 }
 
 export function fetchUsersBookings(uid) {
+    console.log("BOOKINGS: ", uid)
     return dispatch => {
         var oneCourse;
         var allCourses;
@@ -212,13 +213,14 @@ export function finishedWithUserDetails() {
     }
 }
 
-export function createNewUser(user, firstname, lastname) {
+export function createNewUser(user, firstname, lastname, alias) {
     let UIDUsersRef = firebase.database().ref('/users/' + user.uid)
     UIDUsersRef.update({
         email: user.email,
         uid: user.uid,
         firstname: firstname,
         lastname: lastname,
+        alias: alias
     }, error => {
         if (error) {
             console.error("Error writing new user to database", error);

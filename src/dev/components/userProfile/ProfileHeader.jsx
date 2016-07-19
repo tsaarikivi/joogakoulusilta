@@ -7,6 +7,9 @@ import { Link } from 'react-router'
 
 class ProfileHeader extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
   handleLogout = (e) => {
     e.preventDefault();
     if(this.props.auth.uid){
@@ -16,6 +19,7 @@ class ProfileHeader extends React.Component {
     else {
       console.log("User not logged in. No action taken.");
     }
+    this.context.router.push('/')
   }
 
   render() {

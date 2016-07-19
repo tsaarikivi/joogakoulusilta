@@ -11,6 +11,11 @@ class Register extends React.Component {
   constructor(){
     super();
     this.errorText = ""
+    this.registerStarted = false;
+    this.email = "";
+    this.password = "";
+    this.firstName = "";
+    this.alias = "";
   }
 
   componentWillReceiveProps(nextProps){
@@ -22,24 +27,43 @@ class Register extends React.Component {
     }
   }
 
-  handleRegister = (e) => {
+  handleRegister(e) {
     e.preventDefault();
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    var firstName = document.getElementById("firstName").value;
-    var surname = document.getElementById("surname").value;
-    this.props.actions.register(email, password, firstName, surname);
+    this.email = document.getElementById("email").value;
+    this.password = document.getElementById("password").value;
+    this.firstName = document.getElementById("firstName").value;
+    this.surname = document.getElementById("surname").value;
+    this.alias = document.getElementById("alias").value;
+    this.props.actions.register(this.email, this.password, this.firstName, this.surname, this.alias);
+    this.registerStarted = true;
+    this.forceUpdate();
+
   }
 
   render() {
     if(this.props.auth.uid){
       return(
-        <div>
-          <p>Rekisteröinti onnistui!</p>
-          <link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</link>
+        <div class="container">
+          <Logo />
+          <div className="content-container">
+            <h2 className="centered">Rekisteröinti onnistui {this.firstName}!</h2>
+            <Link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</Link>
+          </div>
         </div>
+        
       );
-    } else {
+    }
+    if(this.registerStarted === true){
+      return(
+        <div class="container">
+          <Logo />
+          <div className="content-container">
+            <h2 className="centered">Rekisteröidään käyttäjää!</h2>
+            <b>{this.errorText}</b>
+          </div>
+        </div>
+      )
+    }
       return (
         <div class="container">
           <Logo />
@@ -54,6 +78,8 @@ class Register extends React.Component {
               <input id="firstName" type="text" name="firstName" placeholder="Etunimi"/>
               <label>Sukunimi</label>
               <input id="surname" type="text" name="surname" placeholder="Sukunimi"/>
+              <label>Alias</label>
+              <input id="alias" type="text" name="alias" placeholder="Alias"/>
               <br/>
               <button className="btn-small btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
               <br/>
@@ -62,7 +88,6 @@ class Register extends React.Component {
           </div>  
         </div>
       );
-    }
   }
 }
 
