@@ -85,21 +85,10 @@
   text-decoration: none;
   color: $text-light;
   border-radius: 3px;
-  border-style: none;
-  box-shadow: 0 1px 4px $shadow;
+  box-sizing: border-box;
   text-transform: uppercase;
-  transition: background 0.1s, box-shadow 0.1s, color 0.1s;
+  transition: background 0.1s, color 0.1s;
   font-weight: bold;
-  &:hover {
-    background: $hover-btn;
-    box-shadow: 0 2px 3px $shadow;
-    color: $text-light;
-  }
-  &:active {
-    background: $active-btn;
-    box-shadow: 0 2px 3px $shadow;
-    color: $text-light;
-  }
 }
 .btn-blue {
   background: $blue; /* For browsers that do not support gradients */
@@ -107,16 +96,73 @@
   background: -o-linear-gradient($lighterblue, $blue); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient($lighterblue, $blue); /* For Firefox 3.6 to 15 */
   background: linear-gradient($lighterblue, $blue); /* Standard syntax */
+  transition: background 0.1s, color 0.1s;
+  border: 1px solid $blue;
+  &:hover {
+    background: $darkblue; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient($blue, $darkblue); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($blue, $darkblue); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($blue, $darkblue); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($blue, $darkblue); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-green {
   background: $green;
+  background: -webkit-linear-gradient($lightgreen, $green); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lightgreen, $green); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lightgreen, $green); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lightgreen, $green); /* Standard syntax */
+  border: 1px solid $green;
+  transition: background 0.1s, color 0.1s;
+  &:hover {
+    background: $darkgreen;
+    background: -webkit-linear-gradient($green, $darkgreen); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($green, $darkgreen); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($green, $darkgreen); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($green, $darkgreen); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-red {
   background: $red;
+  background: -webkit-linear-gradient($lightred, $red); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lightred, $red); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lightred, $red); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lightred, $red); /* Standard syntax */
+  border: 1px solid $red;
+  transition: background 0.1s, color 0.1s;
+  &:hover {
+    background: $darkred;
+    background: -webkit-linear-gradient($red, $darkred); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($red, $darkred); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($red, $darkred); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($red, $darkred); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-white {
-  background: $white;
+  background: $text-light;
+  background: -webkit-linear-gradient($white, $text-light); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($white, $text-light); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($white, $text-light); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($white, $text-light); /* Standard syntax */
   color: $blue;
+  transition: background 0.1s, color 0.1s;
+  border: 1px solid $border;
+  &:hover {
+    background: $lightergray;
+  }
+  &:active {
+    background: $active-btn;
+    color: $text-light;
+  }
 }
 
 .text-link {
