@@ -21,6 +21,55 @@ example:
     margin: 0;
     padding: 2vw 0;    
   }
+
+  h1 {
+    font-size: 9vw;
+    span, div {
+      font-size: 9vw;
+    }
+  }
+  h2 {
+    font-size: 7vw;
+  }
+  h3 {
+    font-size: 6vw;
+  }
+  h4 {
+    font-size: 5vw;
+  }
+  h5 {
+    font-size: 4.5vw;
+  }
+  h6 {
+    font-size: 4.4vw;
+  }
+  p {
+    font-size: 4.2vw;
+  }
+  span {
+    font-size: 4.2vw;
+  }
+  div {
+    font-size: 4.2vw;
+  }
+  label {
+    font-size: 4.2vw;
+  }
+  th {
+    font-size: 4.2vw;
+  }
+  td {
+    font-size: 4.2vw;
+  }
+  a, button {
+    font-size: 4.2vw;
+  }
+  input, textarea, select {
+    font-size: 4.2vw;
+  }
+  small {
+    font-size: 3.5vw;
+  }
 }
 
 //////////////////////////////////////////////////////////////

@@ -22,7 +22,7 @@ class UserCourseHistory extends React.Component {
   render() {
       return (
         <div className="container bordered-container">
-          <div className="content-container">
+          <div className="content-container align-left">
             <h2 className="header-collapse">Kurssihistoriasi</h2>
               <ul className="wide-list">
                 {this.props.currentUser.history.map(this.renderEntry)}

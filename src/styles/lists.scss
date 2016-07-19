@@ -41,7 +41,10 @@
         padding: 0;
         margin: 0;
       }
-    }    
+    }   
+    .onerow-item {
+      margin: 1vw 0 0 0;
+    } 
   }
 
   .item-item {
@@ -117,6 +120,7 @@ ul.wide-list {
     background: $container-color;
     border-radius: 5px;
     border: 1px solid $border;
+    box-sizing: border-box;
     .item-row {
       width: 100%;
       display: inline-block;
@@ -130,6 +134,7 @@ ul.wide-list {
     background: $container-color;
     border-radius: 5px;
     border: 1px solid $border;
+    box-sizing: border-box;
   }
 }
 .special-course-item {

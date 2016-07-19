@@ -84,13 +84,13 @@
     padding: 0;
   }
   .transaction-container {
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
     padding: 10;
   }
   .booking-container {
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
     padding: 10;
@@ -296,6 +296,10 @@
 
 .container {
   background: $body-color;
+  box-sizing: border-box;
+  .content-container {
+    box-sizing: border-box;
+  }
 }
 .bordered-container {
   border-bottom: 1px solid $border;
