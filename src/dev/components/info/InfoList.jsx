@@ -23,8 +23,7 @@ class InfoList extends React.Component {
       <div class="container bordered-container">
         <div className="content-container">
           <Logo />
-          <h2 className="centered login-header">Tietoja Joogakoulu Sillasta</h2>
-          <ul className="wide-list">
+          <ul className="wide-list blank-list">
             {this.props.list.list.map(this.renderList)}
           </ul>
         </div>
