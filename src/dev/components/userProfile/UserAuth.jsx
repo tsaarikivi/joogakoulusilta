@@ -16,9 +16,9 @@ class UserAuth extends React.Component {
     if(emailNew !== this.props.auth.email){
       this.props.actions.updateEmailAddress(emailCur, passwdCur, emailNew)
     }
-   // if(passwdNew !== ""){
-   //   this.props.actions.updatePassword(emailCur, passwdCur, passwdNew)
-   //}
+   if(passwdNew !== ""){
+      this.props.actions.updatePassword(emailCur, passwdCur, passwdNew)
+   }
   }
 
   renderContent() {
