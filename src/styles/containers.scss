@@ -11,12 +11,10 @@
       padding: 5vw 0;
       width: 100%;
       .week-info-container {
-        margin: 0 0 4vw;
-        width: 100%;
-        display: inline-block;
-        vertical-align: text-top;
-        padding: 2%;
-        box-sizing: border-box;
+        margin: 0 auto 4vw;
+        width: 94%;
+        display: block;        
+        padding: 2%;        
       }
       .info-info-container {
         margin: 0 2%;
@@ -134,7 +132,7 @@
         width: 46%;
         display: inline-block;
         vertical-align: text-top;
-        padding: 1%;
+        padding: 1%;        
       }
       .info-info-container {
         margin: 0 2%;
@@ -254,6 +252,9 @@
     .week-info-container {
       background-color: white;
       box-shadow: 0 2px 0 0 $item-shdw;
+      box-sizing: border-box;
+      border: 1px solid $item-border;
+      border-radius: 3px;
     }
     .exit-btn {
       color: $button-red-norm;
