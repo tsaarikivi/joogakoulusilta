@@ -115,7 +115,7 @@ ul {
   color: $blue;
 }
 
-ul.wide-list {
+.wide-list {
   li {
     background: $container-color;
     border-radius: 5px;
@@ -142,4 +142,13 @@ ul.wide-list {
     background: $lightblue;
     cursor: pointer;
   }
+}
+
+ul.blank-list {
+  margin-top: 60px;
+  li {
+    background: transparent;
+    border: none;
+    margin-bottom: 10px;
+  }  
 }
