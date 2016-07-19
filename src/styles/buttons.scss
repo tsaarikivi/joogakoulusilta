@@ -189,14 +189,24 @@ a.text-link-white {
 }
 
 .expand-btn {
+  color: $link;
   border: none;
-  background-color: $container-color;
+  text-decoration: none;
+  background: transparent;
   border-radius: 3px;
   text-transform: uppercase;
+  transition: color 0.1s, background-color 0.1s;
   &:hover {
-    background-color: $text-fade;
+    color: $link-hover;
+    background-color: $border;
   }
   &:active {
-    background-color: $text-dark;
+    color: $text-fade;
   }
-}    
+}
+
+.btn-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
