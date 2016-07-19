@@ -3,7 +3,9 @@ import {
     REMOVE_USER,
     AUTH_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
-    AUTH_TIMEOUT
+    AUTH_TIMEOUT,
+    EMAIL_UPDATED,
+    PASSWORD_UPDATED
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -11,7 +13,9 @@ const INITIAL_STATE = {
         code: 0,
         message: ""
     },
-    timeout: false
+    timeout: false,
+    emailUpdated: false,
+    passwordUpdated: false
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -23,16 +27,18 @@ export default function(state = INITIAL_STATE, action) {
                     message: ""
                 }
             }, action.payload);
-            break;
         case REMOVE_USER:
             return Object.assign([], INITIAL_STATE);
-            break;
         case AUTH_ERROR:
             return Object.assign([], state, action.payload);
-            break;
         case AUTH_TIMEOUT:
             return Object.assign([], state, action.payload);
-            break;
+        case EMAIL_UPDATED:
+            console.log("EMAIL_UPDATED")
+            return Object.assign([], state, action.payload);
+        case PASSWORD_UPDATED:
+            console.log("PASSWORD_UPDATED")
+            return Object.assign([], state, action.payload);
         default:
             return state;
     }
