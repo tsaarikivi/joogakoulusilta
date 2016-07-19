@@ -51,8 +51,12 @@ class ShopItem extends React.Component {
         <p className="item-desc">{this.props.item.desc}</p>
         {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>
-        <Link className="btn-small btn-blue" to="checkout" onClick={this.handleClick.bind(this)} >Osta</Link>
-        {admin}
+        <span className="item-row">
+          <Link className="btn-small btn-blue btn-link" to="checkout" onClick={this.handleClick.bind(this)} >Osta</Link>
+        </span>
+        <span className="item-row">
+          {admin}
+        </span>
       </li>
     );
   }

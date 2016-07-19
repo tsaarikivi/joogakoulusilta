@@ -8,8 +8,9 @@ example:
 @import 'tables.scss';
 @import 'containers.scss';
 @import 'buttons.scss';
+@import 'logo.scss';
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,600);
 
 //////////////////////////////////////////////////////////////
 // MOBILE
@@ -22,7 +23,7 @@ example:
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    padding: 2vw 0;
+    padding: 2vw 0;    
   }
 }
 
@@ -45,24 +46,36 @@ example:
 // ALL
 //////////////////////////////////////////////////////////////
 
-button, a {
-  outline-style: none;
-  font-family: 'Open Sans', sans-serif;
+button, a, select, textarea, body {
+  font-family: 'Raleway', sans-serif;
 }
 
-select, textarea {
-  font-family: 'Open Sans', sans-serif;
+button, a {
+  outline-style: none;
 }
 
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
   background: $body-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: $text-dark;
+  font-weight: 400;
+}
+p {
+  color: $text-dark;
+  font-weight: 400;
+}
+th {
+  font-weight: 500;
+}
+button {
+  font-weight: 600;
+}
+a {
+  font-weight: 500;
 }
 
 .header-collapse {
@@ -94,5 +107,4 @@ h1, h2, h3, h4, h5, h6 {
 
 .item-price {
   color: $text-dark;
-  font-weight: bold;
 }
