@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react'
 
 export default class InfoHeader extends React.Component {
   render() {
     return (
-      <div class="container info-header-container">
-        <h1>Infosivu</h1>
+      <div class="container bordered-container">
+        <div className="content-container centered">
+          <h1>Infosivu</h1>
+        </div>
       </div>
     );
   }
