@@ -78,7 +78,9 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
             index++;
         }
     }
-    userbookings.sort();
+    userbookings.sort((a, b) => {
+        return a.item - b.item
+    });
     bookings.sort((a, b) => {
         return a.instance - b.instance
     })

@@ -164,7 +164,6 @@ export function fetchUsersTransactions(uid) {
 }
 
 export function fetchUserDetails(uid) {
-    console.log("FETCH USER DETAILS");
     UserRef = firebase.database().ref('/users/' + uid);
     var usr = null;
     let tmp = null
@@ -186,7 +185,6 @@ export function fetchUserDetails(uid) {
                             usr.roles.instructor = snapshot.val().instructor
                         }
                     }
-                    console.log("Mitä tässä menee:", usr)
                     dispatch({
                         type: USER_DETAILS_UPDATED_IN_DB,
                         payload: usr

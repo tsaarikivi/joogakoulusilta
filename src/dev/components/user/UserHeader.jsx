@@ -70,7 +70,6 @@ class UserHeader extends React.Component {
 
   render() {
     var admin = null;
-    console.log("USERHDRPROPS:", this.props)
     if(this.props.curUsr.roles.admin === true){
       admin = <Link className="text-link float-right" to="admin">Admin</Link>
     }
