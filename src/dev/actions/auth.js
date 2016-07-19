@@ -2,7 +2,9 @@ import {
     ADD_USER,
     REMOVE_USER,
     AUTH_ERROR,
-    AUTH_TIMEOUT
+    AUTH_TIMEOUT,
+    EMAIL_UPDATED,
+    PASSWORD_UPDATED,
 } from './actionTypes.js'
 import {
     createNewUser
@@ -116,5 +118,69 @@ export function register(email, password, fName, sName, a) {
                 })
             }
         });
+    }
+}
+
+export function updateEmailAddress(newEmail) {
+    console.log("AUTH: change of email:", newEmail)
+    return dispatch => {
+        Auth.currentUser.updateEmail(newEmail).then(
+            () => {
+                dispatch({
+                    type: EMAIL_UPDATED,
+                    payload: {
+                        error: {
+                            code: 0,
+                            message: "no error"
+                        },
+                        emailUpdated: true
+                    }
+                })
+            }, (error) => {
+                if (error) {
+                    dispatch({
+                        type: AUTH_ERROR,
+                        payload: {
+                            error: {
+                                code: error.code,
+                                message: error.message
+                            }
+                        }
+                    })
+                }
+            }
+        )
+    }
+}
+
+export function updatePassword(newPassword) {
+    console.log("AUTH: change of pwd:", newPassword)
+    return dispatch => {
+        Auth.currentUser.updatePassword(newPassword).then(
+            () => {
+                dispatch({
+                    type: PASSWORD_UPDATED,
+                    payload: {
+                        error: {
+                            code: 0,
+                            message: "no error"
+                        },
+                        passwordUpdated: true
+                    }
+                })
+            }, (error) => {
+                if (error) {
+                    dispatch({
+                        type: AUTH_ERROR,
+                        payload: {
+                            error: {
+                                code: error.code,
+                                message: error.message
+                            }
+                        }
+                    })
+                }
+            }
+        )
     }
 }

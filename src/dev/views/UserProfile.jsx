@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../actions/user.js'
 
 import ProfileHeader from '../components/userProfile/ProfileHeader.jsx'
+import UserAuth from '../components/userProfile/UserAuth.jsx'
 import UserDataForm from '../components/userProfile/UserDataForm.jsx'
 import UserCourseHistory from '../components/userProfile/UserCourseHistory.jsx'
 import UserTransactions from '../components/userProfile/UserTransactions.jsx'
@@ -39,6 +40,7 @@ class UserProfile extends React.Component {
     return(
       <div>
         <ProfileHeader userError={this.props.currentUser.error}/>
+        <UserAuth/>
         <UserDataForm/>
         <UserTransactions/>
         <UserCourseHistory/>
