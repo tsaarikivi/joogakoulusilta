@@ -8,7 +8,7 @@ class UserBookings extends React.Component {
     router: React.PropTypes.object
   }
   componentWillReceiveProps(nextProps){
-    console.log("PROPSEJA tulee: ", nextProps);
+    //console.log("PROPSEJA tulee: ", nextProps);
   }
 
   renderBookings(item){
@@ -19,7 +19,7 @@ class UserBookings extends React.Component {
       return (
         <div className="container bordered-container">
           <div className="content-container">
-            <h2 className="header-collapse">Kurssihistoriasi ja varauksesi</h2>
+            <h2 className="header-collapse">Tulevat varauksesi</h2>
               <ul className="wide-list">
                 {this.props.currentUser.bookings.map(this.renderBookings)}
               </ul>

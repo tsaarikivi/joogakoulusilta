@@ -5,13 +5,29 @@ import {
   GET_CLIENT_TOKEN,
   DO_PURCHASE_TRANSACTION,
   CHECKOUT_ERROR,
-  CHECKOUT_TIMEOUT
+  CHECKOUT_TIMEOUT,
+  BUY_WITH_CASH,
+  EXECUTE_CASH_PURCHASE
 } from '../actions/actionTypes.js'
 
-const INITIAL_STATE = {cart:{}, error:{code: 0, message: "no error"}, items: [], token: "", purchaseResult:{}, phase: "start"}
+const INITIAL_STATE = {
+  cart:{},
+  error:{
+    code: 0,
+    message: "no error"
+  },
+  items: [],
+  token: "",
+  purchaseResult:{},
+  phase: "start"
+}
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case BUY_WITH_CASH:
+    return Object.assign({},state,action.payload);
+    case EXECUTE_CASH_PURCHASE:
+    return Object.assign({},state,action.payload);
     case START_CHECKOUT_FLOW:
       return Object.assign({},state,action.payload);
     case CHECKOUT_TIMEOUT:

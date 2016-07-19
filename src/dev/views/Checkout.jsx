@@ -3,7 +3,7 @@ import { Link } from "react-router"
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
+import UserList from '../components/admin/UserList.jsx'
 import * as actionCreators from '../actions/shop.js'
 
 
@@ -23,7 +23,7 @@ class Checkout extends React.Component {
   }
 
   componentWillMount(){
-    this.props.actions.getClientTokenFromBraintree();
+
   }
 
   onReady() {
@@ -42,6 +42,10 @@ class Checkout extends React.Component {
 //=================================================================
 //Render logic
 //=================================================================
+
+renderCashPayment(){
+    return( <UserList /> )
+}
 
   renderStartPhase(){
     return(
@@ -68,8 +72,7 @@ class Checkout extends React.Component {
   renderPayment(){
     return (
           <div>
-            <p>Valitse maksutapa ja vahvista maksu.</p>
-            <p class='test-instruction' >Testaa: <code>4111 1111 1111 1111</code></p>
+            <p className="centered">Valitse maksutapa ja vahvista maksu.</p>
             <form action='/transactions' method='POST'>
                 <DropIn
                     braintree={Braintree}
@@ -81,16 +84,21 @@ class Checkout extends React.Component {
               <br></br>
               <p>{this.props.shopItems.cart.title}</p><br></br>
               <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' value='Vahvista:'></input>
+              <input type='submit' className="btn-small btn-blue" value='Vahvista!'></input>
             </form>
           </div>
     );
   }
 
   render() {
+    if(this.props.shopItems.error.code != 0){
+      return(<p>Error: {this.props.shopItems.error.code} {this.props.shopItems.error.message}</p>)
+    }
     switch(this.props.shopItems.phase){
-      case "start":
-        return this.renderStartPhase()
+      case "cashPayment":
+        return this.renderCashPayment()
+      case "braintreePayment":
+          return this.renderStartPhase()
       case "tokenReceived":
         return this.renderPayment()
       case "done":

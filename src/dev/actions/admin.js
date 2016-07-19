@@ -109,7 +109,7 @@ export function fetchAdminList() {
     })
     .catch(err => {
       console.error("FETCH USERS ERROR: ", err);
-    })        
+    })
   }
 }
 
@@ -152,7 +152,7 @@ export function fetchInstructorList() {
     })
     .catch(err => {
       console.error("FETCH USERS ERROR: ", err);
-    })        
+    })
   }
 }
 
@@ -205,7 +205,7 @@ export function fetchCourseList() {
       list.sort(function(a, b) {
         if (a.day && b.day) {
           return a.day - b.day
-        }        
+        }
         return 1
       })
       dispatch({
@@ -234,7 +234,7 @@ export function fetchShopList() {
       list.sort(function(a, b) {
         if (a.price && b.price) {
           return a.price - b.price
-        }        
+        }
         return 0
       })
       dispatch({
@@ -339,15 +339,8 @@ export function addCourseType(data) {
 }
 
 export function addShopItem(data, type) {
-  return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
-    title: data.title,
-    desc: data.desc,
-    price: data.price,
-    type: type,
-    expiresAfterDays: data.expiresAfterDays || null,
-    usetimes: data.usetimes || null,
-    usedays: data.usedays || null
-  })
+  data.type = type;
+  return dispatch => firebase.database().ref('/shopItems/' + data.title).update(data)
   .catch(err => {
     console.error("ERR: update; addShopItem: ", err);
   })

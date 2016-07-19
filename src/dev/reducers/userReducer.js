@@ -13,6 +13,11 @@ const INITIAL_STATE = {
     message: "ok"
   },
   bookings: [],
+  history: [],
+  roles:{
+    admin: false,
+    instructor: false
+  },
   transactions: {
     details: {
       expired: [],
