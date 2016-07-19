@@ -62,7 +62,7 @@ class User extends React.Component {
       } else {
           if (this.props.auth.uid){
             return (
-              <p> LADATAAN KÄYTTÄJÄTIETOJA.</p>
+              <p className="centered"> Ladataan käyttäjätietoja.</p>
             );
           } else {
             return(<p> Ei käyttäjää</p>);

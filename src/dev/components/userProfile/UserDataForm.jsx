@@ -22,7 +22,7 @@ class UserDataForm extends React.Component {
   renderContent() {
     if(!this.props.currentUser) return( <div></div>)
 
-    const { fields: { firstname, lastname }, handleSubmit, load } = this.props
+    const { fields: { firstname, lastname, alias }, handleSubmit, load } = this.props
 
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
@@ -31,6 +31,9 @@ class UserDataForm extends React.Component {
 
           <label htmlFor="lastName">Sukunimi</label>
           <input type="text" name="lastname" {...lastname}/>
+
+          <label htmlFor="lastName">Alias, näytetään nimen asemasta varauslistalla jos annettu.</label>
+          <input type="text" name="alias" {...alias}/>
 
           <p>Sähköpostisi: {this.props.currentUser.email}</p>
 
@@ -75,5 +78,5 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'UserDataForm',
-  fields: ['firstname', 'lastname']
+  fields: ['firstname', 'lastname', 'alias']
 }, mapStateToProps, mapDispatchToProps)(UserDataForm)
