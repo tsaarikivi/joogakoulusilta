@@ -40,8 +40,8 @@ class UserProfile extends React.Component {
     return(
       <div>
         <ProfileHeader userError={this.props.currentUser.error}/>
-        <UserAuth/>
         <UserDataForm/>
+        <UserAuth/>
         <UserTransactions/>
         <UserCourseHistory/>
       </div>

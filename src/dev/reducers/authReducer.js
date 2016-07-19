@@ -10,7 +10,7 @@ import {
 
 const INITIAL_STATE = {
     error: {
-        code: 0,
+        code: "0",
         message: ""
     },
     timeout: false,
@@ -23,7 +23,7 @@ export default function(state = INITIAL_STATE, action) {
         case ADD_USER:
             return Object.assign([], {
                 error: {
-                    code: 0,
+                    code: "0",
                     message: ""
                 }
             }, action.payload);

@@ -52,6 +52,7 @@ export function authListener() {
                     alias = null;
                 }
             } else {
+                console.log("REMOVE_USR")
                 dispatch({
                     type: REMOVE_USER
                 })
@@ -121,66 +122,115 @@ export function register(email, password, fName, sName, a) {
     }
 }
 
-export function updateEmailAddress(newEmail) {
-    console.log("AUTH: change of email:", newEmail)
+//TODO: this does not work.... Weird errors....
+export function updateEmailAddress(oldEmail, oldPdw, newEmail) {
+    console.log("AUTH: change of email:", oldEmail, oldPdw, newEmail)
     return dispatch => {
-        Auth.currentUser.updateEmail(newEmail).then(
-            () => {
-                dispatch({
-                    type: EMAIL_UPDATED,
-                    payload: {
-                        error: {
-                            code: 0,
-                            message: "no error"
-                        },
-                        emailUpdated: true
-                    }
-                })
-            }, (error) => {
-                if (error) {
+        console.log("1111", firebase)
+        console.log("2222", firebase.auth.EmailAuthProvider)
+        var credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPdw);
+        console.log("CREDENTIAL:", credential)
+        var user = firebase.auth().currentUser
+        user.reauthenticate(credential).then(() => {
+            console.log("3333")
+            user.updateEmail(newEmail).then(
+                () => {
+                    console.log("4444")
                     dispatch({
-                        type: AUTH_ERROR,
+                        type: EMAIL_UPDATED,
                         payload: {
                             error: {
-                                code: error.code,
-                                message: error.message
-                            }
+                                code: "0",
+                                message: "no error"
+                            },
+                            emailUpdated: true
                         }
                     })
+                }, (error) => {
+                    if (error) {
+                        console.log("UPDATEEMAIL error", error)
+                        dispatch({
+                            type: AUTH_ERROR,
+                            payload: {
+                                error: {
+                                    code: error.code,
+                                    message: error.message
+                                }
+                            }
+                        })
+                    }
                 }
+            )
+        }, (error) => {
+            if (error) {
+                console.log("REAUTH error", error)
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
             }
-        )
+        })
+
     }
 }
 
-export function updatePassword(newPassword) {
+export function updatePassword(oldEmail, oldPdw, newPassword) {
     console.log("AUTH: change of pwd:", newPassword)
     return dispatch => {
-        Auth.currentUser.updatePassword(newPassword).then(
-            () => {
-                dispatch({
-                    type: PASSWORD_UPDATED,
-                    payload: {
-                        error: {
-                            code: 0,
-                            message: "no error"
-                        },
-                        passwordUpdated: true
-                    }
-                })
-            }, (error) => {
-                if (error) {
+        console.log("1111", firebase)
+        console.log("2222", firebase.auth.EmailAuthProvider)
+        var credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPdw);
+        console.log("CREDENTIAL:", credential)
+        var user = firebase.auth().currentUser
+        user.reauthenticate(credential).then(() => {
+            console.log("3333")
+            user.updatePassword(newPassword).then(
+                () => {
                     dispatch({
-                        type: AUTH_ERROR,
+                        type: PASSWORD_UPDATED,
                         payload: {
                             error: {
-                                code: error.code,
-                                message: error.message
-                            }
+                                code: "0",
+                                message: "no error"
+                            },
+                            passwordUpdated: true
                         }
                     })
+                }, (error) => {
+                    if (error) {
+                        console.log("auth error", error)
+                        dispatch({
+                            type: AUTH_ERROR,
+                            payload: {
+                                error: {
+                                    code: error.code,
+                                    message: error.message
+                                }
+                            }
+                        })
+                    }
                 }
+            )
+        }, (error) => {
+            if (error) {
+                console.log("REAUTH error", error)
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
             }
-        )
+        })
+
+
     }
 }

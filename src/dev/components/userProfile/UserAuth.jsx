@@ -1,5 +1,4 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -7,21 +6,19 @@ import * as actionCreators from '../../actions/auth.js'
 
 class UserAuth extends React.Component {
 
-  static contextTypes = {
-    router: React.PropTypes.object
-  }
-
   changeEmailPassword() {
-    let email = document.getElementById("UAemail").value
-    let passwd = document.getElementById("UApassword").value
-    console.log("Change of email and passwd called", email, passwd)
+    let emailCur = document.getElementById("UAemailCur").value
+    let passwdCur = document.getElementById("UApasswordCur").value
+    let emailNew = document.getElementById("UAemailNew").value
+    let passwdNew = document.getElementById("UApasswordNew").value
+    console.log("Change of email and passwd called", emailCur,emailNew, passwdCur)
     
-    if(email !== this.props.auth.email){
-      this.props.actions.updateEmailAddress(email)
+    if(emailNew !== this.props.auth.email){
+      this.props.actions.updateEmailAddress(emailCur, passwdCur, emailNew)
     }
-    if(passwd !== "Salasana"){
-      this.props.actions.updatePassword(passwd)
-    }
+   // if(passwdNew !== ""){
+   //   this.props.actions.updatePassword(emailCur, passwdCur, passwdNew)
+   //}
   }
 
   renderContent() {
@@ -37,9 +34,11 @@ class UserAuth extends React.Component {
       return (
             <form>              
               {emailLab}
-              <input id="UAemail" type="email" name="email" defaultValue={this.props.auth.email}/>
+              <input id="UAemailCur" type="email" defaultValue={this.props.auth.email}/>
+              <input id="UAemailNew" type="email" placeholder="Uusi sähköposti"/>
               {passwordLab}
-              <input id="UApassword" type="password" name="password" defaultValue="Salasana"/>
+              <input id="UApasswordCur" type="password" />
+              <input id="UApasswordNew" type="password" placeholder="Uusi salasana"/>
               <br/>
               <button className="btn-small btn-blue" onClick={this.changeEmailPassword.bind(this)}>Päivitä</button>
               <br/>
@@ -51,8 +50,8 @@ class UserAuth extends React.Component {
   render() {
     var errorData = null;
     if(this.props.auth){
-      if (this.props.auth.error.code != 0){
-        errorData = <p>Error: {this.props.currentUser.error.message}</p>
+      if (this.props.auth.error.code !== "0"){
+        errorData = <p>Error: {this.props.auth.error.message}</p>
       }
     }
     return (
