@@ -41,9 +41,9 @@ class Admin extends React.Component {
     }
   }
 
-  componentWillUnmount(){
-    this.props.actions.finishedWithUserDetails();
-  }
+componentWillUnmount(){
+  this.props.actions.finishedWithUserDetails();
+}
 
 componentWillReceiveProps(nextProps){
   console.log("ADMIN: ", nextProps)
