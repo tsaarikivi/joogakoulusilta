@@ -2,6 +2,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import * as actionCreators from '../actions/user.js'
+
 import AdminHeader from '../components/admin/AdminHeader.jsx'
 import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
 import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
@@ -25,13 +27,30 @@ constructor(){
   this.allowShow = false;
 }
 
+ componentWillMount(){
+    if( this.props.auth.uid ) {
+      this.props.actions.fetchUserDetails(this.props.auth.uid);
+    }
+    else {
+      this.context.router.push('/');
+    }
+  }
+
+  componentWillUnmount(){
+    this.props.actions.finishedWithUserDetails();
+  }
+
 componentWillReceiveProps(nextProps){
+  console.log("ADMIN: ", nextProps)
   if(nextProps.currentUser.roles.admin === true){
     this.allowShow = true;
   }
 }
 
   render() {
+    if(this.props.currentUser.key === "0"){
+      return <div/>
+    }
     if(this.allowShow){
       return (
         <div>
@@ -65,5 +84,7 @@ componentWillReceiveProps(nextProps){
 function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
-
-export default connect(mapStateToProps, null)(Admin)
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Admin)
