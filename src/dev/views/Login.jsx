@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as actionCreators from '../actions/auth.js'
+import Logo from '../components/logos/JoogakouluLogo.jsx'
 
 class Login extends React.Component {
 
@@ -41,14 +42,14 @@ class Login extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="content-container">
-          <form>
-            <h1>Kirjaudu sisään</h1>
-              <label>Sähköposti</label>
-              <input id="email" type="email" name="email" placeholder="Sähköposti"/>
-              <label>Salasana</label>
-              <input id="password" type="password" name="password" placeholder="Salasana"/>
-            <br/>
+        <Logo />
+        <h2 className="centered login-header">Kirjaudu sisään Joogakoulu Siltaan</h2>
+        <div className="content-container login-container">          
+          <form>            
+            <label>Sähköposti</label>
+            <input id="email" type="email" name="email" placeholder="Sähköposti"/>
+            <label>Salasana</label>
+            <input id="password" type="password" name="password" placeholder="Salasana"/>
             <button className="btn-small btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
             <br/>
             <b>{this.errorText}</b>

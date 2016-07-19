@@ -49,7 +49,7 @@
 
   .btn-small {
     margin: 0 2px;
-    padding: 4px 7px;
+    padding: 7px 11px;
   }
   
   .btn-right {
@@ -102,7 +102,11 @@
   }
 }
 .btn-blue {
-  background: $blue;
+  background: $blue; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient($lighterblue, $blue); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lighterblue, $blue); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lighterblue, $blue); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lighterblue, $blue); /* Standard syntax */
 }
 .btn-green {
   background: $green;

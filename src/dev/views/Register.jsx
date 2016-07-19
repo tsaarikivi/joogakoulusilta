@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as actionCreators from '../actions/auth.js'
+import Logo from '../components/logos/JoogakouluLogo.jsx'
 
 class Register extends React.Component {
 
@@ -41,9 +42,10 @@ class Register extends React.Component {
     } else {
       return (
         <div class="container">
-          <div className="content-container">
-            <form>
-              <h1>Rekisteröidy käyttäjäksi</h1>
+          <Logo />
+          <h2 className="centered logo-header">Rekisteröidy käyttäjäksi</h2>
+          <div className="content-container login-container">
+            <form>              
               <label>Sähköposti</label>
               <input id="email" type="email" name="email" placeholder="Sähköposti"/>
               <label>Salasana</label>
