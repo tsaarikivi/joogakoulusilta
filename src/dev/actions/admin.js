@@ -6,6 +6,7 @@ import {
   FETCH_INSTRUCTOR_LIST,
   FETCH_SHOP_LIST,
   FETCH_PLACE_LIST,
+  FETCH_INFO_LIST,
 
   EXPAND_ADMIN_LIST,
   MINIMIZE_ADMIN_LIST,
@@ -21,6 +22,8 @@ import {
   MINIMIZE_SHOP_LIST,
   EXPAND_PLACE_LIST,
   MINIMIZE_PLACE_LIST,
+  EXPAND_INFO_LIST,
+  MINIMIZE_INFO_LIST,
 
   EXPAND_PLACE_FORM,
   MINIMIZE_PLACE_FORM,
@@ -278,6 +281,29 @@ export function fetchPlaceList() {
     })
     .catch(err => {
       console.error("ERR: fetch places: ", err);
+    })
+  }
+}
+
+export function fetchInfoList(){
+  var list = Object.assign([])
+  return dispatch => {
+    firebase.database().ref('/infoItems/').once('value', snapshot => {
+      var infoItems = snapshot.val()
+      for (var key in infoItems) {
+        if (infoItems.hasOwnProperty(key)) {
+          let ItemWithKey = infoItems[key]
+          ItemWithKey.key = key
+          list = list.concat(ItemWithKey)
+        }
+      }
+      dispatch({
+        type: FETCH_INFO_LIST,
+        payload: list
+      })
+    })
+    .catch(err => {
+      console.error("ERR: fetch infoItems: ", err);
     })
   }
 }
@@ -579,6 +605,20 @@ export function expandCountShopForm() {
 export function minimizeCountShopForm() {
   return dispatch => { dispatch ({
     type: MINIMIZE_COUNT_SHOP_FORM
+    })
+  }
+}
+
+export function expandInfoList() {
+  return dispatch => { dispatch ({
+    type: EXPAND_INFO_LIST
+    })
+  }
+}
+
+export function minimizeInfoList() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_INFO_LIST
     })
   }
 }

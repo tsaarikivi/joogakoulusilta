@@ -18,14 +18,19 @@ import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
 import PlaceForm from '../components/admin/PlaceForm.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
+import InfoList from '../components/admin/InfoList.jsx'
 
 
 class Admin extends React.Component {
 
-constructor(){
-  super()
-  this.allowShow = false;
-}
+ constructor(){
+   super()
+   this.allowShow = false;
+ }
+
+ static contextTypes = {
+    router: React.PropTypes.object
+  }
 
  componentWillMount(){
     if( this.props.auth.uid ) {
@@ -36,9 +41,9 @@ constructor(){
     }
   }
 
-  componentWillUnmount(){
-    this.props.actions.finishedWithUserDetails();
-  }
+componentWillUnmount(){
+  this.props.actions.finishedWithUserDetails();
+}
 
 componentWillReceiveProps(nextProps){
   console.log("ADMIN: ", nextProps)
@@ -58,6 +63,7 @@ componentWillReceiveProps(nextProps){
           <AdminList />
           <InstructorList />
           <UserList />
+          <InfoList />
           <PlaceList />
           <CourseTypeList />
           <CourseList />
