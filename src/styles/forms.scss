@@ -15,7 +15,6 @@
     }
     label {
       width: 100%;
-      font-size: 4.1vw;
     }
     input, textarea, select {
       vertical-align: text-top;
@@ -45,6 +44,7 @@
   }
 
   form {
+    box-sizing: border-box;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
@@ -52,7 +52,6 @@
     text-align: left;
     label {
       width: 100%;
-      font-size: 13px;
       display: block;
       margin-bottom: 8px;      
     }

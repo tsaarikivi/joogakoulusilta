@@ -37,7 +37,7 @@ class TimeTableItem extends React.Component {
   render() {
     return (
       <td onClick={() => this.itemClicked()}>
-        <h3 className="table-course">{this.props.item.courseType.name}</h3>
+        <p className="table-course">{this.props.item.courseType.name}</p>
         <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
       </td>
     );

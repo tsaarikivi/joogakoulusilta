@@ -13,16 +13,16 @@ class UserCourseHistory extends React.Component {
 
   renderEntry(item){
     return(
-      <div key={item.courseTime} className="booking-container">
+      <li key={item.courseTime} className="booking-container">
         <p>{item.courseName} {getDayStrMs(item.courseTime)} {getTimeStrMs(item.courseTime)}</p>
-      </div>
+      </li>
     )
   }
 
   render() {
       return (
         <div className="container bordered-container">
-          <div className="content-container">
+          <div className="content-container align-left">
             <h2 className="header-collapse">Kurssihistoriasi</h2>
               <ul className="wide-list">
                 {this.props.currentUser.history.map(this.renderEntry)}

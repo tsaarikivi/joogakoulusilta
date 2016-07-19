@@ -12,12 +12,6 @@ class CourseInfo extends React.Component {
     this.fetchStarted = false;
   }
 
-  componentWillMount(){
-  }
-
-  componentWillUnMount(){
-  }
-
   componentWillReceiveProps(nextProps){
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
@@ -65,12 +59,9 @@ class CourseInfo extends React.Component {
     //========================================
     if(this.props.courseInfo.bookings){
       if(this.props.courseInfo.bookings.all.length > adjustedIndex){
-        let participantlist = "";
-        this.props.courseInfo.bookings.all[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
         return(
           <div>
             <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
-            <p className="info-participants">Osallistujat: {participantlist}</p>
           </div>
         );
       }
@@ -78,7 +69,7 @@ class CourseInfo extends React.Component {
     else {
       return(
         <div>
-          <p className="info-reserved">Ei ilmoittautuneita.</p>
+          <p className="info-reserved">Ilmoittautuneita 0/{this.props.courseInfo.maxCapacity}</p>
         </div>
       )
     }

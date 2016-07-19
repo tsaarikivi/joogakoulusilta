@@ -9,11 +9,11 @@ class UserTransaction extends React.Component {
       unused = "Käyttämättä: " + this.props.item.unusedtimes + "/" + this.props.item.usetimes + " -- "
     }
     return (
-        <div className="transaction-container">
+        <li className="transaction-container">
           <p>Ostettu: {this.props.item.shopItem.title} -- {getDayStrMs(this.props.item.purchasetime)} </p>
           <p>{unused}Voimassa: {getDayStrMs(this.props.item.expires)} </p>
           <p>Ostotapa: {this.props.item.paymentInstrumentType}</p>
-        </div>
+        </li>
     )
   }
 }

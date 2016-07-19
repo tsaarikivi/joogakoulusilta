@@ -24,7 +24,6 @@
   .text-list-item {
     span {
       margin-top: 3vw;
-      font-size: 3.5vw;
     }
     button {
       margin-top: 2vw;
@@ -42,14 +41,10 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 4.1vw;
-      }
-    }
-  }
-
-  .item-expiration {
-    font-size: 4.1vw;
+    }   
+    .onerow-item {
+      margin: 1vw 0 0 0;
+    } 
   }
 
   .item-item {
@@ -80,7 +75,6 @@
   .text-list-item {
     span {
       margin-top: 14px;
-      font-size: 12px;
     }
     button {
       margin-top: 6px;
@@ -98,14 +92,10 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 14px;
-      }
     }
-  }
-
-  .item-expiration {
-    font-size: 14px;
+    .onerow-item {
+      margin: 8px 0 0 0;
+    }
   }
 
   .item-item {
@@ -130,6 +120,7 @@ ul.wide-list {
     background: $container-color;
     border-radius: 5px;
     border: 1px solid $border;
+    box-sizing: border-box;
     .item-row {
       width: 100%;
       display: inline-block;
@@ -143,6 +134,7 @@ ul.wide-list {
     background: $container-color;
     border-radius: 5px;
     border: 1px solid $border;
+    box-sizing: border-box;
   }
 }
 .special-course-item {
