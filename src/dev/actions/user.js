@@ -234,6 +234,15 @@ export function finishedWithUserDetails() {
     }
 }
 
+export function sendEmailVerification() {
+    return dispatch => {
+        firebase.auth().currentUser.sendEmailVerification().then(() => {
+            console.log("EMAIL verification request sent to user.")
+        })
+    }
+}
+
+
 export function createNewUser(user, firstname, lastname, alias) {
     let UIDUsersRef = firebase.database().ref('/users/' + user.uid)
     UIDUsersRef.update({

@@ -21,10 +21,8 @@ class AuthManager extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    console.log("AUTHMANAGER-PROPS", newProps, newProps.auth.uid, this.userInitialized)
     if(newProps.auth.uid){
       if(!this.userInitialized){
-        console.log("User authenticated - user is: ", newProps.auth.uid)
         this.props.userActions.fetchUserDetails(newProps.auth.uid)
         this.props.userActions.fetchUsersTransactions(newProps.auth.uid)
         this.props.userActions.fetchUsersBookings(newProps.auth.uid)
@@ -32,7 +30,6 @@ class AuthManager extends React.Component {
       }    
     } else {
       if (this.userInitialized){
-        console.log("User no longer present. Stopping to update user data")
         this.props.userActions.finishedWithUserDetails()
         this.context.router.push('/')
         this.userInitialized = false;
@@ -41,7 +38,6 @@ class AuthManager extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("AUTHMANAGER-UNMOUNT")
     this.props.authActions.logout();
     this.props.userActions.finishedWithUserDetails()
   }

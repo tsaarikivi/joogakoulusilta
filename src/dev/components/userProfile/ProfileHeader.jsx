@@ -10,8 +10,7 @@ class ProfileHeader extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object
   }
-  handleLogout = (e) => {
-    e.preventDefault();
+  handleLogout(){
     if(this.props.auth.uid){
       this.props.authActions.logout();
     }

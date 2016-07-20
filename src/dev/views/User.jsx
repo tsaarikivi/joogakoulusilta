@@ -36,14 +36,25 @@ class User extends React.Component {
   componentWillReceiveProps(nextProps){
   }
 
+  handleEmailVerify(){
+      this.props.actions.sendEmailVerification()
+  }
+
 
   render() {
+    var emailVerification = null
+    if(this.props.auth.uid){
+      if(!this.props.auth.userdata.emailVerified){
+        emailVerification =  <button className="btn-small btn-red float-left" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button>
+      }
+    }
     if( this.props.auth.uid &&
         this.props.currentUser.key != "0" &&
         typeof(this.props.currentUser.transactions) != "undefined" &&
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
             <div>
+            {emailVerification}
               <UserHeader curUsr={this.props.currentUser}/>
               <UserBookings/>
               <Timetable/>
