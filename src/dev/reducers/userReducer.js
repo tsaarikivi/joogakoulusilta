@@ -35,6 +35,7 @@ export default function(state = INITIAL_STATE, action) {
             return Object.assign({}, state, action.payload);
             break;
         case USER_ERROR:
+            console.error("USER_ERROR: ", action.payload)
             return Object.assign({}, state, action.payload);
             break;
         case USER_DETAILS_UPDATED_IN_DB:

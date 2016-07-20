@@ -11,7 +11,6 @@ class UserAuth extends React.Component {
     let passwdCur = document.getElementById("UApasswordCur").value
     let emailNew = document.getElementById("UAemailNew").value
     let passwdNew = document.getElementById("UApasswordNew").value
-    console.log("Change of email and passwd called", emailCur,emailNew, passwdCur)
     
     if(emailNew !== this.props.auth.email){
       this.props.actions.updateEmailAddress(emailCur, passwdCur, emailNew)

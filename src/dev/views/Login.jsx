@@ -27,7 +27,6 @@ class Login extends React.Component {
     e.preventDefault();
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    console.log("Logging in with email and password.");
     this.props.actions.login(email, password);
   }
 

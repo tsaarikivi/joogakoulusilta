@@ -14,7 +14,6 @@ class UserBooking extends React.Component {
   }
 
   cancelReservation(item){
-    console.log("Cancelling: ", item);
     this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
   }
 

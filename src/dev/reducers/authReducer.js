@@ -21,7 +21,6 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case ADD_USER:
-            console.log("ADD_USER", state, action)
             return Object.assign({}, {
                 error: {
                     code: "0",
@@ -29,19 +28,15 @@ export default function(state = INITIAL_STATE, action) {
                 }
             }, action.payload);
         case REMOVE_USER:
-            console.log("REMOVE_USER", state)
             return Object.assign({}, INITIAL_STATE);
         case AUTH_ERROR:
-            console.log("AUTH_ERROR", state)
+            console.error("AUTH_ERROR", action.payload)
             return Object.assign({}, state, action.payload);
         case AUTH_TIMEOUT:
-            console.log("AUTH_TIMEOUT", state)
             return Object.assign({}, state, action.payload);
         case EMAIL_UPDATED:
-            console.log("EMAIL_UPDATED")
             return Object.assign({}, state, action.payload);
         case PASSWORD_UPDATED:
-            console.log("PASSWORD_UPDATED")
             return Object.assign({}, state, action.payload);
         default:
             return state;

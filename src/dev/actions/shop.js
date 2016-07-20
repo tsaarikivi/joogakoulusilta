@@ -42,7 +42,6 @@ export function executeCashPurchase(forUsr, itemKey) {
                 })
             })
             .then(result => {
-                console.log("EXECUTE_CASH_PURCHASE:", forUsr, itemKey);
                 dispatch({
                     type: EXECUTE_CASH_PURCHASE,
                     payload: {

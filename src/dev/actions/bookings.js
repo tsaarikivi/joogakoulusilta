@@ -40,7 +40,7 @@ export function postReservation(forward, courseInfo) {
                         weeksForward: forward
                     })
                 .then(response => {
-                    console.log(response.data);
+                    console.log(response.data); // Should process the data - for now ther is no need.
                 })
                 .catch(error => {
                     console.error(error);

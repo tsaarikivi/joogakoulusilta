@@ -25,7 +25,6 @@ export function updateUserDetails(user) {
 }
 
 export function fetchUsersBookings(uid) {
-    console.log("fetchUsersBookings", uid)
     return dispatch => {
         var oneCourse;
         var allCourses;
@@ -222,7 +221,6 @@ export function fetchUserDetails(uid) {
 }
 
 export function finishedWithUserDetails() {
-    console.log("finishedWithUserDetails", UserRef, TransactionsRef, BookingsRef)
     if (UserRef) UserRef.off('value');
     if (TransactionsRef) TransactionsRef.off('value');
     if (BookingsRef) BookingsRef.off('value')
@@ -234,11 +232,46 @@ export function finishedWithUserDetails() {
     }
 }
 
+export function resetPassword(email) {
+    return dispatch => {
+
+        firebase.auth().sendPasswordResetEmail(email).then(() => {
+                console.log("EMAIL RESET sent to user.")
+            })
+            .catch((error) => {
+                console.error("Error from: sendPasswordResetEmail - ", error)
+                dispatch({
+                    type: USER_ERROR,
+                    payload: {
+                        error: {
+                            code: "EMAIL_RESET_ERROR",
+                            message: error.toString()
+                        }
+                    }
+                })
+
+            })
+
+    }
+}
+
 export function sendEmailVerification() {
     return dispatch => {
         firebase.auth().currentUser.sendEmailVerification().then(() => {
-            console.log("EMAIL verification request sent to user.")
-        })
+                console.log("EMAIL verification request sent to user.")
+            })
+            .catch((error) => {
+                console.error("Error from: sendEmailVerification - ", error)
+                dispatch({
+                    type: USER_ERROR,
+                    payload: {
+                        error: {
+                            code: "EMAIL_VERIFICATION_ERROR",
+                            message: error.toString()
+                        }
+                    }
+                })
+            })
     }
 }
 

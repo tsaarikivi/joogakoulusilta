@@ -41,7 +41,6 @@ componentWillUnmount(){
 }
 
 componentWillReceiveProps(nextProps){
-  console.log("ADMIN: ", nextProps)
   if(nextProps.currentUser.roles.admin === true){
     this.allowShow = true;
   }
