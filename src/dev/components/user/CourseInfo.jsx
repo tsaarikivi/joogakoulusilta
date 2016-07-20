@@ -15,7 +15,7 @@ class CourseInfo extends React.Component {
   componentWillReceiveProps(nextProps){
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
-    if(nextProps.courseInfo && !this.fetchStarted){
+    if(nextProps.courseInfo.key !== "0" && !this.fetchStarted){
       this.fetchStarted = true;
       this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
     }
@@ -156,7 +156,7 @@ class CourseInfo extends React.Component {
 
 
   render() {
-    if(this.props.courseInfo) {
+    if(this.props.courseInfo.bookings.ready) {
       return (
         <div className="course-info-container">
           <div className="course-info">

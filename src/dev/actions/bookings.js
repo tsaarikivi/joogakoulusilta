@@ -103,7 +103,8 @@ export function fetchCourseBookings(coursekey, uid) {
             returnObjcet = Object.assign({
                 bookings: {
                     all: bookings,
-                    user: userbookings
+                    user: userbookings,
+                    ready: true
                 }
             })
             dispatch({

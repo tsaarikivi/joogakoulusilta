@@ -276,10 +276,8 @@ export function sendEmailVerification() {
 }
 
 export function createNewUser(user, firstname, lastname, alias) {
-        firebase.database().ref('/users/' + user.uid).once('value').then(snapshot => {
-        if (snapshot.val()) {
-            console.log("User already created. Not updating.")
-        } else {
+    firebase.database().ref('/users/' + user.uid).once('value').then(snapshot => {
+        if (snapshot.val() !== null) {
             if (firstname === null) {
                 console.log("currentUser", firebase.auth().currentUser)
                 firstname = firebase.auth().currentUser.displayName;
