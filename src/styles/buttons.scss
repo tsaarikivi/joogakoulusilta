@@ -205,3 +205,16 @@ a.text-link-white {
   margin-bottom: 10px;
   font-weight: 600;
 }
+
+.mini-link {
+  margin: 10px auto 0;
+  padding: 0;
+  color: $blue;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  &:hover {
+    color: $darkblue;
+    cursor: pointer;
+  }
+}

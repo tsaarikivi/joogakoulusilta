@@ -622,3 +622,18 @@ export function minimizeInfoList() {
     })
   }
 }
+
+/*export function updateToFirebase(
+  refName, 
+  key = firebase.database().ref().child(refName).push().key, 
+  ...items)
+  {
+    return dispatch => firebase.database().ref(refName).push({
+      items.reduce((prev, item) => {
+        return Object.assign({}, prev, item)
+      }, {})
+  })
+  .catch(err => {
+      console.error("ERR: pushToFirebase() ", err);
+  })
+}*/

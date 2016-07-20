@@ -50,10 +50,10 @@ class HomeLoginRegister extends React.Component {
           <form>            
             <label>Sähköposti</label>
             <input id="email" type="email" name="email" placeholder="Sähköposti"/>
-            <label>Salasana</label>
-            <input id="password" type="password" name="password" placeholder="Salasana"/>
+            <label>Salasana</label>            
+            <input id="password" type="password" name="password" placeholder="Salasana"/>            
             <button className="btn-small btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
-            <br/>
+            <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
             <b>{this.errorText}</b>
           </form>
         </div>
