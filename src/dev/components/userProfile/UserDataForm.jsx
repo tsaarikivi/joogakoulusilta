@@ -15,6 +15,7 @@ class UserDataForm extends React.Component {
       uid: this.props.auth.uid,
       firstname: props.firstname,
       lastname: props.lastname,
+      alias: props.alias
     }
     this.props.actions.updateUserDetails(user)
   }

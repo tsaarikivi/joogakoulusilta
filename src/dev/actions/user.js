@@ -275,25 +275,33 @@ export function sendEmailVerification() {
     }
 }
 
-
 export function createNewUser(user, firstname, lastname, alias) {
-    let UIDUsersRef = firebase.database().ref('/users/' + user.uid)
-    UIDUsersRef.update({
-        email: user.email,
-        uid: user.uid,
-        firstname: firstname,
-        lastname: lastname,
-        alias: alias
-    }, error => {
-        if (error) {
-            console.error("Error writing new user to database", error);
-            dispatch({
-                type: AUTH_ERROR,
-                payload: {
-                    error: {
-                        code: error.code,
-                        message: error.message
-                    }
+        firebase.database().ref('/users/' + user.uid).once('value').then(snapshot => {
+        if (snapshot.val()) {
+            console.log("User already created. Not updating.")
+        } else {
+            if (firstname === null) {
+                console.log("currentUser", firebase.auth().currentUser)
+                firstname = firebase.auth().currentUser.displayName;
+            }
+            return firebase.database().ref('/users/' + user.uid).update({
+                email: user.email,
+                uid: user.uid,
+                firstname: firstname,
+                lastname: lastname,
+                alias: alias
+            }).catch((error) => {
+                if (error) {
+                    console.error("Error writing new user to database", error);
+                    dispatch({
+                        type: AUTH_ERROR,
+                        payload: {
+                            error: {
+                                code: error.code,
+                                message: error.message
+                            }
+                        }
+                    })
                 }
             })
         }

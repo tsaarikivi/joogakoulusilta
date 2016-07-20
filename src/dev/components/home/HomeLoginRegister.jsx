@@ -23,11 +23,13 @@ class HomeLoginRegister extends React.Component {
   }
 
 
-  handleLogin = (e) => {
-    e.preventDefault();
+  handleLogin() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     this.props.actions.login(email, password);
+  }
+  handlePopupLogin() {
+    this.props.actions.loginWithPopUp();
   }
 
   render() {
@@ -43,7 +45,8 @@ class HomeLoginRegister extends React.Component {
             <input id="email" type="email" name="email" placeholder="Sähköposti"/>
             <label>Salasana</label>
             <input id="password" type="password" name="password" placeholder="Salasana"/>
-            <button className="btn-small btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
+            <button className="btn-small btn-blue" onClick={this.handleLogin.bind(this)}>Kirjaudu: sähköposti+salasana</button>
+            <button className="btn-small btn-blue" onClick={this.handlePopupLogin.bind(this)}>Kirjaudu Google-tililläsi</button>
             <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
             <br/>
           </form>
@@ -51,7 +54,7 @@ class HomeLoginRegister extends React.Component {
 
         <div className="register-container">
           <p>Oletko uusi käyttäjä?</p>
-          <Link className="text-link" to="register">Rekisteröidy</Link>
+          <Link className="text-link" to="register">Rekisteröi sähköposti ja salasana</Link>
         </div>
       </div>
     )
