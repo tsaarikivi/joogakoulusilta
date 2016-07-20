@@ -17,7 +17,7 @@ export default class CourseTypeItem extends React.Component {
     return (
       <li className="text-list-item">
         <span className="item-row">{this.props.item.name}</span>
-        {this.renderButtons()}
+        
       </li>
     )
   }

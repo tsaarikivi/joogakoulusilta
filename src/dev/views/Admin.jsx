@@ -19,6 +19,7 @@ import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
 import PlaceForm from '../components/admin/PlaceForm.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
+import InfoForm from '../components/admin/InfoForm.jsx'
 
 
 class Admin extends React.Component {
@@ -68,6 +69,7 @@ componentWillReceiveProps(nextProps){
           <CourseTypeList />
           <CourseList />
           <ShopList />
+          <InfoForm />
           <PlaceForm />
           <CourseTypeForm />
           <CourseForm />

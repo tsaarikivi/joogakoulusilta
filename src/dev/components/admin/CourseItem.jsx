@@ -48,10 +48,10 @@ export default class CourseItem extends React.Component {
 
   renderSpecial() {
     if (this.props.item.special) {
-      return <span className="item-row">S</span>
+      return <span className="item-row">Erikoiskurssi</span>
     }
     else {
-      return <span className="item-row">V</span>
+      return <span className="item-row">Vakiokurssi</span>
     }
   }
 
@@ -62,10 +62,7 @@ export default class CourseItem extends React.Component {
       <div>
         <span className="item-row">
           <button className="btn-small btn-red">Poista</button>
-        </span>
-        <span className="item-row">
-          <button className="btn-small btn-blue">Muokkaa</button>
-        </span>     
+        </span> 
       </div>      
     )
     
