@@ -58,12 +58,17 @@ class UserHeader extends React.Component {
   }
 
   render() {
+    var error = null;
+    if(this.props.currentUser.error.code != 0){
+      error = <p className="centered"> Error: {this.props.currentUser.error.code} {this.props.currentUser.error.message} </p>
+    }
     var admin = null;
     if(this.props.curUsr.roles.admin === true){
       admin = <Link className="text-link float-right" to="admin">Admin</Link>
     }
     return (
       <div class="container bordered-container">
+        {error}
         <div className="content-container align-left">
           <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
           {admin}
@@ -78,7 +83,7 @@ class UserHeader extends React.Component {
 
 }
 function mapStateToProps(state) {
-  return { auth: state.auth }
+  return { auth: state.auth, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
