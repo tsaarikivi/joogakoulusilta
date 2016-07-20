@@ -21,8 +21,8 @@ class InfoList extends React.Component {
   render() {
     return (
       <div class="container bordered-container">
+        <Logo />
         <div className="content-container">
-          <Logo />
           <ul className="wide-list blank-list">
             {this.props.list.list.map(this.renderList)}
           </ul>

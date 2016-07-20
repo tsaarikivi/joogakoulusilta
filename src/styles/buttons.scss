@@ -9,7 +9,7 @@
 
   .btn-small {
     margin: 0 2px;
-    padding: 1vw 1.2vw;
+    padding: 1.8vw 1.2vw;
   }
 
   .btn-right {
@@ -33,6 +33,10 @@
     display: inline-block;
     margin: 0 1.5vw;
     padding: 1vw 1.2vw;
+  }
+
+  .mini-link {
+    margin: 3vw 0 1vw;
   }
 }
 
@@ -69,7 +73,12 @@
     margin: 0 10px;
     padding: 7px 11px;
   }
+
+  .mini-link {
+    margin: 10px auto 0;
+  }
 }
+
 
 //////////////////////////////////////////////////////////////
 // ALL
@@ -204,4 +213,16 @@ a.text-link-white {
   display: inline-block;
   margin-bottom: 10px;
   font-weight: 600;
+}
+
+.mini-link {  
+  padding: 0;
+  color: $blue;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  &:hover {
+    color: $darkblue;
+    cursor: pointer;
+  }
 }

@@ -14,6 +14,7 @@ import SpecialCourses from './dev/views/SpecialCourses.jsx'
 import User from './dev/views/User.jsx'
 import UserProfile from './dev/views/UserProfile.jsx'
 import ChangeInformation from './dev/views/ChangeInformation.jsx'
+import ForgotPassword from './dev/views/ForgotPassword.jsx'
 
 export default (
   <Route path="/" component={Layout}>
@@ -28,5 +29,6 @@ export default (
     <Route path="checkout" component={Checkout}> </Route>
     <Route path="specialCourses" component={SpecialCourses}></Route>
     <Route path="userProfile" component={UserProfile}></Route>
+    <Route path="forgotPassword" component={ForgotPassword}></Route>
   </Route>
 )

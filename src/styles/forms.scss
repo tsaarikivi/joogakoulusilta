@@ -5,13 +5,17 @@
 /////////////////////////////////////////////////////
 
 @media screen and (max-width: 799px) {
+  .login-header {
+    margin: 8vw 0 4vw;
+  }
+
   form {
     width: 100%;
     margin: 0 auto;
     padding: 0;
     text-align: left;
-    input, label, textarea {
-      margin-bottom: 5px;
+    input, label, textarea, select {
+      margin-bottom: 2vw;
     }
     label {
       width: 100%;
@@ -19,7 +23,6 @@
     input, textarea, select {
       vertical-align: text-top;
       width: 100%;
-      margin-bottom: 1vw;
       text-indent: 1vw;
     }
     input, select {
@@ -28,7 +31,7 @@
     textarea {
       height: 22vh;
     }
-    button[type="submit"] {
+    button {
       margin-top: 3vw;
     }
   }
@@ -67,7 +70,7 @@
     textarea {
       height: 120px;
     }
-    button[type="submit"] {
+    button {
       margin-top: 14px;
     }
   }

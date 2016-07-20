@@ -36,7 +36,9 @@ import {
   EXPAND_TIME_SHOP_FORM,
   MINIMIZE_TIME_SHOP_FORM,
   EXPAND_COUNT_SHOP_FORM,
-  MINIMIZE_COUNT_SHOP_FORM
+  MINIMIZE_COUNT_SHOP_FORM,
+  EXPAND_INFO_FORM,
+  MINIMIZE_INFO_FORM
 } from './actionTypes.js'
 
 export function fetchUserList() {
@@ -372,6 +374,16 @@ export function addShopItem(data, type) {
   })
 }
 
+export function addInfo(data) {
+  return dispatch => firebase.database().ref('/infoItems/').push({
+    title: data.title,
+    content: data.content
+  })
+  .catch(err => {
+    console.error("ERR: update; addInfo: ", err);
+  })
+}
+
 export function lockUser(key) {
   return dispatch => firebase.database().ref('/users/' + key).update({
     locked: true,
@@ -622,3 +634,32 @@ export function minimizeInfoList() {
     })
   }
 }
+
+export function expandInfoForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_INFO_FORM
+    })
+  }
+}
+
+export function minimizeInfoForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_INFO_FORM
+    })
+  }
+}
+
+/*export function updateToFirebase(
+  refName, 
+  key = firebase.database().ref().child(refName).push().key, 
+  ...items)
+  {
+    return dispatch => firebase.database().ref(refName).push({
+      items.reduce((prev, item) => {
+        return Object.assign({}, prev, item)
+      }, {})
+  })
+  .catch(err => {
+      console.error("ERR: pushToFirebase() ", err);
+  })
+}*/

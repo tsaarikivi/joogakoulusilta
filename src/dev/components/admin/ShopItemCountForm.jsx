@@ -6,8 +6,8 @@ import * as actionCreators from '../../actions/admin.js'
 
 class ShopItemCountForm extends React.Component {
   onSubmit(props) {
-    console.log("props:", props);
     this.props.actions.addShopItem(props, "count")
+    location.reload()
   }
 
   renderContent() {

@@ -6,8 +6,8 @@ import * as actionCreators from '../../actions/admin.js'
 
 class ShopItemTimeForm extends React.Component {
   onSubmit(props) {
-    console.log("props:", props);
     this.props.actions.addShopItem(props, "time")
+    location.reload()
   }
 
   renderContent() {

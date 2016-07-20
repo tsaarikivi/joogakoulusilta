@@ -22,6 +22,7 @@ import ShopItemTimeFormReducer from './admin/shopItemTimeFormReducer.js'
 import ShopItemCountFormReducer from './admin/shopItemCountFormReducer.js'
 import CourseTypeListReducer from './admin/courseTypeListReducer.js'
 import PlaceListReducer from './admin/placeListReducer.js'
+import InfoFormReducer from './admin/infoFormReducer.js'
 
 const combinedReducer = combineReducers({
   currentUser: UserReducer,
@@ -45,7 +46,8 @@ const combinedReducer = combineReducers({
   shopItemCountForm: ShopItemCountFormReducer,
   courseTypeList: CourseTypeListReducer,
   placeList: PlaceListReducer,
-  infoList: InfoReducer
+  infoList: InfoReducer,
+  infoForm: InfoFormReducer
 })
 
 export default combinedReducer;

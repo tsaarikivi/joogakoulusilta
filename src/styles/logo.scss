@@ -5,7 +5,19 @@
 /////////////////////////////////////////////////////
 
 @media screen and (max-width: 799px) {
-
+  .logo-container {
+    margin: 0 auto 4vw;
+    padding: 10vw 0;
+    width: 80%;
+    .upper-text {
+      font-size: 10vw;
+    }
+    .lower-text {
+      font-size: 13vw;
+      margin: 0 0 0 7vw;
+      letter-spacing: 8vw;
+    }
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -13,33 +25,39 @@
 /////////////////////////////////////////////////////
 
 @media screen and (min-width: 800px) {
+  .logo-container {
+    margin: 0 auto 10px;
+    padding: 35px 0;
+    width: 250px;
+    .upper-text {
+      font-size: 30px;
+    }
+    .lower-text {
+      font-size: 40px;
+      margin: 0 0 0 24px;
+      letter-spacing: 24px;
+    }
+  }
 }
 
 /////////////////////////////////////////////////////
 // ALL
 /////////////////////////////////////////////////////
 
-.logo-container {
-  margin: 0 auto 10px;
-  padding: 35px 0;
-  width: 250px;
-  border: 1px solid $text-dark;
-  box-sizing: border-box;
-  border-radius: 1px;
-  .upper-text {
-    font-size: 30px;
-    display: inline-block;
-    text-transform: uppercase;
-    margin: 0 auto;
-    padding: 0;
-    color: $text-fade;
+  .logo-container {
+    border: 1px solid $text-dark;
+    box-sizing: border-box;
+    border-radius: 1px;
+    .upper-text {
+      display: inline-block;
+      text-transform: uppercase;
+      margin: 0 auto;
+      padding: 0;
+      color: $text-fade;
+    }
+    .lower-text {
+      display: inline-block;
+      text-transform: uppercase;
+      padding: 0;
+    }
   }
-  .lower-text {
-    font-size: 40px;
-    display: inline-block;
-    text-transform: uppercase;
-    margin: 0 0 0 24px;
-    padding: 0;
-    letter-spacing: 24px;
-  }
-}
