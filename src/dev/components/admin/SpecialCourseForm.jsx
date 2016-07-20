@@ -8,7 +8,6 @@ class SpecialCourseForm extends React.Component {
   onSubmit(props) {
     this.props.actions.addCourse(props, true)
     // TODO : change actions to on instead of ONCE take reloads away
-    location.reload()
   }
 
   renderCourseTypeOptions(item) {
