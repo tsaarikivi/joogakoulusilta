@@ -45,6 +45,7 @@ class HomeLoginRegister extends React.Component {
             <label>Salasana</label>
             <input id="password" type="password" name="password" placeholder="Salasana"/>
             <button className="btn-small btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
+            <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
             <br/>
           </form>
         </div>
