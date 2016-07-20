@@ -9,7 +9,7 @@
             }
         },
         "infoItems": {
-            ".read": true,
+            ".read": "true",
             ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
         "bookingsbycourse": {
