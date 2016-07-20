@@ -76,7 +76,6 @@ export default class CourseItem extends React.Component {
     return (
       <li className="text-list-item">        
         {this.renderContent()}
-        {this.renderButtons()}
       </li>
     )
   }
