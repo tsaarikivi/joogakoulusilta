@@ -14,19 +14,11 @@ class Login extends React.Component {
 
   constructor(){
     super();
-    this.errorText = ""
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("NEXT PROPS:", nextProps);
-    if(nextProps.auth.error.code != 0){
-      this.errorText = nextProps.auth.error.message;
-    }
-    else {
-      this.errorText = ""
-      if(nextProps.auth.uid){
-            this.context.router.push('user');
-      }
+    if(nextProps.auth.uid){
+          this.context.router.push('user');
     }
   }
 
@@ -52,7 +44,6 @@ class Login extends React.Component {
             <input id="password" type="password" name="password" placeholder="Salasana"/>
             <button className="btn-small btn-blue" onClick={this.handleLogin}>Kirjaudu</button>
             <br/>
-            <b>{this.errorText}</b>
           </form>
         </div>
       </div>

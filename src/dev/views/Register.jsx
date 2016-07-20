@@ -15,7 +15,6 @@ class Register extends React.Component {
 
   constructor(){
     super();
-    this.errorText = ""
     this.registerStarted = false;
     this.email = "";
     this.password = "";
@@ -24,12 +23,6 @@ class Register extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.auth.error.code != 0){
-      this.errorText = nextProps.auth.error.message;
-    }
-    else {
-      this.errorText = "";
-    }
     if(nextProps.auth.timeout === true){
       this.context.router.push('/user/')
     }
@@ -62,13 +55,12 @@ class Register extends React.Component {
         
       );
     }
-    if(this.registerStarted === true && this.props.auth.error.code === 0){
+    if(this.registerStarted === true && this.props.auth.error.code === "0"){
       return(
         <div class="container">
           <Logo />
           <div className="content-container">
             <h2 className="centered">Rekisteröidään käyttäjää!</h2>
-            <b>{this.errorText}</b>
           </div>
         </div>
       )
@@ -92,7 +84,6 @@ class Register extends React.Component {
               <br/>
               <button className="btn-small btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
               <br/>
-              <b>{this.errorText}</b>
             </form>
           </div>  
         </div>

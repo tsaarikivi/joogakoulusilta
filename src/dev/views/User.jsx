@@ -25,24 +25,15 @@ class User extends React.Component {
   }
 
   componentWillMount(){
-    if( this.props.auth.uid ) {
-      this.props.actions.fetchUserDetails(this.props.auth.uid);
-      this.props.actions.fetchUsersTransactions(this.props.auth.uid);
-      this.props.actions.fetchUsersBookings(this.props.auth.uid);
-    }
-    else {
+    if( !this.props.auth.uid ) {
       this.context.router.push('/');
     }
   }
 
   componentWillUnmount(){
-    this.props.actions.finishedWithUserDetails();
   }
 
   componentWillReceiveProps(nextProps){
-    if(typeof(nextProps.auth.uid) == "undefined"){
-      this.context.router.push('/');
-    }
   }
 
 

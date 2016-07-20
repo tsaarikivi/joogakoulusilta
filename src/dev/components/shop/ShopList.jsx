@@ -4,19 +4,15 @@ import { connect } from 'react-redux'
 
 import ShopItem from './ShopItem.jsx'
 import * as shopActionCreators from '../../actions/shop.js'
-import * as userActionCreators from '../../actions/user.js'
 
 class ShopList extends React.Component {
   componentWillMount() {
-    this.props.userActions.fetchUserDetails(this.props.auth.uid)
     this.props.shopActions.fetchShopItems()
   }
   componentWillUnmount(){
-    this.props.userActions.finishedWithUserDetails()
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("PROPSEJA tulee: ", nextProps);
   }
 
   renderShopItems(item) {
@@ -52,8 +48,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    shopActions: bindActionCreators(shopActionCreators, dispatch),
-    userActions: bindActionCreators(userActionCreators, dispatch)
+    shopActions: bindActionCreators(shopActionCreators, dispatch)
   }
 }
 

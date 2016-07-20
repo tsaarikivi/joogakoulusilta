@@ -44,16 +44,9 @@ class UserDataForm extends React.Component {
 
 
   render() {
-    var errorData = null;
-    if(this.props.currentUser){
-      if (this.props.currentUser.error.code != 0){
-        errorData = <p>Error: {this.props.currentUser.error.message}</p>
-      }
-    }
     return (
       <div className="container bordered-container">
         <div className="content-container">
-          {errorData}
           <h2 className="header-collapse">Tallennetut tietosi</h2>
           {this.renderContent()}
         </div>

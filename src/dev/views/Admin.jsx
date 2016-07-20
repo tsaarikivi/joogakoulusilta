@@ -2,8 +2,6 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actionCreators from '../actions/user.js'
-
 import AdminHeader from '../components/admin/AdminHeader.jsx'
 import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
 import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
@@ -33,16 +31,12 @@ class Admin extends React.Component {
   }
 
  componentWillMount(){
-    if( this.props.auth.uid ) {
-      this.props.actions.fetchUserDetails(this.props.auth.uid);
-    }
-    else {
+    if( !this.props.auth.uid ) {
       this.context.router.push('/');
     }
   }
 
 componentWillUnmount(){
-  this.props.actions.finishedWithUserDetails();
 }
 
 componentWillReceiveProps(nextProps){
@@ -90,7 +84,4 @@ componentWillReceiveProps(nextProps){
 function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Admin)
+export default connect(mapStateToProps, null)(Admin)

@@ -1,11 +1,11 @@
 import React from "react";
-import TopBar from '../components/authentication/TopBar.jsx'
+import AuthManager from '../components/authentication/AuthManager.jsx'
 
 export default class Layout extends React.Component {
   render() {
     return (
       <div>
-        <TopBar />
+        <AuthManager />
         {this.props.children}
       </div>
     );

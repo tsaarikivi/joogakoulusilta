@@ -9,16 +9,9 @@ class ChangeInformation extends React.Component {
 
   constructor(){
     super();
-    this.errorText = ""
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.auth.error.code != 0){
-      this.errorText = nextProps.auth.error.message;
-    }
-    else {
-      this.errorText = "";
-    }
   }
 
   handleSubmit(e) {
@@ -46,7 +39,6 @@ class ChangeInformation extends React.Component {
             <br/>
             <button className="btn-small btn-blue" onClick={this.handleSubmit.bind(this)}>Päivitä tiedot</button>
             <br/>
-            <b>{this.errorText}</b>
           </form>
         </div>
       </div>

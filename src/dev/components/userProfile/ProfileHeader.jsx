@@ -14,26 +14,19 @@ class ProfileHeader extends React.Component {
     e.preventDefault();
     if(this.props.auth.uid){
       this.props.authActions.logout();
-      this.props.userActions.finishedWithUserDetails();
     }
     else {
       console.log("User not logged in. No action taken.");
     }
-    this.context.router.push('/')
   }
 
   render() {
-    var errorData = null;
-    if (this.props.userError.code != 0){
-      errorData = <p>Error: {this.props.userError.code} {this.props.userError.message}</p>
-    }
     return (
       <div class="container bordered-container">
         <div className="content-container">
         <button className="btn-small btn-red float-right" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
         <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
         <h1>Käyttäjän hallinnointi.</h1>        
-        {errorData}
         </div>
       </div>
     );

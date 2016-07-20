@@ -91,7 +91,8 @@ renderCashPayment(){
   }
 
   render() {
-    if(this.props.shopItems.error.code != 0){
+    if(this.props.shopItems.error.code !== "0"){
+      console.log("ERROR_SHOP: ", this.props.shopItems.error)
       return(<p>Error: {this.props.shopItems.error.code} {this.props.shopItems.error.message}</p>)
     }
     switch(this.props.shopItems.phase){

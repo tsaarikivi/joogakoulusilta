@@ -33,7 +33,6 @@ export function waitForMilliseconds(milliseconds) {
 export function authListener() {
     return dispatch => {
         Auth.onAuthStateChanged(userdata => {
-            console.log("Userdata: ", userdata);
             if (userdata) {
                 var user = {}
                 user.email = userdata.email;

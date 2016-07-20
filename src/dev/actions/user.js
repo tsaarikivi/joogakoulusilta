@@ -25,7 +25,7 @@ export function updateUserDetails(user) {
 }
 
 export function fetchUsersBookings(uid) {
-    console.log("BOOKINGS: ", uid)
+    console.log("fetchUsersBookings", uid)
     return dispatch => {
         var oneCourse;
         var allCourses;
@@ -55,7 +55,7 @@ export function fetchUsersBookings(uid) {
                                         type: USER_ERROR,
                                         payload: {
                                             error: {
-                                                code: 100, //DB integrity error
+                                                code: "DB_INTEGRITY_ERR",
                                                 message: "Referred course is missing from database: " + oneCourse
                                             }
                                         }
@@ -185,7 +185,6 @@ export function fetchUsersTransactions(uid) {
 }
 
 export function fetchUserDetails(uid) {
-    console.log("FETCH USER DETAILS: ", uid)
     UserRef = firebase.database().ref('/users/' + uid);
     var usr = null;
     let tmp = null
@@ -223,6 +222,7 @@ export function fetchUserDetails(uid) {
 }
 
 export function finishedWithUserDetails() {
+    console.log("finishedWithUserDetails", UserRef, TransactionsRef, BookingsRef)
     if (UserRef) UserRef.off('value');
     if (TransactionsRef) TransactionsRef.off('value');
     if (BookingsRef) BookingsRef.off('value')

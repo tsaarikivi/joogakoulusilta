@@ -8,7 +8,6 @@ class UserBookings extends React.Component {
     router: React.PropTypes.object
   }
   componentWillReceiveProps(nextProps){
-    console.log("PROPSEJA tulee: ", nextProps);
   }
 
   renderBookings(item){
