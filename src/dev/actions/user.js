@@ -43,27 +43,40 @@ export function fetchUsersBookings(uid) {
                     allCourses = snapshot.val();
                     returnListBookings = Object.assign([]);
                     returnListHistory = Object.assign([]);
-                    for (oneCourse in allCourses) {
-                        allBookings = allCourses[oneCourse]
-                        for (oneBooking in allBookings) {
-                            booking = Object.assign({}, allBookings[oneBooking]);
-                            booking.course = oneCourse;
-                            booking.courseInfo = courseInfo[oneCourse];
-                            booking.courseInfo.key = oneCourse;
-                            if (booking.courseTime < Date.now()) {
-                                returnListHistory.push(booking)
-                            } else {
-                                returnListBookings.push(booking);
+                    if (allCourses) {
+                        for (oneCourse in allCourses) {
+                            allBookings = allCourses[oneCourse]
+                            for (oneBooking in allBookings) {
+                                booking = Object.assign({}, allBookings[oneBooking]);
+                                booking.course = oneCourse;
+                                booking.courseInfo = courseInfo[oneCourse];
+                                if (!booking.courseInfo) {
+                                    dispatch({
+                                        type: USER_ERROR,
+                                        payload: {
+                                            error: {
+                                                code: 100, //DB integrity error
+                                                message: "Referred course is missing from database: " + oneCourse
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    booking.courseInfo.key = oneCourse;
+                                    if (booking.courseTime < Date.now()) {
+                                        returnListHistory.push(booking)
+                                    } else {
+                                        returnListBookings.push(booking);
+                                    }
+                                }
                             }
                         }
+                        returnListBookings.sort((a, b) => {
+                            return a.courseTime - b.courseTime
+                        })
+                        returnListHistory.sort((a, b) => {
+                            return a.courseTime - b.courseTime
+                        })
                     }
-                    returnListBookings.sort((a, b) => {
-                        return a.courseTime - b.courseTime
-                    })
-                    returnListHistory.sort((a, b) => {
-                        return a.courseTime - b.courseTime
-                    })
-
                     dispatch({
                         type: UPDATE_USERS_BOOKINGS,
                         payload: {
@@ -80,6 +93,13 @@ export function fetchUsersBookings(uid) {
                 })
             }, err => {
                 console.error("Failed getting course info: ", uid, err);
+                dispatch({
+                    type: USER_ERROR,
+                    payload: err
+                })
+            })
+            .catch((err) => {
+                console.error("Failed getting bookings: ", uid, err);
                 dispatch({
                     type: USER_ERROR,
                     payload: err
@@ -165,6 +185,7 @@ export function fetchUsersTransactions(uid) {
 }
 
 export function fetchUserDetails(uid) {
+    console.log("FETCH USER DETAILS: ", uid)
     UserRef = firebase.database().ref('/users/' + uid);
     var usr = null;
     let tmp = null

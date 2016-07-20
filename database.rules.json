@@ -8,6 +8,10 @@
                 ".write": "auth.uid === $userId"
             }
         },
+        "infoItems": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
         "bookingsbycourse": {
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"
