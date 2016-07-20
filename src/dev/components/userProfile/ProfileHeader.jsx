@@ -32,7 +32,7 @@ class ProfileHeader extends React.Component {
         <div className="content-container">
         <button className="btn-small btn-red float-right" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
         <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
-        <h1>Käyttäjän hallinnointi.</h1>        
+        <h1 className="header-collapse padded-header">Käyttäjän hallinnointi.</h1>        
         {errorData}
         </div>
       </div>
