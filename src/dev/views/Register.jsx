@@ -35,24 +35,18 @@ class Register extends React.Component {
     }
   }
 
-  handleRegister(e) {
-    e.preventDefault();
-    this.email = document.getElementById("email").value
-    this.password = document.getElementById("password").value
-    this.firstName = document.getElementById("firstName").value
-    this.surname = document.getElementById("lastName").value
-    this.alias = document.getElementById("alias").value
-    this.props.actions.register(this.email, this.password, this.firstName, this.surname, this.alias)
-    this.registerStarted = true;
-    this.forceUpdate();
-
-  }
-
   renderForm() {
+
     const { fields: { email, password, firstName, lastName, alias }, handleSubmit } = this.props
 
     return (
-      <form>
+      <form onSubmit={handleSubmit(data => {
+        console.log("TIEDOT:")
+        console.log(data.email, data.password, data.firstName, data.lastName, data.alias)
+        this.props.actions.register(data.email, data.password, data.firstName, data.lastName, data.alias)
+        this.registerStarted = true
+        this.forceUpdate()
+      })}>
         <label htmlFor="email">Sähköposti</label>
         <input type="email" placeholder="Sähköposti" {...email} />
         {email.touched && email.error && <div>{email.error}</div>}
@@ -69,7 +63,7 @@ class Register extends React.Component {
         <input type="text" placeholder="Alias" {...alias}/>
         {alias.touched && alias.error && <div>{alias.error}</div>}
         <br/>
-        <button className="btn-small btn-blue" onClick={this.handleRegister.bind(this)}>Rekisteröidy</button>
+        <button className="btn-small btn-blue">Rekisteröidy</button>
         <br/>
       </form>
     );
@@ -131,6 +125,9 @@ const validate = values => {
   if (!values.lastName) {
     errors.lastName = 'Pakollinen kenttä.'
   }
+  if (!values.alias) {
+    errors.alias = 'Pakollinen kenttä.'
+  }
   return errors
 }
 
@@ -144,6 +141,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'RegisterForm',
-  fields: ['email', 'password', 'firstName', 'surname', 'alias'],
+  fields: ['email', 'password', 'firstName', 'lastName', 'alias'],
   validate
 }, mapStateToProps, mapDispatchToProps)(Register)
