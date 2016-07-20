@@ -7,7 +7,7 @@ export default class ForgotPassword extends React.Component {
             <div class="container centered">
                 <Logo />
                 <h2 className="centered login-header">Unohditko salasanasi?</h2>
-                <p>Anna sähköpostiosoitteesi. Lähetämme sinulle uuden salasanan.</p>
+                <small>Anna sähköpostiosoitteesi. Lähetämme sinulle uuden salasanan.</small>
                 <div className="content-container login-container">
                     <form>
                         <label>Sähköposti</label>
