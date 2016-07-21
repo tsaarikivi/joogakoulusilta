@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -52,7 +51,7 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>
         <span className="item-row">
-          <Link className="btn-small btn-blue btn-link" to="checkout" onClick={this.handleClick.bind(this)} >Osta</Link>
+          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
         </span>
         <span className="item-row">
           {admin}

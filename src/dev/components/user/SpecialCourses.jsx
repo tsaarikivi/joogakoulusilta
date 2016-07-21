@@ -14,7 +14,7 @@ class SpecialCourses extends React.Component {
 
   renderSpecialCoursesBanner(item) {
     return (
-      <SpecialCoursesItem key={item.key} item={item} />
+      <SpecialCoursesItem key={item.key} item={item} admin={this.props.currentUser.roles.admin}/>
     )
   }
 
@@ -25,8 +25,8 @@ class SpecialCourses extends React.Component {
           <div className="content-container">
             <h2>Tulevia erityiskursseja</h2>
             <ul class="narrow-list">
-              {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner)}
-            </ul>            
+              {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner.bind(this))}
+            </ul>
           </div>
         </div>
       );
@@ -40,7 +40,7 @@ class SpecialCourses extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { specialCoursesBanner: state.specialCoursesBanner }
+  return { specialCoursesBanner: state.specialCoursesBanner, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
