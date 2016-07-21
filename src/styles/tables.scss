@@ -82,10 +82,7 @@ table {
       box-sizing: border-box;
       .table-course {
         color: $text-dark;
-      }
-      .table-time {
-        color: $text-fade;
-      }
+      }      
       &:hover {
         background: $lightblue;
         cursor: pointer;
@@ -98,4 +95,7 @@ table {
       color: $text-dark;
     }
   }
+}
+.table-time {
+  color: $text-fade;
 }

@@ -30,8 +30,8 @@ export default class SpecialCoursesItem extends React.Component {
     return (
       <li className="special-course-item">
         <p>{this.props.item.courseType.name}</p>
-        <p>{this.props.item.date}</p>
-        <p>klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
+        <p className="table-time">{this.props.item.date}</p>
+        <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
       </li>
     );
   }
