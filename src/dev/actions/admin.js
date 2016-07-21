@@ -321,6 +321,16 @@ export function addPlace(data) {
   })
 }
 
+function toMilliseconds(time) {
+  let hours = 0;
+  let minutes = 0;
+
+  minutes = time % 100
+  hours = (time - minutes) / 100
+
+  return (hours * 3600000) + (minutes * 60000)
+}
+
 export function addCourse(data, special) {
   var courseType = Object.assign({})
   var instructor = Object.assign({})
@@ -343,8 +353,8 @@ export function addCourse(data, special) {
 
       firebase.database().ref('/courses/').push({
         special: special,
-        start: parseInt(data.start)*36000,
-        end: parseInt(data.end)*36000,
+        start: toMilliseconds(parseInt(data.start)),
+        end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
         day: parseInt(data.day) || null,
         date: data.date || null,
