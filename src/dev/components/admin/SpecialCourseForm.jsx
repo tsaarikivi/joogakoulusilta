@@ -29,7 +29,7 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-    const { fields: { start, end, maxCapacity, date, courseType, place, instructor }, handleSubmit } = this.props
+    const { fields: { start, end, maxCapacity, date, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -63,6 +63,18 @@ class SpecialCourseForm extends React.Component {
             <option>-- Valitse paikka --</option>
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
+
+          <label htmlFor="SCbeforetax">Hinta ennen veroja</label>
+          <input type="number" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="SCtaxa">Veron määrä</label>
+          <input type="number" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="SCtaxp">Veroprosentti</label>
+          <input type="number" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+          
+          <label htmlFor="SCprice">Verollinen hinta</label>
+          <input type="number" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
@@ -111,6 +123,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor'],
+  fields: ['start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

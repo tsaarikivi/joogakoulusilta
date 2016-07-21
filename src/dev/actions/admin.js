@@ -384,15 +384,18 @@ export function addSpecialCourse(data) {
       courseType = snapshot.val()
       instructor.uid = null
 
-      firebase.database().ref('/courses/').push({
-        special: special,
+      firebase.database().ref('/specialCourses/').push({
         start: toMilliseconds(parseInt(data.start)),
         end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
         date: data.date,
+        price: data.price,
+        taxpercent: data.taxpercent,
+        taxamount: data.taxamount,
+        beforetax: data.beforetax,
         place: place,
         instructor: instructor,
-        courseType: courseType
+        courseType: courseType,
       })
     })
   }
