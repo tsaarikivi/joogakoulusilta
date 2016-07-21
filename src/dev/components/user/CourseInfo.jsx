@@ -10,6 +10,7 @@ class CourseInfo extends React.Component {
   constructor(){
     super();
     this.fetchStarted = false;
+    this.reservationRequestOngoing = false;
   }
 
   componentWillReceiveProps(nextProps){
@@ -23,17 +24,17 @@ class CourseInfo extends React.Component {
 
 
   makeReservation(forward) {
-    this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
-  }
-
-  cancelReservation(item, txRef) {
-    this.props.bookingsActions.postCancellation(item, txRef, this.props.courseInfo)
+    if(!this.reservationRequestOngoing){
+      this.reservationRequestOngoing = true;
+      this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
+    }
   }
 
   exitContainer() {
     this.props.courseActions.removeCourseInfo()
     this.props.bookingsActions.stopfetchCourseBookings()
     this.fetchStarted = false;
+    this.reservationRequestOngoing = false;
   }
 
   userCanBook(){
@@ -112,11 +113,11 @@ class CourseInfo extends React.Component {
               return(
                 <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
               );
-          }      
+          }
           if(weekIndex === 1 &&  hasDayPassed(this.props.courseInfo.day)){
               return(
                 <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
-              );            
+              );
           }
       }
       if(this.props.courseInfo.bookings.user.length > 1){
@@ -124,7 +125,7 @@ class CourseInfo extends React.Component {
               return(
                 <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
               );
-          }      
+          }
       }
     }
     if (weekIndex === 0){
@@ -147,7 +148,7 @@ class CourseInfo extends React.Component {
 
       return(
             <div>
-              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} > 
+              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >
                 { dayStr }
               </button>
             </div>
