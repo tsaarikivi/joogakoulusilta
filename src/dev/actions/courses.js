@@ -32,7 +32,7 @@ export function fetchSpecialCoursesBanner() {
     CoursesRef.once('value', snapshot => {
       var courses = snapshot.val()
       for (var key in courses) {
-        if (courses.hasOwnProperty(key) && courses[key].special && list.length < 3) {
+        if (courses.hasOwnProperty(key) && courses[key].special) {
           let courseItemWithKey = courses[key]
           courseItemWithKey.key = key
           list = list.concat(courseItemWithKey)

@@ -26,8 +26,7 @@ class SpecialCourses extends React.Component {
             <h2>Tulevia erityiskursseja</h2>
             <ul class="narrow-list">
               {this.props.specialCoursesBanner.map(this.renderSpecialCoursesBanner)}
-            </ul>
-            <Link className="text-link text-link-white" to="specialCourses">Lisää erityiskursseja</Link>
+            </ul>            
           </div>
         </div>
       );
