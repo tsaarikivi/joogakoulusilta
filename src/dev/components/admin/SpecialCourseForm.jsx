@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/admin.js'
 
 class SpecialCourseForm extends React.Component {
   onSubmit(props) {
-    this.props.actions.addCourse(props, true)
+    this.props.actions.addSpecialCourse(props)
     // TODO : change actions to on instead of ONCE take reloads away
   }
 

@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
-    this.props.actions.addCourse(props, false)
+    this.props.actions.addCourse(props)
   }
 
   renderCourseTypeOptions(item) {
