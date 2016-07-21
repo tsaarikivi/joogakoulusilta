@@ -331,7 +331,7 @@ function toMilliseconds(time) {
   return (hours * 3600000) + (minutes * 60000)
 }
 
-export function addCourse(data, special) {
+export function addCourse(data) {
   var courseType = Object.assign({})
   var instructor = Object.assign({})
   var place = Object.assign({})
@@ -352,15 +352,50 @@ export function addCourse(data, special) {
       instructor.uid = null
 
       firebase.database().ref('/courses/').push({
-        special: special,
         start: toMilliseconds(parseInt(data.start)),
         end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
-        day: parseInt(data.day) || null,
-        date: data.date || null,
+        day: parseInt(data.day),
         place: place,
         instructor: instructor,
         courseType: courseType
+      })
+    })
+  }
+}
+
+export function addSpecialCourse(data) {
+  var courseType = Object.assign({})
+  var instructor = Object.assign({})
+  var place = Object.assign({})
+//TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
+
+  return dispatch => {
+    firebase.database().ref('/places/'+data.place).once("value")
+    .then( snapshot => {
+      place = snapshot.val()
+      return firebase.database().ref('/users/'+data.instructor).once("value")
+    })
+    .then( snapshot => {
+      instructor = snapshot.val()
+      return firebase.database().ref('/courseTypes/'+data.courseType).once("value")
+    })
+    .then( snapshot => {
+      courseType = snapshot.val()
+      instructor.uid = null
+
+      firebase.database().ref('/specialCourses/').push({
+        start: toMilliseconds(parseInt(data.start)),
+        end: toMilliseconds(parseInt(data.end)),
+        maxCapacity: parseInt(data.maxCapacity),
+        date: data.date,
+        price: data.price,
+        taxpercent: data.taxpercent,
+        taxamount: data.taxamount,
+        beforetax: data.beforetax,
+        place: place,
+        instructor: instructor,
+        courseType: courseType,
       })
     })
   }

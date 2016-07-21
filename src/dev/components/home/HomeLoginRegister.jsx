@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router"
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../../actions/auth.js'
@@ -45,7 +44,6 @@ class HomeLoginRegister extends React.Component {
         <input id="password" type="password" name="password" placeholder="Salasana" {...password}/>
         <button className="btn-small btn-blue" type="submit">Kirjaudu</button>
         <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
-        <br/>
       </form>
     )
   }
