@@ -42,8 +42,6 @@ export function authListener() {
                     type: ADD_USER,
                     payload: user
                 })
-                console.log("HELLO FROM authListener(), firstName ja surname on nullia / undefined")
-                console.log("USERDATA", userdata)
                 createNewUser(user, firstName, surname, alias);
                 firstName = null;
                 surname = null;
