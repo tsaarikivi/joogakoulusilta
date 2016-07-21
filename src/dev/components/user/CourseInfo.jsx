@@ -10,7 +10,7 @@ class CourseInfo extends React.Component {
   constructor(){
     super();
     this.fetchStarted = false;
-    this.reservationRequestOngoing = false;
+    this.reservationRequestOngoing = [false, false];
   }
 
   componentWillReceiveProps(nextProps){
@@ -24,8 +24,8 @@ class CourseInfo extends React.Component {
 
 
   makeReservation(forward) {
-    if(!this.reservationRequestOngoing){
-      this.reservationRequestOngoing = true;
+    if(!this.reservationRequestOngoing[forward]){
+      this.reservationRequestOngoing [forward] = true;
       this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
     }
   }
@@ -34,7 +34,7 @@ class CourseInfo extends React.Component {
     this.props.courseActions.removeCourseInfo()
     this.props.bookingsActions.stopfetchCourseBookings()
     this.fetchStarted = false;
-    this.reservationRequestOngoing = false;
+    this.reservationRequestOngoing = [false,false];
   }
 
   userCanBook(){
