@@ -277,15 +277,11 @@ export function sendEmailVerification() {
 
 export function createNewUser(user, firstname, lastname, alias) {
     firebase.database().ref('/users/' + user.uid).once('value').then(snapshot => {
-        if (snapshot.val() != null) {
+        let existingUser = snapshot.val()
+        if (existingUser === null) {
             if (firstname === null) {
-                console.log("currentUser", firebase.auth().currentUser)
-                const displayName = firebase.auth().currentUser.displayName
-                if (displayName) {
-                    firstname = firebase.auth().currentUser.displayName;
-                    console.log("THIS USER WAS FOUND IN AUTH SYSTEM")
-                }                
-            }
+                firstname = firebase.auth().currentUser.displayName;
+                }
             return firebase.database().ref('/users/' + user.uid).update({
                 email: user.email,
                 uid: user.uid,

@@ -28,6 +28,7 @@ class Checkout extends React.Component {
 
   onReady() {
       console.log('Drop-In ready');
+      document.getElementById("submitButton").disabled = false;
   }
 
   onError(err) {
@@ -36,6 +37,7 @@ class Checkout extends React.Component {
   }
 
   onPaymentMethodReceived(payload) {
+    document.getElementById("submitButton").disabled = true;
     this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
   }
 
@@ -84,7 +86,7 @@ renderCashPayment(){
               <br></br>
               <p>{this.props.shopItems.cart.title}</p><br></br>
               <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' className="btn-small btn-blue" value='Vahvista!'></input>
+              <input type='submit' id="submitButton" className="btn-small btn-blue" value='Vahvista!'></input>
             </form>
           </div>
     );

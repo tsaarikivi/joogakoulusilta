@@ -44,10 +44,10 @@ export function authListener() {
                 })
                 console.log("HELLO FROM authListener(), firstName ja surname on nullia / undefined")
                 console.log("USERDATA", userdata)
-                /*createNewUser(user, firstName, surname, alias);
+                createNewUser(user, firstName, surname, alias);
                 firstName = null;
                 surname = null;
-                alias = null;*/
+                alias = null;
             } else {
                 console.log("REMOVE_USR")
                 dispatch({
