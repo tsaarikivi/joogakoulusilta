@@ -12,6 +12,11 @@ import DropIn from "../components/shop/BraintreeDropIn.jsx";
 
 class Checkout extends React.Component {
 
+  constructor(){
+    super()
+    this.paymentOngoing = false;
+  }
+
   static contextTypes = {
     router: React.PropTypes.object
   }
@@ -32,13 +37,15 @@ class Checkout extends React.Component {
   }
 
   onError(err) {
+        //Drop-in error. Transient. No action.
         console.error(err);
-        this.props.actions.checkoutError(err);
   }
 
   onPaymentMethodReceived(payload) {
-    document.getElementById("submitButton").disabled = true;
-    this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
+    if(!this.paymentOngoing){
+      this.paymentOngoing = true;
+      this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
+    }
   }
 
 //=================================================================
@@ -79,28 +86,25 @@ renderCashPayment(){
                 <DropIn
                     braintree={Braintree}
                     clientToken={this.props.shopItems.token}
-                    onReady={this.onReady}
-                    onError={this.onError}
+                    onReady={this.onReady.bind(this)}
+                    onError={this.onError.bind(this)}
                     onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
                 />
               <br></br>
               <p>{this.props.shopItems.cart.title}</p><br></br>
               <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' id="submitButton" className="btn-small btn-blue" value='Vahvista!'></input>
+              <input type='submit' id="submitButton" disabled='true' className="btn-small btn-blue" value='Vahvista!'></input>
             </form>
           </div>
     );
   }
 
   render() {
-    if(this.props.shopItems.error.code !== "0"){
-      console.error("ERROR_SHOP: ", this.props.shopItems.error)
-      return(<p>Error: {this.props.shopItems.error.code} {this.props.shopItems.error.message}</p>)
-    }
     switch(this.props.shopItems.phase){
       case "cashPayment":
         return this.renderCashPayment()
       case "braintreePayment":
+          this.paymentOngoing = false;
           return this.renderStartPhase()
       case "tokenReceived":
         return this.renderPayment()
