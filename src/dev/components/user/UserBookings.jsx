@@ -15,6 +15,7 @@ class UserBookings extends React.Component {
   }
 
   render() {
+    if(this.props.currentUser.bookings.length > 0){
       return (
         <div className="container bordered-container">
           <div className="content-container">
@@ -25,7 +26,10 @@ class UserBookings extends React.Component {
           </div>
         </div>
       )
+    } else{
+      return(<div></div>)
     }
+  }
 }
 
 
