@@ -29,7 +29,7 @@ export function buyWithCash() {
     }
 }
 
-export function executeCashPurchase(forUsr, itemKey) {
+export function executeCashPurchase(forUsr, itemKey, type) {
     return dispatch => {
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
 
@@ -38,7 +38,8 @@ export function executeCashPurchase(forUsr, itemKey) {
                 return axios.post(JOOGAURL, {
                     for_user: forUsr,
                     item_key: itemKey,
-                    current_user: idToken
+                    current_user: idToken,
+                    purchase_target: type
                 })
             })
             .then(result => {
@@ -178,7 +179,7 @@ export function getClientTokenFromBraintree() {
     }
 }
 
-export function doPurchaseTransaction(nonce, clientKey) {
+export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
 
@@ -187,7 +188,8 @@ export function doPurchaseTransaction(nonce, clientKey) {
                 return axios.post(JOOGAURL, {
                     payment_method_nonce: nonce,
                     item_key: clientKey,
-                    current_user: idToken
+                    current_user: idToken,
+                    purchase_target: type
                 })
             })
             .then(result => {

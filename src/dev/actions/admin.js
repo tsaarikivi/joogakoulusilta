@@ -396,6 +396,8 @@ export function addSpecialCourse(data) {
         place: place,
         instructor: instructor,
         courseType: courseType,
+        type: special,
+        title: courseType.name
       })
     })
   }
@@ -695,8 +697,8 @@ export function minimizeInfoForm() {
 }
 
 /*export function updateToFirebase(
-  refName, 
-  key = firebase.database().ref().child(refName).push().key, 
+  refName,
+  key = firebase.database().ref().child(refName).push().key,
   ...items)
   {
     return dispatch => firebase.database().ref(refName).push({

@@ -150,8 +150,11 @@ export function fetchUsersTransactions(uid) {
                             }
                         }
                         break;
+                    case "special":
+                      console.log("TODO: handle special transactions");
+                      break;
                     default:
-                        console.error("undefined transaction type: ", uid, all[one]);
+                        console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
                 if (trxdetails.expires > now) {

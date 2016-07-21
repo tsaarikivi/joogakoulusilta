@@ -15,7 +15,7 @@ class UserItem extends React.Component {
   executeCashBuy(){
     if(!this.paymentOngoing){
       this.paymentOngoing = true;
-      this.props.shopActions.executeCashPurchase(this.props.item.uid, this.props.shopItems.cart.key)
+      this.props.shopActions.executeCashPurchase(this.props.item.uid, this.props.shopItems.cart.key, this.props.shopItems.cart.type)
     }
   }
 

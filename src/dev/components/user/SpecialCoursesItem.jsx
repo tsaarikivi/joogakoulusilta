@@ -18,6 +18,7 @@ class SpecialCoursesItem extends React.Component {
   }
 
   handleClick(){
+    console.log("buy me:", this.props.item);
     this.props.actions.addToCart(this.props.item);
     this.props.actions.getClientTokenFromBraintree()
     this.context.router.push('checkout');

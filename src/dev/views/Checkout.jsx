@@ -44,7 +44,7 @@ class Checkout extends React.Component {
   onPaymentMethodReceived(payload) {
     if(!this.paymentOngoing){
       this.paymentOngoing = true;
-      this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key)
+      this.props.actions.doPurchaseTransaction(payload.nonce, this.props.shopItems.cart.key, this.props.shopItems.cart.type)
     }
   }
 

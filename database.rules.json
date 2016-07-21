@@ -44,6 +44,10 @@
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
+        "specialCourses": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
         "places": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
