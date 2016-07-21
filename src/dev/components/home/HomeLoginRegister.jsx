@@ -2,35 +2,54 @@ import React from "react";
 import { Link } from "react-router"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../../actions/auth.js'
 import Logo from '../logos/JoogakouluLogo.jsx'
 
 class HomeLoginRegister extends React.Component {
+  
   static contextTypes = {
     router: React.PropTypes.object
   }
-
 
   constructor(){
     super();
   }
 
+  onSubmit(props) {
+    console.log("LOGGING IN WITH EMAIL: ", props.email)
+    this.props.actions.login(props.email, props.password)
+  }
+
   componentWillReceiveProps(nextProps){
     if(nextProps.auth.uid){
-          this.context.router.push('user');
+      this.context.router.push('/user');
     }
   }
 
 
   handleLogin() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    this.props.actions.login(email, password);
+
+    
   }
-  handlePopupLogin() {
-    this.props.actions.loginWithPopUp();
+
+  renderForm() {
+    const { fields: { email, password }, handleSubmit } = this.props
+
+    return (
+      <form onSubmit={ handleSubmit(props => this.onSubmit(props)) }>            
+        <label htmlFor="email">Sähköposti</label>
+        <input id="email" type="email" name="email" placeholder="Sähköposti" {...email}/>
+        <label htmlFor="password">Salasana</label>
+        <input id="password" type="password" name="password" placeholder="Salasana" {...password}/>
+        <button className="btn-small btn-blue" type="submit">Kirjaudu</button>
+        <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
+        <br/>
+      </form>
+    )
   }
+
 
   render() {
     return (
@@ -40,15 +59,7 @@ class HomeLoginRegister extends React.Component {
 
         <h2 className="centered login-header">Kirjaudu sisään Joogakoulu Siltaan</h2>
         <div className="content-container login-container">          
-          <form>            
-            <label>Sähköposti</label>
-            <input id="email" type="email" name="email" placeholder="Sähköposti"/>
-            <label>Salasana</label>
-            <input id="password" type="password" name="password" placeholder="Salasana"/>
-            <button className="btn-small btn-blue" onClick={this.handleLogin.bind(this)}>Kirjaudu</button>
-            <Link to="forgotPassword" className="mini-link">Unohditko salasanasi?</Link>  
-            <br/>
-          </form>
+          {this.renderForm()}
         </div>
 
         <div className="register-container">
@@ -68,4 +79,7 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeLoginRegister)
+export default reduxForm({
+  form: 'LoginForm',
+  fields: ['email', 'password']
+}, mapStateToProps, mapDispatchToProps)(HomeLoginRegister)
