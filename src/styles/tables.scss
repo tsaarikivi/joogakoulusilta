@@ -110,6 +110,7 @@ table {
       .table-participants {        
         display: inline-block;
         vertical-align: top;
+        color: $text-fade;
       }
       &:hover {
         background: $lightblue;

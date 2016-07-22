@@ -39,7 +39,7 @@ class TimeTableItem extends React.Component {
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{this.props.item.courseType.name}</p>
         <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
-        <img className="mini-icon" src="./assets/fi-torsos.svg" />
+        <img className="mini-icon" src="./assets/group.png" />
         <p className="table-participants">4/{this.props.item.maxCapacity}</p>
       </td>
     );
