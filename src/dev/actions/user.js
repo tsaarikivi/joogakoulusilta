@@ -118,7 +118,8 @@ export function fetchUsersTransactions(uid) {
                 firstexpire: 0,
                 details: {
                     valid: [],
-                    expired: []
+                    expired: [],
+                    special: []
                 }
             };
             let now = Date.now();
@@ -132,6 +133,7 @@ export function fetchUsersTransactions(uid) {
                 trxdetails.expires = all[one].expires;
                 trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
                 trxdetails.shopItem = all[one].shopItem;
+                trxdetails.shopItemKey = all[one].shopItemKey;
                 switch (all[one].type) {
                     case "time":
                         if (all[one].expires > now) {
@@ -157,10 +159,14 @@ export function fetchUsersTransactions(uid) {
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
-                if (trxdetails.expires > now) {
-                    trx.details.valid.push(trxdetails);
+                if(all[one].type === "special"){
+                  trx.details.special.push(trxdetails);
                 } else {
-                    trx.details.expired.push(trxdetails);
+                  if (trxdetails.expires > now) {
+                      trx.details.valid.push(trxdetails);
+                  } else {
+                      trx.details.expired.push(trxdetails);
+                  }
                 }
             }
             trx.details.valid.sort((a, b) => {

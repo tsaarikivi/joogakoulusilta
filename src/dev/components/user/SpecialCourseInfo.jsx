@@ -38,11 +38,41 @@ class SpecialCourseInfo extends React.Component {
     this.onceOnly = false;
   }
 
-  render() {
+  userHasPurchasedThisAlready(){
+    var returnValue = false;
+    this.props.currentUser.transactions.details.special.forEach((item, index) => {
+      if(item.shopItemKey === this.props.specialCourseInfo.info.key){
+        console.log("Found match:", item, this.props.specialCourseInfo.info);
+        returnValue = true;
+      }
+    })
+    return returnValue;
+  }
+
+  renderPurchaseButtons() {
+
     let admin = null;
+    if( this.userHasPurchasedThisAlready() === true ){
+      return( <h2>Olet jo ostanut tämän kurssin.</h2> );
+    }
+
     if(this.props.currentUser.roles.admin){
       admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
+
+    return (
+      <div>
+        <span className="item-row">
+          <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
+        </span>
+        <span className="item-row">
+          {admin}
+        </span>
+      </div>
+    )
+  }
+
+  render() {
 
     console.log("PROPS ARE", this.props.specialCourseInfo.info)
     if(this.props.specialCourseInfo.info) {
@@ -53,13 +83,7 @@ class SpecialCourseInfo extends React.Component {
             <div className="info-info-container">
 
               <h1>{this.props.specialCourseInfo.info.title}</h1>
-
-              <span className="item-row">
-                <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
-              </span>
-              <span className="item-row">
-                {admin}
-              </span>
+              {this.renderPurchaseButtons()}
 
             </div>
           </div>

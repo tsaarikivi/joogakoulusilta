@@ -90,7 +90,7 @@ renderCashPayment(){
     return(
       <div>
         <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
-        <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
+        <Link className="centered btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
       </div>
     )
   }
