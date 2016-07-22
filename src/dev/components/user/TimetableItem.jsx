@@ -40,7 +40,7 @@ class TimeTableItem extends React.Component {
         <p className="table-course">{this.props.item.courseType.name}</p>
         <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
         <img className="mini-icon" src="./assets/fi-torsos.svg" />
-        <p className="table-participants">0/14</p>
+        <p className="table-participants">x/{this.props.item.maxCapacity}</p>
       </td>
     );
   }
