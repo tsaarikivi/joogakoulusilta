@@ -3,7 +3,7 @@ import {
     REMOVE_SPECIAL_COURSE_INFO,
 } from '../actions/actionTypes.js'
 
-const INITIAL_STATE = { info: null}
+const INITIAL_STATE = { info: null }
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {

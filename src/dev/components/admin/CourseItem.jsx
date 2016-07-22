@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { getTimeStrMs } from '../../helpers/timeHelper.js'
+
 export default class CourseItem extends React.Component {
   renderContent() {
     const {item} = this.props
@@ -41,7 +43,7 @@ export default class CourseItem extends React.Component {
         {this.renderSpecial()}
         <span className="item-row">{item.courseType.name}</span>
         <span className="item-row">{dayTxt}</span>
-        <span className="item-row">klo {item.start/36000} - {item.end/36000}</span>
+        <span className="item-row">klo {getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</span>
       </div>
     )
   }
