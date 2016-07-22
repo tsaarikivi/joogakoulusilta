@@ -20,6 +20,13 @@
       }
       td {      
         padding: 2vw 0;
+        .mini-icon {
+          margin: 0 0.5vw;
+          height: 6vw;
+        }
+        .table-participants {
+          margin: 0.2vw 0.5vw 0;
+        }
         h3 {
           margin: 0;
           padding: 0;
@@ -52,6 +59,13 @@
       }
       td {      
         padding: 5px 0;
+        .mini-icon {
+          margin: 0 3px;
+          height: 25px;
+        }
+        .table-participants {
+          margin: 5px 3px 0;
+        }
         h3 {
           margin: 0;
           padding: 0;
@@ -82,7 +96,15 @@ table {
       box-sizing: border-box;
       .table-course {
         color: $text-dark;
-      }      
+      }
+      .mini-icon {
+        display: inline-block;        
+        width: auto;
+      }
+      .table-participants {        
+        display: inline-block;
+        vertical-align: top;
+      }
       &:hover {
         background: $lightblue;
         cursor: pointer;
