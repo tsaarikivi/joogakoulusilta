@@ -2,7 +2,6 @@ import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as shopActionCreators from '../../actions/shop.js'
 import { putSpecialCourseInfo } from '../../actions/specialCourses.js'
 
 class SpecialCoursesItem extends React.Component {
@@ -11,26 +10,6 @@ class SpecialCoursesItem extends React.Component {
     super();
     this.startDate = new Date();
     this.endDate = new Date();
-  }
-
-
-  static contextTypes = {
-    router: React.PropTypes.object
-  }
-
-  handleClick(){
-    console.log("buy me:", this.props.item);
-    this.props.actions.addToCart(this.props.item);
-    this.props.actions.getClientTokenFromBraintree()
-    this.context.router.push('checkout');
-
-  }
-
-  cashPurchase(){
-    this.props.actions.addToCart(this.props.item);
-    this.props.actions.buyWithCash();
-    this.context.router.push('checkout');
-
   }
 
   getDisplayTime(date,time){
@@ -57,29 +36,18 @@ class SpecialCoursesItem extends React.Component {
   }
 
   render() {
-    let admin = null;
-    if(this.props.admin){
-      admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
-    }
-
     return (
       <li className="special-course-item" onClick={() => this.itemClicked()}>
-        <p>{this.props.item.courseType.name}</p>
+        <p>{this.props.item.title}</p>
         <p className="table-time">{this.props.item.date}</p>
         <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
-        <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
-        </span>
-        <span className="item-row">
-          {admin}
-        </span>
       </li>
     );
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({shopActionCreators, putSpecialCourseInfo}, dispatch) }
+  return { actions: bindActionCreators({putSpecialCourseInfo}, dispatch) }
 }
 
 export default connect(null, mapDispatchToProps)(SpecialCoursesItem)

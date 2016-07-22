@@ -15,6 +15,7 @@ class Checkout extends React.Component {
   constructor(){
     super()
     this.paymentOngoing = false;
+    this.buyingSpecialCourse = false;
   }
 
   static contextTypes = {
@@ -22,6 +23,7 @@ class Checkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    console.log("CO-props:", nextProps);
     if(nextProps.shopItems.phase === "timeout"){
       this.context.router.push('user');
     }
