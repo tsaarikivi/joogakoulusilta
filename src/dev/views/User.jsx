@@ -10,6 +10,7 @@ import UserHeader from '../components/user/UserHeader.jsx'
 import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
+import SpecialCourseInfo from '../components/user/SpecialCourseInfo.jsx'
 import UserBookings from '../components/user/UserBookings.jsx'
 
 
@@ -58,9 +59,10 @@ class User extends React.Component {
               <UserHeader curUsr={this.props.currentUser}/>
               <UserBookings/>
               <Timetable/>
-              <CourseInfo />
               <SpecialCourses />
               <ContactInfo />
+              <CourseInfo />
+              <SpecialCourseInfo />
             </div>
           );
       } else {

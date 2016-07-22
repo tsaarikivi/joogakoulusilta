@@ -2,7 +2,8 @@ import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actionCreators from '../../actions/shop.js'
+import * as shopActionCreators from '../../actions/shop.js'
+import { putSpecialCourseInfo } from '../../actions/specialCourses.js'
 
 class SpecialCoursesItem extends React.Component {
 
@@ -50,6 +51,11 @@ class SpecialCoursesItem extends React.Component {
     this.getDisplayTime(this.endDate, this.props.item.end);
   }
 
+  itemClicked() {
+    console.log("PUTTING ITEM TO SCINFO", this.props.item)
+    this.props.actions.putSpecialCourseInfo(this.props.item)
+  }
+
   render() {
     let admin = null;
     if(this.props.admin){
@@ -57,7 +63,7 @@ class SpecialCoursesItem extends React.Component {
     }
 
     return (
-      <li className="special-course-item">
+      <li className="special-course-item" onClick={() => this.itemClicked()}>
         <p>{this.props.item.courseType.name}</p>
         <p className="table-time">{this.props.item.date}</p>
         <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
@@ -73,7 +79,7 @@ class SpecialCoursesItem extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return { actions: bindActionCreators({shopActionCreators, putSpecialCourseInfo}, dispatch) }
 }
 
 export default connect(null, mapDispatchToProps)(SpecialCoursesItem)

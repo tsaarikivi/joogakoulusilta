@@ -9,6 +9,7 @@ import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
 import InfoReducer from './infoReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
+import SpecialCourseInfoReducer from './specialCourseInfoReducer.js'
 import UserListReducer from './admin/userListReducer.js'
 import AdminListReducer from './admin/adminListReducer.js'
 import CourseListReducer from './admin/courseListReducer.js'
@@ -33,6 +34,7 @@ const combinedReducer = combineReducers({
   auth: AuthReducer,
   form: FormReducer,
   courseInfo: CourseInfoReducer,
+  specialCourseInfo: SpecialCourseInfoReducer,
   userList: UserListReducer,
   adminList: AdminListReducer,
   courseList: CourseListReducer,
