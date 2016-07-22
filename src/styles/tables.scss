@@ -21,8 +21,11 @@
       td {      
         padding: 2vw 0;
         .mini-icon {
-          margin: 0 0.5vw 0 0;
-          height: 6vw;
+          margin: 0.2vw 0.5vw 0 0;
+          height: 5.5vw;
+        }
+        .table-time {
+          margin-top: 0.2vw;
         }
         .table-participants {
           margin: 0.2vw 0 0 0.5vw;
@@ -60,8 +63,11 @@
       td {      
         padding: 5px 0;
         .mini-icon {
-          margin: 0 3px 0 0;
-          height: 20px;
+          margin: 1px 3px 0 0;
+          height: 18px;
+        }
+        .table-time {
+          margin-top: 2px;
         }
         .table-participants {
           margin: 2px 0 0 3px;
