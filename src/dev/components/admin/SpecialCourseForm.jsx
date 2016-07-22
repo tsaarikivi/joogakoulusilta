@@ -29,11 +29,14 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-    const { fields: { start, end, maxCapacity, date, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
+    const { fields: { title, start, end, maxCapacity, date, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
+          <label htmlFor="SpecialTitle">Erikoiskurssin otsikko</label>
+          <input type="text" name="SpecialTitle" {...title} placeholder="esim: Keskiyön jooga" />
+
           <label htmlFor="SpecialDate">Erikoiskurssin päivämäärä</label>
           <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
 
@@ -72,7 +75,7 @@ class SpecialCourseForm extends React.Component {
 
           <label htmlFor="SCtaxp">Veroprosentti</label>
           <input type="number" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
-          
+
           <label htmlFor="SCprice">Verollinen hinta</label>
           <input type="number" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
@@ -101,7 +104,7 @@ class SpecialCourseForm extends React.Component {
           <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
-        </div>        
+        </div>
       </div>
     )
   }
@@ -114,7 +117,11 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.specialCourseFrom, courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
+  return {
+    cmp: state.specialCourseFrom,
+    courseTypes: state.courseTypeList,
+    instructors: state.instructorList,
+    places: state.placeList }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -123,6 +130,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
+  fields: ['title', 'start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

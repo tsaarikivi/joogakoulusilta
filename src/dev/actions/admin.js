@@ -365,6 +365,7 @@ export function addCourse(data) {
 }
 
 export function addSpecialCourse(data) {
+  console.log("SC-data:", data);
   var courseType = Object.assign({})
   var instructor = Object.assign({})
   var place = Object.assign({})
@@ -396,8 +397,8 @@ export function addSpecialCourse(data) {
         place: place,
         instructor: instructor,
         courseType: courseType,
-        type: special,
-        title: courseType.name
+        type: "special",
+        title: data.title
       })
     })
   }
