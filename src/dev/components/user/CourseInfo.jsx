@@ -12,8 +12,9 @@ class CourseInfo extends React.Component {
     this.fetchStarted = false;
     this.reservationRequestOngoing = [false, false];
   }
-
+participants
   componentWillReceiveProps(nextProps){
+    console.log("CI-props", nextProps);
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
     if(nextProps.courseInfo.key !== "0" && !this.fetchStarted){
@@ -58,7 +59,6 @@ class CourseInfo extends React.Component {
       adjustedIndex = bookingIndex;
     }
     //========================================
-    if(this.props.courseInfo.bookings){
       if(this.props.courseInfo.bookings.all.length > adjustedIndex){
         return(
           <div>
@@ -66,14 +66,13 @@ class CourseInfo extends React.Component {
           </div>
         );
       }
-    }
-    else {
-      return(
-        <div>
-          <p className="info-reserved">Ilmoittautuneita 0/{this.props.courseInfo.maxCapacity}</p>
-        </div>
-      )
-    }
+      else {
+        return(
+          <div>
+            <p className="info-reserved">Ilmoittautuneita 0/{this.props.courseInfo.maxCapacity}</p>
+          </div>
+        )
+      }
   }
 
   //========================================================================
