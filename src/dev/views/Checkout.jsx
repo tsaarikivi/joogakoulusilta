@@ -24,10 +24,13 @@ class Checkout extends React.Component {
 
   componentWillReceiveProps(nextProps){
     console.log("CO-props:", nextProps);
-    if(nextProps.shopItems.cart !== null){
+    if(nextProps.shopItems.cart.type){
+      console.log("SPECIAL");
       if(nextProps.shopItems.cart.type === "special"){
+        console.log("YES-SPECIAL");
         this.buyingSpecialCourse = true
       } else {
+        console.log("NOT-SPECIAL");
         this.buyingSpecialCourse = false
       }
     }
@@ -75,9 +78,10 @@ renderCashPayment(){
 
   renderDonePhase(){
     if(this.buyingSpecialCourse){
-      this.props.actions.waitForMilliseconds(5*1000);
+      this.props.actions.waitForMilliseconds(2*1000);
       return(
         <div>
+          <br/>
           <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
         </div>
       )
