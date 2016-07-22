@@ -24,6 +24,13 @@ class Checkout extends React.Component {
 
   componentWillReceiveProps(nextProps){
     console.log("CO-props:", nextProps);
+    if(nextProps.shopItems.cart !== null){
+      if(nextProps.shopItems.cart.type === "special"){
+        this.buyingSpecialCourse = true
+      } else {
+        this.buyingSpecialCourse = false
+      }
+    }
     if(nextProps.shopItems.phase === "timeout"){
       this.context.router.push('user');
     }
@@ -60,15 +67,25 @@ renderCashPayment(){
 
   renderStartPhase(){
     return(
-      <div>Alustetaan maksuyhteyttä...</div>
+      <div>
+        <h2 className="centered">Alustetaan maksuyhteyttä...</h2>
+        </div>
     )
   }
 
   renderDonePhase(){
+    if(this.buyingSpecialCourse){
+      this.props.actions.waitForMilliseconds(5*1000);
+      return(
+        <div>
+          <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
+        </div>
+      )
+    }
     this.props.actions.waitForMilliseconds(5*1000);
     return(
       <div>
-        <p>Maksu onnistuneesti suoritettu...</p>
+        <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
         <Link className="btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
       </div>
     )
@@ -76,14 +93,16 @@ renderCashPayment(){
 
   renderError(){
     return(
-      <div>Maksuyhteydessä ongelmia...</div>
+      <div>
+        <h2 className="centered">Maksuyhteydessä ongelmia...</h2>
+        </div>
     )
   }
 
   renderPayment(){
     return (
           <div>
-            <p className="centered">Valitse maksutapa ja vahvista maksu.</p>
+            <h2 className="centered">Valitse maksutapa ja vahvista maksu.</h2>
             <form action='/transactions' method='POST'>
                 <DropIn
                     braintree={Braintree}
