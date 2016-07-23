@@ -34,17 +34,6 @@ class UserHeader extends React.Component {
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
 
-  handleLogout = (e) => {
-    e.preventDefault();
-    if(this.props.auth.uid){
-      this.props.authActions.logout();
-      this.props.userActions.finishedWithUserDetails();
-    }
-    else {
-      console.log("User not logged in. No action taken.");
-    }
-  }
-
   renderContent() {
     if(this.onkoAikaa){
       return (
@@ -70,17 +59,16 @@ class UserHeader extends React.Component {
 
   render() {
     var admin = null;
-    if(this.props.curUsr.roles.admin = true){
+    if(this.props.curUsr.roles.admin === true){
       admin = <Link className="text-link float-right" to="admin">Admin</Link>
     }
     return (
       <div class="container bordered-container">
         <div className="content-container align-left">
-          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
-          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>
-          <button className="text-link float-right" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
           <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
           {admin}
+          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
+          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>
@@ -90,7 +78,7 @@ class UserHeader extends React.Component {
 
 }
 function mapStateToProps(state) {
-  return { auth: state.auth }
+  return { auth: state.auth, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -7,9 +7,9 @@ import SpecialCoursesBannerReducer from './specialCoursesBannerReducer.js'
 import TimetableReducer from './timetableReducer.js'
 import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
-import PlaceInfoReducer from './placeInfoReducer.js'
-import InstructorInfoReducer from './instructorInfoReducer.js'
+import InfoReducer from './infoReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
+import SpecialCourseInfoReducer from './specialCourseInfoReducer.js'
 import UserListReducer from './admin/userListReducer.js'
 import AdminListReducer from './admin/adminListReducer.js'
 import CourseListReducer from './admin/courseListReducer.js'
@@ -23,6 +23,7 @@ import ShopItemTimeFormReducer from './admin/shopItemTimeFormReducer.js'
 import ShopItemCountFormReducer from './admin/shopItemCountFormReducer.js'
 import CourseTypeListReducer from './admin/courseTypeListReducer.js'
 import PlaceListReducer from './admin/placeListReducer.js'
+import InfoFormReducer from './admin/infoFormReducer.js'
 
 const combinedReducer = combineReducers({
   currentUser: UserReducer,
@@ -32,9 +33,8 @@ const combinedReducer = combineReducers({
   timetable: TimetableReducer,
   auth: AuthReducer,
   form: FormReducer,
-  placeInfoData: PlaceInfoReducer,
-  instructorInfo: InstructorInfoReducer,
   courseInfo: CourseInfoReducer,
+  specialCourseInfo: SpecialCourseInfoReducer,
   userList: UserListReducer,
   adminList: AdminListReducer,
   courseList: CourseListReducer,
@@ -47,7 +47,9 @@ const combinedReducer = combineReducers({
   shopItemTimeForm: ShopItemTimeFormReducer,
   shopItemCountForm: ShopItemCountFormReducer,
   courseTypeList: CourseTypeListReducer,
-  placeList: PlaceListReducer
+  placeList: PlaceListReducer,
+  infoList: InfoReducer,
+  infoForm: InfoFormReducer
 })
 
 export default combinedReducer;

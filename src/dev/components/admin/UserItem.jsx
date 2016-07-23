@@ -7,21 +7,44 @@ import * as shopActionCreators from '../../actions/shop.js'
 
 class UserItem extends React.Component {
 
+  constructor(){
+    super();
+    this.paymentOngoing = false;
+  }
+
+  executeCashBuy(){
+    if(!this.paymentOngoing){
+      this.paymentOngoing = true;
+      this.props.shopActions.executeCashPurchase(this.props.item.uid, this.props.shopItems.cart.key, this.props.shopItems.cart.type)
+    }
+  }
+
   renderButtons() {
     //TODO: fix according !user.locked
     //TODO: add button functionality
 
     if (this.props.item.locked) {
-      return <button className="btn-small btn-green float-right" onClick={() => this.props.adminActions.unlockUser(this.props.item.uid)}>Aktivoi</button>
+      return (
+        <span className="item-row">
+          <button className="btn-small btn-green" onClick={() => this.props.adminActions.unlockUser(this.props.item.uid)}>Aktivoi</button>
+        </span>
+      )
     }
     if(this.props.shopItems.phase === "cashPayment"){
-      return <button className="btn-small btn-green float-right" onClick={() => this.props.shopActions.executeCashPurchase(this.props.item.uid, this.props.shopItems.cart.key)}>Osto</button>
-
+      return (
+        <span className="item-row">
+          <button className="btn-small btn-blue" onClick={() => this.executeCashBuy()}>Osto</button>
+        </span>
+      )
     }
       return (
         <div>
-          <button className="btn-small btn-red float-right" onClick={() => this.props.adminActions.lockUser(this.props.item.uid)}>Lukitse</button>
-          <button className="btn-small btn-blue float-right" onClick={() => this.props.adminActions.makeInstructor(this.props.item.uid)}>Joogaopettajaksi</button>
+          <span className="item-row">
+            <button className="btn-small btn-red" onClick={() => this.props.adminActions.lockUser(this.props.item.uid)}>Lukitse</button>
+          </span>
+          <span className="item-row">
+            <button className="btn-small btn-blue" onClick={() => this.props.adminActions.makeInstructor(this.props.item.uid)}>Joogaopettajaksi</button>
+          </span>
         </div>
       )
   }
@@ -33,7 +56,8 @@ class UserItem extends React.Component {
 
     return (
       <li className="text-list-item">
-        <span className="float-left">{item.firstname} {item.lastname} {item.email}</span>
+        <span className="item-row">{item.firstname} {item.lastname}</span>
+        <span className="item-row">{item.email}</span>
         {this.renderButtons()}
       </li>
     )

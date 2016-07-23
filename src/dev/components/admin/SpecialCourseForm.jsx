@@ -1,12 +1,29 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import { bindActionCreators } from 'redux'
-
 import * as actionCreators from '../../actions/admin.js'
 
+var DatePicker = require('react-datepicker')
+var moment = require('moment')
+
 class SpecialCourseForm extends React.Component {
+
+  constructor(){
+    super();
+    this.startDate = moment();
+    console.log("MOMENT: ", this.startDate);
+  }
+
+  onDateChange(date){
+    console.log("DATE: ", date);
+    this.startDate = date;
+    this.forceUpdate()
+  }
+
   onSubmit(props) {
-    this.props.actions.addCourse(props, true)
+    props.date = this.startDate.valueOf()
+    this.props.actions.addSpecialCourse(props)
+    // TODO : change actions to on instead of ONCE take reloads away
   }
 
   renderCourseTypeOptions(item) {
@@ -28,13 +45,20 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-    const { fields: { start, end, maxCapacity, date, courseType, place, instructor }, handleSubmit } = this.props
+//    <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
+
+    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
+        <div>
+
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
+          <label htmlFor="SpecialTitle">Erikoiskurssin otsikko</label>
+          <input type="text" name="SpecialTitle" {...title} placeholder="esim: Keskiyön jooga" />
+
           <label htmlFor="SpecialDate">Erikoiskurssin päivämäärä</label>
-          <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
+          <DatePicker selected={this.startDate} onChange={this.onDateChange.bind(this)} />
 
           <label htmlFor="SpecialStart">Alkaa klo.</label>
           <input type="number" name="SpecialStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
@@ -63,8 +87,21 @@ class SpecialCourseForm extends React.Component {
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
 
+          <label htmlFor="SCbeforetax">Hinta ennen veroja</label>
+          <input type="number" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="SCtaxa">Veron määrä</label>
+          <input type="number" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="SCtaxp">Veroprosentti</label>
+          <input type="number" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="SCprice">Verollinen hinta</label>
+          <input type="number" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
+
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
+        </div>
       )
     }
     else {
@@ -88,7 +125,7 @@ class SpecialCourseForm extends React.Component {
           <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
-        </div>        
+        </div>
       </div>
     )
   }
@@ -101,7 +138,11 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.specialCourseFrom, courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
+  return {
+    cmp: state.specialCourseFrom,
+    courseTypes: state.courseTypeList,
+    instructors: state.instructorList,
+    places: state.placeList }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -110,6 +151,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor'],
+  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

@@ -6,6 +6,7 @@ import {
   FETCH_INSTRUCTOR_LIST,
   FETCH_SHOP_LIST,
   FETCH_PLACE_LIST,
+  FETCH_INFO_LIST,
 
   EXPAND_ADMIN_LIST,
   MINIMIZE_ADMIN_LIST,
@@ -21,6 +22,8 @@ import {
   MINIMIZE_SHOP_LIST,
   EXPAND_PLACE_LIST,
   MINIMIZE_PLACE_LIST,
+  EXPAND_INFO_LIST,
+  MINIMIZE_INFO_LIST,
 
   EXPAND_PLACE_FORM,
   MINIMIZE_PLACE_FORM,
@@ -33,7 +36,9 @@ import {
   EXPAND_TIME_SHOP_FORM,
   MINIMIZE_TIME_SHOP_FORM,
   EXPAND_COUNT_SHOP_FORM,
-  MINIMIZE_COUNT_SHOP_FORM
+  MINIMIZE_COUNT_SHOP_FORM,
+  EXPAND_INFO_FORM,
+  MINIMIZE_INFO_FORM
 } from './actionTypes.js'
 
 export function fetchUserList() {
@@ -282,6 +287,29 @@ export function fetchPlaceList() {
   }
 }
 
+export function fetchInfoList(){
+  var list = Object.assign([])
+  return dispatch => {
+    firebase.database().ref('/infoItems/').once('value', snapshot => {
+      var infoItems = snapshot.val()
+      for (var key in infoItems) {
+        if (infoItems.hasOwnProperty(key)) {
+          let ItemWithKey = infoItems[key]
+          ItemWithKey.key = key
+          list = list.concat(ItemWithKey)
+        }
+      }
+      dispatch({
+        type: FETCH_INFO_LIST,
+        payload: list
+      })
+    })
+    .catch(err => {
+      console.error("ERR: fetch infoItems: ", err);
+    })
+  }
+}
+
 export function addPlace(data) {
   return dispatch => firebase.database().ref('/places/' + data.name).update({
     name: data.name,
@@ -293,7 +321,17 @@ export function addPlace(data) {
   })
 }
 
-export function addCourse(data, special) {
+function toMilliseconds(time) {
+  let hours = 0;
+  let minutes = 0;
+
+  minutes = time % 100
+  hours = (time - minutes) / 100
+
+  return (hours * 3600000) + (minutes * 60000)
+}
+
+export function addCourse(data) {
   var courseType = Object.assign({})
   var instructor = Object.assign({})
   var place = Object.assign({})
@@ -314,15 +352,52 @@ export function addCourse(data, special) {
       instructor.uid = null
 
       firebase.database().ref('/courses/').push({
-        special: special,
-        start: parseInt(data.start)*36000,
-        end: parseInt(data.end)*36000,
+        start: toMilliseconds(parseInt(data.start)),
+        end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
-        day: parseInt(data.day) || null,
-        date: data.date || null,
+        day: parseInt(data.day),
         place: place,
         instructor: instructor,
         courseType: courseType
+      })
+    })
+  }
+}
+
+export function addSpecialCourse(data) {
+  var courseType = Object.assign({})
+  var instructor = Object.assign({})
+  var place = Object.assign({})
+//TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
+
+  return dispatch => {
+    firebase.database().ref('/places/'+data.place).once("value")
+    .then( snapshot => {
+      place = snapshot.val()
+      return firebase.database().ref('/users/'+data.instructor).once("value")
+    })
+    .then( snapshot => {
+      instructor = snapshot.val()
+      return firebase.database().ref('/courseTypes/'+data.courseType).once("value")
+    })
+    .then( snapshot => {
+      courseType = snapshot.val()
+      instructor.uid = null
+
+      firebase.database().ref('/specialCourses/').push({
+        start: toMilliseconds(parseInt(data.start)),
+        end: toMilliseconds(parseInt(data.end)),
+        maxCapacity: parseInt(data.maxCapacity),
+        date: data.date + toMilliseconds(parseInt(data.start)),
+        price: data.price,
+        taxpercent: data.taxpercent,
+        taxamount: data.taxamount,
+        beforetax: data.beforetax,
+        place: place,
+        instructor: instructor,
+        courseType: courseType,
+        type: "special",
+        title: data.title
       })
     })
   }
@@ -343,6 +418,16 @@ export function addShopItem(data, type) {
   return dispatch => firebase.database().ref('/shopItems/' + data.title).update(data)
   .catch(err => {
     console.error("ERR: update; addShopItem: ", err);
+  })
+}
+
+export function addInfo(data) {
+  return dispatch => firebase.database().ref('/infoItems/').push({
+    title: data.title,
+    content: data.content
+  })
+  .catch(err => {
+    console.error("ERR: update; addInfo: ", err);
   })
 }
 
@@ -582,3 +667,46 @@ export function minimizeCountShopForm() {
     })
   }
 }
+
+export function expandInfoList() {
+  return dispatch => { dispatch ({
+    type: EXPAND_INFO_LIST
+    })
+  }
+}
+
+export function minimizeInfoList() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_INFO_LIST
+    })
+  }
+}
+
+export function expandInfoForm() {
+  return dispatch => { dispatch ({
+    type: EXPAND_INFO_FORM
+    })
+  }
+}
+
+export function minimizeInfoForm() {
+  return dispatch => { dispatch ({
+    type: MINIMIZE_INFO_FORM
+    })
+  }
+}
+
+/*export function updateToFirebase(
+  refName,
+  key = firebase.database().ref().child(refName).push().key,
+  ...items)
+  {
+    return dispatch => firebase.database().ref(refName).push({
+      items.reduce((prev, item) => {
+        return Object.assign({}, prev, item)
+      }, {})
+  })
+  .catch(err => {
+      console.error("ERR: pushToFirebase() ", err);
+  })
+}*/

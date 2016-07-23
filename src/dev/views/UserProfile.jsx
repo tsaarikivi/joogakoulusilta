@@ -2,9 +2,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actionCreators from '../actions/user.js'
-
 import ProfileHeader from '../components/userProfile/ProfileHeader.jsx'
+import UserAuth from '../components/userProfile/UserAuth.jsx'
 import UserDataForm from '../components/userProfile/UserDataForm.jsx'
 import UserCourseHistory from '../components/userProfile/UserCourseHistory.jsx'
 import UserTransactions from '../components/userProfile/UserTransactions.jsx'
@@ -16,18 +15,12 @@ class UserProfile extends React.Component {
   }
 
   componentWillMount(){
-    if( this.props.auth.uid ) {
-      this.props.actions.fetchUserDetails(this.props.auth.uid);
-      this.props.actions.fetchUsersTransactions(this.props.auth.uid);
-      this.props.actions.fetchUsersBookings(this.props.auth.uid);
-    }
-    else {
+    if( !this.props.auth.uid ) {
       this.context.router.push('/');
     }
   }
 
   componentWillUnmount(){
-    this.props.actions.finishedWithUserDetails();
   }
 
 
@@ -36,6 +29,7 @@ class UserProfile extends React.Component {
 
 
   render() {
+//        <UserAuth/>
     return(
       <div>
         <ProfileHeader userError={this.props.currentUser.error}/>
@@ -51,8 +45,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
 
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
+export default connect(mapStateToProps, null)(UserProfile)

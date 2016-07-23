@@ -9,13 +9,20 @@ import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
 class UserBooking extends React.Component {
 
+  constructor(){
+    super();
+    this.cancellationOngoing = false;
+  }
+
   static contextTypes = {
     router: React.PropTypes.object
   }
 
   cancelReservation(item){
-    console.log("Cancelling: ", item);
-    this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
+    if(!this.cancellationOngoing){
+      this.cancellationOngoing = true;
+      this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
+    }
   }
 
   render() {
@@ -25,14 +32,16 @@ class UserBooking extends React.Component {
     if(this.props.item.courseTime > day.getTime()+5*60*60*1000){
       cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)} >Peru </button>
     } else {
-      cancelButton = <p className="btn-small btn-blue btn-right">Ei voi enää perua.</p>      
+      cancelButton = <p className="btn-small btn-blue btn-right">Ei voi enää perua.</p>
     }
 
     return (
-        <div className="booking-container">
-          <p>{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
-          {cancelButton}
-        </div>
+        <li className="booking-container">
+          <span className="item-row">
+            <p className="header-collapse onerow-item">{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+            {cancelButton}
+          </span>
+        </li>
     )
   }
 }

@@ -1,4 +1,6 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import AdminHeader from '../components/admin/AdminHeader.jsx'
 import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
@@ -14,26 +16,73 @@ import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
 import PlaceForm from '../components/admin/PlaceForm.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
+import InfoList from '../components/admin/InfoList.jsx'
+import InfoForm from '../components/admin/InfoForm.jsx'
 
-export default class Admin extends React.Component {
-  render() {
-    return (
-      <div>
-        <AdminHeader />
-        <AdminList />
-        <InstructorList />
-        <UserList />
-        <PlaceList />
-        <CourseTypeList />
-        <CourseList />
-        <ShopList />
-        <PlaceForm />
-        <CourseTypeForm />
-        <CourseForm />
-        <SpecialCourseForm />
-        <ShopItemTimeForm />
-        <ShopItemCountForm />
-      </div>
-    )
+
+class Admin extends React.Component {
+
+ constructor(){
+   super()
+   this.allowShow = false;
+ }
+
+ static contextTypes = {
+    router: React.PropTypes.object
+  }
+
+ componentWillMount(){
+    if( !this.props.auth.uid ) {
+      this.context.router.push('/');
+    }
+  }
+
+componentWillUnmount(){
+}
+
+componentWillReceiveProps(nextProps){
+  if(nextProps.currentUser.roles.admin === true){
+    this.allowShow = true;
   }
 }
+
+  render() {
+    if(this.props.currentUser.key === "0"){
+      return <div/>
+    }
+    if(this.allowShow){
+      return (
+        <div>
+          <AdminHeader />
+          <AdminList />
+          <InstructorList />
+          <UserList />
+          <InfoList />
+          <PlaceList />
+          <CourseTypeList />
+          <CourseList />
+          <ShopList />
+          <InfoForm />
+          <PlaceForm />
+          <CourseTypeForm />
+          <CourseForm />
+          <SpecialCourseForm />
+          <ShopItemTimeForm />
+          <ShopItemCountForm />
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <p>Sinun pitää olla järjestelmän pääkäyttäjä.</p>
+          <p>Ota yhteys järjestelmän valvojaan lisäoikeuksien saamiseksi.</p>
+       </div>
+      )
+    }
+  }
+}
+
+function mapStateToProps(state) {
+  return { auth: state.auth, currentUser: state.currentUser }
+}
+export default connect(mapStateToProps, null)(Admin)

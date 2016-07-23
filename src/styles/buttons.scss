@@ -5,13 +5,11 @@
 //////////////////////////////////////////////////////////////
 
 @media screen and (max-width: 799px) {
-  button, a {
-    font-size: 3.6vw;
-  }
+
 
   .btn-small {
     margin: 0 2px;
-    padding: 1vw 1.2vw;
+    padding: 1.8vw 1.2vw;
   }
 
   .btn-right {
@@ -36,6 +34,10 @@
     margin: 0 1.5vw;
     padding: 1vw 1.2vw;
   }
+
+  .mini-link {
+    margin: 3vw 0 1vw;
+  }
 }
 
 //////////////////////////////////////////////////////////////
@@ -43,13 +45,10 @@
 //////////////////////////////////////////////////////////////
 
 @media screen and (min-width: 800px) {
-  button, a {
-    font-size: 13px;
-  }
 
   .btn-small {
     margin: 0 2px;
-    padding: 4px 7px;
+    padding: 7px 11px;
   }
   
   .btn-right {
@@ -62,7 +61,7 @@
 
   .text-link {
     margin: 0;
-    padding: 4px 7px;
+    padding: 7px 11px;
   }
   .back-btn {
     display: inline-block;
@@ -72,67 +71,121 @@
   .expand-btn {
     display: inline-block;
     margin: 0 10px;
-    padding: 4px 7px;
+    padding: 7px 11px;
+  }
+
+  .mini-link {
+    margin: 10px auto 0;
   }
 }
+
 
 //////////////////////////////////////////////////////////////
 // ALL
 //////////////////////////////////////////////////////////////
 
 .btn-small {
+  margin: 0;
   text-decoration: none;
-  color: $button-text;
+  color: $text-light;
   border-radius: 3px;
-  border-style: none;
-  box-shadow: 0 2px 1px 0 $button-norm-shdw;
+  box-sizing: border-box;
   text-transform: uppercase;
-  transition: background 0.1s, box-shadow 0.1s, color 0.1s;
-  font-weight: bold;
-  &:hover {
-    background: $button-hover;
-    box-shadow: 0 3px 1px 0 $button-hover-shdw;
-    color: $button-text;
-  }
-  &:active {
-    background: $button-active;
-    box-shadow: 0 3px 1px 0 $button-active-shdw;
-    color: $button-text;
-  }
+  transition: background 0.1s, color 0.1s;
 }
 .btn-blue {
-  background: $button-blue-norm;
+  background: $blue; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient($lighterblue, $blue); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lighterblue, $blue); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lighterblue, $blue); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lighterblue, $blue); /* Standard syntax */
+  transition: background 0.1s, color 0.1s;
+  border: 1px solid $blue;
+  &:hover {
+    background: $darkblue; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient($blue, $darkblue); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($blue, $darkblue); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($blue, $darkblue); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($blue, $darkblue); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-green {
-  background: $button-green-norm;
+  background: $green;
+  background: -webkit-linear-gradient($lightgreen, $green); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lightgreen, $green); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lightgreen, $green); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lightgreen, $green); /* Standard syntax */
+  border: 1px solid $green;
+  transition: background 0.1s, color 0.1s;
+  &:hover {
+    background: $darkgreen;
+    background: -webkit-linear-gradient($green, $darkgreen); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($green, $darkgreen); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($green, $darkgreen); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($green, $darkgreen); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-red {
-  background: $button-red-norm;
+  background: $red;
+  background: -webkit-linear-gradient($lightred, $red); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($lightred, $red); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($lightred, $red); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($lightred, $red); /* Standard syntax */
+  border: 1px solid $red;
+  transition: background 0.1s, color 0.1s;
+  &:hover {
+    background: $darkred;
+    background: -webkit-linear-gradient($red, $darkred); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($red, $darkred); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($red, $darkred); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($red, $darkred); /* Standard syntax */
+  }
+  &:active {
+    background: $active-btn;
+  }
 }
 .btn-white {
-  background: $button-light-norm;
-  color: $button-blue-norm;
+  background: $text-light;
+  background: -webkit-linear-gradient($white, $text-light); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($white, $text-light); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($white, $text-light); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($white, $text-light); /* Standard syntax */
+  color: $blue;
+  transition: background 0.1s, color 0.1s;
+  border: 1px solid $border;
+  &:hover {
+    background: $lightergray;
+  }
+  &:active {
+    background: $active-btn;
+    color: $text-light;
+  }
 }
 
 .text-link {
   text-decoration: none;
-  color: $text-link-norm;
+  color: $link;
   text-transform: uppercase;
   transition: color 0.1s, background-color 0.1s;
-  font-weight: bold;
   border-radius: 3px;
   &:hover {
-    color: $text-link-hover;
-    background-color: $text-link-bg;
+    color: $link-hover;
+    background-color: $border;
   }
   &:active {
-    color: $text-link-active;
+    color: $text-fade;
   }
 }
 
 a.text-link-white {
-  background-color: white;
-  color: $button-blue-norm;
+  background-color: $container-color;
+  color: $blue;
 }
 
 .back-btn {
@@ -140,14 +193,36 @@ a.text-link-white {
 }
 
 .expand-btn {
+  color: $link;
   border: none;
-  background-color: $container-color;
+  text-decoration: none;
+  background: transparent;
   border-radius: 3px;
   text-transform: uppercase;
+  transition: color 0.1s, background-color 0.1s;
   &:hover {
-    background-color: $text-link-bg;
+    color: $link-hover;
+    background-color: $border;
   }
   &:active {
-    background-color: $text-link-norm;
+    color: $text-fade;
+  }
+}
+
+.btn-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.mini-link {  
+  padding: 0;
+  color: $blue;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  &:hover {
+    color: $darkblue;
+    cursor: pointer;
   }
 }

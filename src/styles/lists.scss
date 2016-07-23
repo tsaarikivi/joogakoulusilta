@@ -13,19 +13,14 @@
     li {
       width: 100%;
       display: inline-block;
-      margin: 0;
-      padding: 6vw 0;
+      margin: 0 0 2vw;
+      padding: 3.6vw 0;
       text-align: center;
-      h3 {
-        padding: 0;
-      }
     }
   }
   .text-list-item {
-    height: 8vw;
     span {
       margin-top: 3vw;
-      font-size: 3.5vw;
     }
     button {
       margin-top: 2vw;
@@ -43,14 +38,10 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 4.1vw;
-      }
-    }
-  }
-
-  .item-expiration {
-    font-size: 4.1vw;
+    }   
+    .onerow-item {
+      margin: 2vw 0 0 0;
+    } 
   }
 
   .item-item {
@@ -70,19 +61,14 @@
     li {
       width: 32%;
       display: inline-block;
-      margin: 0 5px 0 0;
-      padding: 30px 0;
+      margin: 0 5px 5px 0;
+      padding: 26px 0;
       text-align: center;
-      h3 {
-        padding: 0;
-      }
     }
   }
   .text-list-item {
-    height: 40px;
     span {
       margin-top: 14px;
-      font-size: 12px;
     }
     button {
       margin-top: 6px;
@@ -100,14 +86,10 @@
         padding: 0;
         margin: 0;
       }
-      p {
-        font-size: 14px;
-      }
     }
-  }
-
-  .item-expiration {
-    font-size: 14px;
+    .onerow-item {
+      margin: 8px 0 0 0;
+    }
   }
 
   .item-item {
@@ -124,29 +106,43 @@ ul {
 }
 
 .item-expiration {
-  color: $button-blue-norm;
+  color: $blue;
 }
 
-ul.wide-list {
+.wide-list {
   li {
-    background: $list-item;
-    border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 0 0 $item-shdw;
+    background: $container-color;
+    border-radius: 5px;
+    border: 1px solid $border;
+    box-sizing: border-box;
+    .item-row {
+      width: 100%;
+      display: inline-block;
+      margin: 0;
+    }
   }
 }
 
 .narrow-list {
   li {
-    background: $list-item;
-    border-radius: 3px;
-    border: 1px solid $item-border;
-    box-shadow: 0 2px 0 0 $item-shdw;
+    background: $container-color;
+    border-radius: 5px;
+    border: 1px solid $border;
+    box-sizing: border-box;
   }
 }
 .special-course-item {
   &:hover {
-    background: $list-item-hover;
+    background: $lightblue;
     cursor: pointer;
   }
+}
+
+ul.blank-list {
+  margin-top: 60px;
+  li {
+    background: transparent;
+    border: none;
+    margin-bottom: 10px;
+  }  
 }

@@ -7,8 +7,8 @@ import * as actionCreators from '../../actions/admin.js'
 class PlaceForm extends React.Component {
 
   onSubmit(props) {
-    console.log("props:", props);
     this.props.actions.addPlace(props)
+    location.reload()
   }
 
   renderContent() {

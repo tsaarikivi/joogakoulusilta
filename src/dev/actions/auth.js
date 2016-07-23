@@ -1,85 +1,242 @@
-import { ADD_USER, REMOVE_USER, AUTH_ERROR } from './actionTypes.js'
-import { createNewUser } from './user.js'
+import {
+    ADD_USER,
+    REMOVE_USER,
+    AUTH_ERROR,
+    AUTH_TIMEOUT,
+    EMAIL_UPDATED,
+    PASSWORD_UPDATED,
+} from './actionTypes.js'
+import {
+    createNewUser
+} from './user.js'
 
 const Auth = firebase.auth();
 
-let registeringUser = false; //This is a flag to differentiate if user is authenticated for the first time
 let firstName = null;
 let surname = null;
+let alias = null;
+
+export function waitForMilliseconds(milliseconds) {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch({
+                type: AUTH_TIMEOUT,
+                payload: {
+                    timeout: true
+                }
+            })
+        }, milliseconds);
+    }
+}
 
 export function authListener() {
-  return dispatch => {
-    Auth.onAuthStateChanged( userdata => {
-      console.log("Userdata: ", userdata);
-      if (userdata) {
-        var user = {}
-        user.email = userdata.email;
-        user.uid = userdata.uid;
-        user.userdata = userdata;
-        console.log("USER: ", user.uid, user.email);
-        dispatch({
-          type: ADD_USER,
-          payload: user
+    return dispatch => {
+        Auth.onAuthStateChanged(userdata => {
+            if (userdata) {
+                var user = {}
+                user.email = userdata.email;
+                user.uid = userdata.uid;
+                user.userdata = userdata;
+                console.log("USER: ", user.uid, user.email, userdata);
+                dispatch({
+                    type: ADD_USER,
+                    payload: user
+                })
+                createNewUser(user, firstName, surname, alias);
+                firstName = null;
+                surname = null;
+                alias = null;
+            } else {
+                console.log("REMOVE_USR")
+                dispatch({
+                    type: REMOVE_USER
+                })
+            }
         })
-        if(registeringUser){
-          let first = firstName;
-          let sur = surname;
-          registeringUser = false;
-          firstName = null;
-          surname = null;
-          createNewUser(user, first, sur);
-        }
-      } else {
-        dispatch({
-          type: REMOVE_USER
-        })
-      }
-    })
-  }
+    }
+}
+
+export function loginWithPopUp() {
+    return dispatch => {
+        console.log("firebase auth", firebase)
+        var provider = new firebase.auth.GoogleAuthProvider
+        console.log("provider", provider)
+        Auth.signInWithPopup(provider).catch(error => {
+            if (error) {
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
+        });
+    }
 }
 
 export function login(email, password) {
-  return dispatch => {
-    Auth.signInWithEmailAndPassword(email, password).catch( error => {
-      if(error){
-        dispatch({
-          type: AUTH_ERROR,
-          payload: {error:{code: error.code, message: error.message}}
-        })
-      }
-    });
-  }
+    return dispatch => {
+        Auth.signInWithEmailAndPassword(email, password).catch(error => {
+            if (error) {
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
+        });
+    }
 }
 
 export function logout() {
-  return dispatch => {
-    Auth.signOut().then( () => {
-    }, error => {
-      if(error){
-        dispatch({
-          type: AUTH_ERROR,
-          payload: {error:{code: error.code, message: error.message}}
-        })
-      }
-    });
-  }
+    return dispatch => {
+        Auth.signOut().then(() => {}, error => {
+            if (error) {
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
+        });
+    }
 
 }
 
-export function register(email, password, fName, sName) {
+export function register(email, password, fName, sName, a) {
 
-  registeringUser = true;
-  firstName = fName;
-  surname = sName;
+    firstName = fName;
+    surname = sName;
+    alias = a;
 
-  return dispatch => {
-    Auth.createUserWithEmailAndPassword(email, password).catch( error => {
-      if(error){
-        dispatch({
-          type: AUTH_ERROR,
-          payload: {error:{code: error.code, message: error.message}}
+    return dispatch => {
+        Auth.createUserWithEmailAndPassword(email, password).catch(error => {
+            if (error) {
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
+        });
+    }
+}
+
+//TODO: this does not work.... Weird errors....
+export function updateEmailAddress(oldEmail, oldPdw, newEmail) {
+    console.log("AUTH: change of email:", oldEmail, oldPdw, newEmail)
+    return dispatch => {
+        var credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPdw);
+        var user = firebase.auth().currentUser
+        user.reauthenticate(credential).then(() => {
+            user.updateEmail(newEmail).then(
+                () => {
+                    dispatch({
+                        type: EMAIL_UPDATED,
+                        payload: {
+                            error: {
+                                code: "0",
+                                message: "no error"
+                            },
+                            emailUpdated: true
+                        }
+                    })
+                }, (error) => {
+                    if (error) {
+                        console.error("UPDATE-EMAIL error", error)
+                        dispatch({
+                            type: AUTH_ERROR,
+                            payload: {
+                                error: {
+                                    code: error.code,
+                                    message: error.message
+                                }
+                            }
+                        })
+                    }
+                }
+            )
+        }, (error) => {
+            if (error) {
+                console.error("REAUTH error", error)
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
         })
-      }
-    });
-  }
+
+    }
+}
+
+export function updatePassword(oldEmail, oldPdw, newPassword) {
+    console.log("AUTH: change of pwd:", newPassword)
+    return dispatch => {
+        var credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPdw);
+        var user = firebase.auth().currentUser
+        user.reauthenticate(credential).then(() => {
+            user.updatePassword(newPassword).then(
+                () => {
+                    dispatch({
+                        type: PASSWORD_UPDATED,
+                        payload: {
+                            error: {
+                                code: "0",
+                                message: "no error"
+                            },
+                            passwordUpdated: true
+                        }
+                    })
+                }, (error) => {
+                    if (error) {
+                        console.error("auth error", error)
+                        dispatch({
+                            type: AUTH_ERROR,
+                            payload: {
+                                error: {
+                                    code: error.code,
+                                    message: error.message
+                                }
+                            }
+                        })
+                    }
+                }
+            )
+        }, (error) => {
+            if (error) {
+                console.error("REAUTH error", error)
+                dispatch({
+                    type: AUTH_ERROR,
+                    payload: {
+                        error: {
+                            code: error.code,
+                            message: error.message
+                        }
+                    }
+                })
+            }
+        })
+
+
+    }
 }

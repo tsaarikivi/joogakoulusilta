@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { getTimeStrMs } from '../../helpers/timeHelper.js'
+
 export default class CourseItem extends React.Component {
   renderContent() {
     const {item} = this.props
@@ -39,19 +41,19 @@ export default class CourseItem extends React.Component {
     return (
       <div>
         {this.renderSpecial()}
-        <span className="item-item float-left">{item.courseType.name}</span>
-        <span className="item-item float-left">{dayTxt}</span>
-        <span className="item-item float-left">klo {item.start/36000} - {item.end/36000}</span>
+        <span className="item-row">{item.courseType.name}</span>
+        <span className="item-row">{dayTxt}</span>
+        <span className="item-row">klo {getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</span>
       </div>
     )
   }
 
   renderSpecial() {
     if (this.props.item.special) {
-      return <span className="item-item float-left">S</span>
+      return <span className="item-row">Erikoiskurssi</span>
     }
     else {
-      return <span className="item-item float-left">V</span>
+      return <span className="item-row">Vakiokurssi</span>
     }
   }
 
@@ -60,8 +62,9 @@ export default class CourseItem extends React.Component {
     //TODO: Add proper buttons and functionality
     return (
       <div>
-        <button className="btn-small btn-red float-right">Poista</button>
-        <button className="btn-small btn-blue float-right">Muokkaa</button>        
+        <span className="item-row">
+          <button className="btn-small btn-red">Poista</button>
+        </span> 
       </div>      
     )
     
@@ -75,7 +78,6 @@ export default class CourseItem extends React.Component {
     return (
       <li className="text-list-item">        
         {this.renderContent()}
-        {this.renderButtons()}
       </li>
     )
   }

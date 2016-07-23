@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getCourseTimeGMT, hasDayPassed, timeToMoment } from '../../helpers/timeHelper.js'
+import { getCourseTimeGMT, hasDayPassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
@@ -10,65 +10,48 @@ class CourseInfo extends React.Component {
   constructor(){
     super();
     this.fetchStarted = false;
-  }
-
-  componentWillMount(){
-  }
-
-  componentWillUnMount(){
+    this.reservationRequestOngoing = [false, false];
   }
 
   componentWillReceiveProps(nextProps){
-    //Fetching is started only when CourseInfo is pushed to this component.
-    // Do it only once to avoid recursion. Therefore set flag fetchStarted.
-    console.log("CIPROPS:", nextProps);
-    if(nextProps.courseInfo && !this.fetchStarted){
-      this.fetchStarted = true;
-      this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
-    }
   }
 
 
   makeReservation(forward) {
-    this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
-  }
-
-  cancelReservation(item, txRef) {
-    this.props.bookingsActions.postCancellation(item, txRef, this.props.courseInfo)
+    if(!this.reservationRequestOngoing[forward]){
+      this.reservationRequestOngoing [forward] = true;
+      this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
+    }
   }
 
   exitContainer() {
     this.props.courseActions.removeCourseInfo()
-    this.props.bookingsActions.stopfetchCourseBookings()
-    this.fetchStarted = false;
+    this.reservationRequestOngoing = [false,false];
   }
 
   userCanBook(){
     return (this.props.currentUser.transactions.count > 0 || this.props.currentUser.transactions.time > Date.now()) ? true : false;
   }
-  //========================================================================
-  //========================================================================
-  //========================================================================
-  usersReservations(){
-    let outStr = "";
-    let item = 0;
-    let txRef = 0;
-    let time = new Date();
-    if(this.props.courseInfo.bookings){
-      if(this.props.courseInfo.bookings.user.length > 0){
-          item = this.props.courseInfo.bookings.user[0].item;
-          time.setTime(item);
-          outStr += time.toString() + " | " + item;
-          txRef = this.props.courseInfo.bookings.user[0].txRef;
+
+  courseIsFull(bookingIndex){
+    let adjustedIndex;
+    //=======================================
+    if (hasDayPassed(this.props.courseInfo.day)){
+      if(bookingIndex == 0){
+        return false; //Not for past.
       }
-    }
-    if(outStr === ""){
-        return(<p className="info-noreservations">Et ole ilmoittautunut tälle kurssille.</p>);
+      else {
+        adjustedIndex = bookingIndex - 1;
+      }
     } else {
-      return(
-        <button className="btn-small btn-blue" onClick={() => this.cancelReservation(item, txRef)} >Peru: {outStr} </button>
-      );
+      adjustedIndex = bookingIndex;
     }
+    if(this.props.courseInfo.bookings.all.length > adjustedIndex){
+      return (this.props.courseInfo.bookings.all[adjustedIndex].reservations < this.props.courseInfo.maxCapacity)? false : true;
+    } else {
+      return false; // No bookings for the course yet.
+    }
+
   }
 
   //========================================================================
@@ -88,34 +71,28 @@ class CourseInfo extends React.Component {
       adjustedIndex = bookingIndex;
     }
     //========================================
-    if(this.props.courseInfo.bookings){
       if(this.props.courseInfo.bookings.all.length > adjustedIndex){
-        let participantlist = "";
-        let date = new Date();
-        date.setTime(this.props.courseInfo.bookings.all[adjustedIndex].instance);
-        this.props.courseInfo.bookings.all[adjustedIndex].participants.forEach((item,index) => { participantlist += " " + item })
         return(
           <div>
             <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
-            <p className="info-participants">Osallistujat: {participantlist}</p>
           </div>
         );
       }
-    }
-    else {
-      return(
-        <div>
-          <p className="info-reserved">Ei ilmoittautuneita.</p>
-        </div>
-      )
-    }
+      else {
+        return(
+          <div>
+            <p className="info-reserved">Ilmoittautuneita 0/{this.props.courseInfo.maxCapacity}</p>
+          </div>
+        )
+      }
   }
 
   //========================================================================
   //========================================================================
   //========================================================================
   reservationButton(weekIndex){
-    let dayStr = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).toString();
+    let day = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day)
+    let dayStr = getDayStr(day) + " " + getTimeStr(day)
     let millisecondsStart = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
     let millisecondsEnd = getCourseTimeGMT(weekIndex, this.props.courseInfo.end, this.props.courseInfo.day).getTime()
     if(weekIndex == 0){
@@ -143,10 +120,23 @@ class CourseInfo extends React.Component {
     }
     if(this.props.courseInfo.bookings){
       if(this.props.courseInfo.bookings.user.length > 0){
-          //TODO: tarkista että onko juuri tälle viikolle ilmoitauduttu
+          if(weekIndex === 0 && this.props.courseInfo.bookings.user[0].item < Date.now() + 7*24*60*60*1000 ){
               return(
                 <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
               );
+          }
+          if(weekIndex === 1 &&  hasDayPassed(this.props.courseInfo.day)){
+              return(
+                <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+              );
+          }
+      }
+      if(this.props.courseInfo.bookings.user.length > 1){
+          if(weekIndex === 1 && this.props.courseInfo.bookings.user[1].item > Date.now() + 7*24*60*60*1000 ){
+              return(
+                <p> Sinä olet ilmoittautunut tälle kurssille: {dayStr}</p>
+              );
+          }
       }
     }
     if (weekIndex === 0){
@@ -166,12 +156,15 @@ class CourseInfo extends React.Component {
         );
       }
     }
-
+    if(this.courseIsFull(weekIndex)){
+      return(
+        <p> Kurssi on jo täyteen varattu!</p>
+      );
+    }
       return(
             <div>
-              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >Ilmoittaudu
+              <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >
                 { dayStr }
-                { millisecondsStart }
               </button>
             </div>
           );
@@ -179,7 +172,7 @@ class CourseInfo extends React.Component {
 
 
   render() {
-    if(this.props.courseInfo) {
+    if(this.props.courseInfo.key !== "0"){
       return (
         <div className="course-info-container">
           <div className="course-info">
@@ -190,7 +183,6 @@ class CourseInfo extends React.Component {
               <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
               <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
               <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
-              {this.usersReservations()}
             </div>
             <span className="week-info-container">
               {this.reservationButton(0)}
@@ -204,9 +196,7 @@ class CourseInfo extends React.Component {
         </div>
       )
     } else {
-      return (
-        <div></div>
-      )
+      return ( <div></div>)
     }
   }
 }

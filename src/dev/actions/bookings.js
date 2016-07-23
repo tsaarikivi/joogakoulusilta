@@ -40,7 +40,7 @@ export function postReservation(forward, courseInfo) {
                         weeksForward: forward
                     })
                 .then(response => {
-                    console.log(response.data);
+                    console.log(response.data); // Should process the data - for now ther is no need.
                 })
                 .catch(error => {
                     console.error(error);
@@ -78,7 +78,9 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
             index++;
         }
     }
-    userbookings.sort();
+    userbookings.sort((a, b) => {
+        return a.item - b.item
+    });
     bookings.sort((a, b) => {
         return a.instance - b.instance
     })
@@ -88,25 +90,20 @@ export function fetchCourseBookings(coursekey, uid) {
     var bookings = [];
     var userbookings = [];
 
-    BookingsRef = firebase.database().ref('/bookingsbycourse/' + coursekey);
     return dispatch => {
         var bkns = {};
-        var returnObjcet;
+        var returnObject;
         //Clear the booking details in case there are no bookings and the
-        BookingsRef.on('value', snapshot => {
+        firebase.database().ref('/bookingsbycourse/' + coursekey).on('value', snapshot => {
             bkns = snapshot.val();
             bookings = Object.assign([]);
             userbookings = Object.assign([]);
             processBookings(bkns, uid, bookings, userbookings)
-            returnObjcet = Object.assign({
-                bookings: {
-                    all: bookings,
-                    user: userbookings
-                }
-            })
+            returnObject = Object.assign({})
+            returnObject[coursekey] = { all: bookings, user: userbookings }
             dispatch({
                 type: FETCH_COURSE_BOOKINGS,
-                payload: returnObjcet
+                payload: returnObject
             })
         }, err => {
             console.error("Error is fetching bookingsbycourse: ", err);
@@ -114,8 +111,8 @@ export function fetchCourseBookings(coursekey, uid) {
     }
 }
 
-export function stopfetchCourseBookings() {
+export function stopfetchCourseBookings(coursekey) {
     return dispatch => {
-        BookingsRef.off('value');
+        firebase.database().ref('/bookingsbycourse/' + coursekey).off('value');
     }
 }

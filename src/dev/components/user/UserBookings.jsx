@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import UserBooking from './UserBooking.jsx'
+import UserSpecialCourse from './UserSpecialCourse.jsx'
 
 class UserBookings extends React.Component {
 
@@ -8,7 +9,10 @@ class UserBookings extends React.Component {
     router: React.PropTypes.object
   }
   componentWillReceiveProps(nextProps){
-    //console.log("PROPSEJA tulee: ", nextProps);
+  }
+
+  renderSpecialCources(item){
+    return(<UserSpecialCourse key={item.transactionReference} item={item}/>)
   }
 
   renderBookings(item){
@@ -16,17 +20,22 @@ class UserBookings extends React.Component {
   }
 
   render() {
+    if(this.props.currentUser.bookings.length > 0){
       return (
         <div className="container bordered-container">
           <div className="content-container">
             <h2 className="header-collapse">Tulevat varauksesi</h2>
               <ul className="wide-list">
+                {this.props.currentUser.specialCources.map(this.renderSpecialCources)}
                 {this.props.currentUser.bookings.map(this.renderBookings)}
               </ul>
           </div>
         </div>
       )
+    } else{
+      return(<div></div>)
     }
+  }
 }
 
 

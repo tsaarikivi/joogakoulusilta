@@ -14,61 +14,61 @@ import {
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
-export function buyWithCash(){
-  return dispatch => {
-    dispatch({
-      type: BUY_WITH_CASH,
-      payload: {
-        phase: "cashPayment",
-        error: {
-          code: 0,
-          message: "no error"
-        }
-      }
-    })
-  }
-}
-
-export function executeCashPurchase(forUsr, itemKey){
-  return dispatch => {
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
-
-    firebase.auth().currentUser.getToken(true)
-        .then(idToken => {
-            return axios.post(JOOGAURL, {
-                for_user: forUsr,
-                item_key: itemKey,
-                current_user: idToken
-            })
-        })
-        .then(result => {
-          console.log("EXECUTE_CASH_PURCHASE:", forUsr, itemKey);
-          dispatch({
-            type: EXECUTE_CASH_PURCHASE,
+export function buyWithCash() {
+    return dispatch => {
+        dispatch({
+            type: BUY_WITH_CASH,
             payload: {
-                cart: {},
-                phase: "done",
-                purchaseResult: result,
+                phase: "cashPayment",
                 error: {
-                    code: 0,
+                    code: "0",
                     message: "no error"
                 }
-              }
-          })
+            }
         })
-        .catch(error => {
-            console.error("CASH ERROR", error);
-            dispatch({
-                type: CHECKOUT_ERROR,
-                payload: {
-                    error: {
-                        code: 40,
-                        message: "Cash error: " + error.toString()
-                    }
-                }
+    }
+}
+
+export function executeCashPurchase(forUsr, itemKey, type) {
+    return dispatch => {
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
+
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    for_user: forUsr,
+                    item_key: itemKey,
+                    current_user: idToken,
+                    purchase_target: type
+                })
             })
-        })
-  }
+            .then(result => {
+                dispatch({
+                    type: EXECUTE_CASH_PURCHASE,
+                    payload: {
+                        cart: {},
+                        phase: "done",
+                        purchaseResult: result,
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
+                })
+            })
+            .catch(error => {
+                console.error("CASH ERROR", error);
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "CASH_ERROR",
+                            message: "Cash error: " + error.toString()
+                        }
+                    }
+                })
+            })
+    }
 }
 
 export function waitForMilliseconds(milliseconds) {
@@ -116,8 +116,8 @@ export function addToCart(item) {
             payload: {
                 cart: item,
                 error: {
-                  code: 0,
-                  message: "no error"
+                    code: "0",
+                    message: "no error"
                 }
             }
         })
@@ -130,7 +130,7 @@ export function checkoutError(error) {
             type: CHECKOUT_ERROR,
             payload: {
                 error: {
-                    code: 30,
+                    code: "CHECKOUT_ERR",
                     message: "Checkout error: " + error.toString()
                 }
             }
@@ -170,7 +170,7 @@ export function getClientTokenFromBraintree() {
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
-                            code: 10,
+                            code: "TOKEN_ERROR",
                             message: "ClientToken error: " + error.toString()
                         }
                     }
@@ -179,7 +179,7 @@ export function getClientTokenFromBraintree() {
     }
 }
 
-export function doPurchaseTransaction(nonce, clientKey) {
+export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
 
@@ -188,7 +188,8 @@ export function doPurchaseTransaction(nonce, clientKey) {
                 return axios.post(JOOGAURL, {
                     payment_method_nonce: nonce,
                     item_key: clientKey,
-                    current_user: idToken
+                    current_user: idToken,
+                    purchase_target: type
                 })
             })
             .then(result => {
@@ -199,7 +200,7 @@ export function doPurchaseTransaction(nonce, clientKey) {
                         phase: "done",
                         purchaseResult: result,
                         error: {
-                            code: 0,
+                            code: "0",
                             message: "no error"
                         }
                     }
@@ -211,7 +212,7 @@ export function doPurchaseTransaction(nonce, clientKey) {
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
-                            code: 20,
+                            code: "PURCHASE_ERROR",
                             message: "Purchase error: " + error.toString()
                         }
                     }
