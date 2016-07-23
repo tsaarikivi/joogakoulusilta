@@ -34,7 +34,7 @@ class TimeTableItem extends React.Component {
   }
 
   componentWillUnmount(){
-    his.props.bookingsActions.stopfetchCourseBookings(this.props.item.key)
+    this.props.bookingsActions.stopfetchCourseBookings(this.props.item.key)
   }
 
   itemClicked() {

@@ -33,6 +33,27 @@ class CourseInfo extends React.Component {
     return (this.props.currentUser.transactions.count > 0 || this.props.currentUser.transactions.time > Date.now()) ? true : false;
   }
 
+  courseIsFull(bookingIndex){
+    let adjustedIndex;
+    //=======================================
+    if (hasDayPassed(this.props.courseInfo.day)){
+      if(bookingIndex == 0){
+        return false; //Not for past.
+      }
+      else {
+        adjustedIndex = bookingIndex - 1;
+      }
+    } else {
+      adjustedIndex = bookingIndex;
+    }
+    if(this.props.courseInfo.bookings.all.length > adjustedIndex){
+      return (this.props.courseInfo.bookings.all[adjustedIndex].reservations < this.props.courseInfo.maxCapacity)? false : true;
+    } else {
+      return false; // No bookings for the course yet.
+    }
+
+  }
+
   //========================================================================
   //========================================================================
   //========================================================================
@@ -135,7 +156,11 @@ class CourseInfo extends React.Component {
         );
       }
     }
-
+    if(this.courseIsFull(weekIndex)){
+      return(
+        <p> Kurssi on jo täyteen varattu!</p>
+      );
+    }
       return(
             <div>
               <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >

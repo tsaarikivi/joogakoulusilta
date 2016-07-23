@@ -55,20 +55,25 @@ class SpecialCourseInfo extends React.Component {
       return( <h2>Olet jo ostanut tämän kurssin.</h2> );
     }
 
+
     if(this.props.currentUser.roles.admin){
       admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
-    return (
-      <div>
-        <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
-        </span>
-        <span className="item-row">
-          {admin}
-        </span>
-      </div>
-    )
+    if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
+      return (
+        <div>
+          <span className="item-row">
+            <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
+          </span>
+          <span className="item-row">
+            {admin}
+          </span>
+        </div>
+      )
+    } else {
+      return (<h2>Kurssi on täynnä.</h2> )
+    }
   }
 
   render() {
