@@ -12,14 +12,8 @@ class CourseInfo extends React.Component {
     this.fetchStarted = false;
     this.reservationRequestOngoing = [false, false];
   }
-participants
+
   componentWillReceiveProps(nextProps){
-    //Fetching is started only when CourseInfo is pushed to this component.
-    // Do it only once to avoid recursion. Therefore set flag fetchStarted.
-    if(nextProps.courseInfo.key !== "0" && !this.fetchStarted){
-      this.fetchStarted = true;
-      this.props.bookingsActions.fetchCourseBookings(nextProps.courseInfo.key, this.props.currentUser.uid)
-    }
   }
 
 
@@ -32,8 +26,6 @@ participants
 
   exitContainer() {
     this.props.courseActions.removeCourseInfo()
-    this.props.bookingsActions.stopfetchCourseBookings()
-    this.fetchStarted = false;
     this.reservationRequestOngoing = [false,false];
   }
 
@@ -155,7 +147,7 @@ participants
 
 
   render() {
-    if(this.props.courseInfo.bookings.ready) {
+    if(this.props.courseInfo.key !== "0"){
       return (
         <div className="course-info-container">
           <div className="course-info">
@@ -179,9 +171,7 @@ participants
         </div>
       )
     } else {
-      return (
-        <div></div>
-      )
+      return ( <div></div>)
     }
   }
 }

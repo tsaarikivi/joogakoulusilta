@@ -1,6 +1,7 @@
 import { FETCH_TIMETABLE,
          PUT_COURSE_INFO,
-         REMOVE_COURSE_INFO } from './actionTypes.js'
+         REMOVE_COURSE_INFO,
+        } from './actionTypes.js'
 
 const CoursesRef = firebase.database().ref('/courses/')
 
@@ -22,16 +23,22 @@ export function fetchTimetable() {
       })
       dispatch({
         type: FETCH_TIMETABLE,
-        payload: list
+        payload: {courses: list}
       })
     })
   }
 }
 
-export function putCourseInfo(course) {
-  return {
-    type: PUT_COURSE_INFO,
-    payload: course
+export function putCourseInfo(course, booking) {
+  return dispatch => {
+    dispatch({
+      type: PUT_COURSE_INFO,
+      payload: course      
+    });
+    dispatch({
+      type: PUT_COURSE_INFO,
+      payload: {bookings: booking}
+    });
   }
 }
 

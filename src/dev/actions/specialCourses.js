@@ -29,7 +29,6 @@ export function fetchSpecialCourseBookings(){
   var returnObject = Object.assign({})
   return dispatch => {
     firebase.database().ref('scbookingsbycourse').on('value', snapshot => {
-      console.log(snapshot.val())
       var one = null
       var counter = 0
       var oneuser = null

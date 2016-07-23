@@ -90,26 +90,20 @@ export function fetchCourseBookings(coursekey, uid) {
     var bookings = [];
     var userbookings = [];
 
-    BookingsRef = firebase.database().ref('/bookingsbycourse/' + coursekey);
     return dispatch => {
         var bkns = {};
-        var returnObjcet;
+        var returnObject;
         //Clear the booking details in case there are no bookings and the
-        BookingsRef.on('value', snapshot => {
+        firebase.database().ref('/bookingsbycourse/' + coursekey).on('value', snapshot => {
             bkns = snapshot.val();
             bookings = Object.assign([]);
             userbookings = Object.assign([]);
             processBookings(bkns, uid, bookings, userbookings)
-            returnObjcet = Object.assign({
-                bookings: {
-                    all: bookings,
-                    user: userbookings,
-                    ready: true
-                }
-            })
+            returnObject = Object.assign({})
+            returnObject[coursekey] = { all: bookings, user: userbookings }
             dispatch({
                 type: FETCH_COURSE_BOOKINGS,
-                payload: returnObjcet
+                payload: returnObject
             })
         }, err => {
             console.error("Error is fetching bookingsbycourse: ", err);
@@ -117,8 +111,8 @@ export function fetchCourseBookings(coursekey, uid) {
     }
 }
 
-export function stopfetchCourseBookings() {
+export function stopfetchCourseBookings(coursekey) {
     return dispatch => {
-        BookingsRef.off('value');
+        firebase.database().ref('/bookingsbycourse/' + coursekey).off('value');
     }
 }
