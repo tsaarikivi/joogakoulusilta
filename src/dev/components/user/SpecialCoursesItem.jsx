@@ -1,6 +1,7 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
 import { putSpecialCourseInfo } from '../../actions/specialCourses.js'
 
@@ -39,7 +40,7 @@ class SpecialCoursesItem extends React.Component {
     return (
       <li className="special-course-item" onClick={() => this.itemClicked()}>
         <p>{this.props.item.title}</p>
-        <p className="table-time">{this.props.item.date}</p>
+        <p className="table-time">{getDayStrMs(this.props.item.date)}</p>
         <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
       </li>
     );

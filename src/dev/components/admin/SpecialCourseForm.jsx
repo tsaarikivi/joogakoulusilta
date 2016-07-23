@@ -1,11 +1,27 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
 import { bindActionCreators } from 'redux'
-
 import * as actionCreators from '../../actions/admin.js'
 
+var DatePicker = require('react-datepicker')
+var moment = require('moment')
+
 class SpecialCourseForm extends React.Component {
+
+  constructor(){
+    super();
+    this.startDate = moment();
+    console.log("MOMENT: ", this.startDate);
+  }
+
+  onDateChange(date){
+    console.log("DATE: ", date);
+    this.startDate = date;
+    this.forceUpdate()
+  }
+
   onSubmit(props) {
+    props.date = this.startDate.valueOf()
     this.props.actions.addSpecialCourse(props)
     // TODO : change actions to on instead of ONCE take reloads away
   }
@@ -29,16 +45,20 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-    const { fields: { title, start, end, maxCapacity, date, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
+//    <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
+
+    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
+        <div>
+
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="SpecialTitle">Erikoiskurssin otsikko</label>
           <input type="text" name="SpecialTitle" {...title} placeholder="esim: Keskiyön jooga" />
 
           <label htmlFor="SpecialDate">Erikoiskurssin päivämäärä</label>
-          <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
+          <DatePicker selected={this.startDate} onChange={this.onDateChange.bind(this)} />
 
           <label htmlFor="SpecialStart">Alkaa klo.</label>
           <input type="number" name="SpecialStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
@@ -81,6 +101,7 @@ class SpecialCourseForm extends React.Component {
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
+        </div>
       )
     }
     else {
@@ -130,6 +151,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['title', 'start', 'end', 'maxCapacity', 'date', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
+  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

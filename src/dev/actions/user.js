@@ -3,7 +3,8 @@ import {
     UPDATE_USERS_TRANSACTIONS,
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
-    STOP_UPDATING_USER_DETAILS_FROM_DB
+    STOP_UPDATING_USER_DETAILS_FROM_DB,
+    UPDATE_USERS_SCBOOKINGS
 } from './actionTypes.js'
 
 const Auth = firebase.auth();
@@ -11,6 +12,7 @@ const Auth = firebase.auth();
 var UserRef;
 var TransactionsRef;
 var BookingsRef;
+var specialCBookingsRef;
 
 export function updateUserDetails(user) {
     return dispatch => {
@@ -22,6 +24,33 @@ export function updateUserDetails(user) {
                 })
             })
     }
+}
+
+export function fetchUsersSpecialCourseBookings(uid){
+  return dispatch => {
+    specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
+    specialCBookingsRef.on('value', (snapshot) => {
+      let scBookings = snapshot.val();
+      let one;
+      let returnList = Object.assign([])
+      if(scBookings){
+        for(one in scBookings){
+          if(scBookings[one].shopItem.date > Date.now()){
+            returnList.push(scBookings[one])            
+          }
+        }
+      }
+      dispatch({
+        type: UPDATE_USERS_SCBOOKINGS,
+        payload: {specialCources: returnList}
+      })
+    }, (err) => {
+      dispatch({
+          type: USER_ERROR,
+          payload: err
+      })
+    })
+  }
 }
 
 export function fetchUsersBookings(uid) {
@@ -233,6 +262,7 @@ export function finishedWithUserDetails() {
     if (UserRef) UserRef.off('value');
     if (TransactionsRef) TransactionsRef.off('value');
     if (BookingsRef) BookingsRef.off('value')
+    if (specialCBookingsRef) specialCBookingsRef.off('value')
     return dispatch => {
         dispatch({
             type: STOP_UPDATING_USER_DETAILS_FROM_DB,

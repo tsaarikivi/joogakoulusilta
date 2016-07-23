@@ -23,11 +23,13 @@ class AuthManager extends React.Component {
   componentWillReceiveProps(newProps){
     if(newProps.auth.uid){
       if(!this.userInitialized){
+        this.userInitialized = true;
         this.props.userActions.fetchUserDetails(newProps.auth.uid)
         this.props.userActions.fetchUsersTransactions(newProps.auth.uid)
         this.props.userActions.fetchUsersBookings(newProps.auth.uid)
-        this.userInitialized = true;
-      }    
+        this.props.userActions.fetchUsersSpecialCourseBookings(newProps.auth.uid)
+
+      }
     } else {
       if (this.userInitialized){
         this.props.userActions.finishedWithUserDetails()

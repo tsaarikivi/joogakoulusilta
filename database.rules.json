@@ -16,6 +16,10 @@
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"
         },
+        "scbookingsbycourse": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver'"
+        },
         "specialUsers": {
             ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
             ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
@@ -23,6 +27,12 @@
                 ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
                 ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
             }
+        },
+        "scbookingsbyuser": {
+          "$userId": {
+              ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+              ".write": "auth.uid === 'joogaserver'"
+          }
         },
         "bookingsbyuser": {
             "$userId": {

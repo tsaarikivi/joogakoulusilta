@@ -388,7 +388,7 @@ export function addSpecialCourse(data) {
         start: toMilliseconds(parseInt(data.start)),
         end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
-        date: data.date,
+        date: data.date + toMilliseconds(parseInt(data.start)),
         price: data.price,
         taxpercent: data.taxpercent,
         taxamount: data.taxamount,

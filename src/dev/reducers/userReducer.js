@@ -3,7 +3,8 @@ import {
     UPDATE_USERS_TRANSACTIONS,
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
-    STOP_UPDATING_USER_DETAILS_FROM_DB
+    STOP_UPDATING_USER_DETAILS_FROM_DB,
+    UPDATE_USERS_SCBOOKINGS
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
         message: "ok"
     },
     bookings: [],
+    specialCources: [],
     history: [],
     roles: {
         admin: false,
@@ -29,19 +31,17 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case UPDATE_USERS_SCBOOKINGS:
+          return Object.assign({}, state, action.payload);
         case UPDATE_USERS_BOOKINGS:
             return Object.assign({}, state, action.payload);
-            break;
         case UPDATE_USERS_TRANSACTIONS:
             return Object.assign({}, state, action.payload);
-            break;
         case USER_ERROR:
             console.error("USER_ERROR: ", action.payload)
             return Object.assign({}, state, action.payload);
-            break;
         case USER_DETAILS_UPDATED_IN_DB:
             return Object.assign({}, state, action.payload);;
-            break;
         case STOP_UPDATING_USER_DETAILS_FROM_DB:
             return INITIAL_STATE;
         default:
