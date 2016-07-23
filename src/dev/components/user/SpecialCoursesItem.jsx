@@ -32,7 +32,6 @@ class SpecialCoursesItem extends React.Component {
   }
 
   itemClicked() {
-    console.log("PUTTING ITEM TO SCINFO", this.props.item)
     this.props.actions.putSpecialCourseInfo(this.props.item)
   }
 
@@ -42,6 +41,7 @@ class SpecialCoursesItem extends React.Component {
         <p>{this.props.item.title}</p>
         <p className="table-time">{getDayStrMs(this.props.item.date)}</p>
         <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
+        <p className="centered">{this.props.item.bookings}/{this.props.item.maxCapacity}</p>
       </li>
     );
   }

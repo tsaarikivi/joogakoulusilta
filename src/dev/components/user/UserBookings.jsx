@@ -12,7 +12,6 @@ class UserBookings extends React.Component {
   }
 
   renderSpecialCources(item){
-    console.log(("special", item));
     return(<UserSpecialCourse key={item.transactionReference} item={item}/>)
   }
 

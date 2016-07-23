@@ -14,7 +14,6 @@ class CourseInfo extends React.Component {
   }
 participants
   componentWillReceiveProps(nextProps){
-    console.log("CI-props", nextProps);
     //Fetching is started only when CourseInfo is pushed to this component.
     // Do it only once to avoid recursion. Therefore set flag fetchStarted.
     if(nextProps.courseInfo.key !== "0" && !this.fetchStarted){

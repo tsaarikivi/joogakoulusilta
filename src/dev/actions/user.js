@@ -36,7 +36,7 @@ export function fetchUsersSpecialCourseBookings(uid){
       if(scBookings){
         for(one in scBookings){
           if(scBookings[one].shopItem.date > Date.now()){
-            returnList.push(scBookings[one])            
+            returnList.push(scBookings[one])
           }
         }
       }
@@ -182,7 +182,7 @@ export function fetchUsersTransactions(uid) {
                         }
                         break;
                     case "special":
-                      console.log("TODO: handle special transactions");
+                    //Placeholder for any special handling of specials
                       break;
                     default:
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);

@@ -42,7 +42,6 @@ class SpecialCourseInfo extends React.Component {
     var returnValue = false;
     this.props.currentUser.transactions.details.special.forEach((item, index) => {
       if(item.shopItemKey === this.props.specialCourseInfo.info.key){
-        console.log("Found match:", item, this.props.specialCourseInfo.info);
         returnValue = true;
       }
     })
@@ -73,8 +72,6 @@ class SpecialCourseInfo extends React.Component {
   }
 
   render() {
-
-    console.log("PROPS ARE", this.props.specialCourseInfo.info)
     if(this.props.specialCourseInfo.info) {
       return (
         <div className="course-info-container">
