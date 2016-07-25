@@ -58,7 +58,7 @@ class SpecialCourseForm extends React.Component {
           <input type="text" name="SpecialTitle" {...title} placeholder="esim: Keskiyön jooga" />
 
           <label htmlFor="SpecialDate">Erikoiskurssin päivämäärä</label>
-          <DatePicker selected={this.startDate} onChange={this.onDateChange.bind(this)} />
+          <DatePicker className="date-input" selected={this.startDate} onChange={this.onDateChange.bind(this)} />
 
           <label htmlFor="SpecialStart">Alkaa klo.</label>
           <input type="number" name="SpecialStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />

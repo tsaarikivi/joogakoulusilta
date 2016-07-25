@@ -46,7 +46,7 @@ class User extends React.Component {
     var emailVerification = null
     if(this.props.auth.uid){
       if(!this.props.auth.userdata.emailVerified){
-        emailVerification =  <button className="btn-small btn-red float-left" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button>
+        emailVerification = <div className="container bordered-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
       }
     }
     if( this.props.auth.uid &&
@@ -54,8 +54,8 @@ class User extends React.Component {
         typeof(this.props.currentUser.transactions) != "undefined" &&
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
-            <div>
-            {emailVerification}
+            <div>              
+              {emailVerification}
               <UserHeader curUsr={this.props.currentUser}/>
               <UserBookings/>
               <Timetable/>
