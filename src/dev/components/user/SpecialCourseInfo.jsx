@@ -53,7 +53,7 @@ class SpecialCourseInfo extends React.Component {
 
     let admin = null;
     if( this.userHasPurchasedThisAlready() === true ){
-      return( <h2>Olet jo ostanut tämän kurssin.</h2> );
+      return( <h4>Olet jo ostanut tämän kurssin.</h4> );
     }
 
 
@@ -87,23 +87,19 @@ class SpecialCourseInfo extends React.Component {
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
-            <div className="info-info-container">
-
               <div className="info-info-container">
-                <h3>{info.title}</h3>
+                <h3>{info.title}</h3>                
+                <h3 className="info-time text-bold">{info.price}&euro;</h3>
                 <p className="info-time">{getDayStrMs(info.date)}</p>
-                <p className="info-place text-blue">klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                <p className="info-place text-blue">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
                 <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
                 <p className="info-instructor">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
                 <p className="info-desc">{info.courseType.desc}</p>
               </div>
-              
-              <span className="week-info-container">
+              <span className="week-info-container">                
                 {this.renderPurchaseButtons()}
-                <p className="info-reserved">participants here</p>
+                <p className="info-reserved">Ilmoittautuneita {info.bookings}/{info.maxCapacity}</p>
               </span>              
-
-            </div>
           </div>
         </div>
       )
