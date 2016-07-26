@@ -58,7 +58,7 @@ class SpecialCourseInfo extends React.Component {
 
 
     if(this.props.currentUser.roles.admin){
-      admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      admin = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
     if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
