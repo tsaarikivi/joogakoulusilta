@@ -1,35 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {getTimeStrMs} from '../../helpers/timeHelper.js'
+import {getTimeStrMsBeginnignOfDay} from '../../helpers/timeHelper.js'
 import { putCourseInfo } from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
 class TimeTableItem extends React.Component {
 
-  constructor(){
-    super();
-    this.startDate = new Date();
-    this.endDate = new Date();
-  }
-
-  getDisplayTime(date,time){
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    date.setTime(date.getTime()+time)
-  }
-
-  componentWillReceiveProps(nextProps){
-    //console.log("T-ITEM:", nextProps);
-    this.getDisplayTime(this.startDate, nextProps.item.start);
-    this.getDisplayTime(this.endDate, nextProps.item.end);
-  }
 
   componentWillMount(){
-    this.getDisplayTime(this.startDate, this.props.item.start);
-    this.getDisplayTime(this.endDate, this.props.item.end);
     this.props.bookingsActions.fetchCourseBookings(this.props.item.key, this.props.currentUser.uid)
   }
 
@@ -65,7 +44,7 @@ class TimeTableItem extends React.Component {
     return (
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{this.props.item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMs(this.startDate)} - {getTimeStrMs(this.endDate)}</p>
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(this.props.item.start)} - {getTimeStrMsBeginnignOfDay(this.props.item.end)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
         {userBooked}

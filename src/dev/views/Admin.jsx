@@ -3,16 +3,19 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AdminHeader from '../components/admin/AdminHeader.jsx'
+<<<<<<< HEAD
 import CourseForm from '../components/admin/CourseForm.jsx'
+=======
+import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
+import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
+>>>>>>> origin/tuomo_dev
 import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
 import CourseTypeList from '../components/admin/CourseTypeList.jsx'
 import CourseList from '../components/admin/CourseList.jsx'
-import CourseTypeForm from '../components/admin/CourseTypeForm.jsx'
 import InstructorList from '../components/admin/InstructorList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
-import PlaceForm from '../components/admin/PlaceForm.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
 
@@ -56,9 +59,6 @@ componentWillReceiveProps(nextProps){
           <CourseTypeList />
           <CourseList />
           <ShopList />
-          <PlaceForm />
-          <CourseTypeForm />
-          <CourseForm />
           <SpecialCourseForm />
         </div>
       )

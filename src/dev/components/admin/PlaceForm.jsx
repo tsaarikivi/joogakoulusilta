@@ -7,14 +7,20 @@ import * as actionCreators from '../../actions/admin.js'
 class PlaceForm extends React.Component {
 
   onSubmit(props) {
-    this.props.actions.addPlace(props)
-    location.reload()
+    if(this.props.mode === "addNew"){
+      this.props.actions.addPlace(props);
+    } else {
+      this.props.actions.modifyPlace(props);
+    }
+    this.props.actions.minimizePlaceForm();
   }
 
   renderContent() {
+  
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+
     const { fields: { name, desc, address }, handleSubmit } = this.props
 
-    if (this.props.cmp.expanded) {
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="placeName">Paikan nimi</label>
@@ -26,22 +32,9 @@ class PlaceForm extends React.Component {
           <label htmlFor="placeDesc">Paikan kuvaus</label>
           <textarea type="text" name="placeDesc" placeholder="esim: Joogakoulu Lauttasaari on pieni ja rento joogastudio." {...desc}/>
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
-    }
-    else {
-      return <div></div>
-    }
-  }
-
-  renderExpandButton() {
-    if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizePlaceForm()}>Piilota</button>
-    }
-    else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandPlaceForm()}>Avaa</button>
-    }
   }
 
   render() {
@@ -49,7 +42,6 @@ class PlaceForm extends React.Component {
       <div className="container bordered-container">
        	<div className="content-container">
           <h2 className="header-collapse">Luo uusi joogapaikka</h2>
-          {this.renderExpandButton()}
           {this.renderContent()}       
         </div> 
       </div>
@@ -63,9 +55,7 @@ function validate(values) {
   // TODO: form validation
 }
 
-function mapStateToProps(state) {
-  return { cmp: state.placeForm }
-}
+
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
@@ -75,4 +65,4 @@ export default reduxForm({
   form: 'PlaceForm',
   fields: ['name', 'desc', 'address'],
   validate
-}, mapStateToProps, mapDispatchToProps)(PlaceForm)
+}, null, mapDispatchToProps)(PlaceForm)

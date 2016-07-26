@@ -6,8 +6,24 @@ import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
   onSubmit(props) {
-    this.props.actions.addCourse(props)
+
+    if(this.props.mode === "addNew"){
+      this.props.actions.addCourse(props, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
+      )
+    } else {
+      this.props.actions.modifyCourse(props, 
+      this.props.itemkey, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
+      )
+    }
+    this.props.actions.minimizeCourseForm()
   }
+
 
   renderCourseTypeOptions(item) {
     return (
@@ -28,9 +44,9 @@ class CourseForm extends React.Component {
   }
 
   renderContent() {
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
     const { fields: { day, start, end, maxCapacity, courseType, instructor, place }, handleSubmit } = this.props
 
-    if (this.props.cmp.expanded) {
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="courseDay">Viikonpäivä</label>
@@ -72,22 +88,9 @@ class CourseForm extends React.Component {
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
-    }
-    else {
-      return <div></div>
-    }
-  }
-
-  renderExpandButton() {
-    if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseForm()}>Piilota</button>
-    }
-    else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandCourseForm()}>Avaa</button>
-    }
   }
 
   render() {
@@ -95,7 +98,6 @@ class CourseForm extends React.Component {
       <div className="container bordered-container">
         <div className="content-container">
           <h2 className="header-collapse">Luo uusi vakiokurssi</h2>
-          {this.renderExpandButton()}
           {this.renderContent()}
         </div>
       </div>
@@ -110,7 +112,7 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.courseForm, courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
+  return { courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
 }
 
 function mapDispatchToProps(dispatch) {

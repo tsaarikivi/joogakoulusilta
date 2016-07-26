@@ -42,6 +42,9 @@ import {
     EXPAND_INFO_FORM,
     MINIMIZE_INFO_FORM
 } from './actionTypes.js'
+import {
+    toMilliseconds
+} from '../helpers/timeHelper.js'
 
 
 export function fetchUserList() {
@@ -164,66 +167,97 @@ export function fetchInstructorList() {
     }
 }
 
-export function fetchCourseTypeList() {
-    var list = Object.assign([])
+export function stopFetchCourseTypeList() {
     return dispatch => {
-        firebase.database().ref('/courseTypes/').once('value', snapshot => {
-                var courseTypes = snapshot.val()
-                for (var key in courseTypes) {
-                    if (courseTypes.hasOwnProperty(key)) {
-                        let ItemWithKey = courseTypes[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+        firebase.database().ref('/courseTypes/').off('value');
+        dispatch({
+            type: FETCH_COURSE_TYPE_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        });
+    }
+}
+export function fetchCourseTypeList() {
+    var list = []
+    var returnObject = {}
+    return dispatch => {
+        firebase.database().ref('/courseTypes/').on('value', snapshot => {
+            var courseTypes = snapshot.val()
+            list = Object.assign([])
+            for (var key in courseTypes) {
+                if (courseTypes.hasOwnProperty(key)) {
+                    let ItemWithKey = courseTypes[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    let nma = a.name.toUpperCase()
-                    let nmb = b.name.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_COURSE_TYPE_LIST,
-                    payload: list
-                })
+            }
+            list.sort(function(a, b) {
+                let nma = a.name.toUpperCase()
+                let nmb = b.name.toUpperCase()
+                if (nma < nmb) {
+                    return -1
+                }
+                if (nma > nmb) {
+                    return 1
+                }
+                return 0
             })
-            .catch(err => {
-                console.error("ERR: fetch courseTypes: ", err);
+            returnObject = Object.assign({}, {
+                list: list
             })
+            dispatch({
+                type: FETCH_COURSE_TYPE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch courseTypes: ", err);
+        })
+    }
+}
+
+export function stopFetchCourseList() {
+    return dispatch => {
+        firebase.database().ref('/courses/').off('value');
+        dispatch({
+            type: FETCH_COURSE_LIST,
+            payload: {
+                list: []
+            }
+        });
     }
 }
 
 export function fetchCourseList() {
-    var list = Object.assign([])
+    var list = []
+    var returnObject = {}
     return dispatch => {
-        firebase.database().ref('/courses/').once('value', snapshot => {
-                var courses = snapshot.val()
-                for (var key in courses) {
-                    if (courses.hasOwnProperty(key)) {
-                        let ItemWithKey = courses[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+        firebase.database().ref('/courses/').on('value', snapshot => {
+            var courses = snapshot.val()
+            list = Object.assign([])
+            for (var key in courses) {
+                if (courses.hasOwnProperty(key)) {
+                    let ItemWithKey = courses[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    if (a.day && b.day) {
-                        return a.day - b.day
-                    }
-                    return 1
-                })
-                dispatch({
-                    type: FETCH_COURSE_LIST,
-                    payload: list
-                })
+            }
+            list.sort(function(a, b) {
+                if (a.day && b.day) {
+                    return a.day - b.day
+                }
+                return 1
             })
-            .catch(err => {
-                console.error("ERR: fetch courses: ", err);
+            returnObject = Object.assign({}, {
+                list: list
             })
+            dispatch({
+                type: FETCH_COURSE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch courses: ", err);
+        })
     }
 }
 
@@ -271,37 +305,53 @@ export function stopFetchShopList() {
     }
 }
 
-export function fetchPlaceList() {
-    var list = Object.assign([])
+export function stopFetchPlaceList() {
     return dispatch => {
-        firebase.database().ref('/places/').once('value', snapshot => {
-                var places = snapshot.val()
-                for (var key in places) {
-                    if (places.hasOwnProperty(key)) {
-                        let ItemWithKey = places[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+        firebase.database().ref('/places').off('value');
+        dispatch({
+            type: FETCH_PLACE_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        });
+    }
+}
+
+export function fetchPlaceList() {
+    var list = []
+    var returnObject = {}
+    return dispatch => {
+        firebase.database().ref('/places/').on('value', snapshot => {
+            var places = snapshot.val()
+            list = Object.assign([])
+            for (var key in places) {
+                if (places.hasOwnProperty(key)) {
+                    let ItemWithKey = places[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    let nma = a.name.toUpperCase()
-                    let nmb = b.name.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_PLACE_LIST,
-                    payload: list
-                })
+            }
+            list.sort(function(a, b) {
+                let nma = a.name.toUpperCase()
+                let nmb = b.name.toUpperCase()
+                if (nma < nmb) {
+                    return -1
+                }
+                if (nma > nmb) {
+                    return 1
+                }
+                return 0
             })
-            .catch(err => {
-                console.error("ERR: fetch places: ", err);
+            returnObject = Object.assign({}, {
+                list: list
             })
+            dispatch({
+                type: FETCH_PLACE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch places: ", err);
+        })
     }
 }
 
@@ -338,7 +388,7 @@ export function stopFetchInfoList() {
     return dispatch => {
         firebase.database().ref('/infoItems/').off('value');
         dispatch({
-            type: STOP_FETCH_INFO_LIST,
+            type: FETCH_INFO_LIST,
             payload: {
                 list: Object.assign([])
             }
@@ -356,6 +406,15 @@ export function removeInfoItem(item) {
     }
 }
 
+export function removePlaceItem(item) {
+    return dispatch => {
+        firebase.database().ref('/places/' + item.key).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing place item falied: ", err)
+        })
+    }
+}
 
 export function addPlace(data) {
     return dispatch => firebase.database().ref('/places/' + data.name).update({
@@ -368,46 +427,55 @@ export function addPlace(data) {
         })
 }
 
-function toMilliseconds(time) {
-    let hours = 0;
-    let minutes = 0;
-
-    minutes = time % 100
-    hours = (time - minutes) / 100
-
-    return (hours * 3600000) + (minutes * 60000)
+export function modifyPlace(data) {
+    return dispatch => firebase.database().ref('/places/' + data.name).update({
+            name: data.name,
+            desc: data.desc,
+            address: data.address
+        })
+        .catch(err => {
+            console.error("ERR: update; UpdatePlace: ", err);
+        })
 }
 
-export function addCourse(data) {
-    var courseType = Object.assign({})
-    var instructor = Object.assign({})
-    var place = Object.assign({})
-        //TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
+
+
+export function removeCourse(key) {
+    return dispatch => {
+        firebase.database().ref('/courses/' + key).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing course failed: ", err)
+        })
+    }
+}
+
+export function addCourse(data, courseType, place, instructor) {
 
     return dispatch => {
-        firebase.database().ref('/places/' + data.place).once("value")
-            .then(snapshot => {
-                place = snapshot.val()
-                return firebase.database().ref('/users/' + data.instructor).once("value")
-            })
-            .then(snapshot => {
-                instructor = snapshot.val()
-                return firebase.database().ref('/courseTypes/' + data.courseType).once("value")
-            })
-            .then(snapshot => {
-                courseType = snapshot.val()
-                instructor.uid = null
+        firebase.database().ref('/courses/').push({
+            start: toMilliseconds(parseInt(data.start)),
+            end: toMilliseconds(parseInt(data.end)),
+            maxCapacity: parseInt(data.maxCapacity),
+            day: parseInt(data.day),
+            place: place,
+            instructor: instructor,
+            courseType: courseType
+        })
+    }
+}
 
-                firebase.database().ref('/courses/').push({
-                    start: toMilliseconds(parseInt(data.start)),
-                    end: toMilliseconds(parseInt(data.end)),
-                    maxCapacity: parseInt(data.maxCapacity),
-                    day: parseInt(data.day),
-                    place: place,
-                    instructor: instructor,
-                    courseType: courseType
-                })
-            })
+export function modifyCourse(data, key, courseType, place, instructor) {
+    return dispatch => {
+        firebase.database().ref('/courses/' + key).update({
+            start: toMilliseconds(parseInt(data.start)),
+            end: toMilliseconds(parseInt(data.end)),
+            maxCapacity: parseInt(data.maxCapacity),
+            day: parseInt(data.day),
+            place: place,
+            instructor: instructor,
+            courseType: courseType
+        })
     }
 }
 
@@ -462,6 +530,28 @@ export function addCourseType(data) {
             console.error("ERR: update; addCourseType: ", err);
         })
 }
+
+export function removeCourseType(item) {
+    return dispatch => {
+        firebase.database().ref('/courseTypes/' + item.name).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing place item failed: ", err)
+        })
+    }
+}
+
+
+export function modifyCourseType(data) {
+    return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
+            name: data.name,
+            desc: data.desc
+        })
+        .catch(err => {
+            console.error("ERR: update; modifyCourseType: ", err);
+        })
+}
+
 
 export function addShopItem(data, type) {
     const beforetax = data.price / (1 + (data.taxpercent / 100))
@@ -672,10 +762,14 @@ export function minimizePlaceList() {
     }
 }
 
-export function expandPlaceForm() {
+export function expandPlaceForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_PLACE_FORM
+            type: EXPAND_PLACE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -683,15 +777,23 @@ export function expandPlaceForm() {
 export function minimizePlaceForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_PLACE_FORM
+            type: MINIMIZE_PLACE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }
 
-export function expandCourseTypeForm() {
+export function expandCourseTypeForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_COURSE_TYPE_FORM
+            type: EXPAND_COURSE_TYPE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -699,15 +801,23 @@ export function expandCourseTypeForm() {
 export function minimizeCourseTypeForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_COURSE_TYPE_FORM
+            type: MINIMIZE_COURSE_TYPE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }
 
-export function expandCourseForm() {
+export function expandCourseForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_COURSE_FORM
+            type: EXPAND_COURSE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -715,7 +825,11 @@ export function expandCourseForm() {
 export function minimizeCourseForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_COURSE_FORM
+            type: MINIMIZE_COURSE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }

@@ -1,8 +1,55 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import CourseForm from '../../components/admin/CourseForm.jsx'
+import { getTimeStrMsBeginnignOfDay, toHplusMfromMs } from '../../helpers/timeHelper.js'
+import * as actionCreators from '../../actions/admin.js'
 
-import { getTimeStrMs } from '../../helpers/timeHelper.js'
 
-export default class CourseItem extends React.Component {
+class CourseItem extends React.Component {
+
+  constructor(){
+    super()
+    this.toggleForm = false
+    this.initialValues = {};
+  }
+
+ componentWillReceiveProps(nextProps){
+      if(nextProps.cmp.expanded && nextProps.cmp.expander === this.props.item.key){
+        this.toggleForm = true;
+      } else {
+        this.toggleForm = false;
+      }
+      this.initialValues = Object.assign({},nextProps.item) 
+      this.initialValues.start = toHplusMfromMs(nextProps.item.start)
+      this.initialValues.end = toHplusMfromMs(nextProps.item.end)
+      this.initialValues.courseType = nextProps.item.courseType.name
+      this.initialValues.place = nextProps.item.place.name
+      this.initialValues.instructor = nextProps.item.instructor.key
+  }
+  
+
+  remove(item){
+    this.props.actions.removeCourse(item.key);
+  }
+
+  toggleModify(item){
+    if(this.toggleForm){
+      this.props.actions.minimizeCourseForm()
+    } else {
+      this.props.actions.expandCourseForm(item.key)
+    }    
+  }
+
+  renderForm(item){
+    if(this.toggleForm){
+      return(<CourseForm mode="modify" itemkey={item.key} initialValues={this.initialValues}/>)
+    } else {
+      return(<div></div>)
+    }    
+  }
+
+
   renderContent() {
     const {item} = this.props
     var dayTxt = "";
@@ -28,57 +75,42 @@ export default class CourseItem extends React.Component {
       case 7:
         dayTxt = "Sunnuntai"
         break;
-    
       default:
         dayTxt = "EI PVM"
         if (item.date) {
           dayTxt = item.date
         }
         break;
-    }
-    
-
+    } 
     return (
       <div>
-        {this.renderSpecial()}
         <span className="item-row">{item.courseType.name}</span>
         <span className="item-row">{dayTxt}</span>
-        <span className="item-row">klo {getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</span>
+        <span className="item-row">klo {getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</span>
       </div>
     )
   }
-
-  renderSpecial() {
-    if (this.props.item.special) {
-      return <span className="item-row">Erikoiskurssi</span>
-    }
-    else {
-      return <span className="item-row">Vakiokurssi</span>
-    }
-  }
-
-  renderButtons() {
-
-    //TODO: Add proper buttons and functionality
-    return (
-      <div>
-        <span className="item-row">
-          <button className="btn-small btn-red">Poista</button>
-        </span> 
-      </div>      
-    )
-    
-  }
   
   render() {
-    
-
-    //TODO: Render functionality for admin
-
+    var buttonText = (this.toggleForm)? "Peru Muokkaus" : "Muokkaa"
+    const {item} = this.props;
     return (
       <li className="text-list-item">        
         {this.renderContent()}
+        <button className="expand-btn" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
+        <button className="expand-btn" onClick={() => {this.remove(item)}}>Poista</button>
+        {this.renderForm(item)}
       </li>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return { cmp: state.courseForm }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseItem)
