@@ -88,16 +88,16 @@ class SpecialCourseForm extends React.Component {
           </select>
 
           <label htmlFor="SCbeforetax">Hinta ennen veroja</label>
-          <input type="number" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="SCtaxa">Veron määrä</label>
-          <input type="number" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="SCtaxp">Veroprosentti</label>
-          <input type="number" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="SCprice">Verollinen hinta</label>
-          <input type="number" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>

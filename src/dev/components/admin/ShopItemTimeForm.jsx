@@ -26,16 +26,16 @@ class ShopItemTimeForm extends React.Component {
           <input type="number" name="timeUsedays" {...usedays} placeholder="esim: 7 tai 14" />
 
           <label htmlFor="countBeforetax">Hinta ennen veroja</label>
-          <input type="number" name="countBeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="countBeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="countTaxamount">Veron määrä</label>
-          <input type="number" name="countTaxamount" {...taxamount} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="countTaxamount" {...taxamount} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="countTaxpercent">Veroprosentti</label>
-          <input type="number" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="timePrice">Verollinen hinta</label>
-          <input type="number" name="timePrice" {...price} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="timePrice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>

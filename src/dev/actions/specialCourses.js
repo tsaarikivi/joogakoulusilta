@@ -70,6 +70,9 @@ export function fetchSpecialCoursesBanner() {
           courseItemWithKey.key = key
           list = list.concat(courseItemWithKey)
       }
+      list.sort(function(a, b) {
+        return a.date - b.date
+      })
       dispatch({
         type: FETCH_SPECIAL_COURSES_BANNER,
         payload: {banner: list}
