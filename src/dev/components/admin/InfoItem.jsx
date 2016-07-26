@@ -9,14 +9,14 @@ class InfoItem extends React.Component {
   
   constructor(){
     super();
-    this.modifying = false
+    this.toggleForm = false
   }
 
   componentWillReceiveProps(nextProps){
       if(nextProps.cmp.expanded && nextProps.cmp.expander === this.props.item.key){
-        this.modifying = true;
+        this.toggleForm = true;
       } else {
-        this.modifying = false;
+        this.toggleForm = false;
       }
   }
 
@@ -25,7 +25,7 @@ class InfoItem extends React.Component {
   }
 
   toggleModify(item){
-    if(this.modifying){
+    if(this.toggleForm){
       this.props.actions.minimizeInfoForm()
     } else {
       this.props.actions.expandInfoForm(item.key)
@@ -33,7 +33,7 @@ class InfoItem extends React.Component {
   }
 
   renderForm(item){
-    if(this.modifying){
+    if(this.toggleForm){
       return ( <InfoForm mode="modify" dbKey={item.key} initialValues={item}/>)
     } else {
       return(<div></div>)
@@ -41,7 +41,7 @@ class InfoItem extends React.Component {
   }
 
   render() {
-    var buttonText = (this.modifying)? "Peru Muokkaus" : "Muokkaa"
+    var buttonText = (this.toggleForm)? "Peru Muokkaus" : "Muokkaa"
 
     const {item} = this.props
 
