@@ -7,15 +7,23 @@ import * as actionCreators from '../../actions/admin.js'
 class PlaceForm extends React.Component {
 
   onSubmit(props) {
-    this.props.actions.addInfo(props)
-    location.reload()
+
+    console.log("submit props: ", props)
+    if(this.props.mode === "addNew"){
+      this.props.actions.addInfo(props)
+    } else {
+      this.props.actions.modifyInfo(this.props.dbKey, props)
+    }
+    this.props.actions.minimizeInfoForm();
   }
 
   renderContent() {
+
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+
     const { fields: { title, content }, handleSubmit } = this.props
 
-    if (this.props.cmp.expanded) {
-      return (
+    return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="infotitle">Infon otsikko</label>
           <input type="text" name="infotitle" placeholder="esim: Joogakoulusta" {...title} />
@@ -23,30 +31,18 @@ class PlaceForm extends React.Component {
           <label htmlFor="infocontent">Infon kuvaus</label>
           <textarea type="text" name="infocontent" placeholder="esim: Joogakoulu Lauttasaari on pieni ja rento joogastudio." {...content}/>
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
-    }
-    else {
-      return <div></div>
-    }
-  }
-
-  renderExpandButton() {
-    if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeInfoForm()}>Piilota</button>
-    }
-    else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandInfoForm()}>Avaa</button>
-    }
   }
 
   render() {
+
+
     return (
       <div className="container bordered-container">
        	<div className="content-container">
-          <h2 className="header-collapse">Luo uusi Info</h2>
-          {this.renderExpandButton()}
+          <h2 className="header-collapse">Infon tiedot</h2>
           {this.renderContent()}       
         </div> 
       </div>
@@ -60,9 +56,7 @@ function validate(values) {
   // TODO: form validation
 }
 
-function mapStateToProps(state) {
-  return { cmp: state.infoForm }
-}
+
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
@@ -72,4 +66,4 @@ export default reduxForm({
   form: 'PlaceForm',
   fields: ['title', 'content'],
   validate
-}, mapStateToProps, mapDispatchToProps)(PlaceForm)
+}, null, mapDispatchToProps)(PlaceForm)
