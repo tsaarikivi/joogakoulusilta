@@ -19,6 +19,7 @@ class InfoList extends React.Component {
   }
   
   render() {
+    console.log("thisis info list", this.props)
     return (
       <div class="container bordered-container">
         <Logo />

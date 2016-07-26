@@ -34,7 +34,7 @@ class ForgotPassword extends React.Component {
             <div class="container centered">
                 <Logo />
                 <h2 className="centered login-header">Unohditko salasanasi?</h2>
-                <small>Anna sähköpostiosoitteesi. Lähetämme sinulle salasanan vaihtolinkin.</small>
+                <small className="small-text">Anna sähköpostiosoitteesi. Lähetämme sinulle salasanan vaihtolinkin.</small>
                 <div className="content-container login-container">
                     {this.renderForm()}
                 </div>

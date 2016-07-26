@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case FETCH_INFO_LIST:
-            return Object.assign({}, state, action.payload)
+            return Object.assign({}, state, {list: action.payload})
         case EXPAND_INFO_LIST:
             return Object.assign({}, state, {
                 expanded: true
