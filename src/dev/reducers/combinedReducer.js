@@ -1,5 +1,9 @@
-import { combineReducers } from 'redux'
-import { reducer as FormReducer } from 'redux-form'
+import {
+    combineReducers
+} from 'redux'
+import {
+    reducer as FormReducer
+} from 'redux-form'
 
 import ShopReducer from './shopReducer.js'
 import SpecialCourseReducer from './specialCoursesReducer.js'
@@ -26,30 +30,30 @@ import PlaceListReducer from './admin/placeListReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
 
 const combinedReducer = combineReducers({
-  currentUser: UserReducer,
-  shopItems: ShopReducer,
-  specialCourses: SpecialCourseReducer,
-  specialCoursesBanner: SpecialCoursesBannerReducer,
-  timetable: TimetableReducer,
-  auth: AuthReducer,
-  form: FormReducer,
-  courseInfo: CourseInfoReducer,
-  specialCourseInfo: SpecialCourseInfoReducer,
-  userList: UserListReducer,
-  adminList: AdminListReducer,
-  courseList: CourseListReducer,
-  instructorList: InstructorListReducer,
-  shopList: ShopListReducer,
-  placeForm: PlaceFormReducer,
-  courseTypeFrom: CourseTypeFormReducer,
-  courseForm: CourseFormReducer,
-  specialCourseFrom: SpecialCourseFormReducer,
-  shopItemTimeForm: ShopItemTimeFormReducer,
-  shopItemCountForm: ShopItemCountFormReducer,
-  courseTypeList: CourseTypeListReducer,
-  placeList: PlaceListReducer,
-  infoList: InfoReducer,
-  infoForm: InfoFormReducer
+    currentUser: UserReducer,
+    shopItems: ShopReducer,
+    specialCourses: SpecialCourseReducer,
+    specialCoursesBanner: SpecialCoursesBannerReducer,
+    timetable: TimetableReducer,
+    auth: AuthReducer,
+    form: FormReducer,
+    courseInfo: CourseInfoReducer,
+    specialCourseInfo: SpecialCourseInfoReducer,
+    userList: UserListReducer,
+    adminList: AdminListReducer,
+    courseList: CourseListReducer,
+    instructorList: InstructorListReducer,
+    shopList: ShopListReducer,
+    placeForm: PlaceFormReducer,
+    courseTypeForm: CourseTypeFormReducer,
+    courseForm: CourseFormReducer,
+    specialCourseFrom: SpecialCourseFormReducer,
+    shopItemTimeForm: ShopItemTimeFormReducer,
+    shopItemCountForm: ShopItemCountFormReducer,
+    courseTypeList: CourseTypeListReducer,
+    placeList: PlaceListReducer,
+    infoList: InfoReducer,
+    infoForm: InfoFormReducer
 })
 
 export default combinedReducer;

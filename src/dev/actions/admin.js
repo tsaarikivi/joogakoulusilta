@@ -162,37 +162,52 @@ export function fetchInstructorList() {
     }
 }
 
-export function fetchCourseTypeList() {
-    var list = Object.assign([])
+export function stopFetchCourseTypeList() {
     return dispatch => {
-        firebase.database().ref('/courseTypes/').once('value', snapshot => {
-                var courseTypes = snapshot.val()
-                for (var key in courseTypes) {
-                    if (courseTypes.hasOwnProperty(key)) {
-                        let ItemWithKey = courseTypes[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+        firebase.database().ref('/courseTypes/').off('value');
+        dispatch({
+            type: FETCH_COURSE_TYPE_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        });
+    }
+}
+export function fetchCourseTypeList() {
+    var list = []
+    var returnObject = {}
+    return dispatch => {
+        firebase.database().ref('/courseTypes/').on('value', snapshot => {
+            var courseTypes = snapshot.val()
+            list = Object.assign([])
+            for (var key in courseTypes) {
+                if (courseTypes.hasOwnProperty(key)) {
+                    let ItemWithKey = courseTypes[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    let nma = a.name.toUpperCase()
-                    let nmb = b.name.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_COURSE_TYPE_LIST,
-                    payload: list
-                })
+            }
+            list.sort(function(a, b) {
+                let nma = a.name.toUpperCase()
+                let nmb = b.name.toUpperCase()
+                if (nma < nmb) {
+                    return -1
+                }
+                if (nma > nmb) {
+                    return 1
+                }
+                return 0
             })
-            .catch(err => {
-                console.error("ERR: fetch courseTypes: ", err);
+            returnObject = Object.assign({}, {
+                list: list
             })
+            dispatch({
+                type: FETCH_COURSE_TYPE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch courseTypes: ", err);
+        })
     }
 }
 
@@ -483,6 +498,28 @@ export function addCourseType(data) {
         })
 }
 
+export function removeCourseType(item) {
+    return dispatch => {
+        firebase.database().ref('/courseTypes/' + item.name).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing place item failed: ", err)
+        })
+    }
+}
+
+
+export function modifyCourseType(data) {
+    return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
+            name: data.name,
+            desc: data.desc
+        })
+        .catch(err => {
+            console.error("ERR: update; modifyCourseType: ", err);
+        })
+}
+
+
 export function addShopItem(data, type) {
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
@@ -716,10 +753,14 @@ export function minimizePlaceForm() {
     }
 }
 
-export function expandCourseTypeForm() {
+export function expandCourseTypeForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_COURSE_TYPE_FORM
+            type: EXPAND_COURSE_TYPE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -727,7 +768,11 @@ export function expandCourseTypeForm() {
 export function minimizeCourseTypeForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_COURSE_TYPE_FORM
+            type: MINIMIZE_COURSE_TYPE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }

@@ -10,7 +10,6 @@ import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
 import CourseTypeList from '../components/admin/CourseTypeList.jsx'
 import CourseList from '../components/admin/CourseList.jsx'
-import CourseTypeForm from '../components/admin/CourseTypeForm.jsx'
 import InstructorList from '../components/admin/InstructorList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
@@ -57,7 +56,6 @@ componentWillReceiveProps(nextProps){
           <CourseTypeList />
           <CourseList />
           <ShopList />
-          <CourseTypeForm />
           <CourseForm />
           <SpecialCourseForm />
           <ShopItemTimeForm />
