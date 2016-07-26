@@ -95,11 +95,12 @@ class SpecialCourseInfo extends React.Component {
                 <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
                 <p className="info-instructor">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
                 <p className="info-desc">{info.courseType.desc}</p>
+                <div>
+                  <img className="mini-icon" src="./assets/group.png" />
+                  <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>            
+                  {this.renderPurchaseButtons()}
+                </div>              
               </div>
-              <span className="week-info-container">                
-                {this.renderPurchaseButtons()}
-                <p className="info-reserved">Ilmoittautuneita {info.bookings}/{info.maxCapacity}</p>
-              </span>              
           </div>
         </div>
       )

@@ -73,16 +73,12 @@ class CourseInfo extends React.Component {
     //========================================
       if(this.props.courseInfo.bookings.all.length > adjustedIndex){
         return(
-          <div>
-            <p className="info-reserved">Ilmoittautuneita {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
-          </div>
+            <p className="table-participants margin-bottom"> {this.props.courseInfo.bookings.all[adjustedIndex].reservations}/{this.props.courseInfo.maxCapacity}</p>
         );
       }
       else {
         return(
-          <div>
-            <p className="info-reserved">Ilmoittautuneita 0/{this.props.courseInfo.maxCapacity}</p>
-          </div>
+            <p className="table-participants margin-bottom"> 0/{this.props.courseInfo.maxCapacity}</p>
         )
       }
   }
@@ -183,15 +179,17 @@ class CourseInfo extends React.Component {
               <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
               <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
               <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              <div>
+                <img className="mini-icon" src="./assets/group.png" />
+                {this.participants(0)}
+                {this.reservationButton(0)}
+              </div>
+              <div>
+                <img className="mini-icon" src="./assets/group.png" />
+                {this.participants(1)}
+                {this.reservationButton(1)}
+              </div>
             </div>
-            <span className="week-info-container">
-              {this.reservationButton(0)}
-              {this.participants(0)}
-            </span>
-            <span className="week-info-container">
-              {this.reservationButton(1)}
-              {this.participants(1)}
-            </span>
           </div>
         </div>
       )
