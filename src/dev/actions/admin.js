@@ -8,6 +8,7 @@ import {
     FETCH_PLACE_LIST,
     FETCH_INFO_LIST,
     STOP_FETCH_INFO_LIST,
+    STOP_FETCH_SHOP_LIST,
 
     EXPAND_ADMIN_LIST,
     MINIMIZE_ADMIN_LIST,
@@ -227,9 +228,10 @@ export function fetchCourseList() {
 }
 
 export function fetchShopList() {
-    var list = Object.assign([])
+    var list = []
     return dispatch => {
-        firebase.database().ref('/shopItems/').once('value', snapshot => {
+        var returnObject = {}
+        firebase.database().ref('/shopItems/').on('value', snapshot => {
                 var shopItems = snapshot.val()
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key)) {
@@ -244,14 +246,28 @@ export function fetchShopList() {
                     }
                     return 0
                 })
+                returnObject = Object.assign({}, {
+                    list: list
+                })
                 dispatch({
                     type: FETCH_SHOP_LIST,
-                    payload: list
+                    payload: returnObject
                 })
-            })
-            .catch(err => {
-                console.error("ERR: fetch shopItems: ", err);
-            })
+            }, err => {
+            console.error("ERR: fetch shopList: ", err);
+        })
+    }
+}
+
+export function stopFetchShopList() {
+    return dispatch => {
+        firebase.database().ref('/shopItems/').off('value');
+        dispatch({
+            type: STOP_FETCH_SHOP_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        })
     }
 }
 
@@ -720,10 +736,14 @@ export function minimizeSpecialCourseForm() {
     }
 }
 
-export function expandTimeShopForm() {
+export function expandTimeShopForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_TIME_SHOP_FORM
+            type: EXPAND_TIME_SHOP_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -731,15 +751,23 @@ export function expandTimeShopForm() {
 export function minimizeTimeShopForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_TIME_SHOP_FORM
+            type: MINIMIZE_TIME_SHOP_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }
 
-export function expandCountShopForm() {
+export function expandCountShopForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_COUNT_SHOP_FORM
+            type: EXPAND_COUNT_SHOP_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -747,7 +775,11 @@ export function expandCountShopForm() {
 export function minimizeCountShopForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_COUNT_SHOP_FORM
+            type: MINIMIZE_COUNT_SHOP_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }

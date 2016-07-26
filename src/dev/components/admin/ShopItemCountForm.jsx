@@ -6,11 +6,18 @@ import * as actionCreators from '../../actions/admin.js'
 
 class ShopItemCountForm extends React.Component {
   onSubmit(props) {
-    this.props.actions.addShopItem(props, "count")
-    location.reload()
+    if(this.props.mode === "addNew"){
+      this.props.actions.addShopItem(props, "time")
+    } else {
+      this.props.actions.modifyShopItem(this.props.dbKey, props)
+    }
+    this.props.actions.minimizeCountShopForm();
   }
 
   renderContent() {
+
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+
     const { fields: { desc, price, taxpercent, title, usetimes, expiresAfterDays }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
@@ -34,7 +41,7 @@ class ShopItemCountForm extends React.Component {
           <label htmlFor="countTaxpercent">Veroprosentti</label>
           <input type="number" step="0.01" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
     }
@@ -43,23 +50,11 @@ class ShopItemCountForm extends React.Component {
     }
   }
 
-  renderExpandButton() {
-    if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeCountShopForm()}>Piilota</button>
-    }
-    else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandCountShopForm()}>Avaa</button>
-    }
-  }
-
   render() {
-
-
     return (
       <div className="container bordered-container">
         <div className="content-container">
           <h2 className="header-collapse">Luo uusi kertakortti</h2>
-          {this.renderExpandButton()}
           {this.renderContent()}
         </div>
       </div>

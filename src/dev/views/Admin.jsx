@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AdminHeader from '../components/admin/AdminHeader.jsx'
-import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
-import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
 import CourseForm from '../components/admin/CourseForm.jsx'
 import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
@@ -62,8 +60,6 @@ componentWillReceiveProps(nextProps){
           <CourseTypeForm />
           <CourseForm />
           <SpecialCourseForm />
-          <ShopItemTimeForm />
-          <ShopItemCountForm />
         </div>
       )
     } else {
