@@ -38,10 +38,11 @@ class SpecialCoursesItem extends React.Component {
   render() {
     return (
       <li className="special-course-item" onClick={() => this.itemClicked()}>
-        <p>{this.props.item.title}</p>
+        <p className="table-nonmargin">{this.props.item.title}</p>
         <p className="table-time">{getDayStrMs(this.props.item.date)}</p>
-        <p className="table-time">klo {this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
-        <p className="centered">{this.props.item.bookings}/{this.props.item.maxCapacity}</p>
+        <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
+        <img className="mini-icon" src="./assets/group.png" />
+        <p className="centered table-participants">{this.props.item.bookings}/{this.props.item.maxCapacity}</p>
       </li>
     );
   }
