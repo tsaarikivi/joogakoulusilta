@@ -97,8 +97,12 @@ class CourseItem extends React.Component {
     return (
       <li className="text-list-item">        
         {this.renderContent()}
-        <button className="expand-btn" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
-        <button className="expand-btn" onClick={() => {this.remove(item)}}>Poista</button>
+        <span className="item-row">
+          <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
+        </span>
+        <span className="item-row">
+          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>Poista</button>
+        </span>
         {this.renderForm(item)}
       </li>
     )

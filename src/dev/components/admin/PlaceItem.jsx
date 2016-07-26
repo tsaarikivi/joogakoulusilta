@@ -51,8 +51,12 @@ class PlaceItem extends React.Component {
       <li className="text-list-item">
         <span className="item-row">{this.props.item.name}</span>
         <span className="item-row">{this.props.item.address}</span>
-        <button className="expand-btn" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
-        <button className="expand-btn" onClick={() => {this.remove(item)}}>Poista</button>
+        <span className="item-row">
+          <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
+        </span>
+        <span className="item-row">
+          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>Poista</button>
+        </span>
         {this.renderForm(item)}
       </li>
     )
