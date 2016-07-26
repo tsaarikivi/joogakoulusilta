@@ -10,24 +10,21 @@ class InfoList extends React.Component {
 
   constructor(){
     super();
-    this.addingNew = false
+    this.toggleForm = false
   }
 
   componentWillMount() {
-    console.log("InfoListComponentWill mount")
     this.props.actions.fetchInfoList()
   }
   componentWillUnmount() {
-    console.log("InfoListComponentWill mount")
     this.props.actions.stopFetchInfoList()
   }
 
   componentWillReceiveProps(nextProps){
-      console.log("list next props:", nextProps)
       if(nextProps.cmp.expanded && nextProps.cmp.expander === "addNew"){
-        this.addingNew = true;
+        this.toggleForm = true;
       } else {
-        this.addingNew = false;
+        this.toggleForm = false;
       }
   }
 
@@ -38,8 +35,7 @@ class InfoList extends React.Component {
   }
 
   renderForm(){
-    console.log("render form", this.addingNew)
-    if(this.addingNew){
+    if(this.toggleForm){
       return ( <InfoForm mode="addNew"/>)
     } else {
       return(<div></div>)
@@ -47,7 +43,7 @@ class InfoList extends React.Component {
   }
 
   toggleAdd(){
-  if(this.addingNew){
+  if(this.toggleForm){
       this.props.actions.minimizeInfoForm()
     } else {
       this.props.actions.expandInfoForm("addNew")
@@ -69,7 +65,7 @@ class InfoList extends React.Component {
 
   renderExpandButton() {
 
-    var buttonText = (this.addingNew)? "Peru lisäys" : "Lisää uusi"
+    var buttonText = (this.toggleForm)? "Peru lisäys" : "Lisää uusi"
     
     if(this.props.list.expanded) {
       return (

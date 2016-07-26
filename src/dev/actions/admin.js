@@ -296,29 +296,26 @@ export function fetchInfoList() {
     return dispatch => {
         var returnObject = {}
         firebase.database().ref('/infoItems/').on('value', snapshot => {
-                var infoItems = snapshot.val()
-                console.log("BEFORE FOR:", infoItems, list)
-                list = Object.assign([])
-                console.log("BEFORE FOR:", infoItems, list)
-                for (var key in infoItems) {
-                    if (infoItems.hasOwnProperty(key)) {
-                        let ItemWithKey = infoItems[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+            var infoItems = snapshot.val()
+            list = Object.assign([])
+            for (var key in infoItems) {
+                if (infoItems.hasOwnProperty(key)) {
+                    let ItemWithKey = infoItems[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                returnObject = Object.assign({}, {
-                    list: list
-                })
-                dispatch({
-                        type: FETCH_INFO_LIST,
-                        payload: returnObject
-                }) 
-                console.log("FETCH INFOLIST 2", list)
+            }
+            returnObject = Object.assign({}, {
+                list: list
+            })
+            dispatch({
+                type: FETCH_INFO_LIST,
+                payload: returnObject
+            })
         }, err => {
             console.error("ERR: fetch infoItems: ", err);
         })
-}
+    }
 }
 
 export function stopFetchInfoList() {
@@ -334,7 +331,6 @@ export function stopFetchInfoList() {
 }
 
 export function removeInfoItem(item) {
-    console.log("remove info item: ", item)
     return dispatch => {
         firebase.database().ref('/infoItems/' + item.key).remove().then(() => {
 
@@ -423,8 +419,8 @@ export function addSpecialCourse(data) {
                 const taxamount = data.price - beforetax
 
                 firebase.database().ref('/specialCourses/').push({
-                    start: toMilliseconds(parseInt(data.start)),
-                    end: toMilliseconds(parseInt(data.end)),
+                    start: data.date + toMilliseconds(parseInt(data.start)),
+                    end: data.date + toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
                     date: data.date + toMilliseconds(parseInt(data.start)),
                     price: Number(data.price.toFixed(2)),
@@ -773,7 +769,6 @@ export function minimizeInfoList() {
 }
 
 export function expandInfoForm(expander) {
-    console.log("expsnder: ", expander)
     return dispatch => {
         dispatch({
             type: EXPAND_INFO_FORM,

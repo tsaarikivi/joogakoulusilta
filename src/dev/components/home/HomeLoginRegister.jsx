@@ -17,7 +17,6 @@ class HomeLoginRegister extends React.Component {
   }
 
   onSubmit(props) {
-    console.log("LOGGING IN WITH EMAIL: ", props.email)
     this.props.actions.login(props.email, props.password)
   }
 

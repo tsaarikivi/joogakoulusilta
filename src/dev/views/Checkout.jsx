@@ -23,14 +23,10 @@ class Checkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("CO-props:", nextProps);
     if(nextProps.shopItems.cart.type){
-      console.log("SPECIAL");
       if(nextProps.shopItems.cart.type === "special"){
-        console.log("YES-SPECIAL");
         this.buyingSpecialCourse = true
       } else {
-        console.log("NOT-SPECIAL");
         this.buyingSpecialCourse = false
       }
     }
@@ -44,7 +40,6 @@ class Checkout extends React.Component {
   }
 
   onReady() {
-      console.log('Drop-In ready');
       document.getElementById("submitButton").disabled = false;
   }
 

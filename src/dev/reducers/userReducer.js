@@ -30,9 +30,10 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
+
     switch (action.type) {
         case UPDATE_USERS_SCBOOKINGS:
-          return Object.assign({}, state, action.payload);
+            return Object.assign({}, state, action.payload);
         case UPDATE_USERS_BOOKINGS:
             return Object.assign({}, state, action.payload);
         case UPDATE_USERS_TRANSACTIONS:

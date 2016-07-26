@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import {getTimeStrMs} from '../../helpers/timeHelper.js'
 import { putCourseInfo } from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
@@ -65,7 +65,7 @@ class TimeTableItem extends React.Component {
     return (
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{this.props.item.courseType.name}</p>
-        <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
+        <p className="table-time">{getTimeStrMs(this.startDate)} - {getTimeStrMs(this.endDate)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
         {userBooked}

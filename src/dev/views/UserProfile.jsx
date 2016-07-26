@@ -15,9 +15,6 @@ class UserProfile extends React.Component {
   }
 
   componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
-    }
   }
 
   componentWillUnmount(){
@@ -29,15 +26,19 @@ class UserProfile extends React.Component {
 
 
   render() {
-//        <UserAuth/>
-    return(
-      <div>
-        <ProfileHeader userError={this.props.currentUser.error}/>
-        <UserDataForm/>
-        <UserTransactions/>
-        <UserCourseHistory/>
-      </div>
-    );
+    if(this.props.currentUser.key !== "0")
+    {
+      return(
+        <div>
+          <ProfileHeader userError={this.props.currentUser.error}/>
+          <UserDataForm/>
+          <UserTransactions/>
+          <UserCourseHistory/>
+        </div>
+      );
+    } else {
+      return (<h2 className="centered">Ei käyttäjää</h2>)
+    }
   }
 }
 

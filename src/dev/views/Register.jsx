@@ -40,8 +40,6 @@ class Register extends React.Component {
 
     return (
       <form onSubmit={handleSubmit(data => {
-        console.log("TIEDOT:")
-        console.log(data.email, data.password, data.firstName, data.lastName, data.alias)
         this.props.actions.register(data.email, data.password, data.firstName, data.lastName, data.alias)
         this.registerStarted = true
         this.forceUpdate()
