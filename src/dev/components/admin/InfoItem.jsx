@@ -13,7 +13,6 @@ class InfoItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-      console.log("item next props:", nextProps)
       if(nextProps.cmp.expanded && nextProps.cmp.expander === this.props.item.key){
         this.modifying = true;
       } else {
@@ -22,7 +21,6 @@ class InfoItem extends React.Component {
   }
 
   remove(item){
-    console.log("remove", item)
     this.props.actions.removeInfoItem(item);
   }
 
@@ -35,7 +33,6 @@ class InfoItem extends React.Component {
   }
 
   renderForm(item){
-    console.log("render form", this.modifying)
     if(this.modifying){
       return ( <InfoForm mode="modify" dbKey={item.key} initialValues={item}/>)
     } else {
@@ -46,7 +43,6 @@ class InfoItem extends React.Component {
   render() {
     var buttonText = (this.modifying)? "Peru Muokkaus" : "Muokkaa"
 
-    console.log("INFO_ITEM_RENDER: ", this.props)
     const {item} = this.props
 
     return (

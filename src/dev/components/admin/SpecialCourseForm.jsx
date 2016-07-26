@@ -11,11 +11,9 @@ class SpecialCourseForm extends React.Component {
   constructor(){
     super();
     this.startDate = moment();
-    console.log("MOMENT: ", this.startDate);
   }
 
   onDateChange(date){
-    console.log("DATE: ", date);
     this.startDate = date;
     this.forceUpdate()
   }

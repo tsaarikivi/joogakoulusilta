@@ -80,7 +80,6 @@ class SpecialCourseInfo extends React.Component {
   render() {
     const { info } = this.props.specialCourseInfo
 
-    console.log("INFO", info)
 
     if(info) {
       return (

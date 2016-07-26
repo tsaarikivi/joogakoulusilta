@@ -297,9 +297,7 @@ export function fetchInfoList() {
         var returnObject = {}
         firebase.database().ref('/infoItems/').on('value', snapshot => {
             var infoItems = snapshot.val()
-            console.log("BEFORE FOR:", infoItems, list)
             list = Object.assign([])
-            console.log("BEFORE FOR:", infoItems, list)
             for (var key in infoItems) {
                 if (infoItems.hasOwnProperty(key)) {
                     let ItemWithKey = infoItems[key]
@@ -314,7 +312,6 @@ export function fetchInfoList() {
                 type: FETCH_INFO_LIST,
                 payload: returnObject
             })
-            console.log("FETCH INFOLIST 2", list)
         }, err => {
             console.error("ERR: fetch infoItems: ", err);
         })
@@ -334,7 +331,6 @@ export function stopFetchInfoList() {
 }
 
 export function removeInfoItem(item) {
-    console.log("remove info item: ", item)
     return dispatch => {
         firebase.database().ref('/infoItems/' + item.key).remove().then(() => {
 
@@ -773,7 +769,6 @@ export function minimizeInfoList() {
 }
 
 export function expandInfoForm(expander) {
-    console.log("expsnder: ", expander)
     return dispatch => {
         dispatch({
             type: EXPAND_INFO_FORM,

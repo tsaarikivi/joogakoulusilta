@@ -14,16 +14,13 @@ class InfoList extends React.Component {
   }
 
   componentWillMount() {
-    console.log("InfoListComponentWill mount")
     this.props.actions.fetchInfoList()
   }
   componentWillUnmount() {
-    console.log("InfoListComponentWill mount")
     this.props.actions.stopFetchInfoList()
   }
 
   componentWillReceiveProps(nextProps){
-      console.log("list next props:", nextProps)
       if(nextProps.cmp.expanded && nextProps.cmp.expander === "addNew"){
         this.addingNew = true;
       } else {
@@ -38,7 +35,6 @@ class InfoList extends React.Component {
   }
 
   renderForm(){
-    console.log("render form", this.addingNew)
     if(this.addingNew){
       return ( <InfoForm mode="addNew"/>)
     } else {

@@ -8,7 +8,6 @@ class PlaceForm extends React.Component {
 
   onSubmit(props) {
 
-    console.log("submit props: ", props)
     if(this.props.mode === "addNew"){
       this.props.actions.addInfo(props)
     } else {
