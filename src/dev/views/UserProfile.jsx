@@ -15,9 +15,6 @@ class UserProfile extends React.Component {
   }
 
   componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
-    }
   }
 
   componentWillUnmount(){

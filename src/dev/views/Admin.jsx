@@ -30,11 +30,8 @@ class Admin extends React.Component {
     router: React.PropTypes.object
   }
 
- componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
-    }
-  }
+componentWillMount(){
+}
 
 componentWillUnmount(){
 }

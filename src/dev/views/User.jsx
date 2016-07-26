@@ -25,12 +25,6 @@ class User extends React.Component {
     this.countMount = 0;
   }
 
-  componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
-    }
-  }
-
   componentWillUnmount(){
   }
 
@@ -49,8 +43,7 @@ class User extends React.Component {
         emailVerification = <div className="container bordered-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
       }
     }
-    if( this.props.auth.uid &&
-        this.props.currentUser.key != "0" &&
+    if( this.props.currentUser.key != "0" &&
         typeof(this.props.currentUser.transactions) != "undefined" &&
         typeof(this.props.currentUser.bookings) != "undefined") {
         return (
@@ -66,13 +59,9 @@ class User extends React.Component {
             </div>
           );
       } else {
-          if (this.props.auth.uid){
             return (
               <p className="centered"> Ladataan käyttäjätietoja.</p>
             );
-          } else {
-            return(<p> Ei käyttäjää</p>);
-          }
       }
   }
 }
