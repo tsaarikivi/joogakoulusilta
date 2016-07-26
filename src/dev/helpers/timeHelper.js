@@ -44,6 +44,38 @@ export function getDayStrMs(ms) {
     return getDayStr(day)
 }
 
+export function toMilliseconds(time) {
+    let hours = 0;
+    let minutes = 0;
+
+    minutes = time % 100
+    hours = (time - minutes) / 100
+
+    return (hours * 3600000) + (minutes * 60000)
+}
+
+export function toHplusMfromMs(ms) {
+    let hours = 0;
+    let hoursMs = 0;
+    let minutes = 0;
+    let minutesMs = 0;
+    minutesMs = ms % 3600000
+    hoursMs = ms - minutesMs
+    minutes = minutesMs / 60000
+    hours = hoursMs / 3600000
+    return hours * 100 + minutes
+}
+
+export function getTimeStrMsBeginnignOfDay(ms) {
+    let day = new Date();
+    day.setHours(0);
+    day.setMinutes(0);
+    day.setSeconds(0);
+    day.setMilliseconds(0);
+    day.setTime(day.getTime() + ms);
+    return getTimeStr(day);
+}
+
 export function getTimeStrMs(ms) {
     let day = new Date();
     day.setTime(ms)

@@ -70,7 +70,6 @@ class CourseTypeList extends React.Component {
   renderExpandButton() {
 
     var buttonText = (this.toggleForm)? "Peru lisäys" : "Lisää uusi"
-console.log("CT-PROPS:", this.props)
     if(this.props.list.expanded) {
       return (<div>
       <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseTypeList()}>Piilota</button>
