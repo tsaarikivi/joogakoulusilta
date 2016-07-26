@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { removeSpecialCourseInfo } from '../../actions/specialCourses.js'
 import * as shopActionCreators from '../../actions/shop.js'
+import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
 class SpecialCourseInfo extends React.Component {
 
@@ -77,15 +78,30 @@ class SpecialCourseInfo extends React.Component {
   }
 
   render() {
-    if(this.props.specialCourseInfo.info) {
+    const { info } = this.props.specialCourseInfo
+
+    console.log("INFO", info)
+
+    if(info) {
       return (
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
 
-              <h1>{this.props.specialCourseInfo.info.title}</h1>
-              {this.renderPurchaseButtons()}
+              <div className="info-info-container">
+                <h3>{info.title}</h3>
+                <p className="info-time">{getDayStrMs(info.date)}</p>
+                <p className="info-place text-blue">klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
+                <p className="info-instructor">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                <p className="info-desc">{info.courseType.desc}</p>
+              </div>
+              
+              <span className="week-info-container">
+                {this.renderPurchaseButtons()}
+                <p className="info-reserved">participants here</p>
+              </span>              
 
             </div>
           </div>

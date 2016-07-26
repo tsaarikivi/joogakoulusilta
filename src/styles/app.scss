@@ -207,3 +207,13 @@ input, textarea, select {
 .item-price {
   color: $text-dark;
 }
+
+.text-blue {
+  color: $blue;
+  div {
+    color: $blue;
+  }
+  span {
+    color: $blue;
+  }  
+}
