@@ -17,6 +17,10 @@ class InfoList extends React.Component {
     console.log("InfoListComponentWill mount")
     this.props.actions.fetchInfoList()
   }
+  componentWillUnmount() {
+    console.log("InfoListComponentWill mount")
+    this.props.actions.stopFetchInfoList()
+  }
 
   componentWillReceiveProps(nextProps){
       console.log("list next props:", nextProps)
