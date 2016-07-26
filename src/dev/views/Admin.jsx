@@ -14,7 +14,6 @@ import CourseTypeForm from '../components/admin/CourseTypeForm.jsx'
 import InstructorList from '../components/admin/InstructorList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
-import PlaceForm from '../components/admin/PlaceForm.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
 
@@ -58,7 +57,6 @@ componentWillReceiveProps(nextProps){
           <CourseTypeList />
           <CourseList />
           <ShopList />
-          <PlaceForm />
           <CourseTypeForm />
           <CourseForm />
           <SpecialCourseForm />

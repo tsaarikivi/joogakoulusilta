@@ -7,7 +7,6 @@ import {
     FETCH_SHOP_LIST,
     FETCH_PLACE_LIST,
     FETCH_INFO_LIST,
-    STOP_FETCH_INFO_LIST,
 
     EXPAND_ADMIN_LIST,
     MINIMIZE_ADMIN_LIST,
@@ -255,37 +254,53 @@ export function fetchShopList() {
     }
 }
 
-export function fetchPlaceList() {
-    var list = Object.assign([])
+export function stopFetchPlaceList() {
     return dispatch => {
-        firebase.database().ref('/places/').once('value', snapshot => {
-                var places = snapshot.val()
-                for (var key in places) {
-                    if (places.hasOwnProperty(key)) {
-                        let ItemWithKey = places[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+        firebase.database().ref('/places').off('value');
+        dispatch({
+            type: FETCH_PLACE_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        });
+    }
+}
+
+export function fetchPlaceList() {
+    var list = []
+    var returnObject = {}
+    return dispatch => {
+        firebase.database().ref('/places/').on('value', snapshot => {
+            var places = snapshot.val()
+            list = Object.assign([])
+            for (var key in places) {
+                if (places.hasOwnProperty(key)) {
+                    let ItemWithKey = places[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    let nma = a.name.toUpperCase()
-                    let nmb = b.name.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_PLACE_LIST,
-                    payload: list
-                })
+            }
+            list.sort(function(a, b) {
+                let nma = a.name.toUpperCase()
+                let nmb = b.name.toUpperCase()
+                if (nma < nmb) {
+                    return -1
+                }
+                if (nma > nmb) {
+                    return 1
+                }
+                return 0
             })
-            .catch(err => {
-                console.error("ERR: fetch places: ", err);
+            returnObject = Object.assign({}, {
+                list: list
             })
+            dispatch({
+                type: FETCH_PLACE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch places: ", err);
+        })
     }
 }
 
@@ -322,7 +337,7 @@ export function stopFetchInfoList() {
     return dispatch => {
         firebase.database().ref('/infoItems/').off('value');
         dispatch({
-            type: STOP_FETCH_INFO_LIST,
+            type: FETCH_INFO_LIST,
             payload: {
                 list: Object.assign([])
             }
@@ -340,6 +355,15 @@ export function removeInfoItem(item) {
     }
 }
 
+export function removePlaceItem(item) {
+    return dispatch => {
+        firebase.database().ref('/places/' + item.key).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing place item falied: ", err)
+        })
+    }
+}
 
 export function addPlace(data) {
     return dispatch => firebase.database().ref('/places/' + data.name).update({
@@ -351,6 +375,18 @@ export function addPlace(data) {
             console.error("ERR: update; addPlace: ", err);
         })
 }
+
+export function modifyPlace(data) {
+    return dispatch => firebase.database().ref('/places/' + data.name).update({
+            name: data.name,
+            desc: data.desc,
+            address: data.address
+        })
+        .catch(err => {
+            console.error("ERR: update; UpdatePlace: ", err);
+        })
+}
+
 
 function toMilliseconds(time) {
     let hours = 0;
@@ -656,10 +692,14 @@ export function minimizePlaceList() {
     }
 }
 
-export function expandPlaceForm() {
+export function expandPlaceForm(expander) {
     return dispatch => {
         dispatch({
-            type: EXPAND_PLACE_FORM
+            type: EXPAND_PLACE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -667,7 +707,11 @@ export function expandPlaceForm() {
 export function minimizePlaceForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_PLACE_FORM
+            type: MINIMIZE_PLACE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }
