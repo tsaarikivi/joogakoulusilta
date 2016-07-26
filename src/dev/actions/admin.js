@@ -7,6 +7,7 @@ import {
     FETCH_SHOP_LIST,
     FETCH_PLACE_LIST,
     FETCH_INFO_LIST,
+    STOP_FETCH_INFO_LIST,
 
     EXPAND_ADMIN_LIST,
     MINIMIZE_ADMIN_LIST,
@@ -289,34 +290,46 @@ export function fetchPlaceList() {
 }
 
 
-function _fetchInfoList(dispatch) {
-    console.log("FETCH INFOLIST 2")
-    var list = Object.assign([])
-    firebase.database().ref('/infoItems/').once('value', snapshot => {
-            var infoItems = snapshot.val()
-            for (var key in infoItems) {
-                if (infoItems.hasOwnProperty(key)) {
-                    let ItemWithKey = infoItems[key]
-                    ItemWithKey.key = key
-                    list = list.concat(ItemWithKey)
+export function fetchInfoList() {
+    var list = []
+
+    return dispatch => {
+        var returnObject = {}
+        firebase.database().ref('/infoItems/').on('value', snapshot => {
+                var infoItems = snapshot.val()
+                console.log("BEFORE FOR:", infoItems, list)
+                list = Object.assign([])
+                console.log("BEFORE FOR:", infoItems, list)
+                for (var key in infoItems) {
+                    if (infoItems.hasOwnProperty(key)) {
+                        let ItemWithKey = infoItems[key]
+                        ItemWithKey.key = key
+                        list = list.concat(ItemWithKey)
+                    }
                 }
-            }
-            console.log("FETCH INFOLIST 2", list)
-            dispatch({
-                type: FETCH_INFO_LIST,
-                payload: list
-            })
-            console.log("FETCH INFOLIST 2", list)
-        })
-        .catch(err => {
+                returnObject = Object.assign({}, {
+                    list: list
+                })
+                dispatch({
+                        type: FETCH_INFO_LIST,
+                        payload: returnObject
+                }) 
+                console.log("FETCH INFOLIST 2", list)
+        }, err => {
             console.error("ERR: fetch infoItems: ", err);
         })
 }
+}
 
-export function fetchInfoList() {
+export function stopFetchInfoList() {
     return dispatch => {
-        console.log("FETCH INFOLIST 1")
-        _fetchInfoList(dispatch)
+        firebase.database().ref('/infoItems/').off('value');
+        dispatch({
+            type: STOP_FETCH_INFO_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        })
     }
 }
 
@@ -324,7 +337,9 @@ export function removeInfoItem(item) {
     console.log("remove info item: ", item)
     return dispatch => {
         firebase.database().ref('/infoItems/' + item.key).remove().then(() => {
-            _fetchInfoList(dispatch);
+
+        }).catch(err => {
+            console.error("Removing info item falied: ", err)
         })
     }
 }
@@ -462,9 +477,6 @@ export function addInfo(data) {
             title: data.title,
             content: data.content
         })
-        .then(() => {
-            _fetchInfoList(dispatch);
-        })
         .catch(err => {
             console.error("ERR: addInfo: ", err);
         })
@@ -474,9 +486,6 @@ export function modifyInfo(key, data) {
     return dispatch => firebase.database().ref('/infoItems/' + key).update({
             title: data.title,
             content: data.content
-        })
-        .then(() => {
-            _fetchInfoList(dispatch);
         })
         .catch(err => {
             console.error("ERR: modifyInfo: ", err);
