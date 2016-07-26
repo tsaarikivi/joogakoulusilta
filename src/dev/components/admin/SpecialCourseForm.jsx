@@ -47,7 +47,7 @@ class SpecialCourseForm extends React.Component {
   renderContent() {
 //    <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
 
-    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
+    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -87,17 +87,11 @@ class SpecialCourseForm extends React.Component {
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
 
-          <label htmlFor="SCbeforetax">Hinta ennen veroja</label>
-          <input type="number" step="0.01" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
-
-          <label htmlFor="SCtaxa">Veron määrä</label>
-          <input type="number" step="0.01" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
+          <label htmlFor="SCprice">Verollinen hinta</label>
+          <input type="number" step="0.01" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="SCtaxp">Veroprosentti</label>
           <input type="number" step="0.01" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
-
-          <label htmlFor="SCprice">Verollinen hinta</label>
-          <input type="number" step="0.01" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
@@ -151,6 +145,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
+  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

@@ -11,7 +11,7 @@ class ShopItemCountForm extends React.Component {
   }
 
   renderContent() {
-    const { fields: { desc, price, taxamount, taxpercent, beforetax, title, usetimes, expiresAfterDays }, handleSubmit } = this.props
+    const { fields: { desc, price, taxpercent, title, usetimes, expiresAfterDays }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -28,17 +28,11 @@ class ShopItemCountForm extends React.Component {
           <label htmlFor="countExp">Kortin umpeutumisaika päivinä</label>
           <input type="number" name="countExp" {...expiresAfterDays} placeholder="esim: 30 tai 60" />
 
-          <label htmlFor="countBeforetax">Hinta ennen veroja</label>
-          <input type="number" step="0.01" name="countBeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
-
-          <label htmlFor="countTaxamount">Veron määrä</label>
-          <input type="number" step="0.01" name="countTaxamount" {...taxamount} placeholder="esim: 10.5 tai 50" />
+          <label htmlFor="countPrice">Verollinen hinta</label>
+          <input type="number" step="0.01" name="countPrice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="countTaxpercent">Veroprosentti</label>
           <input type="number" step="0.01" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
-
-          <label htmlFor="countPrice">Verollinen hinta</label>
-          <input type="number" step="0.01" name="countPrice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <button className="btn-small btn-blue" type="submit">Luo</button>
         </form>
@@ -89,6 +83,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'ShopItemCountForm',
-  fields: ['desc', 'price', 'taxamount', 'taxpercent', 'beforetax', 'title', 'usetimes', 'expiresAfterDays'],
+  fields: ['desc', 'price', 'taxpercent', 'title', 'usetimes', 'expiresAfterDays'],
   validate
 }, mapStateToProps, mapDispatchToProps)(ShopItemCountForm)

@@ -384,15 +384,18 @@ export function addSpecialCourse(data) {
       courseType = snapshot.val()
       instructor.uid = null
 
+    const beforetax = data.price / ( 1 + (data.taxpercent/100) )
+    const taxamount = data.price - beforetax
+
       firebase.database().ref('/specialCourses/').push({
         start: toMilliseconds(parseInt(data.start)),
         end: toMilliseconds(parseInt(data.end)),
         maxCapacity: parseInt(data.maxCapacity),
         date: data.date + toMilliseconds(parseInt(data.start)),
-        price: data.price,
-        taxpercent: data.taxpercent,
-        taxamount: data.taxamount,
-        beforetax: data.beforetax,
+        price: Number(data.price.toFixed(2)),
+        taxpercent: Number(data.taxpercent.toFixed(2)),
+        taxamount: Number(taxamount.toFixed(2)),
+        beforetax: Number(beforetax.toFixed(2)),
         place: place,
         instructor: instructor,
         courseType: courseType,
@@ -414,8 +417,21 @@ export function addCourseType(data) {
 }
 
 export function addShopItem(data, type) {
-  data.type = type;
-  return dispatch => firebase.database().ref('/shopItems/' + data.title).update(data)
+  const beforetax = data.price / ( 1 + (data.taxpercent/100) )
+  const taxamount = data.price - beforetax
+
+  return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
+    type: type,
+    title: data.title,
+    desc: data.desc,
+    usetimes: data.usetimes || null,
+    usedays: data.usedays || null,
+    expiresAfterDays: data.expiresAfterDays || null,
+    price: Number(data.price.toFixed(2)),
+    taxamount: Number(taxamount.toFixed(2)),
+    taxpercent: Number(data.taxpercent.toFixed(2)),
+    beforetax: Number(beforetax.toFixed(2)),
+  })
   .catch(err => {
     console.error("ERR: update; addShopItem: ", err);
   })
