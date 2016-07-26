@@ -9,13 +9,15 @@ var BookingsRef;
 export function postCancellation(item, txRef, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : JOOGASERVER + '/cancelSlot'
     return dispatch => {
+        let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
                     JOOGAURL, {
                         user: idToken,
                         courseInfo: courseInfo,
                         cancelItem: item,
-                        transactionReference: txRef
+                        transactionReference: txRef,
+                        timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
                     console.log(response.data); // TODO: process the response data and do the needed...
@@ -32,12 +34,14 @@ export function postCancellation(item, txRef, courseInfo) {
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
     return dispatch => {
+        let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
                     JOOGAURL, {
                         user: idToken,
                         courseInfo: courseInfo,
-                        weeksForward: forward
+                        weeksForward: forward,
+                        timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
                     console.log(response.data); // Should process the data - for now ther is no need.
@@ -100,7 +104,10 @@ export function fetchCourseBookings(coursekey, uid) {
             userbookings = Object.assign([]);
             processBookings(bkns, uid, bookings, userbookings)
             returnObject = Object.assign({})
-            returnObject[coursekey] = { all: bookings, user: userbookings }
+            returnObject[coursekey] = {
+                all: bookings,
+                user: userbookings
+            }
             dispatch({
                 type: FETCH_COURSE_BOOKINGS,
                 payload: returnObject

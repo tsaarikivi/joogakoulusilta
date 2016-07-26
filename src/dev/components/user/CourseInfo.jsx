@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getCourseTimeGMT, hasDayPassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
+import { getCourseTimeLocal, hasDayPassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
@@ -91,10 +91,10 @@ class CourseInfo extends React.Component {
   //========================================================================
   //========================================================================
   reservationButton(weekIndex){
-    let day = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day)
+    let day = getCourseTimeLocal(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day)
     let dayStr = getDayStr(day) + " " + getTimeStr(day)
-    let millisecondsStart = getCourseTimeGMT(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
-    let millisecondsEnd = getCourseTimeGMT(weekIndex, this.props.courseInfo.end, this.props.courseInfo.day).getTime()
+    let millisecondsStart = getCourseTimeLocal(weekIndex, this.props.courseInfo.start, this.props.courseInfo.day).getTime()
+    let millisecondsEnd = getCourseTimeLocal(weekIndex, this.props.courseInfo.end, this.props.courseInfo.day).getTime()
     if(weekIndex == 0){
       if (hasDayPassed(this.props.courseInfo.day)){
         return(
@@ -179,7 +179,7 @@ class CourseInfo extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
               <h3>{this.props.courseInfo.courseType.name}</h3>
-              <p className="info-time">Klo {getCourseTimeGMT(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeGMT(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
+              <p className="info-time">Klo {getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day).toTimeString().slice(0,5)} - {getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day).toTimeString().slice(0,5)}</p>
               <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
               <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
               <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
