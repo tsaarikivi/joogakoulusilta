@@ -267,6 +267,7 @@ export function fetchShopList() {
         var returnObject = {}
         firebase.database().ref('/shopItems/').on('value', snapshot => {
                 var shopItems = snapshot.val()
+                list = Object.assign([])
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key)) {
                         let ItemWithKey = shopItems[key]
