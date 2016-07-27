@@ -3,9 +3,27 @@ function mapDay(dayin) {
 }
 
 export function hasDayPassed(dayNumber) {
-    var JHLP = {}
-    JHLP.courseTime = new Date();
-    if (dayNumber < mapDay(JHLP.courseTime.getDay())) {
+    let courseTime = new Date();
+    if (dayNumber < mapDay(courseTime.getDay())) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function hasTimePassed(dayNumber, startTime) {
+    let courseTime = getCourseTimeLocal(0, startTime, dayNumber);
+    if (courseTime.getTime() < Date.now()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+export function sameDay(dayNumber) {
+    let courseTime = new Date();
+    if (dayNumber === mapDay(courseTime.getDay())) {
         return true;
     } else {
         return false;
@@ -17,25 +35,24 @@ export function timeToMoment(startTime) {
 }
 
 export function getCourseTimeUTC(weeksForward, timeOfStart, dayNumber) {
-    JHLP.courseTimeUTC = getCourseTimeLocal(weeksForward, timeOfStart, dayNumber);
-    JHLP.courseTimeUTC.setTime(JHLP.courseTimeUTC.getTime() + JHLP.courseTimeUTC.getTimezoneOffset() * 60 * 1000);
+    let courseTimeUTC = getCourseTimeLocal(weeksForward, timeOfStart, dayNumber);
+    courseTimeUTC.setTime(courseTimeUTC.getTime() + courseTimeUTC.getTimezoneOffset() * 60 * 1000);
 }
 
 export function getCourseTimeLocal(weeksForward, timeOfStart, dayNumber) {
 
-    var JHLP = {}
-    JHLP.courseTime = new Date();
-    JHLP.dayNumber = JHLP.courseTime.getDay()
-    JHLP.dayNumber = (JHLP.dayNumber == 0) ? 7 : JHLP.dayNumber;
-    JHLP.daysToAdd = weeksForward * 7 + dayNumber - JHLP.dayNumber;
+    let courseTime = new Date();
+    let dayNum = courseTime.getDay()
+    dayNum = (dayNum == 0) ? 7 : dayNum;
+    let daysToAdd = weeksForward * 7 + dayNumber - dayNum;
 
-    JHLP.courseTime.setHours(0);
-    JHLP.courseTime.setMinutes(0);
-    JHLP.courseTime.setSeconds(0);
-    JHLP.courseTime.setMilliseconds(0);
-    JHLP.courseTime.setTime(JHLP.courseTime.getTime() + JHLP.daysToAdd * 24 * 60 * 60 * 1000 + timeOfStart);
+    courseTime.setHours(0);
+    courseTime.setMinutes(0);
+    courseTime.setSeconds(0);
+    courseTime.setMilliseconds(0);
+    courseTime.setTime(courseTime.getTime() + daysToAdd * 24 * 60 * 60 * 1000 + timeOfStart);
 
-    return JHLP.courseTime;
+    return courseTime;
 }
 
 export function getDayStrMs(ms) {
