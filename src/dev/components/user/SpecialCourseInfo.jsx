@@ -88,6 +88,7 @@ class SpecialCourseInfo extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
               <div className="info-info-container">
                 <h3>{info.title}</h3>                
+                <h3 className="info-time text-bold">{info.price}&euro;</h3>
                 <p className="info-time">{getDayStrMs(info.date)}</p>
                 <p className="info-place text-blue">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
                 <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
@@ -95,7 +96,6 @@ class SpecialCourseInfo extends React.Component {
                 <div>
                   <img className="mini-icon" src="./assets/group.png" />
                   <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>            
-                  <h3 className="info-price text-bold">{info.price}&euro;</h3>
                   {this.renderPurchaseButtons()}
                 </div>              
                 <p className="info-desc">{info.courseType.desc}</p>
