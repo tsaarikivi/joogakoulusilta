@@ -5,6 +5,7 @@ import {
     reducer as FormReducer
 } from 'redux-form'
 
+import LoadingScreenReducer from './loadingScreen.js'
 import ShopReducer from './shopReducer.js'
 import SpecialCourseReducer from './specialCoursesReducer.js'
 import SpecialCoursesBannerReducer from './specialCoursesBannerReducer.js'
@@ -31,6 +32,7 @@ import PlaceListReducer from './admin/placeListReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
 
 const combinedReducer = combineReducers({
+    loadingScreen: LoadingScreenReducer,
     currentUser: UserReducer,
     instructor: InstructorReducer,
     shopItems: ShopReducer,

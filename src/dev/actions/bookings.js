@@ -1,8 +1,13 @@
 import axios from 'axios'
 
 import {
-    FETCH_COURSE_BOOKINGS
+    FETCH_COURSE_BOOKINGS,
+    CHANGE_LOADINGSCREEN_STATE
 } from './actionTypes.js'
+
+import {
+    _setLoadingScreenOff
+} from './loadingScreen.js'
 
 var BookingsRef;
 
@@ -20,7 +25,8 @@ export function postCancellation(item, txRef, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data); // TODO: process the response data and do the needed...
+                    console.log(response.data);
+                    _setLoadingScreenOff(dispatch, response.data.message)
                 })
                 .catch(error => {
                     console.error(error);

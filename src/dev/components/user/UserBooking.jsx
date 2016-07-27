@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import {postCancellation} from '../../actions/bookings.js'
 
+import * as loadingScreenActions from '../../actions/loadingScreen.js'
 
 import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
@@ -19,9 +20,11 @@ class UserBooking extends React.Component {
   }
 
   cancelReservation(item){
+    console.log("ACTIONS: ", this.props)
     if(!this.cancellationOngoing){
       this.cancellationOngoing = true;
       this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
+      this.props.lsActions.setLoadingScreenOn("Perutaan varausta.");
     }
   }
 
@@ -52,7 +55,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({postCancellation}, dispatch)}
+  return { actions: bindActionCreators({postCancellation}, dispatch),
+          lsActions: bindActionCreators(loadingScreenActions, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserBooking)
