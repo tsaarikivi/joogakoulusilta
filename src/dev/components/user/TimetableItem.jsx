@@ -7,6 +7,14 @@ import * as bookingsActionCreators from '../../actions/bookings.js'
 
 class TimeTableItem extends React.Component {
 
+  componentWillReceiveProps(nextProps){
+    if(this.props.courseInfo.key !== "0"){ //Pop-up is active and CI-props need to be updated
+      //But only if bookings information has changed.
+      if(this.props.booking !== nextProps.booking){
+        this.props.courseActions.putCourseInfo(nextProps.item, nextProps.booking)
+      }
+    }
+  }
 
   componentWillMount(){
     this.props.bookingsActions.fetchCourseBookings(this.props.item.key, this.props.currentUser.uid)
