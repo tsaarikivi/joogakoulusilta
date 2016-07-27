@@ -133,6 +133,11 @@
   .surrounded-container {
     padding: 4vw;
   }
+  .info-price {
+    span {
+      margin: 0 0 3vw;
+    }  
+  }
 }
 
 
@@ -261,6 +266,12 @@
   .surrounded-container {
     padding: 12px;
   }
+
+  .info-price {
+    span {
+      margin: 0 0 10px;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -367,4 +378,13 @@
 
 .transparent-bg {
   background: transparent;
+}
+
+.info-price {
+  margin: 0;
+  padding: 0;
+  color: $blue;
+  span {
+    display: inline-block;
+  }  
 }

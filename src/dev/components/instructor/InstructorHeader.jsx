@@ -22,10 +22,12 @@ class InstructorHeader extends React.Component {
       errorOut = <p>Error: {error.code} {error.message}</p>
     }
     return (
-      <div class="container bordered-container centered">
-        {errorOut}
-        <h1>Opettajan sivu</h1>
-        <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
+      <div class="container bordered-container">
+        <div className="content-container">
+          {errorOut}
+          <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
+          <h1>Opettajan sivu</h1>
+        </div>
       </div>
     );
   }
