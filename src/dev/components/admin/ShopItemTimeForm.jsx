@@ -10,7 +10,7 @@ class ShopItemTimeForm extends React.Component {
     if(this.props.mode === "addNew"){
       this.props.actions.addShopItem(props, "time")
     } else {
-      this.props.actions.modifyShopItem(this.props.dbKey, props)
+      this.props.actions.modifyShopItem(props, "time")
     }
     this.props.actions.minimizeTimeShopForm();
   }

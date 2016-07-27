@@ -266,29 +266,29 @@ export function fetchShopList() {
     return dispatch => {
         var returnObject = {}
         firebase.database().ref('/shopItems/').on('value', snapshot => {
-                var shopItems = snapshot.val()
-                list = Object.assign([])
-                for (var key in shopItems) {
-                    if (shopItems.hasOwnProperty(key)) {
-                        let ItemWithKey = shopItems[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
+            var shopItems = snapshot.val()
+            list = Object.assign([])
+            for (var key in shopItems) {
+                if (shopItems.hasOwnProperty(key)) {
+                    let ItemWithKey = shopItems[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
                 }
-                list.sort(function(a, b) {
-                    if (a.price && b.price) {
-                        return a.price - b.price
-                    }
-                    return 0
-                })
-                returnObject = Object.assign({}, {
-                    list: list
-                })
-                dispatch({
-                    type: FETCH_SHOP_LIST,
-                    payload: returnObject
-                })
-            }, err => {
+            }
+            list.sort(function(a, b) {
+                if (a.price && b.price) {
+                    return a.price - b.price
+                }
+                return 0
+            })
+            returnObject = Object.assign({}, {
+                list: list
+            })
+            dispatch({
+                type: FETCH_SHOP_LIST,
+                payload: returnObject
+            })
+        }, err => {
             console.error("ERR: fetch shopList: ", err);
         })
     }
@@ -574,6 +574,28 @@ export function addShopItem(data, type) {
             console.error("ERR: update; addShopItem: ", err);
         })
 }
+
+export function modifyShopItem(data, type) {
+    const beforetax = data.price / (1 + (data.taxpercent / 100))
+    const taxamount = data.price - beforetax
+
+    return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
+            type: type,
+            title: data.title,
+            desc: data.desc,
+            usetimes: data.usetimes || null,
+            usedays: data.usedays || null,
+            expiresAfterDays: data.expiresAfterDays || null,
+            price: Number(data.price.toFixed(2)),
+            taxamount: Number(taxamount.toFixed(2)),
+            //taxpercent: Number(data.taxpercent.toFixed(2)),
+            beforetax: Number(beforetax.toFixed(2)),
+        })
+        .catch(err => {
+            console.error("ERR: update; addShopItem: ", err);
+        })
+}
+
 
 export function addInfo(data) {
     return dispatch => firebase.database().ref('/infoItems/').push({

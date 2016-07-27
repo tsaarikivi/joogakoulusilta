@@ -7,16 +7,18 @@ import * as actionCreators from '../../actions/admin.js'
 class ShopItemCountForm extends React.Component {
   onSubmit(props) {
     if(this.props.mode === "addNew"){
-      this.props.actions.addShopItem(props, "time")
+      this.props.actions.addShopItem(props, "count")
     } else {
-      this.props.actions.modifyShopItem(this.props.dbKey, props)
+      this.props.actions.modifyShopItem(props, "count")
     }
     this.props.actions.minimizeCountShopForm();
   }
 
+
   renderContent() {
 
     var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+
 
     const { fields: { desc, price, taxpercent, title, usetimes, expiresAfterDays }, handleSubmit } = this.props
 
