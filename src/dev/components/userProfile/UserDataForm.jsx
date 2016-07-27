@@ -15,7 +15,7 @@ class UserDataForm extends React.Component {
       uid: this.props.auth.uid,
       firstname: props.firstname,
       lastname: props.lastname,
-      alias: props.alias
+      alias: null
     }
     this.props.actions.updateUserDetails(user)
   }
@@ -32,9 +32,6 @@ class UserDataForm extends React.Component {
 
           <label htmlFor="lastName">Sukunimi</label>
           <input type="text" name="lastname" {...lastname}/>
-
-          <label htmlFor="lastName">Alias, näytetään nimen asemasta varauslistalla jos annettu.</label>
-          <input type="text" name="alias" {...alias}/>
 
           <p>Sähköpostisi: {this.props.currentUser.email}</p>
 

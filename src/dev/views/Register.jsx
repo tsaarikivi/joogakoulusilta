@@ -40,7 +40,7 @@ class Register extends React.Component {
 
     return (
       <form onSubmit={handleSubmit(data => {
-        this.props.actions.register(data.email, data.password, data.firstName, data.lastName, data.alias)
+        this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
         this.registerStarted = true
         this.forceUpdate()
       })}>
@@ -56,11 +56,8 @@ class Register extends React.Component {
         <label htmlFor="lastName">Sukunimi</label>
         <input type="text" placeholder="Sukunimi" {...lastName}/>
         {lastName.touched && lastName.error && <div className="form-error">{lastName.error}</div>}
-        <label htmlFor="alias">Käyttäjänimi</label>
-        <input type="text" placeholder="Alias" {...alias}/>
-        {alias.touched && alias.error && <div className="form-error">{alias.error}</div>}
         <br/>
-        <button className="btn-small btn-blue">Rekisteröidy</button>
+        <button type="submit" className="btn-small btn-blue">Rekisteröidy</button>
         <br/>
       </form>
     );
@@ -74,8 +71,8 @@ class Register extends React.Component {
       return(
         <div class="container">
           <Logo />
-          <div className="content-container">
-            <h2 className="centered">Rekisteröinti onnistui {this.firstName}!</h2>
+          <div className="content-container centered">
+            <h2>Rekisteröinti onnistui {this.firstName}!</h2>
             <Link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</Link>
           </div>
         </div>
@@ -120,9 +117,6 @@ const validate = values => {
   }
   if (!values.lastName) {
     errors.lastName = 'Pakollinen kenttä.'
-  }
-  if (!values.alias) {
-    errors.alias = 'Pakollinen kenttä.'
   }
   return errors
 }
