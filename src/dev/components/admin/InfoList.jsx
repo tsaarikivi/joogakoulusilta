@@ -54,7 +54,7 @@ class InfoList extends React.Component {
     if (this.props.list.expanded) {
       return (
         <ul className="wide-list">
-          {this.props.list.list.map(this.renderList)}
+          {this.props.list.list.list.map(this.renderList)}
         </ul>
       )
     }

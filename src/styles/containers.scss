@@ -130,6 +130,9 @@
       padding: 0;
     }
   }
+  .surrounded-container {
+    padding: 4vw;
+  }
 }
 
 
@@ -255,6 +258,9 @@
       padding: 0;
     }
   }
+  .surrounded-container {
+    padding: 12px;
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -351,4 +357,14 @@
   a {
     color: $white;
   }
+}
+
+.surrounded-container {
+  background: $container-color;
+  border: 1px solid $border;
+  border-radius: 4px;
+}
+
+.transparent-bg {
+  background: transparent;
 }

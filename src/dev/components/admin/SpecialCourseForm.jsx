@@ -112,8 +112,8 @@ class SpecialCourseForm extends React.Component {
 
   render() {
     return (
-      <div className="container bordered-container">
-        <div className="content-container">
+      <div className="container transparent-bg">
+        <div className="surrounded-container">
           <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
           {this.renderExpandButton()}
           {this.renderContent()}

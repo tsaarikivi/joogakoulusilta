@@ -39,8 +39,8 @@ class PlaceForm extends React.Component {
 
 
     return (
-      <div className="container bordered-container">
-       	<div className="content-container">
+      <div className="container transparent-bg">
+       	<div className="surrounded-container">
           <h2 className="header-collapse">Infon tiedot</h2>
           {this.renderContent()}       
         </div> 
