@@ -246,6 +246,16 @@ input, textarea, select {
   }  
 }
 
+.text-white {
+  color: $text-light;
+  div {
+    color: $text-light;
+  }
+  span {
+    color: $text-light;
+  }  
+}
+
 .text-bold {
   font-weight: 600;
 }
