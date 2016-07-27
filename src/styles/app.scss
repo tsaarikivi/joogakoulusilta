@@ -75,7 +75,7 @@ example:
     font-size: 3.6vw;
   }
   .margin-bottom {
-    margin-bottom: 2vw;
+    margin-bottom: 4vw;
   }
   .margin-left {
     margin-left: 2vw;
@@ -145,7 +145,7 @@ example:
     font-size: 13px;
   }
   .margin-bottom {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
   }
   .margin-left {
     margin-left: 5px;
@@ -233,6 +233,16 @@ input, textarea, select {
   }
   span {
     color: $blue;
+  }  
+}
+
+.text-red {
+  color: $red;
+  div {
+    color: $red;
+  }
+  span {
+    color: $red;
   }  
 }
 

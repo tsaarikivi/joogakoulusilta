@@ -104,7 +104,7 @@ class CourseInfo extends React.Component {
     if(
       hasTimePassed(courseInfo.day, courseInfo.start) && 
       !hasTimePassed(courseInfo.day, courseInfo.end)){
-        notificationText = <p> Tämän viikon kurssi on alkanut. Varaus seuraavalle viikolle. </p>
+        notificationText = <p className="text-red"> Tämän viikon kurssi on alkanut. Varaus on seuraavalle viikolle. </p>
     }
 
     return(
