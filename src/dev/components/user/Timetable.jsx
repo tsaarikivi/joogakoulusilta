@@ -16,10 +16,6 @@ class Timetable extends React.Component {
 
   }
 
-  componentWillReceiveProps(nextProps){
-    //console.log("TIMETABLE-props:", nextProps);
-  }
-
   render() {
     var bookings = this.props.timetable.bookings;
 

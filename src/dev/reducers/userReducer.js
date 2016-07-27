@@ -14,7 +14,7 @@ const INITIAL_STATE = {
         message: "ok"
     },
     bookings: [],
-    specialCources: [],
+    specialCourses: [],
     history: [],
     roles: {
         admin: false,

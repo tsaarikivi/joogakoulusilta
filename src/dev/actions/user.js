@@ -26,31 +26,33 @@ export function updateUserDetails(user) {
     }
 }
 
-export function fetchUsersSpecialCourseBookings(uid){
-  return dispatch => {
-    specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
-    specialCBookingsRef.on('value', (snapshot) => {
-      let scBookings = snapshot.val();
-      let one;
-      let returnList = Object.assign([])
-      if(scBookings){
-        for(one in scBookings){
-          if(scBookings[one].shopItem.date > Date.now()){
-            returnList.push(scBookings[one])
-          }
-        }
-      }
-      dispatch({
-        type: UPDATE_USERS_SCBOOKINGS,
-        payload: {specialCources: returnList}
-      })
-    }, (err) => {
-      dispatch({
-          type: USER_ERROR,
-          payload: err
-      })
-    })
-  }
+export function fetchUsersSpecialCourseBookings(uid) {
+    return dispatch => {
+        specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
+        specialCBookingsRef.on('value', (snapshot) => {
+            let scBookings = snapshot.val();
+            let one;
+            let returnList = Object.assign([])
+            if (scBookings) {
+                for (one in scBookings) {
+                    if (scBookings[one].shopItem.date > Date.now()) {
+                        returnList.push(scBookings[one])
+                    }
+                }
+            }
+            dispatch({
+                type: UPDATE_USERS_SCBOOKINGS,
+                payload: {
+                    specialCourses: returnList
+                }
+            })
+        }, (err) => {
+            dispatch({
+                type: USER_ERROR,
+                payload: err
+            })
+        })
+    }
 }
 
 export function fetchUsersBookings(uid) {
@@ -182,20 +184,20 @@ export function fetchUsersTransactions(uid) {
                         }
                         break;
                     case "special":
-                    //Placeholder for any special handling of specials
-                      break;
+                        //Placeholder for any special handling of specials
+                        break;
                     default:
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
-                if(all[one].type === "special"){
-                  trx.details.special.push(trxdetails);
+                if (all[one].type === "special") {
+                    trx.details.special.push(trxdetails);
                 } else {
-                  if (trxdetails.expires > now) {
-                      trx.details.valid.push(trxdetails);
-                  } else {
-                      trx.details.expired.push(trxdetails);
-                  }
+                    if (trxdetails.expires > now) {
+                        trx.details.valid.push(trxdetails);
+                    } else {
+                        trx.details.expired.push(trxdetails);
+                    }
                 }
             }
             trx.details.valid.sort((a, b) => {
@@ -320,7 +322,7 @@ export function createNewUser(user, firstname, lastname, alias) {
         if (existingUser === null) {
             if (firstname === null) {
                 firstname = firebase.auth().currentUser.displayName;
-                }
+            }
             return firebase.database().ref('/users/' + user.uid).update({
                 email: user.email,
                 uid: user.uid,
