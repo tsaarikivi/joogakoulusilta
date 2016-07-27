@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AdminHeader from '../components/admin/AdminHeader.jsx'
-import CourseForm from '../components/admin/CourseForm.jsx'
 import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
 import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
 import UserList from '../components/admin/UserList.jsx'

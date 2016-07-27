@@ -75,7 +75,7 @@ class CourseInfo extends React.Component {
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
         return(
-                <p> Sinä olet jo ilmoittautunut tälle kurssille.</p>
+                <p> Sinä olet ilmoittautunut tälle kurssille.</p>
               );
     }}
 

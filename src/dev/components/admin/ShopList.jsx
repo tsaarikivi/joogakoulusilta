@@ -23,8 +23,6 @@ class ShopList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("cmpCount", nextProps.cmpCount)
-    console.log("cmpTime", nextProps.cmpTime)
 
     if(nextProps.cmpCount.expanded && nextProps.cmpCount.expander === "addNew"){
       this.toggleCountForm = true;
