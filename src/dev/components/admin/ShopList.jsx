@@ -26,8 +26,10 @@ class ShopList extends React.Component {
 
     if(nextProps.cmpCount.expanded && nextProps.cmpCount.expander === "addNew"){
       this.toggleCountForm = true;
+      this.toggleTimeForm = false;
     } else if (nextProps.cmpTime.expanded && nextProps.cmpTime.expander === "addNew"){
       this.toggleTimeForm = true;
+      this.toggleCountForm = false;
     } else {
       this.toggleCountForm = false;
       this.toggleTimeForm = false;
@@ -61,6 +63,7 @@ class ShopList extends React.Component {
       this.props.actions.minimizeCountShopForm()
     } else {
       this.props.actions.expandCountShopForm("addNew")
+      this.props.actions.minimizeTimeShopForm()
     }
   }
 
@@ -69,6 +72,7 @@ class ShopList extends React.Component {
       this.props.actions.minimizeTimeShopForm()
     } else {
       this.props.actions.expandTimeShopForm("addNew")
+      this.props.actions.minimizeCountShopForm()
     }
   }
 
