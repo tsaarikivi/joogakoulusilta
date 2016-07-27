@@ -58,16 +58,24 @@ class UserHeader extends React.Component {
   }
 
   render() {
+
+    const { roles, firstname } = this.props.curUsr;
+
     var admin = null;
-    if(this.props.curUsr.roles.admin === true){
+    if(roles.admin === true){
       admin = <Link className="text-link float-right" to="admin">Admin</Link>
+    }
+    var instructor = null;
+    if(roles.instructor === true){
+      instructor = <Link className="text-link float-right" to="instructor">Opettaja</Link>
     }
     return (
       <div class="container bordered-container">
         <div className="content-container align-left">
           <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
           {admin}
-          <h1 className="header-collapse">Hei, {this.props.curUsr.firstname}!</h1>
+          {instructor}
+          <h1 className="header-collapse">Hei, {firstname}!</h1>
           <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, IndexRoute  } from 'react-router'
 
 // Views
+import Instructor from './dev/views/Instructor.jsx'
 import Admin from './dev/views/Admin.jsx'
 import Checkout from './dev/views/Checkout.jsx'
 import Home from './dev/views/Home.jsx'
@@ -19,6 +20,7 @@ export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={Home}></IndexRoute>
     <Route path="admin" component={Admin}></Route>
+    <Route path="instructor" component={Instructor}></Route>
     <Route path="info" component={Info}></Route>
     <Route path="shop" component={Shop}></Route>
     <Route path="user" component={User}></Route>

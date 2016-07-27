@@ -11,6 +11,7 @@ import SpecialCoursesBannerReducer from './specialCoursesBannerReducer.js'
 import TimetableReducer from './timetableReducer.js'
 import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
+import InstructorReducer from './instructorReducer.js'
 import InfoReducer from './infoReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
 import SpecialCourseInfoReducer from './specialCourseInfoReducer.js'
@@ -31,6 +32,7 @@ import InfoFormReducer from './admin/infoFormReducer.js'
 
 const combinedReducer = combineReducers({
     currentUser: UserReducer,
+    instructor: InstructorReducer,
     shopItems: ShopReducer,
     specialCourses: SpecialCourseReducer,
     specialCoursesBanner: SpecialCoursesBannerReducer,
