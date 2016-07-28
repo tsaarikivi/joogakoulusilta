@@ -12,6 +12,7 @@ export function _showLoadingScreen(dispatch, context) {
     dispatch({
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
+            inTimeout: false,
             visible: true,
             context,
             success: "undefined"
@@ -29,6 +30,7 @@ export function _hideLoadingScreen(dispatch, context, success, timeout = 1000) {
     dispatch({
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
+            inTimeout: true,
             visible: true,
             context,
             success
@@ -38,6 +40,7 @@ export function _hideLoadingScreen(dispatch, context, success, timeout = 1000) {
         dispatch({
             type: CHANGE_LOADINGSCREEN_STATE,
             payload: {
+                inTimeout: false,
                 visible: false,
                 context,
                 success

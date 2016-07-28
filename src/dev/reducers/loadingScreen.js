@@ -3,6 +3,7 @@ import {
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
+    inTimeout: false,
     visible: false,
     context: "",
     success: "undefined"

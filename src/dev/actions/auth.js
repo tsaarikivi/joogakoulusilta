@@ -84,6 +84,7 @@ export function loginWithPopUp() {
 
 export function login(email, password) {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen."); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
         Auth.signInWithEmailAndPassword(email, password).catch(error => {
             if (error) {
                 dispatch({
@@ -95,6 +96,7 @@ export function login(email, password) {
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Kirjautuminen päättyi virheeseen: " + error.message, false, 2000)
             }
         });
     }

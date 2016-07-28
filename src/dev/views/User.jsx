@@ -23,26 +23,15 @@ class User extends React.Component {
 
   constructor(){
     super();
-    this.lsShown = false;
     this.userFullyLoaded = false
     this.emailVerificationOngoing = false
   }
 
-  componentWillMount(){
-    if(this.props.currentUser.key === "0"){
-      this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot")
-      this.lsShown = true;
-    }
-  }
   componentWillReceiveProps(nextProps){
     const { currentUser, auth, loadingScreen } = nextProps;
-      if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
+    if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
           this.userFullyLoaded = true;
-          if(this.lsShown){
-            this.props.lsActions.hideLoadingScreen("Valmis", true, 1000)
-            this.lsShown = false
-          }
-        }
+      }
   }
 
   handleEmailVerify(){

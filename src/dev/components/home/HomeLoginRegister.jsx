@@ -26,12 +26,6 @@ class HomeLoginRegister extends React.Component {
     }
   }
 
-
-  handleLogin() {
-
-    
-  }
-
   renderForm() {
     const { fields: { email, password }, handleSubmit } = this.props
 
