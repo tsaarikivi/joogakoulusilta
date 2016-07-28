@@ -7,23 +7,18 @@ import * as instructoractions from '../../actions/instructor.js'
 
 class CourseDetails extends React.Component {
 
-  componentWillReceiveProps(nextProps){
-    console.log("COURSEDETAILS:", nextProps);
-  }
 
   exitContainer() {
     this.props.actions.clearInstructorData()
   }
 
   renderuser(item) {
-      console.log("what about WE HERE?");
       return (
         <UserItem item={item} key={item.key}/>
       )
   }
 
   renderUserList(){
-      console.log("ARE WE HERE?", this.props.instructor.booking);
     if(this.props.instructor.booking.length > 0)
     {
       return (

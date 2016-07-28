@@ -6,8 +6,6 @@ import {
 export function setInstructorData(course, booking) {
     return dispatch => {
         var returnObject = {}
-        console.log("Fetch instructor data")
-
         returnObject = Object.assign({
             visible: true,
             course,
@@ -22,7 +20,6 @@ export function setInstructorData(course, booking) {
 
 export function clearInstructorData() {
     return dispatch => {
-        console.log("Fetch instructor data")
         dispatch({
             type: FETCH_INSTRUCTOR_DATA,
             payload: {

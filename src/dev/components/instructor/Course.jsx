@@ -30,7 +30,6 @@ class Course extends React.Component {
 
   render() {
     const { booking, item } = this.props;
-    console.log("DETAILS: ", this.props);
     if(booking){
       var allBooked = <p className="table-participants">0/{item.maxCapacity}</p>
       if(booking.all.length > 0){
