@@ -62,7 +62,7 @@ function _fetchUserList(dispatch) {
     var instructorList = Object.assign([])
     var specialusers = Object.assign({})
     var users = Object.assign({})
-    _showLoadingScreen(dispatch, "Päivitetään käyttäjät.")
+    _showLoadingScreen(dispatch, "Päivitetään käyttäjät")
     firebase.database().ref('/users/').once('value')
         .then(snapshot => {
             users = snapshot.val()
@@ -71,8 +71,7 @@ function _fetchUserList(dispatch) {
         .then(snapshot => {
             specialusers = snapshot.val()
             for (var key in users) {
-                users[key].key = key
-                userList = userList.concat(users[key])
+                users[key].key = key                
                 if (specialusers[key]) {
                     console.log("specialUsers", specialusers);
                     if (specialusers[key].admin) {
@@ -83,10 +82,12 @@ function _fetchUserList(dispatch) {
                         console.log("INSTRUCTOR");
                         instructorList = instructorList.concat(users[key])
                     }
+                } else {
+                    userList = userList.concat(users[key])
                 }
             }
             userList.sort((a, b) => {
-                return (a.firstname.toUpperCase() < b.firstname.toUpperCase()) ? -1 : 1
+                return a.firstname.toUpperCase() <- b.firstname.toUpperCase()
             });
             dispatch({
                 type: FETCH_USER_LIST,

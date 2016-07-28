@@ -29,7 +29,7 @@ class User extends React.Component {
 
   componentWillMount(){
     if(this.props.currentUser.key === "0"){
-      this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot.")
+      this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot")
       this.lsShown = true;
     }
   }
@@ -38,7 +38,7 @@ class User extends React.Component {
       if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
           this.userFullyLoaded = true;
           if(this.lsShown){
-            this.props.lsActions.hideLoadingScreen("Tervetuloa " + currentUser.firstname, 1000)
+            this.props.lsActions.hideLoadingScreen("Valmis", 1000)
             this.lsShown = false
           }
         }

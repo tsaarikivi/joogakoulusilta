@@ -14,7 +14,7 @@ import {
 export function postCancellation(item, txRef, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : JOOGASERVER + '/cancelSlot'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Perutaan varausta.")
+        _showLoadingScreen(dispatch, "Perutaan varausta")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
@@ -27,7 +27,7 @@ export function postCancellation(item, txRef, courseInfo) {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _hideLoadingScreen(dispatch, "Varaus peruttu.")
+                    _hideLoadingScreen(dispatch, "Varaus peruttu")
                 })
                 .catch(error => {
                     console.error(error);
@@ -43,7 +43,7 @@ export function postCancellation(item, txRef, courseInfo) {
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Varataan kurssia.")
+        _showLoadingScreen(dispatch, "Varataan kurssia")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
@@ -55,7 +55,7 @@ export function postReservation(forward, courseInfo) {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _hideLoadingScreen(dispatch, "Varaus onnistui.")
+                    _hideLoadingScreen(dispatch, "Varaus onnistui")
                 })
                 .catch(error => {
                     console.error(error);
