@@ -25,7 +25,7 @@ class Course extends React.Component {
   }
 
   itemClicked() {
-    this.props.iActions.fetchInstructorData(this.props.item.key)
+    this.props.iActions.setInstructorData(this.props.item, this.props.booking)
   }
 
   render() {

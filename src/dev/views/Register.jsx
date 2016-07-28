@@ -28,7 +28,7 @@ class Register extends React.Component {
     else {
       this.errorText = "";
     }
-    if(nextProps.auth.timeout === true){
+    if(nextProps.auth.uid){
       this.context.router.push('/user/')
     }
   }
@@ -64,17 +64,6 @@ class Register extends React.Component {
   }
 
   render() {
-    
-    if(this.props.auth.uid){
-      return(
-        <div class="container">
-          <Logo />
-          <div className="content-container centered">
-            <Link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</Link>
-          </div>
-        </div>
-      );
-    }
       return (
         <div class="container">
           <Logo />

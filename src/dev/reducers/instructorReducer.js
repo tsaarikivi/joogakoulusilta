@@ -5,7 +5,8 @@ import {
 
 const INITIAL_STATE = {
     visible: false,
-    courseInfo: {},
+    course: {},
+    booking: [],
     error: {
         code: "OK",
         message: "No error"

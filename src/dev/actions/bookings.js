@@ -83,7 +83,11 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
             instanceObj = inputBookings[instanceId];
             for (user in instanceObj) {
                 booking.reservations++;
-                booking.participants.push(user);
+                booking.participants.push({
+                    key: user,
+                    name: instanceObj[user].user,
+                    transactionReference: instanceObj[user].transactionReference
+                });
                 if (user === uid) {
                     userbookings.push(Object.assign({
                         item: instanceId,

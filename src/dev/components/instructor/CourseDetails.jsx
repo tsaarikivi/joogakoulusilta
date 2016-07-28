@@ -7,33 +7,40 @@ import * as instructoractions from '../../actions/instructor.js'
 
 class CourseDetails extends React.Component {
 
-  constructor(){
-    super();
-    this.isVisible = false;
-  }
-
   componentWillReceiveProps(nextProps){
     console.log("COURSEDETAILS:", nextProps);
   }
-
-
 
   exitContainer() {
     this.props.actions.clearInstructorData()
   }
 
-
-
   render() {
-    const { instructor, currentUser } = this.props;
+    const { course, booking, visible } = this.props.instructor;
 
-    if(instructor.visible){
+    let weekIndex = 0;
+    if (hasTimePassed(course.day, course.start)) {
+      weekIndex = 1;
+    } else {
+      weekIndex = 0;
+    }
+    let day = getCourseTimeLocal(weekIndex, course.start, course.day);
+    let dayStr = getDayStr(day) + " " + getTimeStr(day);
+
+    let bookingPerCapacity = null
+    if(booking.length > 0){
+      bookingPerCapacity = <h3>{booking[0].reservations}/{course.maxCapacity}</h3>
+    }
+
+    if(visible){
       return (
         <div className="course-info-container">
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
-              <h3>{currentUser.firstname}</h3>
+              <h2>{course.courseType.name}</h2>
+              <h3>{dayStr}</h3>
+              {bookingPerCapacity}
             </div>
           </div>
         </div>
@@ -45,7 +52,7 @@ class CourseDetails extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {  instructor: state.instructor, currentUser: state.currentUser }
+  return {  instructor: state.instructor }
 }
 
 function mapDispatchToProps(dispatch) {
