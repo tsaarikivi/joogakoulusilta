@@ -12,6 +12,11 @@ import {
     EXECUTE_CASH_PURCHASE
 } from './actionTypes.js'
 
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
+
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
 export function buyWithCash() {
@@ -31,8 +36,9 @@ export function buyWithCash() {
 
 export function executeCashPurchase(forUsr, itemKey, type) {
     return dispatch => {
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
 
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
+        _showLoadingScreen(dispatch, "Käteisostoa suoritetaan.")
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
                 return axios.post(JOOGAURL, {
@@ -43,6 +49,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
                 })
             })
             .then(result => {
+                _hideLoadingScreen(dispatch, "Käteisosto onnistui.")
                 dispatch({
                     type: EXECUTE_CASH_PURCHASE,
                     payload: {
@@ -58,6 +65,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
             })
             .catch(error => {
                 console.error("CASH ERROR", error);
+                _hideLoadingScreen(dispatch, "Käteisostossa tapahtui virhe: " + error.toString())
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -144,6 +152,7 @@ export function removeShopItem(key) {
 
 export function getClientTokenFromBraintree() {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Alustetaan maksuyhteyttä")
         dispatch({
             type: START_CHECKOUT_FLOW,
             payload: {
@@ -156,6 +165,7 @@ export function getClientTokenFromBraintree() {
                 return axios.get(JOOGAURL + '?token=' + idToken)
             })
             .then(response => {
+                _hideLoadingScreen(dispatch, "Maksuyhteys valmis.")
                 dispatch({
                     type: GET_CLIENT_TOKEN,
                     payload: {
@@ -166,6 +176,7 @@ export function getClientTokenFromBraintree() {
             })
             .catch(error => {
                 console.error("TOKEN_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Maksuyhteyden alustuksessa tapahtui virhe: ", error.toString())
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -181,6 +192,7 @@ export function getClientTokenFromBraintree() {
 
 export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Suoritetaan maksu.")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
 
         firebase.auth().currentUser.getToken(true)
@@ -193,6 +205,7 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
                 })
             })
             .then(result => {
+                _hideLoadingScreen(dispatch, "Maksun suoritus onnistui.")
                 dispatch({
                     type: DO_PURCHASE_TRANSACTION,
                     payload: {
@@ -208,6 +221,7 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
             })
             .catch(error => {
                 console.error("PURCHASE ERROR", error);
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString())
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {

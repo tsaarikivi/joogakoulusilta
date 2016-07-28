@@ -9,6 +9,9 @@ import {
 
 const INITIAL_STATE = {
     key: "0",
+    bookingsReady: false,
+    specialCoursesReady: false,
+    transactionsReady: false,
     error: {
         code: "0",
         message: "ok"

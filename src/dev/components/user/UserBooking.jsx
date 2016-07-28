@@ -24,7 +24,6 @@ class UserBooking extends React.Component {
     if(!this.cancellationOngoing){
       this.cancellationOngoing = true;
       this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
-      this.props.lsActions.setLoadingScreenOn("Perutaan varausta.");
     }
   }
 

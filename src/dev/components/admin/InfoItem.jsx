@@ -9,7 +9,9 @@ class InfoItem extends React.Component {
   
   constructor(){
     super();
-    this.toggleForm = false
+    this.toggleForm = false;
+    this.confirmation = false;
+    this.timeoutId = 0;
   }
 
   componentWillReceiveProps(nextProps){
@@ -20,8 +22,23 @@ class InfoItem extends React.Component {
       }
   }
 
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
+  }
+  
   remove(item){
-    this.props.actions.removeInfoItem(item);
+    if(this.confirmation){
+      this.props.actions.removeInfoItem(item);
+    } else {
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout( () => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
   }
 
   toggleModify(item){
@@ -42,6 +59,7 @@ class InfoItem extends React.Component {
 
   render() {
     var buttonText = (this.toggleForm)? "Peru Muokkaus" : "Muokkaa"
+    var removeButton = (this.confirmation)? "Vahvista poisto" : "Poista"
 
     const {item} = this.props
 
@@ -53,7 +71,7 @@ class InfoItem extends React.Component {
           <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
         </span>
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>Poista</button>
+          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>{removeButton}</button>
         </span>
         {this.renderForm(item)}
       </li>
