@@ -78,6 +78,16 @@ class ShopItem extends React.Component {
       return(<div></div>)
     }
   }
+
+  renderType(item) {
+    if (item.type === "count") {
+      return <span className="item-row">Kertakortti</span>
+    } else if (item.type === "time") {
+      return <span className="item-row">Aikakortti</span>
+    } else {
+      return <span className="item-row">EI TYYPPIÄ</span>
+    }
+  }
   
   render() {
     //TODO: Render functionality for admin
@@ -86,6 +96,7 @@ class ShopItem extends React.Component {
     return (
       <li className="text-list-item">
         <span className="item-row">{item.title}</span>
+        {this.renderType(item)}
         <span className="item-row">
           {this.renderModifyButtons(item)}
         </span>

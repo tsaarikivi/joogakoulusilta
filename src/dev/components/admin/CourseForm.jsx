@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux'
 import * as actionCreators from '../../actions/admin.js'
 
 class CourseForm extends React.Component {
-  onSubmit(props) {
 
+  onSubmit(props) {
     if(this.props.mode === "addNew"){
       this.props.actions.addCourse(props, 
       this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
@@ -112,7 +112,11 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
-  return { courseTypes: state.courseTypeList, instructors: state.instructorList, places: state.placeList }
+  return {
+    courseTypes: state.courseTypeList,
+    instructors: state.instructorList,
+    places: state.placeList
+  }
 }
 
 function mapDispatchToProps(dispatch) {
