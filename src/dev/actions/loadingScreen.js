@@ -14,23 +14,25 @@ export function _showLoadingScreen(dispatch, context) {
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
             visible: true,
-            context
+            context,
+            success: "undefined"
         }
     });
 }
 
-export function hideLoadingScreen(context, timeout = 1000) {
+export function hideLoadingScreen(context, success, timeout = 1000) {
     return dispatch => {
-        _hideLoadingScreen(dispatch, context, timeout)
+        _hideLoadingScreen(dispatch, context, success, timeout)
     }
 }
 
-export function _hideLoadingScreen(dispatch, context, timeout = 1000) {
+export function _hideLoadingScreen(dispatch, context, success, timeout = 1000) {
     dispatch({
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
             visible: true,
-            context
+            context,
+            success
         }
     });
     console.log("LoadingScreenOff")
@@ -39,7 +41,8 @@ export function _hideLoadingScreen(dispatch, context, timeout = 1000) {
             type: CHANGE_LOADINGSCREEN_STATE,
             payload: {
                 visible: false,
-                context
+                context,
+                success
             }
         });
     }, timeout)

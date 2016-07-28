@@ -4,16 +4,30 @@ import { connect } from 'react-redux'
 
 class LoadingScreen extends React.Component {
 
+  renderLoadingImage(success) {
+    if (success === true) {
+      return <img className="loading-img" src="./assets/success.png" />
+    } else if (success === false) {
+      return <img className="loading-img" src="./assets/error.png" />
+    } else {
+      return <img className="loading-img rolling" src="./assets/loading.png" />
+    }
+  }
+
   render() {
-    if(this.props.loadingScreen.visible){
+    const {loadingScreen} = this.props
+
+    console.log("LOADINGS", loadingScreen)
+
+    if(loadingScreen.visible){
       console.log("Loading screen visible")
       return (
         <div className="course-info-container">
           <div className="outer">
             <div className="middle">
               <div className="inner centered">
-                <img className="loading-img" src="./assets/loading.png" />
-                <h3 className="text-white text-bold"> {this.props.loadingScreen.context} </h3>
+                {this.renderLoadingImage(loadingScreen.success)}
+                <h3 className="text-white text-bold"> {loadingScreen.context} </h3>
               </div>
             </div>
           </div>          

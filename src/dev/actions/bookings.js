@@ -27,15 +27,15 @@ export function postCancellation(item, txRef, courseInfo) {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _hideLoadingScreen(dispatch, "Varaus peruttu")
+                    _hideLoadingScreen(dispatch, "Varaus peruttu", true)
                 })
                 .catch(error => {
                     console.error(error);
-                    _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString())
+                    _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString(), false)
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
-            _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString())
+            _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString(), false)
         });
     }
 }
@@ -55,15 +55,15 @@ export function postReservation(forward, courseInfo) {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _hideLoadingScreen(dispatch, "Varaus onnistui")
+                    _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {
                     console.error(error);
-                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString())
+                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
-            _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString())
+            _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
         });
     }
 }

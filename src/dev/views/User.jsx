@@ -38,7 +38,7 @@ class User extends React.Component {
       if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
           this.userFullyLoaded = true;
           if(this.lsShown){
-            this.props.lsActions.hideLoadingScreen("Valmis", 1000)
+            this.props.lsActions.hideLoadingScreen("Valmis", true, 1000)
             this.lsShown = false
           }
         }

@@ -49,7 +49,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
                 })
             })
             .then(result => {
-                _hideLoadingScreen(dispatch, "Käteisosto onnistui.")
+                _hideLoadingScreen(dispatch, "Käteisosto onnistui", true)
                 dispatch({
                     type: EXECUTE_CASH_PURCHASE,
                     payload: {
@@ -65,7 +65,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
             })
             .catch(error => {
                 console.error("CASH ERROR", error);
-                _hideLoadingScreen(dispatch, "Käteisostossa tapahtui virhe: " + error.toString())
+                _hideLoadingScreen(dispatch, "Käteisostossa tapahtui virhe: " + error.toString(), false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -165,7 +165,7 @@ export function getClientTokenFromBraintree() {
                 return axios.get(JOOGAURL + '?token=' + idToken)
             })
             .then(response => {
-                _hideLoadingScreen(dispatch, "Maksuyhteys valmis.")
+                _hideLoadingScreen(dispatch, "Maksuyhteys valmis", true)
                 dispatch({
                     type: GET_CLIENT_TOKEN,
                     payload: {
@@ -176,7 +176,7 @@ export function getClientTokenFromBraintree() {
             })
             .catch(error => {
                 console.error("TOKEN_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Maksuyhteyden alustuksessa tapahtui virhe: ", error.toString())
+                _hideLoadingScreen(dispatch, "Maksuyhteyden alustuksessa tapahtui virhe: ", error.toString(), false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -205,7 +205,7 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
                 })
             })
             .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun suoritus onnistui.")
+                _hideLoadingScreen(dispatch, "Maksun suoritus onnistui", true)
                 dispatch({
                     type: DO_PURCHASE_TRANSACTION,
                     payload: {
@@ -221,7 +221,7 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
             })
             .catch(error => {
                 console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString())
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString(), false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {

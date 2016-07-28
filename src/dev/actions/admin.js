@@ -107,11 +107,11 @@ function _fetchUserList(dispatch) {
                 type: FETCH_INSTRUCTOR_LIST,
                 payload: instructorList
             });
-            _hideLoadingScreen(dispatch, "Käyttäjät päivitetty");
+            _hideLoadingScreen(dispatch, "Käyttäjät päivitetty", true);
         })
         .catch(err => {
             console.error("ADMIN_ERR: fetch users fetchUserList: ", err);
-            _hideLoadingScreen(dispatch, "Käyttäjien päivityksessä tapahtui virhe: " + err.toString())
+            _hideLoadingScreen(dispatch, "Käyttäjien päivityksessä tapahtui virhe: " + err.toString(), false)
         })
 }
 
