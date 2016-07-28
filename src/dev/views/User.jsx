@@ -25,6 +25,7 @@ class User extends React.Component {
     super();
     this.lsShown = false;
     this.userFullyLoaded = false
+    this.emailVerificationOngoing = false
   }
 
   componentWillMount(){
@@ -45,7 +46,10 @@ class User extends React.Component {
   }
 
   handleEmailVerify(){
+    if(!this.emailVerificationOngoing){
+      this.emailVerificationOngoing = true;
       this.props.actions.sendEmailVerification()
+    } 
   }
 
 

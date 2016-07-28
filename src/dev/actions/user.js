@@ -7,6 +7,12 @@ import {
     UPDATE_USERS_SCBOOKINGS
 } from './actionTypes.js'
 
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
+
+
 const Auth = firebase.auth();
 
 var UserRef;
@@ -317,8 +323,10 @@ export function resetPassword(email) {
 
 export function sendEmailVerification() {
     return dispatch => {
-        firebase.auth().currentUser.sendEmailVerification().then(() => {
-                console.log("EMAIL verification request sent to user.")
+        _showLoadingScreen(dispatch, "Lähetetään verifiointilinkki sähköpostiisi")
+        firebase.auth().currentUser.sendEmailVerification()
+            .then(() => {
+                _hideLoadingScreen(dispatch, "Sähköposti lähetetty.", true)
             })
             .catch((error) => {
                 console.error("Error from: sendEmailVerification - ", error)
@@ -331,6 +339,7 @@ export function sendEmailVerification() {
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Sähköpostin lähetyksessä tapahtui virhe: " + error.toString(), false)
             })
     }
 }
