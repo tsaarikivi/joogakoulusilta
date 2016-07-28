@@ -11,9 +11,9 @@ class LoadingScreen extends React.Component {
         <div className="course-info-container">
           <div className="outer">
             <div className="middle">
-              <div className="inner">
-                <h3 className="centered text-white text-bold"> Ladataan.. </h3>
-                <h4 className="centered text-white text-bold"> {this.props.loadingScreen.context} </h4>
+              <div className="inner centered">
+                <img className="loading-img" src="./assets/square.png" />
+                <h3 className="text-white text-bold"> {this.props.loadingScreen.context} </h3>
               </div>
             </div>
           </div>          
