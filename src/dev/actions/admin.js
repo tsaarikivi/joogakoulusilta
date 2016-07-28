@@ -585,7 +585,7 @@ export function modifyShopItem(data, type) {
         expiresAfterDays: data.expiresAfterDays || null,
         price: Number(data.price.toFixed(2)),
         taxamount: Number(taxamount.toFixed(2)),
-        //taxpercent: Number(data.taxpercent.toFixed(2)),
+        taxpercent: Number(data.taxpercent.toFixed(2)),
         beforetax: Number(beforetax.toFixed(2)),
     })
         .catch(err => {
