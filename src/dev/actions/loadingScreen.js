@@ -9,7 +9,6 @@ export function showLoadingScreen(context) {
 }
 
 export function _showLoadingScreen(dispatch, context) {
-    console.log("LoadingScreenOn")
     dispatch({
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
@@ -35,7 +34,6 @@ export function _hideLoadingScreen(dispatch, context, success, timeout = 1000) {
             success
         }
     });
-    console.log("LoadingScreenOff")
     setTimeout(() => {
         dispatch({
             type: CHANGE_LOADINGSCREEN_STATE,
