@@ -32,13 +32,13 @@ class TimeTableItem extends React.Component {
     var userBooked = null;
     if(this.props.booking){
       if(this.props.booking.user.length > 0){
-         userBooked = <p className="table-participants">VARATTU</p>
+         userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
       }
     }
     if(this.props.booking){
-      var allBooked = <p className="table-participants">0/{this.props.item.maxCapacity}</p>
+      var allBooked = <p className="table-participants margin-left">0/{this.props.item.maxCapacity}</p>
       if(this.props.booking.all.length > 0){
-        allBooked = <p className="table-participants">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity}</p>
+        allBooked = <p className="table-participants margin-left">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity}</p>
       }
     }
     return (
