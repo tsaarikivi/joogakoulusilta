@@ -128,7 +128,7 @@ export function register(email, password, fName, sName, a) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Rekisteröidään käyttäjää " + email)
         Auth.createUserWithEmailAndPassword(email, password).then(() => {
-            _hideLoadingScreen(dispatch, "Käyttäjä " + email + " onnistuneesti rekisteröity")
+            _hideLoadingScreen(dispatch, "Käyttäjä " + email + " onnistuneesti rekisteröity", true)
         }).catch(error => {
             if (error) {
                 dispatch({
@@ -140,7 +140,7 @@ export function register(email, password, fName, sName, a) {
                         }
                     }
                 })
-                _hideLoadingScreen(dispatch, "Käyttäjän " + email + "rekisteröinti epäonnistui: " + error.toString(), 3000)
+                _hideLoadingScreen(dispatch, "Käyttäjän " + email + "rekisteröinti epäonnistui: " + error.toString(), false, 3000)
             }
         });
     }

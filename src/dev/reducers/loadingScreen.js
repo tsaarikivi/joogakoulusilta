@@ -4,7 +4,8 @@ import {
 
 const INITIAL_STATE = {
     visible: false,
-    context: ""
+    context: "",
+    success: "undefined"
 }
 
 export default function(state = INITIAL_STATE, action) {
