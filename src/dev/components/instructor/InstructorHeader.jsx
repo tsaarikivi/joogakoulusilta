@@ -7,13 +7,6 @@ import * as instructoractions from '../../actions/instructor.js'
 
 class InstructorHeader extends React.Component {
 
-  componentWillMount(){
-    this.props.actions.fetchInstructorData();
-  }
-
-  componentWillUnmount(){
-    this.props.actions.stopFetchInstructorData();
-  }
 
   render() {
     var errorOut = null

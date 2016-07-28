@@ -21,7 +21,7 @@ class CourseInfo extends React.Component {
     if(!this.reservationRequestOngoing){
       this.reservationRequestOngoing = true;
       this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
-      this.props.courseActions.removeCourseInfo()
+      this.exitContainer()
     }
   }
 

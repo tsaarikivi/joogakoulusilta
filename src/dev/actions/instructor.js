@@ -3,40 +3,29 @@ import {
     INSTRUCTOR_ERROR
 } from './actionTypes.js'
 
-export function fetchInstructorData() {
+export function fetchInstructorData(courseKey) {
     return dispatch => {
+        var returnObject = {}
         console.log("Fetch instructor data")
+
+        returnObject = Object.assign({
+            visible: true
+        })
         dispatch({
             type: FETCH_INSTRUCTOR_DATA,
-            payload: {}
+            payload: returnObject
         });
-        dispatch({
-            type: INSTRUCTOR_ERROR,
-            payload: {
-                error: {
-                    code: "NOT_IMPLEMENTED",
-                    message: "action not implemented"
-                }
-            }
-        })
     }
 }
 
-export function stopFetchInstructorData() {
+export function clearInstructorData() {
     return dispatch => {
         console.log("Fetch instructor data")
         dispatch({
             type: FETCH_INSTRUCTOR_DATA,
-            payload: {}
-        });
-        dispatch({
-            type: INSTRUCTOR_ERROR,
             payload: {
-                error: {
-                    code: "NOT_IMPLEMENTED",
-                    message: "action not implemented"
-                }
+                visible: false
             }
-        })
+        });
     }
 }

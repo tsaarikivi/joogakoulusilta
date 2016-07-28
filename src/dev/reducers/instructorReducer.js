@@ -4,6 +4,8 @@ import {
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
+    visible: false,
+    courseInfo: {},
     error: {
         code: "OK",
         message: "No error"

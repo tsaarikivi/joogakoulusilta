@@ -17,7 +17,7 @@ class Timetable extends React.Component {
   }
 
   render() {
-    var bookings = this.props.timetable.bookings;
+    const { bookings } = this.props.timetable;
 
     return (
       <div class="container timetable-container bordered-container centered">
