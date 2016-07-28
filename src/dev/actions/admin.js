@@ -125,6 +125,7 @@ export function stopFetchCourseTypeList() {
         });
     }
 }
+
 export function fetchCourseTypeList() {
     var list = []
     var returnObject = {}
