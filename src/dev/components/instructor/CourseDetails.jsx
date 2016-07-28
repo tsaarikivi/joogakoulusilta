@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
-
+import UserItem from './UserItem.jsx'
 import * as instructoractions from '../../actions/instructor.js'
 
 class CourseDetails extends React.Component {
@@ -15,6 +15,26 @@ class CourseDetails extends React.Component {
     this.props.actions.clearInstructorData()
   }
 
+  renderuser(item) {
+      console.log("what about WE HERE?");
+      return (
+        <UserItem item={item} key={item.key}/>
+      )
+  }
+
+  renderUserList(){
+      console.log("ARE WE HERE?", this.props.instructor.booking);
+    if(this.props.instructor.booking.length > 0)
+    {
+      return (
+        <ul className="wide-list">
+            {this.props.instructor.booking[0].participants.map(this.renderuser)}
+        </ul>
+      );
+    }
+                            
+  }
+  
   render() {
     const { course, booking, visible } = this.props.instructor;
 
@@ -27,9 +47,9 @@ class CourseDetails extends React.Component {
     let day = getCourseTimeLocal(weekIndex, course.start, course.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
-    let bookingPerCapacity = null
+    let bookingPerCapacity = ""
     if(booking.length > 0){
-      bookingPerCapacity = <h3>{booking[0].reservations}/{course.maxCapacity}</h3>
+      bookingPerCapacity = booking[0].reservations + "/" + course.maxCapacity
     }
 
     if(visible){
@@ -39,8 +59,8 @@ class CourseDetails extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
               <h2>{course.courseType.name}</h2>
-              <h3>{dayStr}</h3>
-              {bookingPerCapacity}
+              <h3>{dayStr}    ( {bookingPerCapacity} )</h3>
+              {this.renderUserList()}
             </div>
           </div>
         </div>
