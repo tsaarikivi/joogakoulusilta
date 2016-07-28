@@ -20,8 +20,21 @@ class SpecialCourseForm extends React.Component {
 
   onSubmit(props) {
     props.date = this.startDate.valueOf()
-    this.props.actions.addSpecialCourse(props)
-    // TODO : change actions to on instead of ONCE take reloads away
+    if(this.props.mode === "addNew"){
+      this.props.actions.addSpecialCourse(props, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
+      )
+    } else {
+      this.props.actions.modifySpecialCourse(props, 
+      this.props.itemkey, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
+      )
+    }
+    this.props.actions.minimizeSpecialCourseForm()
   }
 
   renderCourseTypeOptions(item) {
@@ -43,8 +56,7 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-//    <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
-
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
     const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
@@ -91,7 +103,7 @@ class SpecialCourseForm extends React.Component {
           <label htmlFor="SCtaxp">Veroprosentti</label>
           <input type="number" step="0.01" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
         </div>
       )
@@ -134,7 +146,8 @@ function mapStateToProps(state) {
     cmp: state.specialCourseFrom,
     courseTypes: state.courseTypeList,
     instructors: state.instructorList,
-    places: state.placeList }
+    places: state.placeList
+  }
 }
 
 function mapDispatchToProps(dispatch) {

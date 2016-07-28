@@ -7,6 +7,7 @@ import {
     FETCH_SHOP_LIST,
     FETCH_PLACE_LIST,
     FETCH_INFO_LIST,
+    FETCH_SPECIAL_COURSE_LIST,
     STOP_FETCH_INFO_LIST,
     STOP_FETCH_SHOP_LIST,
 
@@ -26,6 +27,8 @@ import {
     MINIMIZE_PLACE_LIST,
     EXPAND_INFO_LIST,
     MINIMIZE_INFO_LIST,
+    EXPAND_SPECIAL_COURSE_LIST,
+    MINIMIZE_SPECIAL_COURSE_LIST,
 
     EXPAND_PLACE_FORM,
     MINIMIZE_PLACE_FORM,
@@ -72,6 +75,7 @@ function _fetchUserList(dispatch) {
             specialusers = snapshot.val()
             for (var key in users) {
                 users[key].key = key                
+                userList = userList.concat(users[key])
                 if (specialusers[key]) {
                     console.log("specialUsers", specialusers);
                     if (specialusers[key].admin) {
@@ -82,8 +86,6 @@ function _fetchUserList(dispatch) {
                         console.log("INSTRUCTOR");
                         instructorList = instructorList.concat(users[key])
                     }
-                } else {
-                    userList = userList.concat(users[key])
                 }
             }
             userList.sort((a, b) => {
@@ -206,6 +208,51 @@ export function fetchCourseList() {
             })
         }, err => {
             console.error("ERR: fetch courses: ", err);
+        })
+    }
+}
+
+export function stopFetchSpecialCourseList() {
+    return dispatch => {
+        firebase.database().ref('/specialCourses/').off('value');
+        dispatch({
+            type: FETCH_SPECIAL_COURSE_LIST,
+            payload: {
+                list: []
+            }
+        });
+    }
+}
+
+export function fetchSpecialCourseList() {
+    var list = []
+    var returnObject = {}
+    return dispatch => {
+        firebase.database().ref('/specialCourses/').on('value', snapshot => {
+            var courses = snapshot.val()
+            list = Object.assign([])
+            for (var key in courses) {
+                if (courses.hasOwnProperty(key)) {
+                    let ItemWithKey = courses[key]
+                    ItemWithKey.key = key
+                    list = list.concat(ItemWithKey)
+                }
+            }
+            list.sort(function(a, b) {
+                if (a.day && b.day) {
+                    return a.day - b.day
+                }
+                return 1
+            })
+            returnObject = Object.assign({}, {
+                list: list
+            })
+            dispatch({
+                type: FETCH_SPECIAL_COURSE_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch specialCourses: ", err);
         })
     }
 }
@@ -698,6 +745,22 @@ export function minimizeCourseList() {
     }
 }
 
+export function expandSpecialCourseList() {
+    return dispatch => {
+        dispatch({
+            type: EXPAND_SPECIAL_COURSE_LIST
+        })
+    }
+}
+
+export function minimizeSpecialCourseList() {
+    return dispatch => {
+        dispatch({
+            type: MINIMIZE_SPECIAL_COURSE_LIST
+        })
+    }
+}
+
 export function expandInstructorList() {
     return dispatch => {
         dispatch({
@@ -821,7 +884,11 @@ export function minimizeCourseForm() {
 export function expandSpecialCourseForm() {
     return dispatch => {
         dispatch({
-            type: EXPAND_SPECIAL_COURSE_FORM
+            type: EXPAND_SPECIAL_COURSE_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
         })
     }
 }
@@ -829,7 +896,11 @@ export function expandSpecialCourseForm() {
 export function minimizeSpecialCourseForm() {
     return dispatch => {
         dispatch({
-            type: MINIMIZE_SPECIAL_COURSE_FORM
+            type: MINIMIZE_SPECIAL_COURSE_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
         })
     }
 }
