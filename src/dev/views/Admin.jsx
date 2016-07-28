@@ -51,10 +51,10 @@ componentWillReceiveProps(nextProps){
           <InstructorList />
           <UserList />
           <InfoList />
+          <ShopList />
           <PlaceList />
           <CourseTypeList />
           <CourseList />
-          <ShopList />
           <SpecialCourseList />
         </div>
       )

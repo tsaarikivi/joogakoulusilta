@@ -68,7 +68,6 @@ class CourseTypeItem extends React.Component {
     return (
       <li className="text-list-item">
         <span className="item-row">{this.props.item.name}</span>
-        <span className="item-row">{this.props.item.desc}</span>
         <span className="item-row">
           <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
         </span>

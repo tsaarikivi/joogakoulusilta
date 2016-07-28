@@ -73,6 +73,7 @@ class SpecialCourseItem extends React.Component {
     return (
       <div>
         <span className="item-row">{item.title}</span>
+        <span className="item-row">{item.courseType.name}</span>
       </div>
     )
   }
