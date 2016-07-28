@@ -85,8 +85,8 @@ const validate = values => {
   }
   if (!values.password) {
     errors.password = 'Pakollinen kenttä.'
-  } else if (values.password.length < 5) {
-    errors.password = 'Salasanan on oltava vähintään 5 merkkiä pitkä.'
+  } else if (values.password.length < 6) {
+    errors.password = 'Salasanan on oltava vähintään 6 merkkiä pitkä.'
   }
   if (!values.firstName) {
     errors.firstName = 'Pakollinen kenttä.'
