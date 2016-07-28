@@ -21,6 +21,7 @@ class SpecialCourseInfo extends React.Component {
       this.onceOnly = true;
       this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
       this.props.shopActions.getClientTokenFromBraintree()
+      this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
     }
   }
@@ -30,6 +31,7 @@ class SpecialCourseInfo extends React.Component {
       this.onceOnly = true;
       this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
       this.props.shopActions.buyWithCash();
+      this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
     }
   }
