@@ -22,12 +22,18 @@ var specialCBookingsRef;
 
 export function updateUserDetails(user) {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Päivitetään tiedot.")
         firebase.database().ref('/users/' + user.uid).update(user)
+            .then(() => {
+                _hideLoadingScreen(dispatch, "Tiedot päivitetty.", true)
+            })
             .catch(error => {
+                console.error("User details update failed: ", error)
                 dispatch({
                     type: USER_ERROR,
                     payload: error
                 })
+                _hideLoadingScreen(dispatch, "Tietojen päivittämisessä tapahtui virhe: " + error.message, false)
             })
     }
 }
@@ -311,7 +317,7 @@ export function resetPassword(email) {
                     payload: {
                         error: {
                             code: "EMAIL_RESET_ERROR",
-                            message: error.toString()
+                            message: error.message
                         }
                     }
                 })
@@ -335,11 +341,11 @@ export function sendEmailVerification() {
                     payload: {
                         error: {
                             code: "EMAIL_VERIFICATION_ERROR",
-                            message: error.toString()
+                            message: error.message
                         }
                     }
                 })
-                _hideLoadingScreen(dispatch, "Sähköpostin lähetyksessä tapahtui virhe: " + error.toString(), false)
+                _hideLoadingScreen(dispatch, "Sähköpostin lähetyksessä tapahtui virhe: " + error.message, false)
             })
     }
 }
