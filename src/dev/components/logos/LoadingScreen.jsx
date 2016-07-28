@@ -12,7 +12,7 @@ class LoadingScreen extends React.Component {
           <div className="outer">
             <div className="middle">
               <div className="inner centered">
-                <img className="loading-img" src="./assets/square.png" />
+                <img className="loading-img" src="./assets/loading.png" />
                 <h3 className="text-white text-bold"> {this.props.loadingScreen.context} </h3>
               </div>
             </div>

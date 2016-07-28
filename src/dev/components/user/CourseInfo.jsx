@@ -76,13 +76,13 @@ class CourseInfo extends React.Component {
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
         return(
-                <p> Sinä olet ilmoittautunut tälle kurssille.</p>
+                <p className="text-blue"> Sinä olet ilmoittautunut tälle kurssille.</p>
               );
     }}
 
     if(this.courseIsFull()){
       return(
-        <p> Kurssi on jo täyteen varattu!</p>
+        <p className="text-red"> Kurssi on jo täyteen varattu!</p>
       );
     }
 
