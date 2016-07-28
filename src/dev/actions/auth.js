@@ -10,6 +10,11 @@ import {
     createNewUser
 } from './user.js'
 
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
+
 const Auth = firebase.auth();
 
 let firstName = null;
@@ -121,7 +126,10 @@ export function register(email, password, fName, sName, a) {
     alias = a;
 
     return dispatch => {
-        Auth.createUserWithEmailAndPassword(email, password).catch(error => {
+        _showLoadingScreen(dispatch, "Rekisteröidään käyttäjää " + email)
+        Auth.createUserWithEmailAndPassword(email, password).then(() => {
+            _hideLoadingScreen(dispatch, "Käyttäjä " + email + "onnistuneesti rekisteröity")
+        }).catch(error => {
             if (error) {
                 dispatch({
                     type: AUTH_ERROR,
@@ -132,6 +140,7 @@ export function register(email, password, fName, sName, a) {
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Käyttäjän " + email + "rekisteröinti epäonnistui: " + error.toString(), 3000)
             }
         });
     }

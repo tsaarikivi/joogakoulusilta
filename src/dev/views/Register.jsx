@@ -15,7 +15,6 @@ class Register extends React.Component {
 
   constructor(){
     super();
-    this.registerStarted = false;
     this.email = "";
     this.password = "";
     this.firstName = "";
@@ -34,16 +33,16 @@ class Register extends React.Component {
     }
   }
 
+  doRegister(data){
+    this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
+  }
+
   renderForm() {
 
     const { fields: { email, password, firstName, lastName, alias }, handleSubmit } = this.props
 
     return (
-      <form onSubmit={handleSubmit(data => {
-        this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
-        this.registerStarted = true
-        this.forceUpdate()
-      })}>
+      <form onSubmit={handleSubmit(data => { this.doRegister(data) })}>
         <label htmlFor="email">Sähköposti</label>
         <input type="email" placeholder="Sähköposti" {...email} />
         {email.touched && email.error && <div className="form-error">{email.error}</div>}
@@ -67,26 +66,14 @@ class Register extends React.Component {
   render() {
     
     if(this.props.auth.uid){
-      this.props.actions.waitForMilliseconds(5*1000);
       return(
         <div class="container">
           <Logo />
           <div className="content-container centered">
-            <h2>Rekisteröinti onnistui {this.firstName}!</h2>
             <Link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</Link>
           </div>
         </div>
       );
-    }
-    if(this.registerStarted === true && this.props.auth.error.code === "0"){
-      return(
-        <div class="container">
-          <Logo />
-          <div className="content-container">
-            <h2 className="centered">Rekisteröidään käyttäjää!</h2>
-          </div>
-        </div>
-      )
     }
       return (
         <div class="container">
