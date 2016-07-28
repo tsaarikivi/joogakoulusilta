@@ -7,7 +7,7 @@ import * as actionCreators from '../../actions/admin.js'
 
 class InstructorList extends React.Component {
   componentWillMount() {
-    this.props.actions.fetchInstructorList()
+    //this.props.actions.fetchInstructorList()
   }
 
   renderList(item) {

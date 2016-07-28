@@ -45,127 +45,75 @@ import {
 import {
     toMilliseconds
 } from '../helpers/timeHelper.js'
-
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
 
 export function fetchUserList() {
-    var list = Object.assign([])
     return dispatch => {
-        firebase.database().ref('/users/').once('value', snapshot => {
-                var users = snapshot.val()
-                for (var key in users) {
-                    if (users.hasOwnProperty(key) && !users[key].instructor) {
-                        let ItemWithKey = users[key]
-                        ItemWithKey.key = key
-                        list = list.concat(ItemWithKey)
-                    }
-                }
-                list.sort(function(a, b) {
-                    let nma = a.firstname.toUpperCase()
-                    let nmb = b.firstname.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_USER_LIST,
-                    payload: list
-                })
-            })
-            .catch(err => {
-                console.error("ADMIN_ERR: fetch users fetchUserList: ", err);
-            })
+        _fetchUserList(dispatch)
     }
 }
 
-export function fetchAdminList() {
-    var list = Object.assign([])
+function _fetchUserList(dispatch) {
+    var userList = Object.assign([])
+    var adminList = Object.assign([])
+    var instructorList = Object.assign([])
     var specialusers = Object.assign({})
     var users = Object.assign({})
-
-    return dispatch => {
-        firebase.database().ref('/users/').once('value')
-            .then(snapshot => {
-                users = snapshot.val()
-                return firebase.database().ref('/specialUsers/').once('value')
-            })
-            .then(snapshot => {
-                specialusers = snapshot.val()
-
-                for (var key in specialusers) {
+    _showLoadingScreen(dispatch, "Päivitetään käyttäjät.")
+    firebase.database().ref('/users/').once('value')
+        .then(snapshot => {
+            users = snapshot.val()
+            return firebase.database().ref('/specialUsers/').once('value')
+        })
+        .then(snapshot => {
+            specialusers = snapshot.val()
+            for (var key in users) {
+                users[key].key = key
+                userList = userList.concat(users[key])
+                if (specialusers[key]) {
+                    console.log("specialUsers", specialusers);
                     if (specialusers[key].admin) {
-                        users[key].key = key
-                        list = list.concat(users[key])
+                        console.log("ADMIN");
+                        adminList = adminList.concat(users[key])
                     }
-                }
-                list.sort(function(a, b) {
-                    let nma = a.firstname.toUpperCase()
-                    let nmb = b.firstname.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_ADMIN_LIST,
-                    payload: list
-                })
-
-            })
-            .catch(err => {
-                console.error("FETCH USERS ERROR: ", err);
-            })
-    }
-}
-
-export function fetchInstructorList() {
-    var list = Object.assign([])
-    var specialusers = Object.assign({})
-    var users = Object.assign({})
-
-    return dispatch => {
-        firebase.database().ref('/users/').once('value')
-            .then(snapshot => {
-                users = snapshot.val()
-                return firebase.database().ref('/specialUsers/').once('value')
-            })
-            .then(snapshot => {
-                specialusers = snapshot.val()
-
-                for (var key in specialusers) {
                     if (specialusers[key].instructor) {
-                        users[key].key = key
-                        list = list.concat(users[key])
+                        console.log("INSTRUCTOR");
+                        instructorList = instructorList.concat(users[key])
                     }
                 }
-                list.sort(function(a, b) {
-                    let nma = a.firstname.toUpperCase()
-                    let nmb = b.firstname.toUpperCase()
-                    if (nma < nmb) {
-                        return -1
-                    }
-                    if (nma > nmb) {
-                        return 1
-                    }
-                    return 0
-                })
-                dispatch({
-                    type: FETCH_INSTRUCTOR_LIST,
-                    payload: list
-                })
-
-            })
-            .catch(err => {
-                console.error("FETCH USERS ERROR: ", err);
-            })
-    }
+            }
+            userList.sort((a, b) => {
+                return (a.firstname.toUpperCase() < b.firstname.toUpperCase()) ? -1 : 1
+            });
+            dispatch({
+                type: FETCH_USER_LIST,
+                payload: userList
+            });
+            adminList.sort((a, b) => {
+                return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+            });
+            dispatch({
+                type: FETCH_ADMIN_LIST,
+                payload: adminList
+            });
+            instructorList.sort((a, b) => {
+                return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+            });
+            dispatch({
+                type: FETCH_INSTRUCTOR_LIST,
+                payload: instructorList
+            });
+            _hideLoadingScreen(dispatch, "Käyttäjät päivitetty");
+        })
+        .catch(err => {
+            console.error("ADMIN_ERR: fetch users fetchUserList: ", err);
+            _hideLoadingScreen(dispatch, "Käyttäjien päivityksessä tapahtui virhe: " + err.toString())
+        })
 }
+
 
 export function stopFetchCourseTypeList() {
     return dispatch => {
@@ -623,6 +571,9 @@ export function lockUser(key) {
             locked: true,
             instructor: null
         })
+        .then(() => {
+            _fetchUserList(dispatch)
+        })
         .catch(err => {
             console.error("ERR: update; lockUser: ", err);
         })
@@ -631,6 +582,9 @@ export function lockUser(key) {
 export function unlockUser(key) {
     return dispatch => firebase.database().ref('/users/' + key).update({
             locked: null
+        })
+        .then(() => {
+            _fetchUserList(dispatch)
         })
         .catch(err => {
             console.error("ERR: update; unlockUser: ", err);
@@ -659,6 +613,9 @@ export function makeInstructor(key) {
     return dispatch => firebase.database().ref('/specialUsers/' + key).update({
             instructor: true
         })
+        .then(() => {
+            _fetchUserList(dispatch)
+        })
         .catch(err => {
             console.error("ERR: update; makeInstructor: ", err);
         })
@@ -667,6 +624,9 @@ export function makeInstructor(key) {
 export function unmakeInstructor(key) {
     return dispatch => firebase.database().ref('/specialUsers/' + key).update({
             instructor: null
+        })
+        .then(() => {
+            _fetchUserList(dispatch)
         })
         .catch(err => {
             console.error("ERR: update; unmakeInstructor: ", err);
@@ -960,18 +920,3 @@ export function minimizeInfoForm() {
         })
     }
 }
-
-/*export function updateToFirebase(
-  refName,
-  key = firebase.database().ref().child(refName).push().key,
-  ...items)
-  {
-    return dispatch => firebase.database().ref(refName).push({
-      items.reduce((prev, item) => {
-        return Object.assign({}, prev, item)
-      }, {})
-  })
-  .catch(err => {
-      console.error("ERR: pushToFirebase() ", err);
-  })
-}*/

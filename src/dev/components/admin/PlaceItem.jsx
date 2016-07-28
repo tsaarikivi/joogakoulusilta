@@ -10,9 +10,17 @@ class PlaceItem extends React.Component {
   constructor(){
     super()
     this.toggleForm = false
+    this.confirmation = false
+    this.timeoutId = 0;
   }
 
- componentWillReceiveProps(nextProps){
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
       if(nextProps.cmp.expanded && nextProps.cmp.expander === this.props.item.key){
         this.toggleForm = true;
       } else {
@@ -21,7 +29,17 @@ class PlaceItem extends React.Component {
   }
 
   remove(item){
-    this.props.actions.removePlaceItem(item);
+    if(this.confirmation){
+      this.props.actions.removePlaceItem(item);
+      this.confirmation = false; 
+    } else {
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout(() => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
   }
 
   toggleModify(item){
@@ -45,17 +63,19 @@ class PlaceItem extends React.Component {
 
   render() {
 
-    var buttonText = (this.toggleForm)? "Peru Muokkaus" : "Muokkaa"
+    var modifyButtonText = (this.toggleForm)? "Peru Muokkaus" : "Muokkaa"
+    var removeButtonText = (this.confirmation)? "Vahvista poisto" : "Poista"
+
     const {item} = this.props
     return (
       <li className="text-list-item">
         <span className="item-row">{this.props.item.name}</span>
         <span className="item-row">{this.props.item.address}</span>
         <span className="item-row">
-          <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{buttonText}</button>
+          <button className="btn-small btn-blue" onClick={() => {this.toggleModify(item)}}>{modifyButtonText}</button>
         </span>
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>Poista</button>
+          <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>{removeButtonText}</button>
         </span>
         {this.renderForm(item)}
       </li>

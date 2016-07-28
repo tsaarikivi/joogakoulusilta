@@ -8,7 +8,7 @@ import * as actionCreators from '../../actions/admin.js'
 class AdminList extends React.Component {
   
   componentWillMount() {
-    this.props.actions.fetchAdminList()
+    //this.props.actions.fetchAdminList()
   }
 
   renderList(item) {
