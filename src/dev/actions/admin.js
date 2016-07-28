@@ -77,13 +77,10 @@ function _fetchUserList(dispatch) {
                 users[key].key = key                
                 userList = userList.concat(users[key])
                 if (specialusers[key]) {
-                    console.log("specialUsers", specialusers);
                     if (specialusers[key].admin) {
-                        console.log("ADMIN");
                         adminList = adminList.concat(users[key])
                     }
                     if (specialusers[key].instructor) {
-                        console.log("INSTRUCTOR");
                         instructorList = instructorList.concat(users[key])
                     }
                 }
