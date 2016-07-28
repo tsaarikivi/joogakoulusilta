@@ -73,19 +73,15 @@ renderCashPayment(){
 
   renderDonePhase(){
     if(this.buyingSpecialCourse){
-      this.props.actions.waitForMilliseconds(2*1000);
+      this.props.actions.waitForMilliseconds(300); //Set this to define how long the done phase is displayed 
       return(
         <div>
-          <br/>
-          <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
         </div>
       )
     }
-    this.props.actions.waitForMilliseconds(5*1000);
+    this.props.actions.waitForMilliseconds(300);
     return(
       <div>
-        <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
-        <Link className="centered btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
       </div>
     )
   }

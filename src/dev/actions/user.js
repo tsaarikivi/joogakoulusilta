@@ -17,10 +17,10 @@ var specialCBookingsRef;
 export function updateUserDetails(user) {
     return dispatch => {
         firebase.database().ref('/users/' + user.uid).update(user)
-            .catch(err => {
+            .catch(error => {
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: error
                 })
             })
     }
@@ -43,13 +43,17 @@ export function fetchUsersSpecialCourseBookings(uid) {
             dispatch({
                 type: UPDATE_USERS_SCBOOKINGS,
                 payload: {
+                    specialCoursesReady: true,
                     specialCourses: returnList
                 }
             })
-        }, (err) => {
+        }, (error) => {
             dispatch({
                 type: USER_ERROR,
-                payload: err
+                payload: {
+                    error,
+                    specialCoursesReady: true
+                }
             })
         })
     }
@@ -87,7 +91,8 @@ export function fetchUsersBookings(uid) {
                                             error: {
                                                 code: "DB_INTEGRITY_ERR",
                                                 message: "Referred course is missing from database: " + oneCourse
-                                            }
+                                            },
+                                            bookingsReady: true
                                         }
                                     })
                                 } else {
@@ -110,29 +115,39 @@ export function fetchUsersBookings(uid) {
                     dispatch({
                         type: UPDATE_USERS_BOOKINGS,
                         payload: {
+                            bookingsReady: true,
                             bookings: returnListBookings,
                             history: returnListHistory
                         }
                     })
-                }, err => {
-                    console.error("Failed getting bookings: ", uid, err);
+                }, error => {
+                    console.error("Failed getting bookings: ", uid, error);
                     dispatch({
                         type: USER_ERROR,
-                        payload: err
+                        payload: {
+                            error,
+                            bookingsReady: true
+                        }
                     })
                 })
-            }, err => {
-                console.error("Failed getting course info: ", uid, err);
+            }, error => {
+                console.error("Failed getting course info: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: {
+                        error,
+                        bookingsReady: true
+                    }
                 })
             })
-            .catch((err) => {
-                console.error("Failed getting bookings: ", uid, err);
+            .catch((error) => {
+                console.error("Failed getting bookings: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: {
+                        error,
+                        bookingsReady: true
+                    }
                 })
             })
     }
@@ -210,14 +225,18 @@ export function fetchUsersTransactions(uid) {
             dispatch({
                 type: UPDATE_USERS_TRANSACTIONS,
                 payload: {
+                    transactionsReady: true,
                     transactions: trx
                 }
             })
-        }, err => {
-            console.error("Fetching transactions failed: ", uid, err);
+        }, error => {
+            console.error("Fetching transactions failed: ", uid, error);
             dispatch({
                 type: USER_ERROR,
-                payload: err
+                payload: {
+                    transactionsReady: true,
+                    error
+                }
             })
         })
     }

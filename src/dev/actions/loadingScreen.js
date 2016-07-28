@@ -2,26 +2,30 @@ import {
     CHANGE_LOADINGSCREEN_STATE
 } from './actionTypes.js'
 
-export function setLoadingScreenOn(context) {
+export function showLoadingScreen(context) {
     return dispatch => {
-        console.log("LoadingScreenOn")
-        dispatch({
-            type: CHANGE_LOADINGSCREEN_STATE,
-            payload: {
-                visible: true,
-                context
-            }
-        });
+        _showLoadingScreen(dispatch, context)
     }
 }
 
-export function setLoadingScreenOff(context) {
+export function _showLoadingScreen(dispatch, context) {
+    console.log("LoadingScreenOn")
+    dispatch({
+        type: CHANGE_LOADINGSCREEN_STATE,
+        payload: {
+            visible: true,
+            context
+        }
+    });
+}
+
+export function hideLoadingScreen(context, timeout = 1000) {
     return dispatch => {
-        _setLoadingScreenOff(dispatch, context)
+        _hideLoadingScreen(dispatch, context, timeout)
     }
 }
 
-export function _setLoadingScreenOff(dispatch, context) {
+export function _hideLoadingScreen(dispatch, context, timeout = 1000) {
     dispatch({
         type: CHANGE_LOADINGSCREEN_STATE,
         payload: {
@@ -38,5 +42,5 @@ export function _setLoadingScreenOff(dispatch, context) {
                 context
             }
         });
-    }, 2 * 1000)
+    }, timeout)
 }

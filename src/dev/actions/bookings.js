@@ -6,14 +6,15 @@ import {
 } from './actionTypes.js'
 
 import {
-    _setLoadingScreenOff
+    _hideLoadingScreen,
+    _showLoadingScreen
 } from './loadingScreen.js'
 
-var BookingsRef;
 
 export function postCancellation(item, txRef, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : JOOGASERVER + '/cancelSlot'
     return dispatch => {
+        _showLoadingScreen(dispatch, "Perutaan varausta.")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
@@ -26,13 +27,15 @@ export function postCancellation(item, txRef, courseInfo) {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _setLoadingScreenOff(dispatch, response.data.message)
+                    _hideLoadingScreen(dispatch, "Varaus peruttu.")
                 })
                 .catch(error => {
                     console.error(error);
+                    _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString())
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
+            _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString())
         });
     }
 }
@@ -40,6 +43,7 @@ export function postCancellation(item, txRef, courseInfo) {
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
     return dispatch => {
+        _showLoadingScreen(dispatch, "Varataan kurssia.")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
@@ -50,13 +54,16 @@ export function postReservation(forward, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data); // Should process the data - for now ther is no need.
+                    console.log(response.data);
+                    _hideLoadingScreen(dispatch, "Varaus onnistui.")
                 })
                 .catch(error => {
                     console.error(error);
+                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString())
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
+            _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString())
         });
     }
 }
