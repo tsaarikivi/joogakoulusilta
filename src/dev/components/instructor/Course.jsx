@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {getTimeStrMsBeginnignOfDay} from '../../helpers/timeHelper.js'
-import { putCourseInfo } from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
+import * as instructoractions from '../../actions/instructor.js'
 
-class TimeTableItem extends React.Component {
+class Course extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if(this.props.courseInfo.key !== "0"){ //Pop-up is active and CI-props need to be updated
@@ -17,7 +17,7 @@ class TimeTableItem extends React.Component {
   }
 
   componentWillMount(){
-    this.props.bookingsActions.fetchCourseBookings(this.props.item.key, this.props.currentUser.uid)
+    this.props.bookingsActions.fetchCourseBookings(this.props.item.key, null)
   }
 
   componentWillUnmount(){
@@ -25,29 +25,24 @@ class TimeTableItem extends React.Component {
   }
 
   itemClicked() {
-    this.props.courseActions.putCourseInfo(this.props.item, this.props.booking)
+    this.props.iActions.fetchInstructorData(this.props.item.key)
   }
 
   render() {
-    var userBooked = null;
-    if(this.props.booking){
-      if(this.props.booking.user.length > 0){
-         userBooked = <p className="table-participants">VARATTU</p>
-      }
-    }
-    if(this.props.booking){
-      var allBooked = <p className="table-participants">0/{this.props.item.maxCapacity}</p>
-      if(this.props.booking.all.length > 0){
-        allBooked = <p className="table-participants">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity}</p>
+    const { booking, item } = this.props;
+    console.log("DETAILS: ", this.props);
+    if(booking){
+      var allBooked = <p className="table-participants">0/{item.maxCapacity}</p>
+      if(booking.all.length > 0){
+          allBooked = <p className="table-participants">{booking.all[0].reservations}/{item.maxCapacity}</p>
       }
     }
     return (
       <td onClick={() => this.itemClicked()}>
-        <p className="table-course">{this.props.item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(this.props.item.start)} - {getTimeStrMsBeginnignOfDay(this.props.item.end)}</p>
+        <p className="table-course">{item.courseType.name}</p>
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
-        {userBooked}
       </td>
     );
   }
@@ -58,8 +53,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { courseActions: bindActionCreators({putCourseInfo}, dispatch),
+  return { iActions: bindActionCreators(instructoractions, dispatch),
            bookingsActions: bindActionCreators(bookingsActionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeTableItem)
+export default connect(mapStateToProps, mapDispatchToProps)(Course)

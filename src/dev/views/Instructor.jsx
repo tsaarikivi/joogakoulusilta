@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import InstructorHeader from '../components/instructor/InstructorHeader.jsx'
+import CoursesList from '../components/instructor/CoursesList.jsx'
+import CoursesDetails from '../components/instructor/CourseDetails.jsx'
 
 
 class Instructor extends React.Component {
@@ -35,6 +37,8 @@ componentWillReceiveProps(nextProps){
       return (
         <div>
           <InstructorHeader />
+          <CoursesList />
+          <CoursesDetails />
         </div>
       )
     } else {
