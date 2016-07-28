@@ -114,6 +114,7 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderExpandButton() {
+    console.log("CMPHERR", this.props.cmp)
     if(this.props.cmp.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseForm()}>Piilota</button>
     }
@@ -143,7 +144,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    cmp: state.specialCourseFrom,
+    cmp: state.specialCourseForm,
     courseTypes: state.courseTypeList,
     instructors: state.instructorList,
     places: state.placeList

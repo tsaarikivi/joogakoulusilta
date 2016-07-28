@@ -74,7 +74,7 @@ function _fetchUserList(dispatch) {
         .then(snapshot => {
             specialusers = snapshot.val()
             for (var key in users) {
-                users[key].key = key                
+                users[key].key = key
                 userList = userList.concat(users[key])
                 if (specialusers[key]) {
                     if (specialusers[key].admin) {
@@ -86,7 +86,7 @@ function _fetchUserList(dispatch) {
                 }
             }
             userList.sort((a, b) => {
-                return a.firstname.toUpperCase() <- b.firstname.toUpperCase()
+                return a.firstname.toUpperCase() < - b.firstname.toUpperCase()
             });
             dispatch({
                 type: FETCH_USER_LIST,
@@ -114,7 +114,6 @@ function _fetchUserList(dispatch) {
         })
 }
 
-
 export function stopFetchCourseTypeList() {
     return dispatch => {
         firebase.database().ref('/courseTypes/').off('value');
@@ -140,7 +139,7 @@ export function fetchCourseTypeList() {
                     list = list.concat(ItemWithKey)
                 }
             }
-            list.sort(function(a, b) {
+            list.sort(function (a, b) {
                 let nma = a.name.toUpperCase()
                 let nmb = b.name.toUpperCase()
                 if (nma < nmb) {
@@ -190,7 +189,7 @@ export function fetchCourseList() {
                     list = list.concat(ItemWithKey)
                 }
             }
-            list.sort(function(a, b) {
+            list.sort(function (a, b) {
                 if (a.day && b.day) {
                     return a.day - b.day
                 }
@@ -235,7 +234,7 @@ export function fetchSpecialCourseList() {
                     list = list.concat(ItemWithKey)
                 }
             }
-            list.sort(function(a, b) {
+            list.sort(function (a, b) {
                 if (a.day && b.day) {
                     return a.day - b.day
                 }
@@ -268,7 +267,7 @@ export function fetchShopList() {
                     list = list.concat(ItemWithKey)
                 }
             }
-            list.sort(function(a, b) {
+            list.sort(function (a, b) {
                 if (a.price && b.price) {
                     return a.price - b.price
                 }
@@ -325,7 +324,7 @@ export function fetchPlaceList() {
                     list = list.concat(ItemWithKey)
                 }
             }
-            list.sort(function(a, b) {
+            list.sort(function (a, b) {
                 let nma = a.name.toUpperCase()
                 let nmb = b.name.toUpperCase()
                 if (nma < nmb) {
@@ -348,7 +347,6 @@ export function fetchPlaceList() {
         })
     }
 }
-
 
 export function fetchInfoList() {
     var list = []
@@ -412,10 +410,10 @@ export function removePlaceItem(item) {
 
 export function addPlace(data) {
     return dispatch => firebase.database().ref('/places/' + data.name).update({
-            name: data.name,
-            desc: data.desc,
-            address: data.address
-        })
+        name: data.name,
+        desc: data.desc,
+        address: data.address
+    })
         .catch(err => {
             console.error("ERR: update; addPlace: ", err);
         })
@@ -423,20 +421,28 @@ export function addPlace(data) {
 
 export function modifyPlace(data) {
     return dispatch => firebase.database().ref('/places/' + data.name).update({
-            name: data.name,
-            desc: data.desc,
-            address: data.address
-        })
+        name: data.name,
+        desc: data.desc,
+        address: data.address
+    })
         .catch(err => {
             console.error("ERR: update; UpdatePlace: ", err);
         })
 }
 
-
-
 export function removeCourse(key) {
     return dispatch => {
         firebase.database().ref('/courses/' + key).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing course failed: ", err)
+        })
+    }
+}
+
+export function removeSpecialCourse(key) {
+    return dispatch => {
+        firebase.database().ref('/specialCourses/' + key).remove().then(() => {
 
         }).catch(err => {
             console.error("Removing course failed: ", err)
@@ -477,7 +483,7 @@ export function addSpecialCourse(data) {
     var courseType = Object.assign({})
     var instructor = Object.assign({})
     var place = Object.assign({})
-        //TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
+    //TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
 
     return dispatch => {
         firebase.database().ref('/places/' + data.place).once("value")
@@ -517,9 +523,9 @@ export function addSpecialCourse(data) {
 
 export function addCourseType(data) {
     return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
-            name: data.name,
-            desc: data.desc
-        })
+        name: data.name,
+        desc: data.desc
+    })
         .catch(err => {
             console.error("ERR: update; addCourseType: ", err);
         })
@@ -535,34 +541,32 @@ export function removeCourseType(item) {
     }
 }
 
-
 export function modifyCourseType(data) {
     return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
-            name: data.name,
-            desc: data.desc
-        })
+        name: data.name,
+        desc: data.desc
+    })
         .catch(err => {
             console.error("ERR: update; modifyCourseType: ", err);
         })
 }
-
 
 export function addShopItem(data, type) {
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
 
     return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
-            type: type,
-            title: data.title,
-            desc: data.desc,
-            usetimes: data.usetimes || null,
-            usedays: data.usedays || null,
-            expiresAfterDays: data.expiresAfterDays || null,
-            price: Number(data.price.toFixed(2)),
-            taxamount: Number(taxamount.toFixed(2)),
-            taxpercent: Number(data.taxpercent.toFixed(2)),
-            beforetax: Number(beforetax.toFixed(2)),
-        })
+        type: type,
+        title: data.title,
+        desc: data.desc,
+        usetimes: data.usetimes || null,
+        usedays: data.usedays || null,
+        expiresAfterDays: data.expiresAfterDays || null,
+        price: Number(data.price.toFixed(2)),
+        taxamount: Number(taxamount.toFixed(2)),
+        taxpercent: Number(data.taxpercent.toFixed(2)),
+        beforetax: Number(beforetax.toFixed(2)),
+    })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);
         })
@@ -573,28 +577,27 @@ export function modifyShopItem(data, type) {
     const taxamount = data.price - beforetax
 
     return dispatch => firebase.database().ref('/shopItems/' + data.title).update({
-            type: type,
-            title: data.title,
-            desc: data.desc,
-            usetimes: data.usetimes || null,
-            usedays: data.usedays || null,
-            expiresAfterDays: data.expiresAfterDays || null,
-            price: Number(data.price.toFixed(2)),
-            taxamount: Number(taxamount.toFixed(2)),
-            //taxpercent: Number(data.taxpercent.toFixed(2)),
-            beforetax: Number(beforetax.toFixed(2)),
-        })
+        type: type,
+        title: data.title,
+        desc: data.desc,
+        usetimes: data.usetimes || null,
+        usedays: data.usedays || null,
+        expiresAfterDays: data.expiresAfterDays || null,
+        price: Number(data.price.toFixed(2)),
+        taxamount: Number(taxamount.toFixed(2)),
+        //taxpercent: Number(data.taxpercent.toFixed(2)),
+        beforetax: Number(beforetax.toFixed(2)),
+    })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);
         })
 }
 
-
 export function addInfo(data) {
     return dispatch => firebase.database().ref('/infoItems/').push({
-            title: data.title,
-            content: data.content
-        })
+        title: data.title,
+        content: data.content
+    })
         .catch(err => {
             console.error("ERR: addInfo: ", err);
         })
@@ -602,20 +605,19 @@ export function addInfo(data) {
 
 export function modifyInfo(key, data) {
     return dispatch => firebase.database().ref('/infoItems/' + key).update({
-            title: data.title,
-            content: data.content
-        })
+        title: data.title,
+        content: data.content
+    })
         .catch(err => {
             console.error("ERR: modifyInfo: ", err);
         })
 }
 
-
 export function lockUser(key) {
     return dispatch => firebase.database().ref('/users/' + key).update({
-            locked: true,
-            instructor: null
-        })
+        locked: true,
+        instructor: null
+    })
         .then(() => {
             _fetchUserList(dispatch)
         })
@@ -626,8 +628,8 @@ export function lockUser(key) {
 
 export function unlockUser(key) {
     return dispatch => firebase.database().ref('/users/' + key).update({
-            locked: null
-        })
+        locked: null
+    })
         .then(() => {
             _fetchUserList(dispatch)
         })
@@ -638,8 +640,8 @@ export function unlockUser(key) {
 
 export function lockShopItem(key) {
     return dispatch => firebase.database().ref('/shopItems/' + key).update({
-            locked: true
-        })
+        locked: true
+    })
         .catch(err => {
             console.error("ERR: update; lockShopItem: ", err);
         })
@@ -647,8 +649,8 @@ export function lockShopItem(key) {
 
 export function unlockShopItem(key) {
     return dispatch => firebase.database().ref('/shopItems/' + key).update({
-            locked: null
-        })
+        locked: null
+    })
         .catch(err => {
             console.error("ERR: update; unlockShopItem: ", err);
         })
@@ -656,8 +658,8 @@ export function unlockShopItem(key) {
 
 export function makeInstructor(key) {
     return dispatch => firebase.database().ref('/specialUsers/' + key).update({
-            instructor: true
-        })
+        instructor: true
+    })
         .then(() => {
             _fetchUserList(dispatch)
         })
@@ -668,8 +670,8 @@ export function makeInstructor(key) {
 
 export function unmakeInstructor(key) {
     return dispatch => firebase.database().ref('/specialUsers/' + key).update({
-            instructor: null
-        })
+        instructor: null
+    })
         .then(() => {
             _fetchUserList(dispatch)
         })
@@ -878,7 +880,7 @@ export function minimizeCourseForm() {
     }
 }
 
-export function expandSpecialCourseForm() {
+export function expandSpecialCourseForm(expander) {
     return dispatch => {
         dispatch({
             type: EXPAND_SPECIAL_COURSE_FORM,
