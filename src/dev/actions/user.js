@@ -260,27 +260,30 @@ export function fetchUserDetails(uid) {
     let tmp = null
     return dispatch => {
         UserRef.on('value', snapshot => {
-            usr = snapshot.val();
-            usr.key = snapshot.key;
-            firebase.database().ref('/specialUsers/' + usr.key).once('value')
-                .then(snapshot => {
-                    usr.roles = {
-                        admin: false,
-                        instructor: false
-                    }
-                    if (snapshot.val()) {
-                        if (snapshot.val().admin) {
-                            usr.roles.admin = snapshot.val().admin
+            if (snapshot.val()) {
+                usr = snapshot.val();
+                console.log("userdetails", usr);
+                usr.key = snapshot.key;
+                firebase.database().ref('/specialUsers/' + usr.key).once('value')
+                    .then(snapshot => {
+                        usr.roles = {
+                            admin: false,
+                            instructor: false
                         }
-                        if (snapshot.val().instructor) {
-                            usr.roles.instructor = snapshot.val().instructor
+                        if (snapshot.val()) {
+                            if (snapshot.val().admin) {
+                                usr.roles.admin = snapshot.val().admin
+                            }
+                            if (snapshot.val().instructor) {
+                                usr.roles.instructor = snapshot.val().instructor
+                            }
                         }
-                    }
-                    dispatch({
-                        type: USER_DETAILS_UPDATED_IN_DB,
-                        payload: usr
+                        dispatch({
+                            type: USER_DETAILS_UPDATED_IN_DB,
+                            payload: usr
+                        })
                     })
-                })
+            }
         }, err => {
             console.error("Getting user data failed: ", err);
             dispatch({
