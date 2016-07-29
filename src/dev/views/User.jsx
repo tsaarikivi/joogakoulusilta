@@ -27,11 +27,18 @@ class User extends React.Component {
     this.emailVerificationOngoing = false
   }
 
-  componentWillReceiveProps(nextProps){
-    const { currentUser, auth, loadingScreen } = nextProps;
+  currentUserReady(currentUser){
     if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
-          this.userFullyLoaded = true;
-      }
+      this.userFullyLoaded = true;
+    }
+  }
+
+  componentWillMount() {
+    this.currentUserReady(this.props.currentUser)
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.currentUserReady(nextProps.currentUser)
   }
 
   handleEmailVerify(){
