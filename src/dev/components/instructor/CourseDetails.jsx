@@ -7,6 +7,32 @@ import * as instructoractions from '../../actions/instructor.js'
 
 class CourseDetails extends React.Component {
 
+  constructor() {
+    super();
+    this.confirmation = false;
+    this.timeoutId = 0;
+  }
+
+  cancelCourse(item){
+     const { course, booking, visible } = this.props.instructor;
+     if(this.confirmation){
+      this.props.actions.postCanceCourse(course, booking[0]);
+      this.exitContainer();
+    } else {
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout( () => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
+  }
+
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
+  }
 
   exitContainer() {
     this.props.actions.clearInstructorData()
@@ -26,8 +52,23 @@ class CourseDetails extends React.Component {
             {this.props.instructor.booking[0].participants.map(this.renderuser)}
         </ul>
       );
+    } else {
+      return(
+        <h3>Kurssille ei ole ilmoittautuneita.</h3>
+      )
     }
                             
+  }
+
+  renderButton(){
+    var cancelButton = (this.confirmation)? "Vahvista peruminen" : "Peru"
+    if(this.props.instructor.booking.length > 0){
+      return(
+        <span className="item-row">
+          <button className="btn-small btn-red" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
+        </span>
+      );
+    } 
   }
   
   render() {
@@ -42,9 +83,9 @@ class CourseDetails extends React.Component {
     let day = getCourseTimeLocal(weekIndex, course.start, course.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
-    let bookingPerCapacity = ""
+    let bookingPerCapacity = "0/" + course.maxCapacity;
     if(booking.length > 0){
-      bookingPerCapacity = booking[0].reservations + "/" + course.maxCapacity
+      bookingPerCapacity = booking[0].reservations + "/" + course.maxCapacity;
     }
 
     if(visible){
@@ -56,6 +97,7 @@ class CourseDetails extends React.Component {
               <h2>{course.courseType.name}</h2>
               <h3>{dayStr}    ( {bookingPerCapacity} )</h3>
               {this.renderUserList()}
+              {this.renderButton()}
             </div>
           </div>
         </div>
