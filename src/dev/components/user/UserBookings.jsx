@@ -14,7 +14,7 @@ class UserBookings extends React.Component {
   }
 
   renderBookings(item){
-    return(<UserBooking key={item.key} item={item}/>)
+    return(<UserBooking key={item.courseInfo.key} item={item}/>)
   }
 
   render() {
