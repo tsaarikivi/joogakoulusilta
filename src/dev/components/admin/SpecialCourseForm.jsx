@@ -29,9 +29,6 @@ class SpecialCourseForm extends React.Component {
     } else {
       this.props.actions.modifySpecialCourse(props, 
       this.props.itemkey, 
-      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
-      this.props.places.list.find((item) => {return item.key === props.place}),
-      this.props.instructors.list.find((item) => {return item.key === props.instructor})
       )
     }
     this.props.actions.minimizeSpecialCourseForm()
