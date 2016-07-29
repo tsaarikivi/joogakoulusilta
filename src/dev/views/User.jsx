@@ -74,7 +74,7 @@ class User extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth, currentUser: state.currentUser, loadingScreen: state.loadingScreen }
+  return { auth: state.auth, currentUser: state.currentUser}
 }
 
 function mapDispatchToProps(dispatch) {

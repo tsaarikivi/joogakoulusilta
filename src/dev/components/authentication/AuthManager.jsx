@@ -16,6 +16,7 @@ class AuthManager extends React.Component {
   constructor(){
     super();
     this.userInitialized = false;
+    this.loadingScreenActivated = false;
   }
 
   componentWillMount() {
@@ -26,16 +27,18 @@ class AuthManager extends React.Component {
     const { currentUser, auth, loadingScreen } = nextProps;
     if(auth.uid){
       if(!this.userInitialized){
-        this.userInitialized = true;
         this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot.")
+        this.loadingScreenActivated = true;
         this.props.userActions.fetchUserDetails(auth.uid)
         this.props.userActions.fetchUsersTransactions(auth.uid)
         this.props.userActions.fetchUsersBookings(auth.uid)
         this.props.userActions.fetchUsersSpecialCourseBookings(auth.uid)
+        this.userInitialized = true;
       }
       if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
-        if(loadingScreen.visible && !loadingScreen.inTimeout){
-          this.props.lsActions.hideLoadingScreen("Valmis", true, 500)
+        if(this.loadingScreenActivated){
+          this.props.lsActions.hideLoadingScreen("Valmis", true, 500);
+          this.loadingScreenActivated = false;
         }
       }
     } else {
@@ -75,7 +78,7 @@ class AuthManager extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth, currentUser: state.currentUser, loadingScreen: state.loadingScreen }
+  return { auth: state.auth, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
