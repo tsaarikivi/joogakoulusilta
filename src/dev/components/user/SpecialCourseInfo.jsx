@@ -63,12 +63,15 @@ class SpecialCourseInfo extends React.Component {
       admin = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
-    if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
-      return (
-        <div>
-          <span className="item-row">
+    /**
+     * <span className="item-row">
             <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
           </span>
+     */
+
+    if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
+      return (
+        <div>          
           <span className="item-row">
             {admin}
           </span>
