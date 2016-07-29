@@ -9,8 +9,31 @@ import {
     _showLoadingScreen
 } from './loadingScreen.js'
 
+import {
+    hasTimePassed,
+    getCourseTimeLocal
+} from '../helpers/timeHelper.js'
+
+
+export function activateCourse(course) {
+    return dispatch => {
+        firebase.database().ref('/cancelledCourses/' + course.key + '/' + course.cancelInfo.instance).remove()
+        .then(()=>{
+            console.log("Course activated again.");
+        })
+        .catch(error => {
+            console.error("Course activation failed: ", error);
+        })
+    }
+}
+
 export function postCanceCourse(course, booking, reason = "undefined") {
-    console.log("Post input params: ", course, booking);
+    let weekIndex = (hasTimePassed(course.day, course.start))? 1 : 0;
+    let instance = getCourseTimeLocal(weekIndex, course.start, course.day)
+    let participants = [];
+    if(booking){
+        participants = booking.participants;
+    }
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelcourse' : JOOGASERVER + '/cancelcourse'
     return dispatch => {
         _showLoadingScreen(dispatch, "Perutaan kurssia")
@@ -18,9 +41,9 @@ export function postCanceCourse(course, booking, reason = "undefined") {
             axios.post(
                     JOOGAURL, {
                         current_user: idToken,
-                        course_instance: booking.instance,
+                        course_instance: instance.getTime(),
                         course_info: course,
-                        participant_list: booking.participants,
+                        participant_list: participants,
                         reason: reason
                     })
                 .then(response => {

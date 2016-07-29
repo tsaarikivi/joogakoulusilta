@@ -12,6 +12,10 @@ class CoursesList extends React.Component {
     this.props.cActions.fetchTimetable();
   }
 
+  componentWillUnmount(){
+    this.props.cActions.stopFetchTimetable();
+  }
+
 
   render() {
     const { bookings, courses } = this.props.timetable;

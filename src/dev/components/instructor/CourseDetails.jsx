@@ -13,10 +13,26 @@ class CourseDetails extends React.Component {
     this.timeoutId = 0;
   }
 
-  cancelCourse(item){
+  cancelCourse(){
      const { course, booking, visible } = this.props.instructor;
      if(this.confirmation){
       this.props.actions.postCanceCourse(course, booking[0]);
+      this.exitContainer();
+    } else {
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout( () => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
+  }
+
+
+  activateCourse(){
+     const { course, booking, visible } = this.props.instructor;
+     if(this.confirmation){
+      this.props.actions.activateCourse(course);
       this.exitContainer();
     } else {
       this.confirmation = true;
@@ -61,18 +77,32 @@ class CourseDetails extends React.Component {
   }
 
   renderButton(){
-    var cancelButton = (this.confirmation)? "Vahvista peruminen" : "Peru"
-    if(this.props.instructor.booking.length > 0){
+    const { course, booking } = this.props.instructor;
+    var cancelButton = null;
+    if(course.cancelled){
+      cancelButton = (this.confirmation)? "Vahvista aktivoiminen" : "Aktivoi kurssi"
+      return(
+        <span className="item-row">
+          <button className="btn-small btn-red" onClick={() => {this.activateCourse()}}>{cancelButton}</button>
+        </span>
+      );
+    } else {
+      cancelButton = (this.confirmation)? "Vahvista peruminen" : "Peru"
       return(
         <span className="item-row">
           <button className="btn-small btn-red" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
         </span>
       );
-    } 
+    }
   }
   
   render() {
     const { course, booking, visible } = this.props.instructor;
+
+    let courseCancelled = null;
+    if(course.cancelled){
+      courseCancelled = <h2>Kurssi on peruttu!</h2>
+    }
 
     let weekIndex = 0;
     if (hasTimePassed(course.day, course.start)) {
@@ -96,6 +126,7 @@ class CourseDetails extends React.Component {
             <div className="info-info-container">
               <h2>{course.courseType.name}</h2>
               <h3>{dayStr}    ( {bookingPerCapacity} )</h3>
+              {courseCancelled}
               {this.renderUserList()}
               {this.renderButton()}
             </div>

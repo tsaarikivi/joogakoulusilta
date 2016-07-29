@@ -13,7 +13,7 @@ class Timetable extends React.Component {
   }
 
   componentWillUnmount(){
-
+    this.props.actions.stopFetchTimetable();
   }
 
   render() {

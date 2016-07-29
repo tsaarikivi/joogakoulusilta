@@ -72,6 +72,11 @@ class CourseInfo extends React.Component {
     const { courseInfo } = this.props;
     let weekIndex = 0;
 
+    if(courseInfo.cancelled){
+        return(
+                <p className="text-red"> Kurssi on peruttu!</p>
+              );
+    }
 
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
