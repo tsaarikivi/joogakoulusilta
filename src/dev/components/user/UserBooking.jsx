@@ -29,12 +29,13 @@ class UserBooking extends React.Component {
   render() {
     let day = new Date()
     var cancelButton = null;
-    //Show cancel button if course starts more than 5 hours from now.
+    //Show cancel button if course starts more than 3 hours from now.
     if(this.props.item.courseTime > day.getTime()+3*60*60*1000){
-      cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)} >Peru </button>
+      cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)}>Peru</button>
     } else {
       cancelButton = <p>Kurssin alkuun alle 3 tuntia.</p>
     }
+    console.log("this.props.item.courseTime", this.props.item.courseTime)
 
     return (
         <li className="booking-container">
