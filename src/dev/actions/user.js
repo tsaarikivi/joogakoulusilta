@@ -306,9 +306,9 @@ export function finishedWithUserDetails() {
 
 export function resetPassword(email) {
     return dispatch => {
-
+        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti.");
         firebase.auth().sendPasswordResetEmail(email).then(() => {
-                console.log("EMAIL RESET sent to user.")
+                _hideLoadingScreen(dispatch, "Viesti lähetetty.", true);
             })
             .catch((error) => {
                 console.error("Error from: sendPasswordResetEmail - ", error)
@@ -321,7 +321,7 @@ export function resetPassword(email) {
                         }
                     }
                 })
-
+                _hideLoadingScreen(dispatch, "Viestin lähetyksessä tapahtui virhe:" + error.message, false);
             })
 
     }
