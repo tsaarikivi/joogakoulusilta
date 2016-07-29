@@ -7,6 +7,12 @@ import {
     UPDATE_USERS_SCBOOKINGS
 } from './actionTypes.js'
 
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
+
+
 const Auth = firebase.auth();
 
 var UserRef;
@@ -16,41 +22,53 @@ var specialCBookingsRef;
 
 export function updateUserDetails(user) {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Päivitetään tiedot.")
         firebase.database().ref('/users/' + user.uid).update(user)
-            .catch(err => {
+            .then(() => {
+                _hideLoadingScreen(dispatch, "Tiedot päivitetty.", true)
+            })
+            .catch(error => {
+                console.error("User details update failed: ", error)
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: error
                 })
+                _hideLoadingScreen(dispatch, "Tietojen päivittämisessä tapahtui virhe: " + error.message, false)
             })
     }
 }
 
-export function fetchUsersSpecialCourseBookings(uid){
-  return dispatch => {
-    specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
-    specialCBookingsRef.on('value', (snapshot) => {
-      let scBookings = snapshot.val();
-      let one;
-      let returnList = Object.assign([])
-      if(scBookings){
-        for(one in scBookings){
-          if(scBookings[one].shopItem.date > Date.now()){
-            returnList.push(scBookings[one])
-          }
-        }
-      }
-      dispatch({
-        type: UPDATE_USERS_SCBOOKINGS,
-        payload: {specialCources: returnList}
-      })
-    }, (err) => {
-      dispatch({
-          type: USER_ERROR,
-          payload: err
-      })
-    })
-  }
+export function fetchUsersSpecialCourseBookings(uid) {
+    return dispatch => {
+        specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
+        specialCBookingsRef.on('value', (snapshot) => {
+            let scBookings = snapshot.val();
+            let one;
+            let returnList = Object.assign([])
+            if (scBookings) {
+                for (one in scBookings) {
+                    if (scBookings[one].shopItem.date > Date.now()) {
+                        returnList.push(scBookings[one])
+                    }
+                }
+            }
+            dispatch({
+                type: UPDATE_USERS_SCBOOKINGS,
+                payload: {
+                    specialCoursesReady: true,
+                    specialCourses: returnList
+                }
+            })
+        }, (error) => {
+            dispatch({
+                type: USER_ERROR,
+                payload: {
+                    error,
+                    specialCoursesReady: true
+                }
+            })
+        })
+    }
 }
 
 export function fetchUsersBookings(uid) {
@@ -85,7 +103,8 @@ export function fetchUsersBookings(uid) {
                                             error: {
                                                 code: "DB_INTEGRITY_ERR",
                                                 message: "Referred course is missing from database: " + oneCourse
-                                            }
+                                            },
+                                            bookingsReady: true
                                         }
                                     })
                                 } else {
@@ -108,29 +127,39 @@ export function fetchUsersBookings(uid) {
                     dispatch({
                         type: UPDATE_USERS_BOOKINGS,
                         payload: {
+                            bookingsReady: true,
                             bookings: returnListBookings,
                             history: returnListHistory
                         }
                     })
-                }, err => {
-                    console.error("Failed getting bookings: ", uid, err);
+                }, error => {
+                    console.error("Failed getting bookings: ", uid, error);
                     dispatch({
                         type: USER_ERROR,
-                        payload: err
+                        payload: {
+                            error,
+                            bookingsReady: true
+                        }
                     })
                 })
-            }, err => {
-                console.error("Failed getting course info: ", uid, err);
+            }, error => {
+                console.error("Failed getting course info: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: {
+                        error,
+                        bookingsReady: true
+                    }
                 })
             })
-            .catch((err) => {
-                console.error("Failed getting bookings: ", uid, err);
+            .catch((error) => {
+                console.error("Failed getting bookings: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
-                    payload: err
+                    payload: {
+                        error,
+                        bookingsReady: true
+                    }
                 })
             })
     }
@@ -182,20 +211,20 @@ export function fetchUsersTransactions(uid) {
                         }
                         break;
                     case "special":
-                    //Placeholder for any special handling of specials
-                      break;
+                        //Placeholder for any special handling of specials
+                        break;
                     default:
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
-                if(all[one].type === "special"){
-                  trx.details.special.push(trxdetails);
+                if (all[one].type === "special") {
+                    trx.details.special.push(trxdetails);
                 } else {
-                  if (trxdetails.expires > now) {
-                      trx.details.valid.push(trxdetails);
-                  } else {
-                      trx.details.expired.push(trxdetails);
-                  }
+                    if (trxdetails.expires > now) {
+                        trx.details.valid.push(trxdetails);
+                    } else {
+                        trx.details.expired.push(trxdetails);
+                    }
                 }
             }
             trx.details.valid.sort((a, b) => {
@@ -208,14 +237,18 @@ export function fetchUsersTransactions(uid) {
             dispatch({
                 type: UPDATE_USERS_TRANSACTIONS,
                 payload: {
+                    transactionsReady: true,
                     transactions: trx
                 }
             })
-        }, err => {
-            console.error("Fetching transactions failed: ", uid, err);
+        }, error => {
+            console.error("Fetching transactions failed: ", uid, error);
             dispatch({
                 type: USER_ERROR,
-                payload: err
+                payload: {
+                    transactionsReady: true,
+                    error
+                }
             })
         })
     }
@@ -227,27 +260,30 @@ export function fetchUserDetails(uid) {
     let tmp = null
     return dispatch => {
         UserRef.on('value', snapshot => {
-            usr = snapshot.val();
-            usr.key = snapshot.key;
-            firebase.database().ref('/specialUsers/' + usr.key).once('value')
-                .then(snapshot => {
-                    usr.roles = {
-                        admin: false,
-                        instructor: false
-                    }
-                    if (snapshot.val()) {
-                        if (snapshot.val().admin) {
-                            usr.roles.admin = snapshot.val().admin
+            if (snapshot.val()) {
+                usr = snapshot.val();
+                console.log("userdetails", usr);
+                usr.key = snapshot.key;
+                firebase.database().ref('/specialUsers/' + usr.key).once('value')
+                    .then(snapshot => {
+                        usr.roles = {
+                            admin: false,
+                            instructor: false
                         }
-                        if (snapshot.val().instructor) {
-                            usr.roles.instructor = snapshot.val().instructor
+                        if (snapshot.val()) {
+                            if (snapshot.val().admin) {
+                                usr.roles.admin = snapshot.val().admin
+                            }
+                            if (snapshot.val().instructor) {
+                                usr.roles.instructor = snapshot.val().instructor
+                            }
                         }
-                    }
-                    dispatch({
-                        type: USER_DETAILS_UPDATED_IN_DB,
-                        payload: usr
+                        dispatch({
+                            type: USER_DETAILS_UPDATED_IN_DB,
+                            payload: usr
+                        })
                     })
-                })
+            }
         }, err => {
             console.error("Getting user data failed: ", err);
             dispatch({
@@ -273,9 +309,9 @@ export function finishedWithUserDetails() {
 
 export function resetPassword(email) {
     return dispatch => {
-
+        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti.");
         firebase.auth().sendPasswordResetEmail(email).then(() => {
-                console.log("EMAIL RESET sent to user.")
+                _hideLoadingScreen(dispatch, "Viesti lähetetty.", true);
             })
             .catch((error) => {
                 console.error("Error from: sendPasswordResetEmail - ", error)
@@ -284,11 +320,11 @@ export function resetPassword(email) {
                     payload: {
                         error: {
                             code: "EMAIL_RESET_ERROR",
-                            message: error.toString()
+                            message: error.message
                         }
                     }
                 })
-
+                _hideLoadingScreen(dispatch, "Viestin lähetyksessä tapahtui virhe:" + error.message, false);
             })
 
     }
@@ -296,8 +332,10 @@ export function resetPassword(email) {
 
 export function sendEmailVerification() {
     return dispatch => {
-        firebase.auth().currentUser.sendEmailVerification().then(() => {
-                console.log("EMAIL verification request sent to user.")
+        _showLoadingScreen(dispatch, "Lähetetään verifiointilinkki sähköpostiisi")
+        firebase.auth().currentUser.sendEmailVerification()
+            .then(() => {
+                _hideLoadingScreen(dispatch, "Sähköposti lähetetty.", true)
             })
             .catch((error) => {
                 console.error("Error from: sendEmailVerification - ", error)
@@ -306,10 +344,11 @@ export function sendEmailVerification() {
                     payload: {
                         error: {
                             code: "EMAIL_VERIFICATION_ERROR",
-                            message: error.toString()
+                            message: error.message
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Sähköpostin lähetyksessä tapahtui virhe: " + error.message, false)
             })
     }
 }
@@ -320,7 +359,7 @@ export function createNewUser(user, firstname, lastname, alias) {
         if (existingUser === null) {
             if (firstname === null) {
                 firstname = firebase.auth().currentUser.displayName;
-                }
+            }
             return firebase.database().ref('/users/' + user.uid).update({
                 email: user.email,
                 uid: user.uid,

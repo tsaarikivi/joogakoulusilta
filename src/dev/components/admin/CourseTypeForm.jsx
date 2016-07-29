@@ -7,14 +7,20 @@ import * as actionCreators from '../../actions/admin.js'
 class CourseTypeForm extends React.Component {
 
   onSubmit(props) {
-    this.props.actions.addCourseType(props)
-    location.reload()
+    if(this.props.mode === "addNew"){
+      this.props.actions.addCourseType(props)
+    } else {
+      this.props.actions.modifyCourseType(props)
+    }
+    this.props.actions.minimizeCourseTypeForm()
   }
 
   renderContent() {
+
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+
     const { fields: { name, desc }, handleSubmit } = this.props
 
-    if (this.props.cmp.expanded) {
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}> 
           <label htmlFor="courseType">Kurssityypin nimi</label>
@@ -23,30 +29,17 @@ class CourseTypeForm extends React.Component {
           <label htmlFor="courseDesc">Kurssityypin kuvaus</label>
           <textarea type="text" name="courseDesc" placeholder="esim: Flow jooga on rentoa joogaa." {...desc}/>
 
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
-    }
-    else {
-      return <div></div>
-    }
   }
 
-  renderExpandButton() {
-    if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseTypeForm()}>Piilota</button>
-    }
-    else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandCourseTypeForm()}>Avaa</button>
-    }
-  }
-
+ 
   render() {    
     return (
-      <div className="container bordered-container">
-        <div className="content-container">
+      <div className="container transparent-bg">
+        <div className="surrounded-container">
           <h2 className="header-collapse">Luo uusi kurssityyppi</h2>
-          {this.renderExpandButton()}
           {this.renderContent()}
         </div>
       </div>
@@ -60,10 +53,6 @@ function validate(values) {
   // TODO: form validation
 }
 
-function mapStateToProps(state) {
-  return { cmp: state.courseTypeFrom }
-}
-
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
@@ -72,4 +61,4 @@ export default reduxForm({
   form: 'CourseTypeForm',
   fields: ['name', 'desc'],
   validate
-}, mapStateToProps, mapDispatchToProps)(CourseTypeForm)
+}, null, mapDispatchToProps)(CourseTypeForm)

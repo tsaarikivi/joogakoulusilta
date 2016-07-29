@@ -8,26 +8,25 @@ class UserBookings extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object
   }
-  componentWillReceiveProps(nextProps){
-  }
 
   renderSpecialCources(item){
     return(<UserSpecialCourse key={item.transactionReference} item={item}/>)
   }
 
   renderBookings(item){
-    return(<UserBooking key={item.courseTime} item={item}/>)
+    return(<UserBooking key={item.courseInfo.key} item={item}/>)
   }
 
   render() {
-    if(this.props.currentUser.bookings.length > 0){
+    const { specialCourses, bookings } = this.props.currentUser;
+    if(bookings.length > 0 || specialCourses.length ){
       return (
         <div className="container bordered-container">
           <div className="content-container">
             <h2 className="header-collapse">Tulevat varauksesi</h2>
               <ul className="wide-list">
-                {this.props.currentUser.specialCources.map(this.renderSpecialCources)}
-                {this.props.currentUser.bookings.map(this.renderBookings)}
+                {specialCourses.map(this.renderSpecialCources)}
+                {bookings.map(this.renderBookings)}
               </ul>
           </div>
         </div>

@@ -1,35 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import {getTimeStrMsBeginnignOfDay} from '../../helpers/timeHelper.js'
 import { putCourseInfo } from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 
 class TimeTableItem extends React.Component {
 
-  constructor(){
-    super();
-    this.startDate = new Date();
-    this.endDate = new Date();
-  }
-
-  getDisplayTime(date,time){
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    date.setTime(date.getTime()+time)
-  }
-
   componentWillReceiveProps(nextProps){
-    //console.log("T-ITEM:", nextProps);
-    this.getDisplayTime(this.startDate, nextProps.item.start);
-    this.getDisplayTime(this.endDate, nextProps.item.end);
+    if(this.props.courseInfo.key !== "0"){ //Pop-up is active and CI-props need to be updated
+      //But only if bookings information has changed.
+      if(this.props.booking !== nextProps.booking){
+        this.props.courseActions.putCourseInfo(nextProps.item, nextProps.booking)
+      }
+    }
   }
 
   componentWillMount(){
-    this.getDisplayTime(this.startDate, this.props.item.start);
-    this.getDisplayTime(this.endDate, this.props.item.end);
     this.props.bookingsActions.fetchCourseBookings(this.props.item.key, this.props.currentUser.uid)
   }
 
@@ -42,33 +29,31 @@ class TimeTableItem extends React.Component {
   }
 
   render() {
+    const { booking, item } = this.props;
+    var courseCancelled = null;
+    if(item.cancelled){
+      courseCancelled = <p>PERUTTU</p>
+    }
     var userBooked = null;
-    if(this.props.booking){
-      if(this.props.booking.user.length > 0){
-        if(this.props.booking.user.length > 1){
-          userBooked = <p className="table-participants">VARATTU + VARATTU</p>
-        } else {
-          userBooked = <p className="table-participants">VARATTU</p>
-        }
+    if(booking){
+      if(booking.user.length > 0){
+         userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
       }
     }
-    if(this.props.booking){
-      var allBooked = <p className="table-participants">0/{this.props.item.maxCapacity}</p>
-      if(this.props.booking.all.length > 0){
-        if(this.props.booking.all.length > 1){
-          allBooked = <p className="table-participants">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity} {this.props.booking.all[1].reservations}/{this.props.item.maxCapacity}</p>
-        } else {
-          allBooked = <p className="table-participants">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity}</p>
-        }
+    if(booking){
+      var allBooked = <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+      if(booking.all.length > 0){
+        allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
       }
     }
     return (
       <td onClick={() => this.itemClicked()}>
-        <p className="table-course">{this.props.item.courseType.name}</p>
-        <p className="table-time">{this.startDate.toTimeString().slice(0,5)} - {this.endDate.toTimeString().slice(0,5)}</p>
+        <p className="table-course">{item.courseType.name}</p>
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
         {userBooked}
+        {courseCancelled}
       </td>
     );
   }

@@ -5,12 +5,33 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../../actions/admin.js'
 
 class InstructorItem extends React.Component {
+
+  constructor() {
+    super();
+    this.confirmed = false;
+  }
+
+  unmakeInstructor(uid){
+    if(this.confirmed){
+      this.props.actions.unmakeInstructor(uid)
+      this.confirmed = false;
+    } else {
+      this.confirmed = true;
+      this.forceUpdate()
+      setTimeout(() => {
+        this.confirmed = false;
+        this.forceUpdate()        
+      }, 2000)
+    }
+  }
+
   renderButtons() {
 
-    //TODO: Add proper buttons and functionality
+    var buttonName = (this.confirmed)? "Vahvista poisto" : "Poista Joogaopettaja"
+    
     return(
       <span className="item-row">
-        <button className="btn-small btn-red" onClick={() => this.props.actions.unmakeInstructor(this.props.item.uid)}>Poista Joogaopettaja</button> 
+        <button className="btn-small btn-red" onClick={() => this.unmakeInstructor(this.props.item.uid) }>{buttonName}</button> 
       </span>
     )
   }

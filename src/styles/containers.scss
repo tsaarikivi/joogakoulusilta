@@ -12,18 +12,18 @@
       width: 100%;
       .week-info-container {
         margin: 0 auto 4vw;
-        width: 94%;
+        width: 92vw;
         display: block;        
         padding: 2%;        
       }
       .info-info-container {
-        margin: 0 2%;
+        margin: 0 4vw;
       }
       .exit-btn {
         float: right;
-        font-size: 10vw;
+        font-size: 12vw;
         padding: 0;
-        margin: 0 3vw 0;
+        margin: 0 5vw 0;
         line-height: 0.8;
       }
       p {
@@ -33,7 +33,9 @@
         padding: 0;
       }
       .info-time {
+        margin-top: 3vw;
         margin-bottom: 0;
+        padding: 0;
       }
       .info-place {
         margin: 0;
@@ -41,6 +43,13 @@
       .info-instructor {
         margin-top: 0;
       }
+      .info-desc {
+        margin: 3vw 0;
+        padding: 0;
+      }
+    }
+    .inner {
+      width: 80%;
     }
   }
 
@@ -124,6 +133,14 @@
       padding: 0;
     }
   }
+  .surrounded-container {
+    padding: 4vw;
+  }
+  .info-price {
+    span {
+      margin: 0 0 3vw;
+    }  
+  }
 }
 
 
@@ -149,21 +166,23 @@
         padding: 1%;        
       }
       .info-info-container {
-        margin: 0 2%;
+        margin: 0;
       }
       .exit-btn {
         float: right;
         font-size: 30px;
         margin: 0;
         line-height: 0.8;
-        font-weight: 600;
+        font-weight: bold;
       }
       h3 {
         margin: 5px 0 0;
         padding: 0;
       }
       .info-time {
+        margin-top: 15px;
         margin-bottom: 0;
+        padding: 0;
       }
       .info-place {
         margin: 0;
@@ -171,6 +190,14 @@
       .info-instructor {
         margin-top: 0;
       }
+      .info-desc {
+        margin: 15px 0;
+        padding: 0;
+      }
+    }
+    .inner {
+      width: 400px;
+      padding: 4vw;
     }
   }
 
@@ -243,6 +270,15 @@
       padding: 0;
     }
   }
+  .surrounded-container {
+    padding: 12px;
+  }
+
+  .info-price {
+    span {
+      margin: 0 0 10px;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -271,7 +307,6 @@
       color: $red;
       border: none;
       background-color: transparent;
-      border-radius: 3px;
       &:hover {
         color: #444;
       }
@@ -303,6 +338,24 @@
     .info-noreservations {
       color: $red;
     }
+  }
+
+  .outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .inner {
+    margin: 0 auto;
+    padding: 20px 0;
+    background-color: rgba(255,255,255, 0.9);
+    box-shadow: 0 3px 10px $text-dark;
+    border-radius: 5px;
   }
 }
 
@@ -339,4 +392,23 @@
   a {
     color: $white;
   }
+}
+
+.surrounded-container {
+  background: $container-color;
+  border: 1px solid $border;
+  border-radius: 5px;
+}
+
+.transparent-bg {
+  background: transparent;
+}
+
+.info-price {
+  margin: 0;
+  padding: 0;
+  color: $blue;
+  span {
+    display: inline-block;
+  }  
 }

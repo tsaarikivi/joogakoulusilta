@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import {postCancellation} from '../../actions/bookings.js'
 
+import * as loadingScreenActions from '../../actions/loadingScreen.js'
 
 import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
@@ -28,12 +29,13 @@ class UserBooking extends React.Component {
   render() {
     let day = new Date()
     var cancelButton = null;
-    //Show cancel button if course starts more than 5 hours from now.
-    if(this.props.item.courseTime > day.getTime()+5*60*60*1000){
-      cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)} >Peru </button>
+    //Show cancel button if course starts more than 3 hours from now.
+    if(this.props.item.courseTime > day.getTime()+3*60*60*1000){
+      cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)}>Peru</button>
     } else {
-      cancelButton = <p className="btn-small btn-blue btn-right">Ei voi enää perua.</p>
+      cancelButton = <p>Kurssin alkuun alle 3 tuntia.</p>
     }
+    console.log("this.props.item.courseTime", this.props.item.courseTime)
 
     return (
         <li className="booking-container">
@@ -52,7 +54,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({postCancellation}, dispatch)}
+  return { actions: bindActionCreators({postCancellation}, dispatch),
+          lsActions: bindActionCreators(loadingScreenActions, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserBooking)

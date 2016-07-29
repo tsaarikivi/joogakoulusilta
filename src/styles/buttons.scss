@@ -9,7 +9,7 @@
 
   .btn-small {
     margin: 0 2px;
-    padding: 1.8vw 1.2vw;
+    padding: 2.2vw 1.5vw;
   }
 
   .btn-right {
@@ -30,8 +30,7 @@
   }
 
   .expand-btn {
-    display: inline-block;
-    margin: 0 1.5vw;
+    margin: 0 0 1vw;
     padding: 1vw 1.2vw;
   }
 
@@ -69,8 +68,7 @@
   }
 
   .expand-btn {
-    display: inline-block;
-    margin: 0 10px;
+    margin: 0 0 5px;
     padding: 7px 11px;
   }
 
@@ -200,6 +198,7 @@ a.text-link-white {
   border-radius: 3px;
   text-transform: uppercase;
   transition: color 0.1s, background-color 0.1s;
+  display: block;
   &:hover {
     color: $link-hover;
     background-color: $border;
@@ -212,7 +211,7 @@ a.text-link-white {
 .btn-link {
   display: inline-block;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .mini-link {  

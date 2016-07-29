@@ -15,7 +15,6 @@ class Register extends React.Component {
 
   constructor(){
     super();
-    this.registerStarted = false;
     this.email = "";
     this.password = "";
     this.firstName = "";
@@ -29,9 +28,13 @@ class Register extends React.Component {
     else {
       this.errorText = "";
     }
-    if(nextProps.auth.timeout === true){
+    if(nextProps.auth.uid){
       this.context.router.push('/user/')
     }
+  }
+
+  doRegister(data){
+    this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
   }
 
   renderForm() {
@@ -39,13 +42,7 @@ class Register extends React.Component {
     const { fields: { email, password, firstName, lastName, alias }, handleSubmit } = this.props
 
     return (
-      <form onSubmit={handleSubmit(data => {
-        console.log("TIEDOT:")
-        console.log(data.email, data.password, data.firstName, data.lastName, data.alias)
-        this.props.actions.register(data.email, data.password, data.firstName, data.lastName, data.alias)
-        this.registerStarted = true
-        this.forceUpdate()
-      })}>
+      <form onSubmit={handleSubmit(data => { this.doRegister(data) })}>
         <label htmlFor="email">Sähköposti</label>
         <input type="email" placeholder="Sähköposti" {...email} />
         {email.touched && email.error && <div className="form-error">{email.error}</div>}
@@ -58,11 +55,8 @@ class Register extends React.Component {
         <label htmlFor="lastName">Sukunimi</label>
         <input type="text" placeholder="Sukunimi" {...lastName}/>
         {lastName.touched && lastName.error && <div className="form-error">{lastName.error}</div>}
-        <label htmlFor="alias">Käyttäjänimi</label>
-        <input type="text" placeholder="Alias" {...alias}/>
-        {alias.touched && alias.error && <div className="form-error">{alias.error}</div>}
         <br/>
-        <button className="btn-small btn-blue">Rekisteröidy</button>
+        <button type="submit" className="btn-small btn-blue">Rekisteröidy</button>
         <br/>
       </form>
     );
@@ -70,29 +64,6 @@ class Register extends React.Component {
   }
 
   render() {
-    
-    if(this.props.auth.uid){
-      this.props.actions.waitForMilliseconds(5*1000);
-      return(
-        <div class="container">
-          <Logo />
-          <div className="content-container">
-            <h2 className="centered">Rekisteröinti onnistui {this.firstName}!</h2>
-            <Link className="btn-small btn-blue" to="user">Jatka sovelluksen käyttöä</Link>
-          </div>
-        </div>
-      );
-    }
-    if(this.registerStarted === true && this.props.auth.error.code === "0"){
-      return(
-        <div class="container">
-          <Logo />
-          <div className="content-container">
-            <h2 className="centered">Rekisteröidään käyttäjää!</h2>
-          </div>
-        </div>
-      )
-    }
       return (
         <div class="container">
           <Logo />
@@ -114,17 +85,14 @@ const validate = values => {
   }
   if (!values.password) {
     errors.password = 'Pakollinen kenttä.'
-  } else if (values.password.length < 5) {
-    errors.password = 'Salasanan on oltava vähintään 5 merkkiä pitkä.'
+  } else if (values.password.length < 6) {
+    errors.password = 'Salasanan on oltava vähintään 6 merkkiä pitkä.'
   }
   if (!values.firstName) {
     errors.firstName = 'Pakollinen kenttä.'
   }
   if (!values.lastName) {
     errors.lastName = 'Pakollinen kenttä.'
-  }
-  if (!values.alias) {
-    errors.alias = 'Pakollinen kenttä.'
   }
   return errors
 }

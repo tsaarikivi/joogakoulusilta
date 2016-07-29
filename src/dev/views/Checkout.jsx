@@ -23,14 +23,10 @@ class Checkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("CO-props:", nextProps);
     if(nextProps.shopItems.cart.type){
-      console.log("SPECIAL");
       if(nextProps.shopItems.cart.type === "special"){
-        console.log("YES-SPECIAL");
         this.buyingSpecialCourse = true
       } else {
-        console.log("NOT-SPECIAL");
         this.buyingSpecialCourse = false
       }
     }
@@ -44,7 +40,6 @@ class Checkout extends React.Component {
   }
 
   onReady() {
-      console.log('Drop-In ready');
       document.getElementById("submitButton").disabled = false;
   }
 
@@ -78,19 +73,15 @@ renderCashPayment(){
 
   renderDonePhase(){
     if(this.buyingSpecialCourse){
-      this.props.actions.waitForMilliseconds(2*1000);
+      this.props.actions.waitForMilliseconds(300); //Set this to define how long the done phase is displayed 
       return(
         <div>
-          <br/>
-          <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
         </div>
       )
     }
-    this.props.actions.waitForMilliseconds(5*1000);
+    this.props.actions.waitForMilliseconds(300);
     return(
       <div>
-        <h2 className="centered">Maksu onnistuneesti suoritettu...</h2>
-        <Link className="centered btn-small btn-blue" to="shop"> Takaisin kauppaan...</Link>
       </div>
     )
   }

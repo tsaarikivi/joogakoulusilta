@@ -10,6 +10,11 @@ import {
     createNewUser
 } from './user.js'
 
+import {
+    _hideLoadingScreen,
+    _showLoadingScreen
+} from './loadingScreen.js'
+
 const Auth = firebase.auth();
 
 let firstName = null;
@@ -79,6 +84,7 @@ export function loginWithPopUp() {
 
 export function login(email, password) {
     return dispatch => {
+        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen."); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
         Auth.signInWithEmailAndPassword(email, password).catch(error => {
             if (error) {
                 dispatch({
@@ -90,6 +96,7 @@ export function login(email, password) {
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Kirjautuminen päättyi virheeseen: " + error.message, false, 2000)
             }
         });
     }
@@ -121,7 +128,10 @@ export function register(email, password, fName, sName, a) {
     alias = a;
 
     return dispatch => {
-        Auth.createUserWithEmailAndPassword(email, password).catch(error => {
+        _showLoadingScreen(dispatch, "Rekisteröidään käyttäjää " + email)
+        Auth.createUserWithEmailAndPassword(email, password).then(() => {
+            _hideLoadingScreen(dispatch, "Käyttäjä " + email + " onnistuneesti rekisteröity", true)
+        }).catch(error => {
             if (error) {
                 dispatch({
                     type: AUTH_ERROR,
@@ -132,6 +142,7 @@ export function register(email, password, fName, sName, a) {
                         }
                     }
                 })
+                _hideLoadingScreen(dispatch, "Käyttäjän " + email + "rekisteröinti epäonnistui: " + error.toString(), false, 3000)
             }
         });
     }

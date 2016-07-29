@@ -3,7 +3,8 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as actionCreators from '../actions/user.js'
+import * as userActionCreators from '../actions/user.js'
+import * as lsActionCreators from '../actions/loadingScreen.js'
 
 import ContactInfo from '../components/home/ContactInfo.jsx'
 import UserHeader from '../components/user/UserHeader.jsx'
@@ -22,41 +23,47 @@ class User extends React.Component {
 
   constructor(){
     super();
-    this.countMount = 0;
+    this.userFullyLoaded = false
+    this.emailVerificationOngoing = false
   }
 
-  componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
+  currentUserReady(currentUser){
+    if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
+      this.userFullyLoaded = true;
     }
   }
 
-  componentWillUnmount(){
+  componentWillMount() {
+    this.currentUserReady(this.props.currentUser)
   }
 
   componentWillReceiveProps(nextProps){
+    this.currentUserReady(nextProps.currentUser)
   }
 
   handleEmailVerify(){
+    if(!this.emailVerificationOngoing){
+      this.emailVerificationOngoing = true;
       this.props.actions.sendEmailVerification()
+    } 
   }
 
 
   render() {
+
+    const { currentUser, auth } = this.props
+
     var emailVerification = null
-    if(this.props.auth.uid){
-      if(!this.props.auth.userdata.emailVerified){
-        emailVerification =  <button className="btn-small btn-red float-left" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button>
+    if(auth.uid){
+      if(!auth.userdata.emailVerified){
+        emailVerification = <div className="container bordered-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
       }
     }
-    if( this.props.auth.uid &&
-        this.props.currentUser.key != "0" &&
-        typeof(this.props.currentUser.transactions) != "undefined" &&
-        typeof(this.props.currentUser.bookings) != "undefined") {
+    if( this.userFullyLoaded ) {
         return (
-            <div>
-            {emailVerification}
-              <UserHeader curUsr={this.props.currentUser}/>
+            <div>              
+              {emailVerification}
+              <UserHeader curUsr={currentUser}/>
               <UserBookings/>
               <Timetable/>
               <SpecialCourses />
@@ -66,23 +73,20 @@ class User extends React.Component {
             </div>
           );
       } else {
-          if (this.props.auth.uid){
             return (
-              <p className="centered"> Ladataan käyttäjätietoja.</p>
+              <div></div>
             );
-          } else {
-            return(<p> Ei käyttäjää</p>);
-          }
       }
   }
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth, currentUser: state.currentUser }
+  return { auth: state.auth, currentUser: state.currentUser}
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+  return { actions: bindActionCreators(userActionCreators, dispatch),
+    lsActions: bindActionCreators(lsActionCreators, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

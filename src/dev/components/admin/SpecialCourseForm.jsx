@@ -11,19 +11,27 @@ class SpecialCourseForm extends React.Component {
   constructor(){
     super();
     this.startDate = moment();
-    console.log("MOMENT: ", this.startDate);
   }
 
   onDateChange(date){
-    console.log("DATE: ", date);
     this.startDate = date;
     this.forceUpdate()
   }
 
   onSubmit(props) {
     props.date = this.startDate.valueOf()
-    this.props.actions.addSpecialCourse(props)
-    // TODO : change actions to on instead of ONCE take reloads away
+    if(this.props.mode === "addNew"){
+      this.props.actions.addSpecialCourse(props, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
+      )
+    } else {
+      this.props.actions.modifySpecialCourse(props, 
+      this.props.itemkey, 
+      )
+    }
+    this.props.actions.minimizeSpecialCourseForm()
   }
 
   renderCourseTypeOptions(item) {
@@ -45,9 +53,8 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderContent() {
-//    <input type="text" name="SpecialDate" {...date} placeholder="esim: 6.5.2016 tai 19.10.2016" />
-
-    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, beforetax, taxamount, taxpercent }, handleSubmit } = this.props
+    var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
+    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -58,7 +65,7 @@ class SpecialCourseForm extends React.Component {
           <input type="text" name="SpecialTitle" {...title} placeholder="esim: Keskiyön jooga" />
 
           <label htmlFor="SpecialDate">Erikoiskurssin päivämäärä</label>
-          <DatePicker selected={this.startDate} onChange={this.onDateChange.bind(this)} />
+          <DatePicker className="date-input" selected={this.startDate} onChange={this.onDateChange.bind(this)} />
 
           <label htmlFor="SpecialStart">Alkaa klo.</label>
           <input type="number" name="SpecialStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
@@ -87,19 +94,13 @@ class SpecialCourseForm extends React.Component {
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
 
-          <label htmlFor="SCbeforetax">Hinta ennen veroja</label>
-          <input type="number" name="SCbeforetax" {...beforetax} placeholder="esim: 10.5 tai 50" />
-
-          <label htmlFor="SCtaxa">Veron määrä</label>
-          <input type="number" name="SCtaxa" {...taxamount} placeholder="esim: 10.5 tai 50" />
+          <label htmlFor="SCprice">Verollinen hinta</label>
+          <input type="number" step="0.01" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="SCtaxp">Veroprosentti</label>
-          <input type="number" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+          <input type="number" step="0.01" name="SCtaxp" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
-          <label htmlFor="SCprice">Verollinen hinta</label>
-          <input type="number" name="SCprice" {...price} placeholder="esim: 10.5 tai 50" />
-
-          <button className="btn-small btn-blue" type="submit">Luo</button>
+          <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
         </div>
       )
@@ -110,6 +111,7 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderExpandButton() {
+    console.log("CMPHERR", this.props.cmp)
     if(this.props.cmp.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseForm()}>Piilota</button>
     }
@@ -120,8 +122,8 @@ class SpecialCourseForm extends React.Component {
 
   render() {
     return (
-      <div className="container bordered-container">
-        <div className="content-container">
+      <div className="container transparent-bg">
+        <div className="surrounded-container">
           <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
@@ -139,10 +141,11 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    cmp: state.specialCourseFrom,
+    cmp: state.specialCourseForm,
     courseTypes: state.courseTypeList,
     instructors: state.instructorList,
-    places: state.placeList }
+    places: state.placeList
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -151,6 +154,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SpecialCourseForm',
-  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'beforetax', 'taxamount', 'taxpercent'],
+  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'taxpercent'],
   validate
 }, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)

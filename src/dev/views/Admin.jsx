@@ -5,19 +5,15 @@ import { connect } from 'react-redux'
 import AdminHeader from '../components/admin/AdminHeader.jsx'
 import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
 import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
-import CourseForm from '../components/admin/CourseForm.jsx'
 import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
 import CourseTypeList from '../components/admin/CourseTypeList.jsx'
 import CourseList from '../components/admin/CourseList.jsx'
-import CourseTypeForm from '../components/admin/CourseTypeForm.jsx'
 import InstructorList from '../components/admin/InstructorList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
-import SpecialCourseForm from '../components/admin/SpecialCourseForm.jsx'
-import PlaceForm from '../components/admin/PlaceForm.jsx'
+import SpecialCourseList from '../components/admin/SpecialCourseList.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
-import InfoForm from '../components/admin/InfoForm.jsx'
 
 
 class Admin extends React.Component {
@@ -31,11 +27,8 @@ class Admin extends React.Component {
     router: React.PropTypes.object
   }
 
- componentWillMount(){
-    if( !this.props.auth.uid ) {
-      this.context.router.push('/');
-    }
-  }
+componentWillMount(){
+}
 
 componentWillUnmount(){
 }
@@ -58,17 +51,11 @@ componentWillReceiveProps(nextProps){
           <InstructorList />
           <UserList />
           <InfoList />
+          <ShopList />
           <PlaceList />
           <CourseTypeList />
           <CourseList />
-          <ShopList />
-          <InfoForm />
-          <PlaceForm />
-          <CourseTypeForm />
-          <CourseForm />
-          <SpecialCourseForm />
-          <ShopItemTimeForm />
-          <ShopItemCountForm />
+          <SpecialCourseList />
         </div>
       )
     } else {

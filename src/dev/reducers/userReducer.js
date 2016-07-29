@@ -9,12 +9,15 @@ import {
 
 const INITIAL_STATE = {
     key: "0",
+    bookingsReady: false,
+    specialCoursesReady: false,
+    transactionsReady: false,
     error: {
         code: "0",
         message: "ok"
     },
     bookings: [],
-    specialCources: [],
+    specialCourses: [],
     history: [],
     roles: {
         admin: false,
@@ -30,9 +33,10 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
+
     switch (action.type) {
         case UPDATE_USERS_SCBOOKINGS:
-          return Object.assign({}, state, action.payload);
+            return Object.assign({}, state, action.payload);
         case UPDATE_USERS_BOOKINGS:
             return Object.assign({}, state, action.payload);
         case UPDATE_USERS_TRANSACTIONS:

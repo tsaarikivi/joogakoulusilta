@@ -33,7 +33,7 @@ class ShopList extends React.Component {
         </div>
       )
     } else {
-        return(<p>Ladataan kaupalistaa...</p>)
+        return(<div></div>)
     }
   }
 }

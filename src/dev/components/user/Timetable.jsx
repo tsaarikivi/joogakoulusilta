@@ -13,15 +13,11 @@ class Timetable extends React.Component {
   }
 
   componentWillUnmount(){
-
-  }
-
-  componentWillReceiveProps(nextProps){
-    //console.log("TIMETABLE-props:", nextProps);
+    this.props.actions.stopFetchTimetable();
   }
 
   render() {
-    var bookings = this.props.timetable.bookings;
+    const { bookings } = this.props.timetable;
 
     return (
       <div class="container timetable-container bordered-container centered">
