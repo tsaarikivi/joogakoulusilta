@@ -4,16 +4,40 @@ import {
     REMOVE_COURSE_INFO,
 } from './actionTypes.js'
 
-const CoursesRef = firebase.database().ref('/courses/')
+import {
+    hasTimePassed,
+    getCourseTimeLocal
+} from '../helpers/timeHelper.js'
+
+function processCancel(course, cancelledCourse){
+    let weekIndex = (hasTimePassed(course.day, course.start))? 1 : 0;
+    let instance = getCourseTimeLocal(weekIndex, course.start, course.day)
+    if(cancelledCourse[instance.getTime()]){
+        course.cancelInfo = cancelledCourse[instance.getTime()];
+        course.cancelled = true;
+    }
+}
 
 export function fetchTimetable(instructor = "all") {
     var list = Object.assign([])
+    var cancelled = {}
     return dispatch => {
-        CoursesRef.once('value', snapshot => {
+        firebase.database().ref('/cancelledCourses/').once('value')
+        .then(snapshot => {
+            cancelled = snapshot.val()
+            return firebase.database().ref('/courses/').once('value');
+        })
+        .then( snapshot => {
             var courses = snapshot.val()
             for (var key in courses) {
                 if (instructor === "all" || courses[key].instructor.key === instructor) {
                     courses[key].key = key
+                    courses[key].cancelled = false; //This will be overwritten in processCancel if called
+                    if(cancelled){
+                        if(cancelled[key]){
+                            processCancel(courses[key], cancelled[key]);
+                        }
+                    }
                     list = list.concat(courses[key])
                 }
             }
@@ -29,6 +53,9 @@ export function fetchTimetable(instructor = "all") {
                     courses: list
                 }
             })
+        })
+        .catch(error => {
+            console.error("FetchTimetable failed:", error);
         })
     }
 }
