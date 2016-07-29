@@ -8,6 +8,10 @@
                 ".write": "auth.uid === $userId"
             }
         },
+        "cancelledCourses": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('instructor').val() == true"
+        },
         "infoItems": {
             ".read": "true",
             ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
@@ -29,10 +33,10 @@
             }
         },
         "scbookingsbyuser": {
-          "$userId": {
-              ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-              ".write": "auth.uid === 'joogaserver'"
-          }
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
         },
         "bookingsbyuser": {
             "$userId": {
