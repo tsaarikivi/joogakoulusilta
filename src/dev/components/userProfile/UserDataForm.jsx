@@ -20,7 +20,7 @@ class UserDataForm extends React.Component {
     this.props.actions.updateUserDetails(user)
   }
 
-  componentDidMount(){tuo
+  componentDidMount(){
     document.getElementById("firstName").focus()
   }
 

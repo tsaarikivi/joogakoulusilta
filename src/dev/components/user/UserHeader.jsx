@@ -40,7 +40,7 @@ class UserHeader extends React.Component {
 
   renderTickets() {
     return (
-      <div>
+      <div className="tickets-container">
         <span className="ticket-logo">
           <img className="mini-icon margin-left" src="./assets/ticket.png" />
           <p className="ticket-amnt">{this.count} krt</p>
@@ -59,26 +59,36 @@ class UserHeader extends React.Component {
 
     let toTheShop = null
     if(roles.admin || roles.instructor){
-      toTheShop = <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+      toTheShop = <Link className="text-link text-link-white margin-top" to="shop">Kauppaan</Link>
     }
 
     let admin = null;
     if(roles.admin){
-      admin = <Link className="text-link float-right" to="admin">Admin</Link>
+      admin = <Link className="text-link text-link-white margin-top" to="admin">Admin</Link>
     }
     let instructor = null;
     if(roles.instructor){
-      instructor = <Link className="text-link float-right" to="instructor">Opettaja</Link>
+      instructor = <Link className="text-link text-link-white margin-top" to="instructor">Opettaja</Link>
     }
     return (
-      <div class="container bordered-container">
-        <div className="content-container align-left">
-          <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
-          {admin}
-          {instructor}
-          <h1 className="header-collapse">Hei, {firstname}!</h1>
-          {this.renderTickets()}           
-          {toTheShop}
+      <div class="container bordered-container user-header-container">
+        <div className="content-container">
+          {this.renderTickets()}
+          <div className="userinfo-container">
+            <h1>Hei, {firstname}!</h1>
+            <div className="mobile-row">
+              <Link className="text-link text-link-white margin-top" to="userProfile">Käyttäjätiedot</Link>
+            </div>
+            <div className="mobile-row">
+              {toTheShop}
+            </div>
+            <div className="mobile-row">
+              {instructor}
+            </div>
+            <div className="mobile-row">
+              {admin}
+            </div>
+          </div>
         </div>
       </div>
     )

@@ -47,7 +47,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
     return dispatch => {
 
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
-        _showLoadingScreen(dispatch, "Käteisostoa suoritetaan.")
+        _showLoadingScreen(dispatch, "Käteisostoa suoritetaan")
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
                 return axios.post(JOOGAURL, {

@@ -32,9 +32,9 @@ button, a, select, textarea, body, input {
   }
 
   h1 {
-    font-size: 8.2vw;
+    font-size: 7.2vw;
     span, div {
-      font-size: 8.2vw;
+      font-size: 7.2vw;
     }
   }
   h2 {
@@ -88,6 +88,9 @@ button, a, select, textarea, body, input {
   .small-text {
     display: block;
     margin-bottom: 1vw;
+  }
+  .margin-top {
+    margin-top: 2vw;
   }
 }
 
@@ -157,6 +160,9 @@ button, a, select, textarea, body, input {
   }
   .small-text {
     margin-bottom: 10px;
+  }
+  .margin-top {
+    margin-top: 8px;
   }
 }
 

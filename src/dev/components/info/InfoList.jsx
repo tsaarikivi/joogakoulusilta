@@ -23,7 +23,9 @@ class InfoList extends React.Component {
     return (
       <div class="container bordered-container">
         <Logo />
-        <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+        <div className="centered">
+          <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+        </div>
         <div className="content-container">
           <ul className="wide-list blank-list">
             {this.props.list.list.map(this.renderList)}

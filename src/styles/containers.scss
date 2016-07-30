@@ -140,6 +140,34 @@
       margin: 0 0 3vw;
     }  
   }
+
+  .tickets-container {
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+  }
+
+  .userinfo-container {
+    display: inline-block;
+    margin-top: 7vw;
+    margin-bottom: 3vw;
+    width: 60%;
+  }
+
+  .mobile-row {
+    width: 100%;
+    margin-top: 4vw;
+  }
+
+  .user-header-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .mailbtn-container {
+    margin: 0;
+    padding: 2vw 0;
+  }
 }
 
 
@@ -277,6 +305,36 @@
     span {
       margin: 0 0 10px;
     }  
+  }
+
+  .tickets-container {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+  }
+
+  .userinfo-container {
+    display: inline-block;
+    margin-top: 25px;
+    a {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .mobile-row {
+    display: inline-block;
+  }
+
+  .user-header-container {
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .mailbtn-container {
+    margin: 0;
+    padding: 5px 0;
   }
 }
 
