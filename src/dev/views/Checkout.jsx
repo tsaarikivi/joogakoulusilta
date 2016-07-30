@@ -60,7 +60,13 @@ class Checkout extends React.Component {
 //=================================================================
 
 renderCashPayment(){
-    return( <UserList /> )
+    return( 
+    <div>
+      <button className="btn-small btn-blue" onClick={() => this.props.actions.resetShop()} > Peru osto </button>
+      <h3 className="centered"> Valitse käyttäjä, jolle osto suoritetaan.</h3>
+      <UserList />
+    </div>   
+      )
 }
 
   renderStartPhase(){
@@ -130,6 +136,9 @@ renderCashPayment(){
         return this.renderError()
       case "timeout":
         return(<p> Palataan takaisin päänäkymään.</p>)
+      case "start":
+        this.context.router.push('user');
+        break;
       default:
       return (<p>ERROR</p>)
     }
