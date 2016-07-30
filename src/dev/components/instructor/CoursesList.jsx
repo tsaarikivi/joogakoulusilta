@@ -61,22 +61,22 @@ class CoursesList extends React.Component {
 
     return (
       
-      <div class="container timetable-container centered">
-        <div>
+      <div class="container timetable-container">
+        <div className="content-container align-left">
           <h2>Aikataulu</h2>
           <small>Klikkaa joogatuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
-          <table>
-            <tbody>
-            {this.renderTR("Maanantai", 1)}
-            {this.renderTR("Tiistai", 2)}
-            {this.renderTR("Keskiviikko", 3)}
-            {this.renderTR("Torstai", 4)}
-            {this.renderTR("Perjantai", 5)}
-            {this.renderTR("Lauantai", 6)}
-            {this.renderTR("Sunnuntai", 7)}
-            </tbody>
-          </table>
         </div>
+        <table className="centered">
+          <tbody>
+          {this.renderTR("Maanantai", 1)}
+          {this.renderTR("Tiistai", 2)}
+          {this.renderTR("Keskiviikko", 3)}
+          {this.renderTR("Torstai", 4)}
+          {this.renderTR("Perjantai", 5)}
+          {this.renderTR("Lauantai", 6)}
+          {this.renderTR("Sunnuntai", 7)}
+          </tbody>
+        </table>        
       </div>
     )
   }
