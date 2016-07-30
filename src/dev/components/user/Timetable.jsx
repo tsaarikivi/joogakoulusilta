@@ -21,7 +21,7 @@ class Timetable extends React.Component {
 
     return (
       <div class="container timetable-container bordered-container centered">
-        <div className="content-container">
+        <div>
           <h2>Aikataulu</h2>
           <small>Klikkaa joogatuntia avataksesi lisätiedot ja varataksesi paikka tunnilta</small>
           <table>
