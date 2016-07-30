@@ -124,7 +124,7 @@ class CourseInfo extends React.Component {
     let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
-                  <button className="btn-small btn-blue" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
+                  <button className="btn-small btn-red" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
                 </div>
               );
     }}
