@@ -39,6 +39,12 @@ class ShopItem extends React.Component {
     }
   }
 
+  /**
+   * <span className="item-row">
+          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
+        </span>
+   */
+
   render() {
     let admin = null;
     if(this.props.admin){
@@ -49,10 +55,7 @@ class ShopItem extends React.Component {
         <h3 className="item-title">{this.props.item.title}</h3>
         <p className="item-desc">{this.props.item.desc}</p>
         {this.renderExpire()}
-        <p class="item-price">{this.props.item.price} €</p>
-        <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
-        </span>
+        <p class="item-price">{this.props.item.price} €</p>        
         <span className="item-row">
           {admin}
         </span>
