@@ -35,8 +35,8 @@ class Checkout extends React.Component {
     }
   }
 
-  componentWillMount(){
-
+  componentWillUnmount(){
+    this.props.actions.resetShop()
   }
 
   onReady() {

@@ -7,7 +7,8 @@ import {
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
     BUY_WITH_CASH,
-    EXECUTE_CASH_PURCHASE
+    EXECUTE_CASH_PURCHASE,
+    RESET_SHOP
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -24,6 +25,8 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case RESET_SHOP:
+            return INITIAL_STATE;
         case BUY_WITH_CASH:
             return Object.assign({}, state, action.payload);
         case EXECUTE_CASH_PURCHASE:

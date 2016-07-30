@@ -9,7 +9,8 @@ import {
     DO_PURCHASE_TRANSACTION,
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
-    EXECUTE_CASH_PURCHASE
+    EXECUTE_CASH_PURCHASE,
+    RESET_SHOP
 } from './actionTypes.js'
 
 import {
@@ -18,6 +19,14 @@ import {
 } from './loadingScreen.js'
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
+
+export function resetShop(){
+    return dispatch => {
+        dispatch({
+            type: RESET_SHOP
+        })
+    }
+}
 
 export function buyWithCash() {
     return dispatch => {
