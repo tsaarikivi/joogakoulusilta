@@ -31,10 +31,7 @@ class TimeTableItem extends React.Component {
   renderBooked(item, allBooked) {
     if(!item.cancelled) {
       return (
-        <span>
-          <img className="mini-icon" src="./assets/group.png" />
-          {allBooked}
-        </span>
+        allBooked    
       )
     }    
   }
@@ -52,12 +49,18 @@ class TimeTableItem extends React.Component {
       }
     }
     if(booking){
-      var allBooked = <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+      var allBooked = <span>
+                        <img className="mini-icon" src="./assets/group.png" />
+                        <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+                      </span>       
       if(booking.all.length > 0){
         if(booking.all[0].reservations === item.maxCapacity) {
-          allBooked = <p className="table-participants margin-left text-red text-bold">{booking.all[0].reservations}/{item.maxCapacity}</p>
+          allBooked = <p className="table-participants text-red text-bold">TÄYNNÄ</p>
         } else {
-          allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+          allBooked = <span>
+                        <img className="mini-icon" src="./assets/group.png" />
+                        <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+                      </span>          
         }        
       }
     }
