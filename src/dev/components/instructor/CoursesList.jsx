@@ -61,7 +61,7 @@ class CoursesList extends React.Component {
 
     return (
       
-      <div class="container timetable-container bordered-container centered">
+      <div class="container timetable-container centered">
         <div>
           <h2>Aikataulu</h2>
           <small>Klikkaa joogatuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
