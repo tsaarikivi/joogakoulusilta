@@ -64,7 +64,6 @@ class User extends React.Component {
             <div>              
               {emailVerification}
               <UserHeader curUsr={currentUser}/>
-              <UserBookings/>
               <Timetable/>
               <SpecialCourses />
               <ContactInfo />

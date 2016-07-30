@@ -11,11 +11,43 @@ class CourseInfo extends React.Component {
     super();
     this.fetchStarted = false;
     this.reservationRequestOngoing = false;
+    this.cancellationOngoing = false;
+    this.confirmation = false;
+    this.timeoutId = 0;
   }
 
   componentWillReceiveProps(nextProps){
   }
 
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+  cancelReservation(forward){
+    const { courseInfo } = this.props;
+    if(this.confirmation){
+      if(!this.cancellationOngoing){
+        this.cancellationOngoing = true;
+        this.props.bookingsActions.postCancellation(
+          courseInfo.bookings.user[0].item, 
+          courseInfo.bookings.user[0].txRef, 
+          courseInfo);
+          this.exitContainer();
+      }
+    } else {
+      console.log(this.props);
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout( () => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
+    
+
+  }
 
   makeReservation(forward) {
     if(!this.reservationRequestOngoing){
@@ -71,6 +103,15 @@ class CourseInfo extends React.Component {
     var notificationText = null;
     const { courseInfo } = this.props;
     let weekIndex = 0;
+    if (hasTimePassed(courseInfo.day, courseInfo.start)) {
+      weekIndex = 1;
+    } else {
+      weekIndex = 0;
+    }
+
+    let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
+    let dayStr = getDayStr(day) + " " + getTimeStr(day);
+
 
     if(courseInfo.cancelled){
         return(
@@ -80,8 +121,11 @@ class CourseInfo extends React.Component {
 
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
-        return(
-                <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
+    let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
+        return( <div>
+                  <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
+                  <button className="btn-small btn-blue" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
+                </div>
               );
     }}
 
@@ -98,14 +142,6 @@ class CourseInfo extends React.Component {
       );
     }
     
-    if (hasTimePassed(courseInfo.day, courseInfo.start)) {
-      weekIndex = 1;
-    } else {
-      weekIndex = 0;
-    }
-
-    let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
-    let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
     if(
       hasTimePassed(courseInfo.day, courseInfo.start) && 
