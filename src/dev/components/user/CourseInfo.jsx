@@ -62,9 +62,9 @@ class CourseInfo extends React.Component {
     this.reservationRequestOngoing = false;
   }
 
-  userCanBook(){
+  userCanBook(day){
     const { transactions } = this.props.currentUser;
-    return (transactions.count > 0 || transactions.time > Date.now()) ? true : false;
+    return (transactions.count > 0 || transactions.time > day.getTime()) ? true : false;
   }
 
   courseIsFull(){
@@ -135,7 +135,7 @@ class CourseInfo extends React.Component {
       );
     }
 
-    if(!this.userCanBook()){
+    if(!this.userCanBook(day)){
       return(<div>
               <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy joogaopettajaltasi ostamassa varaus oikeuksia.</p>
             </div>
