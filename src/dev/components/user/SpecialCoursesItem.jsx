@@ -20,6 +20,17 @@ class SpecialCoursesItem extends React.Component {
     return false;
   }
 
+  renderBookings(item) {
+    if (item.bookings === item.maxCapacity) {
+      return <p className="centered table-participants text-red text-bold">TÄYNNÄ</p>
+    }
+    return (
+      <span>
+        <img className="mini-icon" src="./assets/group.png" />
+        <p className="centered table-participants">{item.bookings}/{item.maxCapacity}</p>
+      </span>
+    )
+  }
 
   render() {
     let userBooked = null;
@@ -31,9 +42,8 @@ class SpecialCoursesItem extends React.Component {
       <li className="special-course-item" onClick={() => this.itemClicked()}>
         <p className="table-nonmargin">{item.title}</p>
         <p className="table-time">{getDayStrMs(item.date)}</p>
-        <p className="table-time">{getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</p>
-        <img className="mini-icon" src="./assets/group.png" />
-        <p className="centered table-participants">{item.bookings}/{item.maxCapacity}</p>
+        <p className="table-time">{getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</p>        
+        {this.renderBookings(item)}
         {userBooked}
       </li>
     );
