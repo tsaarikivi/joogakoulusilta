@@ -19,7 +19,7 @@ export function activateCourse(course) {
     return dispatch => {
         firebase.database().ref('/cancelledCourses/' + course.key + '/' + course.cancelInfo.instance).remove()
         .then(()=>{
-            console.log("Course activated again.");
+            // nothing to do
         })
         .catch(error => {
             console.error("Course activation failed: ", error);
@@ -47,7 +47,6 @@ export function postCanceCourse(course, booking, reason = "undefined") {
                         reason: reason
                     })
                 .then(response => {
-                    console.log(response.data);
                     _hideLoadingScreen(dispatch, "Tunti peruttu", true)
                 })
                 .catch(error => {

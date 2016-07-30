@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { mapDay } from '../../helpers/timeHelper.js'
 
 import * as courseActions from '../../actions/courses.js'
 import Course from './Course.jsx'
@@ -14,6 +15,43 @@ class CoursesList extends React.Component {
 
   componentWillUnmount(){
     this.props.cActions.stopFetchTimetable();
+  }
+
+  renderTR(dayname, dayNumber){
+    const { bookings, courses } = this.props.timetable;
+    const { currentUser } = this.props;
+    let day = new Date();
+    let today = (dayNumber === mapDay(day.getDay()))? true: false;
+    if(today){
+    return(
+      <tr className="glowing">
+        <th>***{dayname}***</th>
+        {
+          courses.map(function(item) {
+            if (item.day === dayNumber && item.instructor.key === currentUser.key) {
+              return (
+                <Course key={item.key} item={item} booking={bookings[item.key]}/>
+              )
+            }
+          })
+        }
+      </tr>
+    )
+    }
+    return(
+      <tr>
+        <th>{dayname}</th>
+        {
+          courses.map(function(item) {
+            if (item.day === dayNumber && item.instructor.key === currentUser.key) {
+              return (
+                <Course key={item.key} item={item} booking={bookings[item.key]}/>
+              )
+            }
+          })
+        }
+      </tr>
+    )
   }
 
 
@@ -29,90 +67,13 @@ class CoursesList extends React.Component {
           <small>Klikkaa joogatuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
           <table>
             <tbody>
-              <tr>
-                <th>Maanantai</th>
-                {
-                  courses.map(function(item) {
-                    if (item.day === 1 && item.instructor.key === currentUser.key) {
-                      return (
-                        <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                      )
-                    }
-                  })
-                }
-              </tr>
-              <tr>
-                <th>Tiistai</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 2 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                        )
-                      }
-                    })
-                  }
-              </tr>
-              <tr>
-                <th>Keskiviikko</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 3 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                        )
-                      }
-                    })
-                  }
-              </tr>
-              <tr>
-                <th>Torstai</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 4 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                        )
-                      }
-                    })
-                  }
-              </tr>
-              <tr>
-                <th>Perjantai</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 5 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                        )
-                      }
-                    })
-                  }
-              </tr>
-              <tr>
-                <th>Lauantai</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 6 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]}/>
-                        )
-                      }
-                    })
-                  }
-              </tr>
-              <tr>
-                <th>Sunnuntai</th>
-                  {
-                    courses.map(function(item) {
-                      if (item.day === 7 && item.instructor.key === currentUser.key) {
-                        return (
-                          <Course key={item.key} item={item} booking={bookings[item.key]} />
-                        )
-                      }
-                    })
-                  }
-              </tr>
+            {this.renderTR("Maanantai", 1)}
+            {this.renderTR("Tiistai", 2)}
+            {this.renderTR("Keskiviikko", 3)}
+            {this.renderTR("Torstai", 4)}
+            {this.renderTR("Perjantai", 5)}
+            {this.renderTR("Lauantai", 6)}
+            {this.renderTR("Sunnuntai", 7)}
             </tbody>
           </table>
         </div>

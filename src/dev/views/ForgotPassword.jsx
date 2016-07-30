@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router"
 import Logo from '../components/logos/JoogakouluLogo.jsx'
 import { bindActionCreators } from 'redux'
 import { reduxForm } from 'redux-form'
@@ -33,6 +34,7 @@ class ForgotPassword extends React.Component {
         return (
             <div class="container centered">
                 <Logo />
+                <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
                 <h2 className="centered login-header">Unohditko salasanasi?</h2>
                 <small className="small-text">Anna sähköpostiosoitteesi. Lähetämme sinulle salasanan vaihtolinkin.</small>
                 <small className="small-text">Sähköpostin saapumisessa voi kestää tovi.</small>

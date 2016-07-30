@@ -17,6 +17,7 @@ class CourseInfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    this.cancellationOngoing = false;
   }
 
   componentWillUnmount(){
@@ -37,7 +38,6 @@ class CourseInfo extends React.Component {
           this.exitContainer();
       }
     } else {
-      console.log(this.props);
       this.confirmation = true;
       this.forceUpdate();
       this.timeoutId = setTimeout( () => {

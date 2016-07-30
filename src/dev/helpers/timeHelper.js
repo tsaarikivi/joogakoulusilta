@@ -1,4 +1,4 @@
-function mapDay(dayin) {
+export function mapDay(dayin) {
     return (dayin == 0) ? 7 : dayin;
 }
 

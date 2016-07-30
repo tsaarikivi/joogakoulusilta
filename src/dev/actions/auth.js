@@ -52,7 +52,6 @@ export function authListener() {
                 surname = null;
                 alias = null;
             } else {
-                console.log("REMOVE_USR")
                 dispatch({
                     type: REMOVE_USER
                 })
@@ -63,9 +62,7 @@ export function authListener() {
 
 export function loginWithPopUp() {
     return dispatch => {
-        console.log("firebase auth", firebase)
         var provider = new firebase.auth.GoogleAuthProvider
-        console.log("provider", provider)
         Auth.signInWithPopup(provider).catch(error => {
             if (error) {
                 dispatch({
