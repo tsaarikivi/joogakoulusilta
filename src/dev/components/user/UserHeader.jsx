@@ -57,6 +57,21 @@ class UserHeader extends React.Component {
     }
   }
 
+  renderTickets() {
+    return (
+      <div>
+        <span className="ticket-logo">
+          <img className="mini-icon margin-left" src="./assets/ticket.png" />
+          <p className="ticket-amnt">0 krt</p>
+        </span>
+        <span className="ticket-logo">
+          <img className="mini-icon margin-left" src="./assets/clock.png" />
+          <p className="ticket-amnt">0 pv</p>
+        </span>
+      </div>
+    )
+  }
+
   render() {
 
     const { roles, firstname } = this.props.curUsr;
@@ -81,8 +96,7 @@ class UserHeader extends React.Component {
           {admin}
           {instructor}
           <h1 className="header-collapse">Hei, {firstname}!</h1>
-          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
-          {this.renderContent()}
+          {this.renderTickets()}           
           {toTheShop}
         </div>
       </div>

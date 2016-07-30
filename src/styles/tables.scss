@@ -18,6 +18,9 @@
         width: 100%;
         display: block;
       }
+      th {
+        font-size: 5vw;
+      }
       td {      
         padding: 2vw 0;
         .table-time {
@@ -64,6 +67,9 @@
       th, td {
         width: 100%;
         display: block;
+      }
+      th {
+        font-size: 16px;
       }
       td {
         padding: 12px 0;       
@@ -117,6 +123,8 @@ table {
       }
     }
     th {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       background: $lightgray;
       border: none;
       box-sizing: border-box;
@@ -138,4 +146,8 @@ table {
 }
 .table-nonmargin {
   margin-top: 0;
+}
+.glowing {
+  border: none;
+  box-shadow: 0 0 8px 1px $blue;
 }
