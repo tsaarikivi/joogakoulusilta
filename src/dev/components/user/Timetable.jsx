@@ -23,7 +23,7 @@ class Timetable extends React.Component {
     if(today){
     return(
       <tr className="glowing">
-        <th>***{dayname}***</th>
+        <th className="text-bold text-blue">{dayname}</th>
         {
           courses.map(function(item) {
             if (item.day === dayNumber) {

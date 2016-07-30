@@ -75,8 +75,7 @@ class UserHeader extends React.Component {
           <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
           {admin}
           {instructor}
-          <h1 className="header-collapse">Hei, {firstname}!</h1>
-          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
+          <h1 className="header-collapse">Hei, {firstname}!</h1>               
           {this.renderContent()}
           <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
         </div>
