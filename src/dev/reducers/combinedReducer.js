@@ -31,6 +31,7 @@ import CourseTypeListReducer from './admin/courseTypeListReducer.js'
 import PlaceListReducer from './admin/placeListReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
 import SpecialCourseListReducer from './admin/specialCourseListReducer.js'
+import SearchBarReducer from './admin/searchBarReducer.js'
 
 const combinedReducer = combineReducers({
     loadingScreen: LoadingScreenReducer,
@@ -59,7 +60,8 @@ const combinedReducer = combineReducers({
     courseTypeList: CourseTypeListReducer,
     placeList: PlaceListReducer,
     infoList: InfoReducer,
-    infoForm: InfoFormReducer
+    infoForm: InfoFormReducer,
+    searchBar: SearchBarReducer
 })
 
 export default combinedReducer;

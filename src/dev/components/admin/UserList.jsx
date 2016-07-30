@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Item from './UserItem.jsx'
+import SearchBar from './SearchBar.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
 class UserList extends React.Component {
@@ -11,15 +12,19 @@ class UserList extends React.Component {
   }
 
   renderList(item) {
-    return (
-      <Item key={item.key} item={item} />
-    )
+    console.log("SEVALUE", this.props.searchBar.value)
+    if (item.email.indexOf(this.props.searchBar.value) !== -1) {
+      return (
+        <Item key={item.key} item={item} />
+      )
+    }    
   }
 
   renderContent() {
     if (this.props.list.expanded || this.props.shopItems.phase === "cashPayment") {
       return (
         <ul className="wide-list">
+          <SearchBar />
           {this.props.list.list.map(this.renderList.bind(this))}
         </ul>
       )
@@ -42,7 +47,7 @@ class UserList extends React.Component {
   render() {
     return (
       <div className="container bordered-container">
-        <div className="content-container align-left">
+        <div className="content-container align-left">          
           <h2 className="header-collapse">Käyttäjät</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
@@ -53,7 +58,7 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.userList, shopItems: state.shopItems }
+  return { list: state.userList, shopItems: state.shopItems, searchBar: state.searchBar }
 }
 
 function mapDispatchToProps(dispatch) {
