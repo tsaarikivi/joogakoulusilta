@@ -28,11 +28,23 @@ class TimeTableItem extends React.Component {
     this.props.courseActions.putCourseInfo(this.props.item, this.props.booking)
   }
 
+  renderBooked(item, allBooked) {
+    if(item.cancelled) {
+      return <div></div>
+    }
+    return (
+      <div>
+        <img className="mini-icon" src="./assets/group.png" />
+        {allBooked}
+      </div>
+    )
+  }
+
   render() {
     const { booking, item } = this.props;
     var courseCancelled = null;
     if(item.cancelled){
-      courseCancelled = <p>PERUTTU</p>
+      courseCancelled = <p className="text-bold text-red">PERUTTU</p>
     }
     var userBooked = null;
     if(booking){
@@ -49,9 +61,8 @@ class TimeTableItem extends React.Component {
     return (
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
-        <img className="mini-icon" src="./assets/group.png" />
-        {allBooked}
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
+        {this.renderBooked(item, allBooked)}
         {userBooked}
         {courseCancelled}
       </td>

@@ -12,7 +12,6 @@ class UserList extends React.Component {
   }
 
   renderList(item) {
-    console.log("SEVALUE", this.props.searchBar.value)
     if (item.email.indexOf(this.props.searchBar.value) !== -1) {
       return (
         <Item key={item.key} item={item} />
