@@ -17,7 +17,7 @@ class ShopList extends React.Component {
 
   renderShopItems(item) {
     return (
-      <ShopItem key={item.key} item={item} admin={this.props.currentUser.roles.admin}/>
+      <ShopItem key={item.key} item={item} roles={this.props.currentUser.roles}/>
     )
   }
 

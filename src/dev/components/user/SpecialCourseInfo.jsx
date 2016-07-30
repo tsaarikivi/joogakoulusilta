@@ -52,14 +52,14 @@ class SpecialCourseInfo extends React.Component {
 
   renderPurchaseButtons() {
 
-    let admin = null;
+    let cashBuyButton = null;
     if( this.userHasPurchasedThisAlready() === true ){
       return( <p className="text-red">Olet jo ostanut tämän kurssin.</p> );
     }
 
 
-    if(this.props.currentUser.roles.admin){
-      admin = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+    if(this.props.currentUser.roles.admin || this.props.currentUser.roles.instructor){
+      cashBuyButton = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
     /**
@@ -72,7 +72,7 @@ class SpecialCourseInfo extends React.Component {
       return (
         <div>          
           <span className="item-row">
-            {admin}
+            {cashBuyButton}
           </span>
         </div>
       )

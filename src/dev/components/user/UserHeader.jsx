@@ -61,12 +61,17 @@ class UserHeader extends React.Component {
 
     const { roles, firstname } = this.props.curUsr;
 
-    var admin = null;
-    if(roles.admin === true){
+    let toTheShop = null
+    if(roles.admin || roles.instructor){
+      toTheShop = <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+    }
+
+    let admin = null;
+    if(roles.admin){
       admin = <Link className="text-link float-right" to="admin">Admin</Link>
     }
-    var instructor = null;
-    if(roles.instructor === true){
+    let instructor = null;
+    if(roles.instructor){
       instructor = <Link className="text-link float-right" to="instructor">Opettaja</Link>
     }
     return (
@@ -78,7 +83,7 @@ class UserHeader extends React.Component {
           <h1 className="header-collapse">Hei, {firstname}!</h1>
           <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
           {this.renderContent()}
-          <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+          {toTheShop}
         </div>
       </div>
     )

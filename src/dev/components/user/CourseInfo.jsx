@@ -137,7 +137,7 @@ class CourseInfo extends React.Component {
 
     if(!this.userCanBook()){
       return(<div>
-              <p className="info-cantreserve">Sinulla ei ole oikeutta varata. Mene kauppaan</p>
+              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy joogaopettajaltasi ostamassa varaus oikeuksia.</p>
             </div>
       );
     }

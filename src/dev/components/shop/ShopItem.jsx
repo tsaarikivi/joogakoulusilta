@@ -46,9 +46,10 @@ class ShopItem extends React.Component {
    */
 
   render() {
-    let admin = null;
-    if(this.props.admin){
-      admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+    let cashBuyButton = null;
+    const { admin, instructor } = this.props.roles;
+    if(admin || instructor){
+      cashBuyButton = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
     return (
       <li>
@@ -57,7 +58,7 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>        
         <span className="item-row">
-          {admin}
+          {cashBuyButton}
         </span>
       </li>
     );
