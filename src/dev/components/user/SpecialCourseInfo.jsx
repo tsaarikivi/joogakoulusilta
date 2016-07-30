@@ -55,7 +55,7 @@ class SpecialCourseInfo extends React.Component {
 
     let admin = null;
     if( this.userHasPurchasedThisAlready() === true ){
-      return( <h4>Olet jo ostanut tämän kurssin.</h4> );
+      return( <p className="text-red">Olet jo ostanut tämän kurssin.</p> );
     }
 
 
@@ -78,7 +78,7 @@ class SpecialCourseInfo extends React.Component {
         </div>
       )
     } else {
-      return (<h2>Kurssi on täynnä.</h2> )
+      return (<p className="text-red">Kurssi on täynnä.</p> )
     }
   }
 

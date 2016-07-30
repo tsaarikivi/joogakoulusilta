@@ -97,7 +97,7 @@ class CourseForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Luo uusi vakiokurssi</h2>
+          <h2 className="header-collapse">Luo uusi joogatunti</h2>
           {this.renderContent()}
         </div>
       </div>

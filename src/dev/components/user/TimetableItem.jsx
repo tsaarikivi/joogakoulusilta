@@ -54,7 +54,11 @@ class TimeTableItem extends React.Component {
     if(booking){
       var allBooked = <p className="table-participants margin-left">0/{item.maxCapacity}</p>
       if(booking.all.length > 0){
-        allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+        if(booking.all[0].reservations === item.maxCapacity) {
+          allBooked = <p className="table-participants margin-left text-red text-bold">{booking.all[0].reservations}/{item.maxCapacity}</p>
+        } else {
+          allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+        }        
       }
     }
     return (

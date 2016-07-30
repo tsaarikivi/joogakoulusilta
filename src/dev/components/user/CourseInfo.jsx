@@ -74,20 +74,20 @@ class CourseInfo extends React.Component {
 
     if(courseInfo.cancelled){
         return(
-                <p className="text-red"> Kurssi on peruttu!</p>
+                <p className="text-red">Tunti on peruttu!</p>
               );
     }
 
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
         return(
-                <p className="text-blue"> Sinä olet ilmoittautunut tälle kurssille.</p>
+                <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
               );
     }}
 
     if(this.courseIsFull()){
       return(
-        <p className="text-red"> Kurssi on jo täyteen varattu!</p>
+        <p className="text-red"> Tunti on jo täyteen varattu!</p>
       );
     }
 
@@ -110,7 +110,7 @@ class CourseInfo extends React.Component {
     if(
       hasTimePassed(courseInfo.day, courseInfo.start) && 
       !hasTimePassed(courseInfo.day, courseInfo.end)){
-        notificationText = <p className="text-red"> Tämän viikon kurssi on alkanut. Varaus on seuraavalle viikolle. </p>
+        notificationText = <p className="text-red"> Tämän viikon tunti on alkanut. Varaus on seuraavalle viikolle. </p>
     }
 
     return(

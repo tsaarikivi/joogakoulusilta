@@ -43,7 +43,7 @@ export function postCancellation(item, txRef, courseInfo) {
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Varataan kurssia")
+        _showLoadingScreen(dispatch, "Varataan tuntia")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(

@@ -36,7 +36,7 @@ export function postCanceCourse(course, booking, reason = "undefined") {
     }
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelcourse' : JOOGASERVER + '/cancelcourse'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Perutaan kurssia")
+        _showLoadingScreen(dispatch, "Perutaan tuntia")
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
                     JOOGAURL, {
@@ -48,15 +48,15 @@ export function postCanceCourse(course, booking, reason = "undefined") {
                     })
                 .then(response => {
                     console.log(response.data);
-                    _hideLoadingScreen(dispatch, "Kurssi peruttu", true)
+                    _hideLoadingScreen(dispatch, "Tunti peruttu", true)
                 })
                 .catch(error => {
                     console.error(error);
-                    _hideLoadingScreen(dispatch, "Kurssin perumisesa tapahtui virhe: " + error.data.message, false)
+                    _hideLoadingScreen(dispatch, "Tunnin perumisesa tapahtui virhe: " + error.data.message, false)
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
-            _hideLoadingScreen(dispatch, "Kurssin perumisesa tapahtui virhe: " + error.message, false)
+            _hideLoadingScreen(dispatch, "Tunnin perumisesa tapahtui virhe: " + error.message, false)
         });
     }
 }

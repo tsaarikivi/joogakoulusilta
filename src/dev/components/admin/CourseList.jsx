@@ -85,7 +85,7 @@ class CourseList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Kurssit</h2>
+          <h2 className="header-collapse">Joogatunnit</h2>
           {this.renderExpandButton()}
           {this.renderForm()}
           {this.renderContent()}
