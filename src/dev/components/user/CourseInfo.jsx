@@ -17,6 +17,8 @@ class CourseInfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    console.log("Course Info props", nextProps);
+    this.cancellationOngoing = false;
   }
 
   componentWillUnmount(){
