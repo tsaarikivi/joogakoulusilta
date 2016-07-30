@@ -29,25 +29,31 @@ class TimeTableItem extends React.Component {
   }
 
   render() {
+    const { booking, item } = this.props;
+    var courseCancelled = null;
+    if(item.cancelled){
+      courseCancelled = <p>PERUTTU</p>
+    }
     var userBooked = null;
-    if(this.props.booking){
-      if(this.props.booking.user.length > 0){
+    if(booking){
+      if(booking.user.length > 0){
          userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
       }
     }
-    if(this.props.booking){
-      var allBooked = <p className="table-participants margin-left">0/{this.props.item.maxCapacity}</p>
-      if(this.props.booking.all.length > 0){
-        allBooked = <p className="table-participants margin-left">{this.props.booking.all[0].reservations}/{this.props.item.maxCapacity}</p>
+    if(booking){
+      var allBooked = <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+      if(booking.all.length > 0){
+        allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
       }
     }
     return (
       <td onClick={() => this.itemClicked()}>
-        <p className="table-course">{this.props.item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(this.props.item.start)} - {getTimeStrMsBeginnignOfDay(this.props.item.end)}</p>
+        <p className="table-course">{item.courseType.name}</p>
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
         {userBooked}
+        {courseCancelled}
       </td>
     );
   }

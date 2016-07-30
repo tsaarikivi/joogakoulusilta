@@ -30,6 +30,11 @@ class Course extends React.Component {
 
   render() {
     const { booking, item } = this.props;
+    var courseCancelled = null;
+    if(item.cancelled){
+      courseCancelled = <p>PERUTTU</p>
+    }
+
     if(booking){
       var allBooked = <p className="table-participants">0/{item.maxCapacity}</p>
       if(booking.all.length > 0){
@@ -42,6 +47,7 @@ class Course extends React.Component {
         <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         <img className="mini-icon" src="./assets/group.png" />
         {allBooked}
+        {courseCancelled}
       </td>
     );
   }
