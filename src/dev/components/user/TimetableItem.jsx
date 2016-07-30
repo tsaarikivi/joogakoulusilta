@@ -29,15 +29,14 @@ class TimeTableItem extends React.Component {
   }
 
   renderBooked(item, allBooked) {
-    if(item.cancelled) {
-      return <div></div>
-    }
-    return (
-      <div>
-        <img className="mini-icon" src="./assets/group.png" />
-        {allBooked}
-      </div>
-    )
+    if(!item.cancelled) {
+      return (
+        <span>
+          <img className="mini-icon" src="./assets/group.png" />
+          {allBooked}
+        </span>
+      )
+    }    
   }
 
   render() {
