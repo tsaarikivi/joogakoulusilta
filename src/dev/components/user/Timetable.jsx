@@ -20,7 +20,7 @@ class Timetable extends React.Component {
     const { bookings } = this.props.timetable;
 
     return (
-      <div class="container timetable-container bordered-container centered">
+      <div class="container timetable-container centered">
         <div>
           <h2>Aikataulu</h2>
           <small>Klikkaa joogatuntia avataksesi lisätiedot ja varataksesi paikka tunnilta</small>
