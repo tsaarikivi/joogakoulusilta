@@ -16,8 +16,8 @@ class SearchBar extends React.Component {
   render() {
     return (
       <form>
-        <label htmlFor="search">Haku</label>
-        <input name="search" type="text" onChange={event => this.handleChange(event)}/>
+        <label htmlFor="usersearch">Haku</label>
+        <input name="usersearch" type="search" onChange={event => this.handleChange(event)}/>
       </form>
     )
   }
