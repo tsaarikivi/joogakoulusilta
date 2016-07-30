@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -22,6 +23,7 @@ class InfoList extends React.Component {
     return (
       <div class="container bordered-container">
         <Logo />
+        <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
         <div className="content-container">
           <ul className="wide-list blank-list">
             {this.props.list.list.map(this.renderList)}

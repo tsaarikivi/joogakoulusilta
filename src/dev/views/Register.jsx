@@ -67,6 +67,7 @@ class Register extends React.Component {
       return (
         <div class="container">
           <Logo />
+          <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
           <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>
           <div className="content-container login-container">
             {this.renderForm()}
