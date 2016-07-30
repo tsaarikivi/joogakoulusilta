@@ -26,7 +26,6 @@ export function postCancellation(item, txRef, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data);
                     _hideLoadingScreen(dispatch, "Varaus peruttu", true)
                 })
                 .catch(error => {
@@ -54,7 +53,6 @@ export function postReservation(forward, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data);
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {

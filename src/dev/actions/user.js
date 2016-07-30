@@ -262,7 +262,6 @@ export function fetchUserDetails(uid) {
         UserRef.on('value', snapshot => {
             if (snapshot.val()) {
                 usr = snapshot.val();
-                console.log("userdetails", usr);
                 usr.key = snapshot.key;
                 firebase.database().ref('/specialUsers/' + usr.key).once('value')
                     .then(snapshot => {

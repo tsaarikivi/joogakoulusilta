@@ -35,7 +35,6 @@ class UserBooking extends React.Component {
     } else {
       cancelButton = <p>Tunnin alkuun alle 3 tuntia.</p>
     }
-    console.log("this.props.item.courseTime", this.props.item.courseTime)
 
     return (
         <li className="booking-container">
