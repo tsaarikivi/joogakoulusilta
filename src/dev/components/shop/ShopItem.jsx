@@ -10,21 +10,15 @@ class ShopItem extends React.Component {
     router: React.PropTypes.object
   }
 
-  handleClick(e){
-    console.log("handle click1");
-    e.preventDefault();
-    console.log("handle click2");
-    this.props.actions.addToCart(this.props.item);
-    console.log("handle click3");
-    this.props.actions.buyWithPaytrail()
-    console.log("handle click4");
+  payTrailPurchase(){
+    const { item } = this.props
+    this.props.actions.addToCart(item);
+    this.props.actions.initializePayTrailTransaction(item.key, item.type)
     this.context.router.push('checkout');
-    console.log("handle click5");
 
   }
 
-  cashPurchase(e){
-    e.preventDefault();
+  cashPurchase(){
     this.props.actions.addToCart(this.props.item);
     this.props.actions.buyWithCash();
     this.context.router.push('checkout');
@@ -44,12 +38,6 @@ class ShopItem extends React.Component {
     }
   }
 
-  /**
-   * <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
-        </span>
-   */
-
   render() {
     let cashBuyButton = null;
     const { admin, instructor } = this.props.roles;
@@ -66,7 +54,7 @@ class ShopItem extends React.Component {
           {cashBuyButton}
         </span>
         <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
+          <button className="btn-small btn-blue btn-link" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
         </span>
       </li>
     );

@@ -50,9 +50,19 @@
                 ".write": "auth.uid === 'joogaserver'"
             }
         },
+        "pendingtransactions": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
         "courseTypes": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "serverError": {
+            ".read": "auth.uid === 'joogaserver'",
+            ".write": "auth.uid === 'joogaserver'"
         },
         "courses": {
             ".read": "auth != null",

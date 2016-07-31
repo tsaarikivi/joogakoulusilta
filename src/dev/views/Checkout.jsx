@@ -42,18 +42,19 @@ class Checkout extends React.Component {
   }
 
   renderPayTrail(){
-    console.log("RENDER PAY TRAIL");
+    console.log("RENDER PAY TRAIL", this.props);
+    const { cart } = this.props.shopItems
     let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
     let merchantId = "13466"
-    let amount = "99.90"
-    let orderNumber = "123456"
+    let amount = cart.price;
+    let orderNumber = "123456M"
     let referenceNumber = ""
-    let orderDescription = "testitilaus"
+    let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
+    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com"
+    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com"
     let pendingAddress = ""
-    let notifyAddress = "http://joogaserver-stage.herokuapp.com/notifypayment"
+    let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
     let type = "S1"
     let culture = "fi_FI"
     let preselectedMethod = ""
@@ -176,8 +177,9 @@ renderCashPayment(){
   render() {
     console.log("SWITCH: ", this.props.shopItems.phase);
     switch(this.props.shopItems.phase){
+      case "payTrailInitialized":
+        return this.renderPayTrail()
       case "payTrailPayment":
-      console.log("IN switch paytrail");
         return this.renderPayTrail()
       case "cashPayment":
         return this.renderCashPayment()
@@ -193,7 +195,7 @@ renderCashPayment(){
       case "timeout":
         return(<p> Palataan takaisin päänäkymään.</p>)
       case "start":
-        this.context.router.push('user');
+        return(<p> start ei pitäisi tulla.....</p>)
         break;
       default:
       return (<p>ERROR</p>)
