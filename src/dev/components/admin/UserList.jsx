@@ -12,7 +12,7 @@ class UserList extends React.Component {
   }
 
   renderList(item) {
-    if (item.email.indexOf(this.props.searchBar.value) !== -1) {
+    if (item.email.toUpperCase().indexOf(this.props.searchBar.value.toUpperCase()) !== -1) {
       return (
         <Item key={item.key} item={item} />
       )
