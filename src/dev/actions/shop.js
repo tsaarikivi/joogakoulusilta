@@ -5,6 +5,7 @@ import {
     FETCH_SHOP_ITEMS,
     ADD_TO_CART,
     BUY_WITH_CASH,
+    BUY_WITH_PAYTRAIL,
     GET_CLIENT_TOKEN,
     DO_PURCHASE_TRANSACTION,
     CHECKOUT_ERROR,
@@ -27,6 +28,22 @@ export function resetShop(){
         })
     }
 }
+
+export function buyWithPaytrail() {
+    return dispatch => {
+        dispatch({
+            type: BUY_WITH_PAYTRAIL,
+            payload: {
+                phase: "payTrailPayment",
+                error: {
+                    code: "0",
+                    message: "no error"
+                }
+            }
+        })
+    }
+}
+
 
 export function buyWithCash() {
     return dispatch => {

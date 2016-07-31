@@ -11,10 +11,15 @@ class ShopItem extends React.Component {
   }
 
   handleClick(e){
+    console.log("handle click1");
     e.preventDefault();
+    console.log("handle click2");
     this.props.actions.addToCart(this.props.item);
-    this.props.actions.getClientTokenFromBraintree()
+    console.log("handle click3");
+    this.props.actions.buyWithPaytrail()
+    console.log("handle click4");
     this.context.router.push('checkout');
+    console.log("handle click5");
 
   }
 
@@ -59,6 +64,9 @@ class ShopItem extends React.Component {
         <p class="item-price">{this.props.item.price} €</p>        
         <span className="item-row">
           {cashBuyButton}
+        </span>
+        <span className="item-row">
+          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
         </span>
       </li>
     );

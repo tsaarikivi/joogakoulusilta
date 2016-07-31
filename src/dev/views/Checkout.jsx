@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router"
-
+var md5 = require('md5')
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import UserList from '../components/admin/UserList.jsx'
@@ -33,6 +33,58 @@ class Checkout extends React.Component {
     if(nextProps.shopItems.phase === "timeout"){
       this.context.router.push('user');
     }
+  }
+
+  componentDidUpdate(){
+    if(this.props.shopItems.phase === "payTrailPayment"){
+      SV.widget.initWithForm('payment', {charset:'ISO-8859-1'});
+    }
+  }
+
+  renderPayTrail(){
+    console.log("RENDER PAY TRAIL");
+    let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
+    let merchantId = "13466"
+    let amount = "99.90"
+    let orderNumber = "123456"
+    let referenceNumber = ""
+    let orderDescription = "testitilaus"
+    let currency = "EUR"
+    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
+    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
+    let pendingAddress = ""
+    let notifyAddress = "http://joogaserver-stage.herokuapp.com/notifypayment"
+    let type = "S1"
+    let culture = "fi_FI"
+    let preselectedMethod = ""
+    let mode = "1"
+    let visibleMethods = ""
+    let group = ""
+    let authcode = md5(merchantAuthenticationhash + '|' + merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group).toUpperCase();
+    console.log(authcode);
+    return(
+      <form id="payment">
+        <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
+        <input name="AMOUNT" type="hidden" value={amount}/>
+        <input name="ORDER_NUMBER" type="hidden" value={orderNumber}/>
+        <input name="REFERENCE_NUMBER" type="hidden" value={referenceNumber}/>
+        <input name="ORDER_DESCRIPTION" type="hidden" value={orderDescription}/>
+        <input name="CURRENCY" type="hidden" value={currency}/>
+        <input name="RETURN_ADDRESS" type="hidden" value={returnAddress}/>
+        <input name="CANCEL_ADDRESS" type="hidden" value={cancelAddress}/>
+        <input name="PENDING_ADDRESS" type="hidden" value={pendingAddress}/>
+        <input name="NOTIFY_ADDRESS" type="hidden" value={notifyAddress}/>
+        <input name="TYPE" type="hidden" value={type}/>
+        <input name="CULTURE" type="hidden" value={culture}/>
+        <input name="PRESELECTED_METHOD" type="hidden" value={preselectedMethod}/>
+        <input name="MODE" type="hidden" value={mode}/>
+        <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
+        <input name="GROUP" type="hidden" value={group}/>
+        <input name="AUTHCODE" type="hidden" value={authcode}/>
+        <input type="submit" value="Siirry maksamaan"/>
+      </form>
+
+    )
   }
 
   componentWillUnmount(){
@@ -122,7 +174,11 @@ renderCashPayment(){
   }
 
   render() {
+    console.log("SWITCH: ", this.props.shopItems.phase);
     switch(this.props.shopItems.phase){
+      case "payTrailPayment":
+      console.log("IN switch paytrail");
+        return this.renderPayTrail()
       case "cashPayment":
         return this.renderCashPayment()
       case "braintreePayment":
