@@ -36,7 +36,6 @@ class Checkout extends React.Component {
   }
 
   completePayTrailPayment(){
-    console.log("completePayTrailPayment", this.props);
     if(this.props.shopItems.phase === "payTrailPayment"){
       SV.widget.initWithForm('payment', {charset:'ISO-8859-1'});
     }
@@ -49,7 +48,6 @@ class Checkout extends React.Component {
   }
 
   renderPayTrail(){
-    console.log("RENDER PAY TRAIL", this.props);
     const { cart } = this.props.shopItems
     let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
     let merchantId = "13466"
@@ -69,7 +67,6 @@ class Checkout extends React.Component {
     let visibleMethods = ""
     let group = ""
     let authcode = md5(merchantAuthenticationhash + '|' + merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group).toUpperCase();
-    console.log(authcode);
     setTimeout(() => {
       SV.widget.initWithForm('payment', {charset:'UTF-8'});
     }, 1000)
@@ -184,13 +181,10 @@ renderCashPayment(){
   }
 
   render() {
-    console.log("SWITCH: ", this.props.shopItems.phase);
     switch(this.props.shopItems.phase){
       case "payTrailInitialized":
-      console.log("payTrailInitialized");
         return this.renderSubmitPayTrail()
       case "payTrailPayment":
-      console.log("payTrailPayment");
         return this.renderPayTrail()
       case "cashPayment":
         return this.renderCashPayment()
@@ -206,8 +200,7 @@ renderCashPayment(){
       case "timeout":
         return(<p> Palataan takaisin päänäkymään.</p>)
       case "start":
-        return(<p> start ei pitäisi tulla.....</p>)
-        break;
+        return(<div></div>)
       default:
       return (<p>ERROR</p>)
     }

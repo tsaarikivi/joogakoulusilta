@@ -43,14 +43,14 @@ class SpecialCourseInfo extends React.Component {
     this.onceOnly = false;
   }
 
-  userHasPurchasedThisAlready(){
-    this.props.currentUser.transactions.details.special.forEach((item, index) => {
-      if(item.shopItemKey === this.props.specialCourseInfo.info.key){
-        return true;
-      }
-    })
+ userHasPurchasedThisAlready(){
+    if(this.props.currentUser.transactions.details.special.find((item) => {
+      return item.shopItemKey === this.props.specialCourseInfo.info.key
+    })) {
+      return true;
+    }
     return false;
-  }
+ }
 
   renderPurchaseButtons() {
 

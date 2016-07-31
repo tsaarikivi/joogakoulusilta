@@ -51,9 +51,6 @@ export function initializePayTrailTransaction(clientKey, type) {
 
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                console.log("item_key", clientKey);
-                console.log("current_user", idToken);
-                console.log("purchase_target", type);
                 return axios.post(JOOGAURL, {
                     item_key: clientKey,
                     current_user: idToken,
@@ -62,7 +59,6 @@ export function initializePayTrailTransaction(clientKey, type) {
             })
             .then(result => {
                 _hideLoadingScreen(dispatch, "Maksun alustus onnistui.", true)
-                console.log("RESULT:", result);
                 dispatch({
                     type: DO_PURCHASE_TRANSACTION,
                     payload: {
