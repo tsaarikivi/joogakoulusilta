@@ -121,12 +121,20 @@ class CourseInfo extends React.Component {
 
     if(courseInfo.bookings){
     if(courseInfo.bookings.user.length > 0){
-    let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
+      if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Course starts less than 3 hours from now.
+        return( <div>
+                  <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
+                  <p className="text-blue"> Kurssin alkuun aikaa alle 3 tuntia.</p>
+                </div>
+              );
+      } else {
+        let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
                   <button className="btn-small btn-red mobile-full" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
                 </div>
               );
+      }
     }}
 
     if(this.courseIsFull()){
