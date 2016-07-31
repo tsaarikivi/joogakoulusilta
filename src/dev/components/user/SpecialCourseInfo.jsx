@@ -59,7 +59,7 @@ class SpecialCourseInfo extends React.Component {
 
 
     if(this.props.currentUser.roles.admin || this.props.currentUser.roles.instructor){
-      cashBuyButton = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      cashBuyButton = <button className="btn-small btn-blue mobile-full" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
     /**
@@ -91,15 +91,19 @@ class SpecialCourseInfo extends React.Component {
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
               <div className="info-info-container">
-                <h3>{info.title}</h3>                
-                <h3 className="info-time text-bold">{info.price}&euro;</h3>
-                <p className="info-time">{getDayStrMs(info.date)}</p>
-                <p className="info-place text-blue">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
-                <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
-                <p className="info-instructor">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                <h3>{info.title}</h3>
+                <div className="surrounded-border">      
+                  <p className="info-line border-bottom info-time text-bold">Hinta: {info.price}&euro;</p>
+                  <p className="info-line border-bottom">{getDayStrMs(info.date)}</p>
+                  <p className="info-line border-bottom">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                  <p className="info-line border-bottom">Sijainti: {info.place.name}, {info.place.address}</p>
+                  <p className="info-line">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                </div>
                 <div>
-                  <img className="mini-icon" src="./assets/group.png" />
-                  <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>            
+                  <div className="centered">
+                    <img className="mini-icon" src="./assets/group.png" />
+                    <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>
+                  </div>            
                   {this.renderPurchaseButtons()}
                 </div>              
                 <p className="info-desc">{info.courseType.desc}</p>
