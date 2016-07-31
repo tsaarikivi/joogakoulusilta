@@ -6,23 +6,36 @@ import * as actionCreators from '../../actions/shop.js'
 
 class ShopItem extends React.Component {
 
+  constructor(){
+    super();
+    this.onceOnly = false;
+  }
+
   static contextTypes = {
     router: React.PropTypes.object
   }
 
+  componentDidMount(){
+    this.onceOnly = false;
+  }
+
   payTrailPurchase(){
     const { item } = this.props
-    this.props.actions.addToCart(item);
-    this.props.actions.initializePayTrailTransaction(item.key, item.type)
-    this.context.router.push('checkout');
-
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.addToCart(item);
+      this.props.actions.initializePayTrailTransaction(item.key, item.type)
+      this.context.router.push('checkout');
+    }
   }
 
   cashPurchase(){
-    this.props.actions.addToCart(this.props.item);
-    this.props.actions.buyWithCash();
-    this.context.router.push('checkout');
-
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.addToCart(this.props.item);
+      this.props.actions.buyWithCash();
+      this.context.router.push('checkout');
+    }
   }
 
   renderExpire() {

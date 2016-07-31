@@ -16,20 +16,22 @@ class SpecialCourseInfo extends React.Component {
     router: React.PropTypes.object
   }
 
-  handleClickToBuy(){
+  handlePayTrailBuy(){
+    const { info } = this.props.specialCourseInfo;
     if(!this.onceOnly){
       this.onceOnly = true;
-      this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
-      this.props.shopActions.getClientTokenFromBraintree()
+      this.props.shopActions.addToCart(info);
+      this.props.shopActions.initializePayTrailTransaction(info.key, info.type)
       this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
     }
   }
 
   cashPurchase(){
+    const { info } = this.props.specialCourseInfo;
     if(!this.onceOnly){
       this.onceOnly = true;
-      this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
+      this.props.shopActions.addToCart(info);
       this.props.shopActions.buyWithCash();
       this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
@@ -52,27 +54,27 @@ class SpecialCourseInfo extends React.Component {
 
   renderPurchaseButtons() {
 
+    const { admin, instructor } = this.props.currentUser.roles;
+    const { info } = this.props.specialCourseInfo;
+
     let cashBuyButton = null;
     if( this.userHasPurchasedThisAlready() === true ){
       return( <p className="text-red">Olet jo ostanut tämän kurssin.</p> );
     }
 
 
-    if(this.props.currentUser.roles.admin || this.props.currentUser.roles.instructor){
+    if(admin || instructor){
       cashBuyButton = <button className="btn-small btn-blue mobile-full" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
-    /**
-     * <span className="item-row">
-            <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
-          </span>
-     */
-
-    if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
+    if(info.bookings < info.maxCapacity){
       return (
         <div>          
           <span className="item-row">
             {cashBuyButton}
+          </span>
+          <span className="item-row">
+            <button className="btn-small btn-blue btn-link" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
           </span>
         </div>
       )

@@ -29,7 +29,7 @@ export function resetShop(){
     }
 }
 
-export function buyWithPaytrail() {
+export function buyWithPaytrail(pendingTrxId) {
     return dispatch => {
         dispatch({
             type: BUY_WITH_PAYTRAIL,
@@ -44,6 +44,52 @@ export function buyWithPaytrail() {
     }
 }
 
+export function initializePayTrailTransaction(clientKey, type) {
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu.")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : JOOGASERVER + '/initializepaytrailtransaction'
+
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                console.log("item_key", clientKey);
+                console.log("current_user", idToken);
+                console.log("purchase_target", type);
+                return axios.post(JOOGAURL, {
+                    item_key: clientKey,
+                    current_user: idToken,
+                    purchase_target: type
+                })
+            })
+            .then(result => {
+                _hideLoadingScreen(dispatch, "Maksun alustus onnistui.", true)
+                console.log("RESULT:", result);
+                dispatch({
+                    type: DO_PURCHASE_TRANSACTION,
+                    payload: {
+                        phase: "payTrailInitialized",
+                        initializedTransaction: result.data,
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
+                })
+            })
+            .catch(error => {
+                console.error("PURCHASE ERROR", error);
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString(), false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "PURCHASE_ERROR",
+                            message: "Purchase error: " + error.toString()
+                        }
+                    }
+                })
+            })
+    }
+}
 
 export function buyWithCash() {
     return dispatch => {
@@ -261,48 +307,3 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
     }
 }
 
-export function initializePayTrailTransaction(clientKey, type) {
-    return dispatch => {
-        _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu.")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : JOOGASERVER + '/initializepaytrailtransaction'
-
-        firebase.auth().currentUser.getToken(true)
-            .then(idToken => {
-                console.log("item_key", clientKey);
-                console.log("current_user", idToken);
-                console.log("purchase_target", type);
-                return axios.post(JOOGAURL, {
-                    item_key: clientKey,
-                    current_user: idToken,
-                    purchase_target: type
-                })
-            })
-            .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun alustus onnistui", true)
-                dispatch({
-                    type: DO_PURCHASE_TRANSACTION,
-                    payload: {
-                        phase: "payTrailInitialized",
-                        purchaseResult: result,
-                        error: {
-                            code: "0",
-                            message: "no error"
-                        }
-                    }
-                })
-            })
-            .catch(error => {
-                console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString(), false)
-                dispatch({
-                    type: CHECKOUT_ERROR,
-                    payload: {
-                        error: {
-                            code: "PURCHASE_ERROR",
-                            message: "Purchase error: " + error.toString()
-                        }
-                    }
-                })
-            })
-    }
-}

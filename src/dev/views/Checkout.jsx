@@ -35,10 +35,17 @@ class Checkout extends React.Component {
     }
   }
 
-  componentDidUpdate(){
+  completePayTrailPayment(){
+    console.log("completePayTrailPayment", this.props);
     if(this.props.shopItems.phase === "payTrailPayment"){
       SV.widget.initWithForm('payment', {charset:'ISO-8859-1'});
     }
+  }
+
+  renderSubmitPayTrail(){
+    return(
+        <button className="btn-small btn-blue" onClick={() => this.props.actions.buyWithPaytrail(this.props.shopItems.initializedTransaction)}>Siirry maksamaan</button>
+    )
   }
 
   renderPayTrail(){
@@ -47,12 +54,12 @@ class Checkout extends React.Component {
     let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
     let merchantId = "13466"
     let amount = cart.price;
-    let orderNumber = "123456M"
+    let orderNumber = this.props.shopItems.initializedTransaction
     let referenceNumber = ""
     let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com"
+    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
+    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
     let pendingAddress = ""
     let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
     let type = "S1"
@@ -63,6 +70,9 @@ class Checkout extends React.Component {
     let group = ""
     let authcode = md5(merchantAuthenticationhash + '|' + merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group).toUpperCase();
     console.log(authcode);
+    setTimeout(() => {
+      SV.widget.initWithForm('payment', {charset:'UTF-8'});
+    }, 1000)
     return(
       <form id="payment">
         <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
@@ -82,7 +92,6 @@ class Checkout extends React.Component {
         <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
         <input name="GROUP" type="hidden" value={group}/>
         <input name="AUTHCODE" type="hidden" value={authcode}/>
-        <input type="submit" value="Siirry maksamaan"/>
       </form>
 
     )
@@ -178,8 +187,10 @@ renderCashPayment(){
     console.log("SWITCH: ", this.props.shopItems.phase);
     switch(this.props.shopItems.phase){
       case "payTrailInitialized":
-        return this.renderPayTrail()
+      console.log("payTrailInitialized");
+        return this.renderSubmitPayTrail()
       case "payTrailPayment":
+      console.log("payTrailPayment");
         return this.renderPayTrail()
       case "cashPayment":
         return this.renderCashPayment()

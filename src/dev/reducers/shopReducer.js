@@ -20,6 +20,7 @@ const INITIAL_STATE = {
     },
     items: [],
     token: "",
+    initializedTransaction: "0",
     purchaseResult: {},
     phase: "start"
 }
