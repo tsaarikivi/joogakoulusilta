@@ -57,8 +57,8 @@ class Timetable extends React.Component {
     return (
       <div class="container timetable-container bordered-container">
         <div className="content-container align-left">
-          <h2>Aikataulu</h2>
-          <small>Klikkaa joogatuntia avataksesi lisätiedot ja varataksesi paikka tunnilta</small>
+          <h2 className="nomargin nopadding">Aikataulu</h2>
+          <small className="text-fade margin-top margin-bottom small-info">Klikkaa joogatuntia avataksesi lisätiedot ja varataksesi paikka tunnilta</small>
         </div>
         <table className="centered">
           <tbody>

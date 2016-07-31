@@ -53,17 +53,6 @@
     }
   }
 
-  .timetable-container {
-    h2 {
-      padding: 0;
-      margin: 0;
-    }
-    small {
-      display: block;
-      padding: 1.5vw 0 3vw;
-    }
-  }
-
   .contact-container {
     text-align: left;
   }
@@ -225,18 +214,6 @@
     .inner {
       width: 400px;
       padding: 4vw;
-    }
-  }
-
-  .timetable-container {
-    width: 100%;
-    h2 {
-      padding: 0;
-      margin: 0;
-    }
-    small {
-      display: block;
-      padding: 10px 0 20px;
     }
   }
 
@@ -413,12 +390,6 @@
     background-color: rgba(255,255,255, 0.9);
     box-shadow: 0 3px 10px $text-dark;
     border-radius: 5px;
-  }
-}
-
-.timetable-container {
-  small {
-    color: $text-fade;
   }
 }
 
