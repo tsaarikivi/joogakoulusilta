@@ -124,7 +124,7 @@ class CourseInfo extends React.Component {
     let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
-                  <button className="btn-small btn-red" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
+                  <button className="btn-small btn-red mobile-full" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
                 </div>
               );
     }}
@@ -152,7 +152,7 @@ class CourseInfo extends React.Component {
     return(
           <div>
             {notificationText}
-            <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >
+            <button className="btn-small btn-blue mobile-full" onClick={() => this.makeReservation(weekIndex)} >
               Varaa: { dayStr }
             </button>
           </div>
@@ -168,12 +168,16 @@ class CourseInfo extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
               <h3>{this.props.courseInfo.courseType.name}</h3>
-              <p className="info-time">Klo {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day))} - {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day))}</p>
-              <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-              <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+              <div className="surrounded-border">
+                <p className="info-line border-bottom">Klo {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day))} - {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day))}</p>
+                <p className="info-line border-bottom">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
+                <p className="info-line">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+              </div>
               <div>
-                <img className="mini-icon" src="./assets/group.png" />
-                {this.renderParticipants()}
+                <div className="centered">
+                  <img className="mini-icon" src="./assets/group.png" />
+                  {this.renderParticipants()}
+                </div>
                 {this.renderReservationButton()}
               </div>
               <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>

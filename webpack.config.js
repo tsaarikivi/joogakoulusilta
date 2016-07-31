@@ -15,13 +15,13 @@ module.exports = [
   name : "joogakoulu web front-end",
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./app.jsx",
+  entry: ["babel-polyfill", "./app.jsx"],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
+        loader: 'babel',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],

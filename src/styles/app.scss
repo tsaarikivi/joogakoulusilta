@@ -90,7 +90,18 @@ button, a, select, textarea, body, input {
     margin-bottom: 1vw;
   }
   .margin-top {
-    margin-top: 2vw;
+    margin-top: 4vw;
+  }
+  .small-info {
+    margin: 2vw 0;
+  }
+
+  .surrounded-border {
+    margin: 3vw 0;
+  }
+
+  .info-line {
+    padding: 3vw 2vw;
   }
 }
 
@@ -162,7 +173,18 @@ button, a, select, textarea, body, input {
     margin-bottom: 10px;
   }
   .margin-top {
-    margin-top: 8px;
+    margin-top: 15px;
+  }
+  .small-info {
+    margin: 10px 0;
+  }
+
+  .surrounded-border {
+    margin: 10px 0;
+  }
+
+  .info-line {
+    padding: 10px 5px;
   }
 }
 
@@ -252,6 +274,16 @@ input, textarea, select {
   }  
 }
 
+.text-fade {
+  color: $text-fade;
+  div {
+    color: $text-fade;
+  }
+  span {
+    color: $text-fade;
+  }  
+}
+
 .text-white {
   color: $text-light;
   div {
@@ -268,4 +300,34 @@ input, textarea, select {
 
 .small-text {
   display: block;
+}
+
+.small-info {
+  display: block;
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+.surrounded-border {
+  border: 1px solid $border;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: $container-color;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border;
+  box-sizing: border-box;
+}
+
+.info-line {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
 }

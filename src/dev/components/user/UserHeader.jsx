@@ -40,14 +40,14 @@ class UserHeader extends React.Component {
 
   renderTickets() {
     return (
-      <div className="tickets-container">
-        <span className="ticket-logo">
-          <img className="mini-icon margin-left" src="./assets/ticket.png" />
-          <p className="ticket-amnt">{this.count} krt</p>
-        </span>
+      <div className="tickets-container float-right">
         <span className="ticket-logo">
           <img className="mini-icon margin-left" src="./assets/clock.png" />
           <p className="ticket-amnt">{this.daysLeft()} pv</p>
+        </span>
+        <span className="ticket-logo">
+          <img className="mini-icon margin-left" src="./assets/ticket.png" />
+          <p className="ticket-amnt">{this.count} krt</p>
         </span>
       </div>
     )
@@ -73,7 +73,6 @@ class UserHeader extends React.Component {
     return (
       <div class="container bordered-container user-header-container">
         <div className="content-container">
-          {this.renderTickets()}
           <div className="userinfo-container">
             <h1>Hei, {firstname}!</h1>
             <div className="mobile-row">
@@ -89,6 +88,7 @@ class UserHeader extends React.Component {
               {admin}
             </div>
           </div>
+          {this.renderTickets()}
         </div>
       </div>
     )

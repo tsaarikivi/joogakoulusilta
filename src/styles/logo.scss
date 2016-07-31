@@ -20,7 +20,8 @@
   }
 
   .ticket-logo {
-    margin: 4vw 2vw 4vw 0;
+    float: right;
+    margin: 4vw 0 4vw 2vw;
     width: 16vw;
     img {
       padding: 3vw;
@@ -51,7 +52,8 @@
   }
 
   .ticket-logo {
-    margin: 20px 12px 20px 0;
+    float: right;
+    margin: 20px 0 20px 12px;
     width: 50px;
     img {
       padding: 10px;

@@ -70,7 +70,7 @@ class CourseDetails extends React.Component {
       );
     } else {
       return(
-        <h3>Tunnille ei ole ilmoittautuneita.</h3>
+        <p>Tunnille ei ole ilmoittautuneita.</p>
       )
     }
                             
@@ -83,14 +83,14 @@ class CourseDetails extends React.Component {
       cancelButton = (this.confirmation)? "Vahvista aktivoiminen" : "Aktivoi tunti"
       return(
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.activateCourse()}}>{cancelButton}</button>
+          <button className="btn-small btn-blue mobile-full" onClick={() => {this.activateCourse()}}>{cancelButton}</button>
         </span>
       );
     } else {
       cancelButton = (this.confirmation)? "Vahvista peruminen" : "Peru"
       return(
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
+          <button className="btn-small btn-red mobile-full" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
         </span>
       );
     }
@@ -101,7 +101,7 @@ class CourseDetails extends React.Component {
 
     let courseCancelled = null;
     if(course.cancelled){
-      courseCancelled = <h2>Tunti on peruttu!</h2>
+      courseCancelled = <p className="text-red">Tunti on peruttu!</p>
     }
 
     let weekIndex = 0;
