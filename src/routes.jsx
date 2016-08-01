@@ -5,6 +5,8 @@ import { Route, IndexRoute  } from 'react-router'
 import Instructor from './dev/views/Instructor.jsx'
 import Admin from './dev/views/Admin.jsx'
 import Checkout from './dev/views/Checkout.jsx'
+import PaytrailReturn from './dev/views/PaytrailReturn.jsx'
+import PaytrailCancel from './dev/views/PaytrailCancel.jsx'
 import Home from './dev/views/Home.jsx'
 import Info from './dev/views/Info.jsx'
 import Layout from './dev/views/Layout.jsx'
@@ -27,6 +29,8 @@ export default (
     <Route path="userInformation" component={ChangeInformation}></Route>
     <Route path="register" component={Register}> </Route>
     <Route path="checkout" component={Checkout}> </Route>
+    <Route path="paytrailreturn" component={PaytrailReturn}> </Route>
+    <Route path="paytrailcancel" component={PaytrailCancel}> </Route>
     <Route path="specialCourses" component={SpecialCourses}></Route>
     <Route path="userProfile" component={UserProfile}></Route>
     <Route path="forgotPassword" component={ForgotPassword}></Route>
