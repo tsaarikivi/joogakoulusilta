@@ -51,10 +51,8 @@
             }
         },
         "pendingtransactions": {
-            "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-                ".write": "auth.uid === 'joogaserver'"
-            }
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
         "courseTypes": {
             ".read": "auth != null",

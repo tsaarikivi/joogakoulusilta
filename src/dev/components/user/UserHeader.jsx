@@ -28,13 +28,11 @@ class UserHeader extends React.Component {
   }
 
   componentWillMount(){
-    console.log("HREF: ", window.location.href);
     this.count = this.props.curUsr.transactions.count;
     this.firstexpire.setTime(this.props.curUsr.transactions.firstexpire);
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("HREF: ", window.location.href);
     this.count = nextProps.curUsr.transactions.count;
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
