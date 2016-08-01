@@ -5,7 +5,16 @@ export default class PayTrail extends React.Component {
   constructor() {
     super()
     this.widgetInitialized = false;
+    this.onceOnly = false;
   }
+
+    cancelPayment(initializedTransaction){
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.cancelPaytrailPayment(this.props.shopItems.initializedTransaction)
+    }
+  }
+
 
   render() {
     const { cart, initializedTransaction, authCode } = this.props.shopItems
@@ -15,8 +24,8 @@ export default class PayTrail extends React.Component {
     let referenceNumber = ""
     let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
+    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailreturn"
+    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailcancel"
     let pendingAddress = ""
     let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
     let type = "S1"
@@ -42,6 +51,9 @@ export default class PayTrail extends React.Component {
     }
 
     return(
+      <div>
+      <button className="btn-small btn-red" onClick={() => this.cancelPayment(initializedTransaction)}>Peru osto</button>
+
       <form id="payment">
         <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
         <input name="AMOUNT" type="hidden" value={amount}/>
@@ -61,6 +73,7 @@ export default class PayTrail extends React.Component {
         <input name="GROUP" type="hidden" value={group}/>
         <input name="AUTHCODE" type="hidden" value={authCode}/>
       </form>
+      </div>
     )
   }
 }

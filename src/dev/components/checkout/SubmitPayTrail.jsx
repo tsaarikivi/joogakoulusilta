@@ -2,6 +2,15 @@ import React from "react";
 
 export default class SubmitPayTrail extends React.Component {
 
+  constructor(){
+    super();
+    this.onceOnly = false;
+  }
+
+  componentWillMount(){
+    this.onceOnly = false;
+  }
+
   renderCartInfo() {
     const {cart} = this.props.shopItems
     return (
@@ -13,14 +22,28 @@ export default class SubmitPayTrail extends React.Component {
     )
   }
 
+  cancelPayment(initializedTransaction){
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.cancelPaytrailPayment(this.props.shopItems.initializedTransaction)
+    }
+  }
+
+  executePayment(initializedTransaction){
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.buyWithPaytrail(initializedTransaction)
+    }
+  }
+
   render() {    
     return(
       <div className="container checkout-container">
         <div className="content-container">
-          <button className="btn-small btn-red" onClick={() => this.props.actions.cancelPaytrailPayment(this.props.shopItems.initializedTransaction)}>Peru osto</button>
+          <button className="btn-small btn-red" onClick={() => this.cancelPayment(this.props.shopItems.initializedTransaction)}>Peru osto</button>
           <h3 className="margin-top nopadding">Ostoskori</h3>
           {this.renderCartInfo()}
-          <button className="btn-small btn-blue mobile-full" onClick={() => this.props.actions.buyWithPaytrail(this.props.shopItems.initializedTransaction)}>Siirry maksamaan</button>
+          <button className="btn-small btn-blue mobile-full" onClick={() => this.executePayment(this.props.shopItems.initializedTransaction)}>Siirry maksamaan</button>
         </div>
       </div>
     )
