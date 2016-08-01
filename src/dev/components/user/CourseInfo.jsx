@@ -74,7 +74,6 @@ class CourseInfo extends React.Component {
     } else {
       return false; // No bookings for the course yet.
     }
-
   }
 
   //========================================================================

@@ -45,12 +45,12 @@ class TimeTableItem extends React.Component {
     var userBooked = null;
     if(booking){
       if(booking.user.length > 0){
-         userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
+         userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
       }
     }
     if(booking){
       var allBooked = <span>
-                        <img className="mini-icon" src="./assets/group.png" />
+                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
                         <p className="table-participants margin-left">0/{item.maxCapacity}</p>
                       </span>       
       if(booking.all.length > 0){
@@ -59,7 +59,7 @@ class TimeTableItem extends React.Component {
 
         } else {
           allBooked = <span>
-                        <img className="mini-icon" src="./assets/group.png" />
+                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
                         <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
                       </span>          
         }        
