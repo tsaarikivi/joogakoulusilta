@@ -1,6 +1,8 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from "react-router"
+
 import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
@@ -74,7 +76,6 @@ class CourseInfo extends React.Component {
     } else {
       return false; // No bookings for the course yet.
     }
-
   }
 
   //========================================================================
@@ -145,7 +146,8 @@ class CourseInfo extends React.Component {
 
     if(!this.userCanBook(day)){
       return(<div>
-              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy joogaopettajaltasi ostamassa varaus oikeuksia.</p>
+              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy kaupassamme ostamassa joogaoikeuksia!</p>
+              <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
             </div>
       );
     }

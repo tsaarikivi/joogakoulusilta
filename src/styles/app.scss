@@ -333,5 +333,9 @@ input, textarea, select {
 }
 
 .pre-wrap {
-  white-space: pre;
+  white-space: pre-line;
+}
+
+.hidden {
+  display: none;
 }

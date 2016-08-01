@@ -26,7 +26,7 @@ class SpecialCoursesItem extends React.Component {
     }
     return (
       <span >
-        <img className="mini-icon" src="./assets/group.png" />
+        <img className="mini-icon tiny-icon" src="./assets/group.png" />
         <p className="centered table-participants">{item.bookings}/{item.maxCapacity}</p>
       </span>
     )
@@ -35,7 +35,7 @@ class SpecialCoursesItem extends React.Component {
   render() {
     let userBooked = null;
     if(this.userHasPurchasedThisAlready()){
-       userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
+       userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
     }
     const { item } = this.props;
     return (
