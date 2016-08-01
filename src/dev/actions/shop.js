@@ -21,11 +21,17 @@ import {
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
 
-export function resetShop(){
+export function resetShop(shopItems = null){
     return dispatch => {
-        dispatch({
-            type: RESET_SHOP
-        })
+        if(shopItems === null){
+            dispatch({
+                type: RESET_SHOP
+            })
+        } else {
+            if(shopItems.initializedTransaction !== "0"){ //We need to clear the pending transaction.
+                _cancelPaytrailPayment(dispatch, shopItems.initializedTransaction);
+            }
+        }
     }
 }
 
@@ -128,38 +134,43 @@ export function getAuthCode(_authcode) {
     }
 }
 
-export function cancelPaytrailPayment(pendingTrxId) {
+export function cancelPaytrailPayment(pendingTrxId){
     return dispatch => {
-        _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
+        _cancelPaytrailPayment(dispatch, pendingTrxId)
+    } 
+}
 
-        firebase.auth().currentUser.getToken(true)
-            .then(idToken => {
-                return axios.post(JOOGAURL, {
-                    current_user: idToken,
-                    pending_transaction: pendingTrxId
-                })
+
+function _cancelPaytrailPayment(dispatch, pendingTrxId) {
+    _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
+
+    firebase.auth().currentUser.getToken(true)
+        .then(idToken => {
+            return axios.post(JOOGAURL, {
+                current_user: idToken,
+                pending_transaction: pendingTrxId
             })
-            .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
-                dispatch({
-                    type: RESET_SHOP
-                })
+        })
+        .then(result => {
+            _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
+            dispatch({
+                type: RESET_SHOP
             })
-            .catch(error => {
-                console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun perumisessa tapahtui virhe: "+ error.toString(), false)
-                dispatch({
-                    type: CHECKOUT_ERROR,
-                    payload: {
-                        error: {
-                            code: "PURCHASE_ERROR",
-                            message: "Purchase error: " + error.toString()
-                        }
+        })
+        .catch(error => {
+            console.error("PURCHASE ERROR", error);
+            _hideLoadingScreen(dispatch, "Maksun perumisessa tapahtui virhe: "+ error.toString(), false)
+            dispatch({
+                type: CHECKOUT_ERROR,
+                payload: {
+                    error: {
+                        code: "PURCHASE_ERROR",
+                        message: "Purchase error: " + error.toString()
                     }
-                })
+                }
             })
-    }
+        })
 }
 
 export function initializePayTrailTransaction(clientKey, type) {

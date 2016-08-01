@@ -36,7 +36,7 @@ class Checkout extends React.Component {
   }
 
   componentWillUnmount(){
-    this.props.actions.resetShop()
+    this.props.actions.resetShop(this.props.shopItems)
   }
 
   renderSubmitPayTrail(){

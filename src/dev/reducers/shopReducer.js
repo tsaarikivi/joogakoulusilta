@@ -29,7 +29,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case RESET_SHOP:
-            return INITIAL_STATE;
+            return Object.assign({},INITIAL_STATE,  {items: state.items});
         case BUY_WITH_PAYTRAIL:
             return Object.assign({}, state, action.payload);
         case BUY_WITH_CASH:
