@@ -188,7 +188,7 @@ class CourseInfo extends React.Component {
                 </div>
                 {this.renderReservationButton()}
               </div>
-              <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              <p className="info-desc pre-wrap">{this.props.courseInfo.courseType.desc}</p>
             </div>
           </div>
         </div>

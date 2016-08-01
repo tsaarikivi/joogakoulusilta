@@ -108,7 +108,7 @@ class SpecialCourseInfo extends React.Component {
                   </div>            
                   {this.renderPurchaseButtons()}
                 </div>              
-                <p className="info-desc">{info.courseType.desc}</p>
+                <p className="info-desc pre-wrap">{info.courseType.desc}</p>
               </div>
           </div>
         </div>

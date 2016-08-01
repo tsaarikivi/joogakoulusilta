@@ -70,10 +70,7 @@ class AuthManager extends React.Component {
     }
 
 
-    return (<div>
-        {authError}
-        {userError}
-    </div>)
+    return <div></div>
   }
 }
 

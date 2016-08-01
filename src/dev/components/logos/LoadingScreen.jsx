@@ -24,7 +24,7 @@ class LoadingScreen extends React.Component {
             <div className="middle">
               <div className="inner centered">
                 {this.renderLoadingImage(loadingScreen.success)}
-                <h3 className="text-bold"> {loadingScreen.context} </h3>
+                <h3 className="text-bold pre-wrap"> {loadingScreen.context} </h3>
               </div>
             </div>
           </div>          

@@ -86,9 +86,9 @@
 
   .ticket-logo {
     display: inline-block;
+    background: $lightgray;
     border: 1px solid $border;
     border-radius: 5px;
-    background: $container-color;
     box-sizing: border-box;
     img {
       display: block;
@@ -99,7 +99,7 @@
       border-top: 1px solid $border;
       display: block;
       text-align: center;
-      background: $lightgray;
+      background: $container-color;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px; 
     }

@@ -32,7 +32,7 @@ class Course extends React.Component {
     const { booking, item } = this.props;
     var courseCancelled = null;
     if(item.cancelled){
-      courseCancelled = <p className="text-bold text-red">PERUTTU</p>
+      courseCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
     } else {
       if(booking){
         var allBooked = <span>
@@ -41,7 +41,7 @@ class Course extends React.Component {
         </span>        
         if(booking.all.length > 0){
           if (booking.all[0].reservations === item.maxCapacity) {
-            allBooked = <p className="text-bold text-red">TÄYNNÄ</p>
+            allBooked = <p className="text-bold text-red table-alert-f">TÄYNNÄ</p>
           } else {
             allBooked = <span>
               <img className="mini-icon" src="./assets/group.png" />
