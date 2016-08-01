@@ -25,7 +25,6 @@ class Checkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("CHECKOUT-NEXT-PROPS: ", nextProps);
     if(nextProps.shopItems.cart.type){
       if(nextProps.shopItems.cart.type === "special"){
         this.buyingSpecialCourse = true
@@ -74,8 +73,6 @@ class Checkout extends React.Component {
     let group = ""
     let _authcode = merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group;
     let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ";
-    console.log("REFERENCE: ", md5(merchantAuthenticationhash + '|' + _authcode).toUpperCase());
-    console.log("AUTHCODE: ", authCode);
     if(authCode ===""){
       setTimeout(() => {
         this.props.actions.getAuthCode(_authcode)
@@ -116,26 +113,22 @@ class Checkout extends React.Component {
 
   renderStart(){
     if(this.props.location.search === ""){ //This should not really happen. Something has failed, and let's get user back to the user view.
-      //setTimeout(() => { this.context.router.push('user')}, 2000)
       return(<Link className="text-link back-btn" to="user">&lt;Takaisin</Link>)
     }
     //We assume redirection from the PayTrail with details in the query object
     if(this.props.auth.uid){ //Wait for re-authentication as this is a redirect from the PayTrail.
       if(!this.finishingPayTrailOngoing){
         this.finishingPayTrailOngoing = true;
-        console.log("RENDERSTART: goint to finish: ", this.props.location.query, this.props.auth);
         setTimeout(() => {
           this.props.actions.finishPayTrailTransaction(this.props.location.query);
         }, 500)
       }
     }
-    console.log("WHAT-TO-RENDER??? ", this.props); 
     return(<div></div>)
   }
 
 
   componentWillUnmount(){
-    console.log("CHECKOUT UNMOUNTED - SHOPRESET");
     this.props.actions.resetShop()
   }
 
@@ -221,14 +214,20 @@ renderCashPayment(){
     );
   }
 
+  renderPayTrailComplete(){
+    setTimeout(() => {this.context.router.push('user')}, 200)
+    return(<div></div>)
+  }
+
   render() {
-        console.log("CHECKOUT-RENDER-PROPS: ", this.props);
 
     switch(this.props.shopItems.phase){
       case "payTrailInitialized":
         return this.renderSubmitPayTrail()
       case "payTrailPayment":
         return this.renderPayTrail()
+      case "payTrailComplete":
+        return this.renderPayTrailComplete()
       case "cashPayment":
         return this.renderCashPayment()
       case "braintreePayment":

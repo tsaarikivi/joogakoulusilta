@@ -45,7 +45,6 @@ export function buyWithPaytrail(pendingTrxId) {
 }
 
 export function finishPayTrailTransaction(query){
-    console.log("finishPayTrailTransaction ", query);
         return dispatch => {
         _showLoadingScreen(dispatch, "Viimeistellään osto")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/completepaytrail' : JOOGASERVER + '/completepaytrail'
@@ -63,7 +62,14 @@ export function finishPayTrailTransaction(query){
             .then(response => {
                 _hideLoadingScreen(dispatch, "Osto valmis", true)
                 dispatch({
-                    type: RESET_SHOP
+                    type: BUY_WITH_PAYTRAIL,
+                    payload: {
+                        phase: "payTrailComplete",
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
                 })
             })
             .catch(error => {
