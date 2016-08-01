@@ -55,7 +55,7 @@ class ShopItem extends React.Component {
     let cashBuyButton = null;
     const { admin, instructor } = this.props.roles;
     if(admin || instructor){
-      cashBuyButton = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      cashBuyButton = <button className="btn-small btn-blue margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
     return (
       <li>
