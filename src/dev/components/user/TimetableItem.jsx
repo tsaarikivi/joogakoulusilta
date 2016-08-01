@@ -40,7 +40,7 @@ class TimeTableItem extends React.Component {
     const { booking, item } = this.props;
     var courseCancelled = null;
     if(item.cancelled){
-      courseCancelled = <p className="text-bold text-red">PERUTTU</p>
+      courseCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
     }
     var userBooked = null;
     if(booking){
@@ -55,7 +55,8 @@ class TimeTableItem extends React.Component {
                       </span>       
       if(booking.all.length > 0){
         if(booking.all[0].reservations === item.maxCapacity) {
-          allBooked = <p className="table-participants text-red text-bold">TÄYNNÄ</p>
+          allBooked = <p className="table-participants text-red text-bold table-alert-f">TÄYNNÄ</p>
+
         } else {
           allBooked = <span>
                         <img className="mini-icon" src="./assets/group.png" />

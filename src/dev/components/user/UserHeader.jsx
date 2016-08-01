@@ -40,12 +40,12 @@ class UserHeader extends React.Component {
 
   renderTickets() {
     return (
-      <div className="tickets-container">
+      <div className="tickets-container" title={"Sinulla on " + this.daysLeft() + " päivää jäljellä aikakortissasi"}>
         <span className="ticket-logo">
           <img className="mini-icon" src="./assets/clock.png" />
           <p className="ticket-amnt">{this.daysLeft()} pv</p>
         </span>
-        <span className="ticket-logo">
+        <span className="ticket-logo" title={"Sinulla on käytettävissäsi " + this.count + " kertalippua"}>
           <img className="mini-icon" src="./assets/ticket.png" />
           <p className="ticket-amnt">{this.count} krt</p>
         </span>

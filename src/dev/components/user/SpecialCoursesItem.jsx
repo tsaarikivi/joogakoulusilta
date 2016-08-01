@@ -22,10 +22,10 @@ class SpecialCoursesItem extends React.Component {
 
   renderBookings(item) {
     if (item.bookings === item.maxCapacity) {
-      return <p className="centered table-participants text-red text-bold">TÄYNNÄ</p>
+      return <p className="centered table-participants text-red text-bold table-alert">TÄYNNÄ</p>
     }
     return (
-      <span>
+      <span >
         <img className="mini-icon" src="./assets/group.png" />
         <p className="centered table-participants">{item.bookings}/{item.maxCapacity}</p>
       </span>

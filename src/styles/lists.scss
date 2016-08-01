@@ -59,6 +59,7 @@
     margin: 0 auto 15px;
     padding: 0;
     li {
+      vertical-align: top;
       width: 32%;
       display: inline-block;
       margin: 0 5px 5px 0;
@@ -73,6 +74,15 @@
     button {
       margin-top: 6px;
     }
+  }
+  .table-alert {
+    height: 20px;
+  }
+  .table-alert-c {
+    height: 22px;
+  }
+  .table-alert-f {
+    height: 20px;
   }
 
   ul.wide-list {
