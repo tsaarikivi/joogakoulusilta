@@ -4,7 +4,6 @@ export default class SubmitPayTrail extends React.Component {
 
   renderCartInfo() {
     const {cart} = this.props.shopItems
-    console.log("CART", cart)
     return (
       <div className="surrounded-border">
         <p className="info-line border-bottom">Tuote: {cart.title}</p>

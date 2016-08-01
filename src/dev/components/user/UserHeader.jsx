@@ -40,13 +40,13 @@ class UserHeader extends React.Component {
 
   renderTickets() {
     return (
-      <div className="tickets-container float-right">
+      <div className="tickets-container">
         <span className="ticket-logo">
-          <img className="mini-icon margin-left" src="./assets/clock.png" />
+          <img className="mini-icon" src="./assets/clock.png" />
           <p className="ticket-amnt">{this.daysLeft()} pv</p>
         </span>
         <span className="ticket-logo">
-          <img className="mini-icon margin-left" src="./assets/ticket.png" />
+          <img className="mini-icon" src="./assets/ticket.png" />
           <p className="ticket-amnt">{this.count} krt</p>
         </span>
       </div>
@@ -57,26 +57,23 @@ class UserHeader extends React.Component {
 
     const { roles, firstname } = this.props.curUsr;
 
-    let toTheShop = null
-    if(roles.admin || roles.instructor){
-      toTheShop = <Link className="text-link text-link-white margin-top" to="shop">Kauppaan</Link>
-    }
+    let toTheShop = <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
 
     let admin = null;
     if(roles.admin){
-      admin = <Link className="text-link text-link-white margin-top" to="admin">Admin</Link>
+      admin = <Link className="text-link text-link-white" to="admin">Admin</Link>
     }
     let instructor = null;
     if(roles.instructor){
-      instructor = <Link className="text-link text-link-white margin-top" to="instructor">Opettaja</Link>
+      instructor = <Link className="text-link text-link-white" to="instructor">Opettaja</Link>
     }
     return (
       <div class="container bordered-container user-header-container">
         <div className="content-container">
+          {this.renderTickets()}
           <div className="userinfo-container">
-            <h1>Hei, {firstname}!</h1>
             <div className="mobile-row">
-              <Link className="text-link text-link-white margin-top" to="userProfile">Käyttäjätiedot</Link>
+              <Link className="text-link text-link-white" to="userProfile">Käyttäjätiedot</Link>
             </div>
             <div className="mobile-row">
               {toTheShop}
@@ -88,7 +85,6 @@ class UserHeader extends React.Component {
               {admin}
             </div>
           </div>
-          {this.renderTickets()}
         </div>
       </div>
     )
