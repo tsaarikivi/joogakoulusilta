@@ -19,7 +19,6 @@ class Checkout extends React.Component {
     super()
     this.paymentOngoing = false;
     this.buyingSpecialCourse = false;
-    this.widgetInitialized = false;
     this.finishingPayTrailOngoing = false;
   }
 
@@ -49,17 +48,11 @@ class Checkout extends React.Component {
   renderSubmitPayTrail(){
     this.finishingPayTrailOngoing = false;
     return(
-      <SubmitPayTrail actions={this.props.actions} initializedTransaction={this.props.shopItems.initializedTransaction} />
+      <SubmitPayTrail actions={this.props.actions} shopItems={this.props.shopItems} />
     )
   }
 
   renderPayTrail(){
-    if(!this.widgetInitialized){
-      this.widgetInitialized = true;
-      setTimeout(() => {
-        SV.widget.initWithForm('payment', {charset:'UTF-8'});
-      }, 1000)
-    }
     return (
       <PayTrail shopItems={this.props.shopItems} actions={this.props.actions} />
     )

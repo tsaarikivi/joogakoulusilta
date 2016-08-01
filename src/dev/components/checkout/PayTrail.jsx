@@ -2,6 +2,11 @@ import React from "react";
 
 export default class PayTrail extends React.Component {
 
+  constructor() {
+    super()
+    this.widgetInitialized = false;
+  }
+
   render() {
     const { cart, initializedTransaction, authCode } = this.props.shopItems
     let merchantId = "13466"
@@ -21,13 +26,19 @@ export default class PayTrail extends React.Component {
     let visibleMethods = ""
     let group = ""
     let _authcode = merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group;    
-    let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ";
     
     if(authCode === ""){
       setTimeout(() => {
         this.props.actions.getAuthCode(_authcode)
       }, 500)      
       return(<div></div>)
+    }
+
+    if(!this.widgetInitialized){
+      this.widgetInitialized = true;
+      setTimeout(() => {
+        SV.widget.initWithForm('payment', {charset:'UTF-8'});
+      }, 1000)
     }
 
     return(
