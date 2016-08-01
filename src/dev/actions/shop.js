@@ -130,7 +130,7 @@ export function getAuthCode(_authcode) {
 
 export function cancelPaytrailPayment(pendingTrxId) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Perutaan PayTrail maksu.")
+        _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
 
         firebase.auth().currentUser.getToken(true)
@@ -141,7 +141,7 @@ export function cancelPaytrailPayment(pendingTrxId) {
                 })
             })
             .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun peruminen onnistui.", true)
+                _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
                 dispatch({
                     type: RESET_SHOP
                 })
@@ -164,7 +164,7 @@ export function cancelPaytrailPayment(pendingTrxId) {
 
 export function initializePayTrailTransaction(clientKey, type) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu.")
+        _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : JOOGASERVER + '/initializepaytrailtransaction'
 
         firebase.auth().currentUser.getToken(true)
@@ -176,7 +176,7 @@ export function initializePayTrailTransaction(clientKey, type) {
                 })
             })
             .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun alustus onnistui.", true)
+                _hideLoadingScreen(dispatch, "Maksun alustus onnistui", true)
                 dispatch({
                     type: DO_PURCHASE_TRANSACTION,
                     payload: {

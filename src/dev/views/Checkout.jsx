@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router"
-var md5 = require('md5')
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import UserList from '../components/admin/UserList.jsx'
+
 import * as actionCreators from '../actions/shop.js'
-
-
-var Braintree = require("braintree-web");
-import DropIn from "../components/shop/BraintreeDropIn.jsx";
+import SubmitPayTrail from "../components/checkout/SubmitPayTrail.jsx"
+import PayTrail from "../components/checkout/PayTrail.jsx"
+import CashPayment from "../components/checkout/CashPayment.jsx"
+import BraintreePayment from "../components/checkout/BraintreePayment.jsx"
 
 class Checkout extends React.Component {
+  
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
 
   constructor(){
     super()
@@ -18,10 +21,6 @@ class Checkout extends React.Component {
     this.buyingSpecialCourse = false;
     this.widgetInitialized = false;
     this.finishingPayTrailOngoing = false;
-  }
-
-  static contextTypes = {
-    router: React.PropTypes.object
   }
 
   componentWillReceiveProps(nextProps){
@@ -37,6 +36,10 @@ class Checkout extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.props.actions.resetShop()
+  }
+
   completePayTrailPayment(){
     if(this.props.shopItems.phase === "payTrailPayment"){
       SV.widget.initWithForm('payment', {charset:'ISO-8859-1'});
@@ -46,68 +49,19 @@ class Checkout extends React.Component {
   renderSubmitPayTrail(){
     this.finishingPayTrailOngoing = false;
     return(
-      <div>
-        <button className="btn-small btn-blue" onClick={() => this.props.actions.buyWithPaytrail(this.props.shopItems.initializedTransaction)}>Siirry maksamaan</button>
-        <button className="btn-small btn-blue" onClick={() => this.props.actions.cancelPaytrailPayment(this.props.shopItems.initializedTransaction)}>Peru osto</button>
-      </div>
+      <SubmitPayTrail actions={this.props.actions} initializedTransaction={this.props.shopItems.initializedTransaction} />
     )
   }
 
   renderPayTrail(){
-    const { cart, initializedTransaction, authCode } = this.props.shopItems
-    let merchantId = "13466"
-    let amount = cart.price;
-    let orderNumber = initializedTransaction
-    let referenceNumber = ""
-    let orderDescription = cart.key;
-    let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
-    let pendingAddress = ""
-    let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
-    let type = "S1"
-    let culture = "fi_FI"
-    let preselectedMethod = ""
-    let mode = "1"
-    let visibleMethods = ""
-    let group = ""
-    let _authcode = merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group;
-    let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ";
-    if(authCode ===""){
-      setTimeout(() => {
-        this.props.actions.getAuthCode(_authcode)
-      }, 500)
-      
-      return(<div></div>)
-    }
-
     if(!this.widgetInitialized){
       this.widgetInitialized = true;
       setTimeout(() => {
         SV.widget.initWithForm('payment', {charset:'UTF-8'});
       }, 1000)
     }
-    return(
-      <form id="payment">
-        <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
-        <input name="AMOUNT" type="hidden" value={amount}/>
-        <input name="ORDER_NUMBER" type="hidden" value={orderNumber}/>
-        <input name="REFERENCE_NUMBER" type="hidden" value={referenceNumber}/>
-        <input name="ORDER_DESCRIPTION" type="hidden" value={orderDescription}/>
-        <input name="CURRENCY" type="hidden" value={currency}/>
-        <input name="RETURN_ADDRESS" type="hidden" value={returnAddress}/>
-        <input name="CANCEL_ADDRESS" type="hidden" value={cancelAddress}/>
-        <input name="PENDING_ADDRESS" type="hidden" value={pendingAddress}/>
-        <input name="NOTIFY_ADDRESS" type="hidden" value={notifyAddress}/>
-        <input name="TYPE" type="hidden" value={type}/>
-        <input name="CULTURE" type="hidden" value={culture}/>
-        <input name="PRESELECTED_METHOD" type="hidden" value={preselectedMethod}/>
-        <input name="MODE" type="hidden" value={mode}/>
-        <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
-        <input name="GROUP" type="hidden" value={group}/>
-        <input name="AUTHCODE" type="hidden" value={authCode}/>
-      </form>
-
+    return (
+      <PayTrail shopItems={this.props.shopItems} actions={this.props.actions} />
     )
   }
 
@@ -125,11 +79,6 @@ class Checkout extends React.Component {
       }
     }
     return(<div></div>)
-  }
-
-
-  componentWillUnmount(){
-    this.props.actions.resetShop()
   }
 
   onReady() {
@@ -154,19 +103,15 @@ class Checkout extends React.Component {
 
 renderCashPayment(){
     return( 
-    <div>
-      <button className="btn-small btn-blue" onClick={() => this.props.actions.resetShop()} > Peru osto </button>
-      <h3 className="centered"> Valitse käyttäjä, jolle osto suoritetaan.</h3>
-      <UserList />
-    </div>   
-      )
+      <CashPayment actions={this.props.actions} />
+    )
 }
 
   renderBtPaymentPhase(){
     return(
       <div>
         <h2 className="centered">Alustetaan maksuyhteyttä...</h2>
-        </div>
+      </div>
     )
   }
 
@@ -189,28 +134,18 @@ renderCashPayment(){
     return(
       <div>
         <h2 className="centered">Maksuyhteydessä ongelmia...</h2>
-        </div>
+      </div>
     )
   }
 
   renderPayment(){
     return (
-          <div>
-            <h2 className="centered">Valitse maksutapa ja vahvista maksu.</h2>
-            <form action='/transactions' method='POST'>
-                <DropIn
-                    braintree={Braintree}
-                    clientToken={this.props.shopItems.token}
-                    onReady={this.onReady.bind(this)}
-                    onError={this.onError.bind(this)}
-                    onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
-                />
-              <br></br>
-              <p>{this.props.shopItems.cart.title}</p><br></br>
-              <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' id="submitButton" disabled='true' className="btn-small btn-blue" value='Vahvista!'></input>
-            </form>
-          </div>
+      <BraintreePayment 
+        shopItems={this.props.shopItems}
+        onReady={this.onReady.bind(this)}
+        onError={this.onError.bind(this)}
+        onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
+      />
     );
   }
 
