@@ -93,7 +93,7 @@ export function login(email, password) {
                         }
                     }
                 })
-                _hideLoadingScreen(dispatch, "Kirjautuminen päättyi virheeseen: " + error.message, false, 2000)
+                _hideLoadingScreen(dispatch, "Tarkista käyttäjätunnus/salasana\nOletko rekisteröitynyt?", false, 3000)
             }
         });
     }
