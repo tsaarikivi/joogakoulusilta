@@ -44,6 +44,118 @@ export function buyWithPaytrail(pendingTrxId) {
     }
 }
 
+export function finishPayTrailTransaction(query){
+    console.log("finishPayTrailTransaction ", query);
+        return dispatch => {
+        _showLoadingScreen(dispatch, "Viimeistellään osto")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/completepaytrail' : JOOGASERVER + '/completepaytrail'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    current_user: idToken,
+                    METHOD: query.METHOD,
+                    ORDER_NUMBER: query.ORDER_NUMBER,
+                    PAID: query.PAID,
+                    RETURN_AUTHCODE: query.RETURN_AUTHCODE,
+                    TIMESTAMP: query.TIMESTAMP
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Osto valmis", true)
+                dispatch({
+                    type: RESET_SHOP
+                })
+            })
+            .catch(error => {
+                console.error("PAYTRAIL_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Oston viimeistelyssä tapahtui virhe: ", error.toString(), false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "PAYTRAIL_ERROR",
+                            message: "Paytrail complete error: " + error.toString()
+                        }
+                    }
+                })
+            });
+    }  
+}
+
+export function getAuthCode(_authcode) {
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Haetaan tunnistekoodia")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/paytrailauthcode' : JOOGASERVER + '/paytrailauthcode'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    current_user: idToken,
+                    auth_code: _authcode
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Tunniste valmis", true)
+                dispatch({
+                    type: BUY_WITH_PAYTRAIL,
+                    payload: {
+                        authCode: response.data,
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
+                })
+            })
+            .catch(error => {
+                console.error("AUTHCODE_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Tunnisteen hakemisessa tapahtui virhe: ", error.toString(), false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "AUTHCODE_ERROR",
+                            message: "AuthCode error: " + error.toString()
+                        }
+                    }
+                })
+            });
+    }
+}
+
+export function cancelPaytrailPayment(pendingTrxId) {
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Perutaan PayTrail maksu.")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
+
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    current_user: idToken,
+                    pending_transaction: pendingTrxId
+                })
+            })
+            .then(result => {
+                _hideLoadingScreen(dispatch, "Maksun peruminen onnistui.", true)
+                dispatch({
+                    type: RESET_SHOP
+                })
+            })
+            .catch(error => {
+                console.error("PURCHASE ERROR", error);
+                _hideLoadingScreen(dispatch, "Maksun perumisessa tapahtui virhe: "+ error.toString(), false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "PURCHASE_ERROR",
+                            message: "Purchase error: " + error.toString()
+                        }
+                    }
+                })
+            })
+    }
+}
+
 export function initializePayTrailTransaction(clientKey, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu.")

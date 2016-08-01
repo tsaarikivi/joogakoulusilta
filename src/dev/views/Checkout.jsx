@@ -16,6 +16,8 @@ class Checkout extends React.Component {
     super()
     this.paymentOngoing = false;
     this.buyingSpecialCourse = false;
+    this.widgetInitialized = false;
+    this.finishingPayTrailOngoing = false;
   }
 
   static contextTypes = {
@@ -23,6 +25,7 @@ class Checkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    console.log("CHECKOUT-NEXT-PROPS: ", nextProps);
     if(nextProps.shopItems.cart.type){
       if(nextProps.shopItems.cart.type === "special"){
         this.buyingSpecialCourse = true
@@ -42,22 +45,25 @@ class Checkout extends React.Component {
   }
 
   renderSubmitPayTrail(){
+    this.finishingPayTrailOngoing = false;
     return(
+      <div>
         <button className="btn-small btn-blue" onClick={() => this.props.actions.buyWithPaytrail(this.props.shopItems.initializedTransaction)}>Siirry maksamaan</button>
+        <button className="btn-small btn-blue" onClick={() => this.props.actions.cancelPaytrailPayment(this.props.shopItems.initializedTransaction)}>Peru osto</button>
+      </div>
     )
   }
 
   renderPayTrail(){
-    const { cart } = this.props.shopItems
-    let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
+    const { cart, initializedTransaction, authCode } = this.props.shopItems
     let merchantId = "13466"
     let amount = cart.price;
-    let orderNumber = this.props.shopItems.initializedTransaction
+    let orderNumber = initializedTransaction
     let referenceNumber = ""
     let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/user"
+    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
+    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/checkout"
     let pendingAddress = ""
     let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
     let type = "S1"
@@ -66,10 +72,24 @@ class Checkout extends React.Component {
     let mode = "1"
     let visibleMethods = ""
     let group = ""
-    let authcode = md5(merchantAuthenticationhash + '|' + merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group).toUpperCase();
-    setTimeout(() => {
-      SV.widget.initWithForm('payment', {charset:'UTF-8'});
-    }, 1000)
+    let _authcode = merchantId + '|' + amount + '|' + orderNumber + '|' + referenceNumber + '|' + orderDescription + '|' + currency + '|' + returnAddress + '|' + cancelAddress + '|' + pendingAddress + '|' + notifyAddress + '|' + type + '|' + culture + '|' + preselectedMethod + '|' + mode + '|' + visibleMethods + '|' + group;
+    let merchantAuthenticationhash = "6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ";
+    console.log("REFERENCE: ", md5(merchantAuthenticationhash + '|' + _authcode).toUpperCase());
+    console.log("AUTHCODE: ", authCode);
+    if(authCode ===""){
+      setTimeout(() => {
+        this.props.actions.getAuthCode(_authcode)
+      }, 500)
+      
+      return(<div></div>)
+    }
+
+    if(!this.widgetInitialized){
+      this.widgetInitialized = true;
+      setTimeout(() => {
+        SV.widget.initWithForm('payment', {charset:'UTF-8'});
+      }, 1000)
+    }
     return(
       <form id="payment">
         <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
@@ -88,13 +108,34 @@ class Checkout extends React.Component {
         <input name="MODE" type="hidden" value={mode}/>
         <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
         <input name="GROUP" type="hidden" value={group}/>
-        <input name="AUTHCODE" type="hidden" value={authcode}/>
+        <input name="AUTHCODE" type="hidden" value={authCode}/>
       </form>
 
     )
   }
 
+  renderStart(){
+    if(this.props.location.search === ""){ //This should not really happen. Something has failed, and let's get user back to the user view.
+      //setTimeout(() => { this.context.router.push('user')}, 2000)
+      return(<Link className="text-link back-btn" to="user">&lt;Takaisin</Link>)
+    }
+    //We assume redirection from the PayTrail with details in the query object
+    if(this.props.auth.uid){ //Wait for re-authentication as this is a redirect from the PayTrail.
+      if(!this.finishingPayTrailOngoing){
+        this.finishingPayTrailOngoing = true;
+        console.log("RENDERSTART: goint to finish: ", this.props.location.query, this.props.auth);
+        setTimeout(() => {
+          this.props.actions.finishPayTrailTransaction(this.props.location.query);
+        }, 500)
+      }
+    }
+    console.log("WHAT-TO-RENDER??? ", this.props); 
+    return(<div></div>)
+  }
+
+
   componentWillUnmount(){
+    console.log("CHECKOUT UNMOUNTED - SHOPRESET");
     this.props.actions.resetShop()
   }
 
@@ -128,7 +169,7 @@ renderCashPayment(){
       )
 }
 
-  renderStartPhase(){
+  renderBtPaymentPhase(){
     return(
       <div>
         <h2 className="centered">Alustetaan maksuyhteyttä...</h2>
@@ -181,6 +222,8 @@ renderCashPayment(){
   }
 
   render() {
+        console.log("CHECKOUT-RENDER-PROPS: ", this.props);
+
     switch(this.props.shopItems.phase){
       case "payTrailInitialized":
         return this.renderSubmitPayTrail()
@@ -190,7 +233,7 @@ renderCashPayment(){
         return this.renderCashPayment()
       case "braintreePayment":
           this.paymentOngoing = false;
-          return this.renderStartPhase()
+          return this.renderBtPaymentPhase()
       case "tokenReceived":
         return this.renderPayment()
       case "done":
@@ -200,7 +243,7 @@ renderCashPayment(){
       case "timeout":
         return(<p> Palataan takaisin päänäkymään.</p>)
       case "start":
-        return(<div></div>)
+        return this.renderStart()
       default:
       return (<p>ERROR</p>)
     }
@@ -212,7 +255,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { shopItems: state.shopItems, currentUser: state.currentUser }
+  return { auth: state.auth, shopItems: state.shopItems, currentUser: state.currentUser }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

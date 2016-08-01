@@ -21,6 +21,7 @@ const INITIAL_STATE = {
     items: [],
     token: "",
     initializedTransaction: "0",
+    authCode: "",
     purchaseResult: {},
     phase: "start"
 }
@@ -28,6 +29,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case RESET_SHOP:
+        console.log("RESET_SHOP - REDUCER");
             return INITIAL_STATE;
         case BUY_WITH_PAYTRAIL:
             return Object.assign({}, state, action.payload);
