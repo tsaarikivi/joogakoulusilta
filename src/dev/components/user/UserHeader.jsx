@@ -63,6 +63,10 @@ class UserHeader extends React.Component {
     if(roles.admin){
       admin = <Link className="text-link text-link-white" to="admin">Admin</Link>
     }
+    let tests = null;
+    if(roles.tester){
+      tests = <Link className="text-link text-link-white" to="tests">Test</Link>
+    }
     let instructor = null;
     if(roles.instructor){
       instructor = <Link className="text-link text-link-white" to="instructor">Opettaja</Link>
@@ -83,6 +87,9 @@ class UserHeader extends React.Component {
             </div>
             <div className="mobile-row">
               {admin}
+            </div>
+            <div className="mobile-row">
+              {tests}
             </div>
           </div>
         </div>
