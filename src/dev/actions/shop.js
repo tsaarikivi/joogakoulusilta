@@ -11,7 +11,8 @@ import {
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
     EXECUTE_CASH_PURCHASE,
-    RESET_SHOP
+    RESET_SHOP,
+    FETCH_PENDING_TRANSACTIONS
 } from './actionTypes.js'
 
 import {
@@ -20,6 +21,74 @@ import {
 } from './loadingScreen.js'
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
+
+export function completePaytrailPayment(pendingTrxId){
+    return dispatch => {
+                _showLoadingScreen(dispatch, "Hyväksytään osto")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/approveincomplete' : JOOGASERVER + '/approveincomplete'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    current_user: idToken,
+                    pending_transaction_id: pendingTrxId
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Osto hyväksytty", true)
+            })
+            .catch(error => {
+                console.error("PAYTRAIL_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: ", error.toString(), false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "PAYTRAIL_ERROR",
+                            message: "Paytrail complete error: " + error.toString()
+                        }
+                    }
+                })
+            });
+
+    } 
+}
+
+
+export function fetchPendingTransactions(){
+    var list = [];
+    return dispatch => {
+        var returnObject = {}
+        firebase.database().ref('/pendingtransactions/').on('value', snapshot => {
+            if(snapshot.val() !== null){
+                let allTrx = snapshot.val();
+                list = Object.assign([])
+                for(let key in allTrx){
+                    allTrx[key].key = key;
+                    list = list.concat(allTrx[key])
+                }
+            }
+            returnObject = Object.assign({}, {
+                list: list
+            })
+            dispatch({
+                type: FETCH_PENDING_TRANSACTIONS,
+                payload: returnObject
+            });
+        }, error => {
+            console.error("Error in fetching pending transactions: ", error);
+        })
+    }
+}
+
+export function  stopFetchPendingTransactions(){
+    return dispatch => {
+        firebase.database().ref('/pendingtransactions/').off('value');
+        dispatch({
+            type: FETCH_PENDING_TRANSACTIONS,
+            payload: {list: []}
+        });
+    }
+}
 
 export function resetShop(shopItems = null){
     return dispatch => {
