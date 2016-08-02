@@ -59,9 +59,9 @@ export function fetchPendingTransactions(){
     return dispatch => {
         var returnObject = {}
         firebase.database().ref('/pendingtransactions/').on('value', snapshot => {
+            list = Object.assign([])
             if(snapshot.val() !== null){
                 let allTrx = snapshot.val();
-                list = Object.assign([])
                 for(let key in allTrx){
                     allTrx[key].key = key;
                     list = list.concat(allTrx[key])
