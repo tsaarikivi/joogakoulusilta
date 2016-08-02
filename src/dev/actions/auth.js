@@ -42,7 +42,7 @@ export function authListener() {
                 user.email = userdata.email;
                 user.uid = userdata.uid;
                 user.userdata = userdata;
-                console.log("USER: ", user.uid, user.email, userdata);
+                //console.log("USER: ", user.uid, user.email, userdata);
                 dispatch({
                     type: ADD_USER,
                     payload: user

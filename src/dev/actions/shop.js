@@ -149,13 +149,13 @@ export function finishPayTrailTransaction(query){
             })
             .catch(error => {
                 console.error("PAYTRAIL_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Oston viimeistelyssä tapahtui virhe: ", error.toString(), false)
+                _hideLoadingScreen(dispatch, "Oston viimeistelyssä tapahtui virhe: " + error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "PAYTRAIL_ERROR",
-                            message: "Paytrail complete error: " + error.toString()
+                            message: "Paytrail complete error: " + error
                         }
                     }
                 })
@@ -189,13 +189,13 @@ export function getAuthCode(_authcode) {
             })
             .catch(error => {
                 console.error("AUTHCODE_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Tunnisteen hakemisessa tapahtui virhe: ", error.toString(), false)
+                _hideLoadingScreen(dispatch, "Tunnisteen hakemisessa tapahtui virhe: " + error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "AUTHCODE_ERROR",
-                            message: "AuthCode error: " + error.toString()
+                            message: "AuthCode error: " + error
                         }
                     }
                 })
@@ -229,13 +229,13 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId) {
         })
         .catch(error => {
             console.error("PURCHASE ERROR", error);
-            _hideLoadingScreen(dispatch, "Maksun perumisessa tapahtui virhe: "+ error.toString(), false)
+            _hideLoadingScreen(dispatch, "Maksun perumisessa tapahtui virhe: "+ error, false)
             dispatch({
                 type: CHECKOUT_ERROR,
                 payload: {
                     error: {
                         code: "PURCHASE_ERROR",
-                        message: "Purchase error: " + error.toString()
+                        message: "Purchase error: " + error
                     }
                 }
             })
@@ -271,13 +271,13 @@ export function initializePayTrailTransaction(clientKey, type) {
             })
             .catch(error => {
                 console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString(), false)
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "PURCHASE_ERROR",
-                            message: "Purchase error: " + error.toString()
+                            message: "Purchase error: " + error
                         }
                     }
                 })
@@ -331,13 +331,13 @@ export function executeCashPurchase(forUsr, itemKey, type) {
             })
             .catch(error => {
                 console.error("CASH ERROR", error);
-                _hideLoadingScreen(dispatch, "Käteisostossa tapahtui virhe: " + error.toString(), false)
+                _hideLoadingScreen(dispatch, "Käteisostossa tapahtui virhe: " + error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "CASH_ERROR",
-                            message: "Cash error: " + error.toString()
+                            message: "Cash error: " + error
                         }
                     }
                 })
@@ -442,13 +442,13 @@ export function getClientTokenFromBraintree() {
             })
             .catch(error => {
                 console.error("TOKEN_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Maksuyhteyden alustuksessa tapahtui virhe: ", error.toString(), false)
+                _hideLoadingScreen(dispatch, "Maksuyhteyden alustuksessa tapahtui virhe: " + error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "TOKEN_ERROR",
-                            message: "ClientToken error: " + error.toString()
+                            message: "ClientToken error: " + error
                         }
                     }
                 })
@@ -487,13 +487,13 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
             })
             .catch(error => {
                 console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error.toString(), false)
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "PURCHASE_ERROR",
-                            message: "Purchase error: " + error.toString()
+                            message: "Purchase error: " + error
                         }
                     }
                 })
