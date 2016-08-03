@@ -18,7 +18,7 @@ class Timetable extends React.Component {
 
   renderTR(dayname, dayNumber){
     const { bookings, courses } = this.props.timetable;
-    let day = new Date();
+    let day = new Date()
     let today = (dayNumber === mapDay(day.getDay()))? true: false;
     if(today){
     return(
