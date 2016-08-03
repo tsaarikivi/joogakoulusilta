@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import  { getCurrentBaseUrl } from '../helpers/urlParser.js'
 
-var md5 = require('md5')
+//var md5 = require('md5')
 
 import * as testActionCreators from '../actions/test.js'
 

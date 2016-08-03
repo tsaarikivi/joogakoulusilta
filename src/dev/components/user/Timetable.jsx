@@ -18,11 +18,11 @@ class Timetable extends React.Component {
 
   renderTR(dayname, dayNumber){
     const { bookings, courses } = this.props.timetable;
-    let day = new Date();
+    let day = new Date()
     let today = (dayNumber === mapDay(day.getDay()))? true: false;
     if(today){
     return(
-      <tr className="glowing">
+      <tr className="glowing" key={dayNumber}>
         <th className="text-bold text-blue">{dayname}</th>
         {
           courses.map(function(item) {
@@ -37,7 +37,7 @@ class Timetable extends React.Component {
     )
     }
     return(
-      <tr>
+      <tr key={dayNumber}>
         <th>{dayname}</th>
         {
           courses.map(function(item) {
@@ -52,6 +52,30 @@ class Timetable extends React.Component {
     )
   }
 
+  renderWeek() {
+    const now = new Date()
+    const start = mapDay(now.getDay())
+    let day = start
+    let output = []
+    const dayNames = [
+      'Maanantai',
+      'Tiistai',
+      'Keskiviikko',
+      'Torstai',
+      'Perjantai',
+      'Lauantai',
+      'Sunnuntai'
+    ]
+    do {
+      output.push(this.renderTR(dayNames[day - 1], day))
+      day++
+      if (day > 7) {
+        day = 1
+      }
+    } while (day != start);
+    return output
+  }
+
   render() {
 
     return (
@@ -62,13 +86,7 @@ class Timetable extends React.Component {
         </div>
         <table className="centered">
           <tbody>
-          {this.renderTR("Maanantai", 1)}
-          {this.renderTR("Tiistai", 2)}
-          {this.renderTR("Keskiviikko", 3)}
-          {this.renderTR("Torstai", 4)}
-          {this.renderTR("Perjantai", 5)}
-          {this.renderTR("Lauantai", 6)}
-          {this.renderTR("Sunnuntai", 7)}
+            {this.renderWeek()}
           </tbody>
         </table>        
       </div>

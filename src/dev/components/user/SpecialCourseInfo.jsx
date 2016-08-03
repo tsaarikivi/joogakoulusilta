@@ -64,7 +64,7 @@ class SpecialCourseInfo extends React.Component {
 
 
     if(admin || instructor){
-      cashBuyButton = <button className="btn-small btn-blue mobile-full" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      cashBuyButton = <button className="btn-small btn-blue mobile-full margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
     if(info.bookings < info.maxCapacity){
@@ -74,7 +74,7 @@ class SpecialCourseInfo extends React.Component {
             {cashBuyButton}
           </span>
           <span className="item-row">
-            <button className="btn-small btn-blue btn-link" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
+            <button className="btn-small btn-blue btn-link mobile-full" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
           </span>
         </div>
       )
