@@ -39,6 +39,15 @@
     margin-bottom: 4vw;
   }
 
+  label.inline-label {
+    margin-top: 1vw;
+  }
+  .checkbox {
+    height: 7vw;
+    width: 7vw;
+    margin: 0 2vw 0 0;
+  }
+
 .react-datepicker__day-name,
 .react-datepicker__day {
   color: #000;
@@ -92,6 +101,15 @@
     margin-bottom: 30px;
   }
 
+  label.inline-label {
+    margin-top: 2px;
+  }
+  .checkbox {
+    height: 20px;
+    width: 20px;
+    margin: 0 10px 0 0;
+  }
+
 .react-datepicker__day-name,
 .react-datepicker__day {
   color: #000;
@@ -124,6 +142,15 @@ form {
     display: block;
     text-align: center;
   }
+}
+
+label.inline-label {
+  display: inline-block;
+  width: auto;
+}
+.checkbox {
+  display: inline-block;
+  float: left;
 }
 
 
@@ -409,17 +436,4 @@ form {
 
 .react-datepicker__tether-element {
   z-index: 2147483647;
-}
-
-label.inline-label {
-  display: inline-block;
-  width: auto;
-  margin-top: 2px;
-}
-.checkbox {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  margin: 0 10px 0 0;
-  float: left;
 }
