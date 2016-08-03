@@ -27,7 +27,7 @@ export default function(state = INITIAL_STATE, action) {
                 for(let event in state.events){
                     let instances = state.events[event];
                     for(let timestamp in instances){
-                        firebase.database().ref('/diagnostics/'+state.sessionKey+'/events/'+event+'/'+timestamp).update(instances[timestamp])
+                        firebase.database().ref('/diagnostics/'+state.sessionKey+'/events/'+event+'/'+timestamp).update(instances[timestamp]||{payload: 0})
                         .catch(error => {
                             console.error("flushing diagnostics events to firebase failed");
                         })                
