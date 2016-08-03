@@ -125,7 +125,7 @@ class CourseInfo extends React.Component {
       if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Course starts less than 3 hours from now.
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
-                  <p className="text-blue"> Kurssin alkuun aikaa alle 3 tuntia.</p>
+                  <p className="text-red"> Kurssin alkuun aikaa alle 3 tuntia. Valitettavasti et voi enää peruuttaa varausta.</p>
                 </div>
               );
       } else {
