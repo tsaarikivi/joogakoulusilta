@@ -416,7 +416,7 @@ export function removeShopItem(key) {
     return dispatch => ShopItemsRef.child(key).remove()
 }
 
-export function getClientTokenFromBraintree() {
+/*export function getClientTokenFromBraintree() {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan maksuyhteyttä")
         dispatch({
@@ -454,9 +454,9 @@ export function getClientTokenFromBraintree() {
                 })
             });
     }
-}
+}*/
 
-export function doPurchaseTransaction(nonce, clientKey, type) {
+/*export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Suoritetaan maksu.")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
@@ -499,5 +499,5 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
                 })
             })
     }
-}
+} */
 
