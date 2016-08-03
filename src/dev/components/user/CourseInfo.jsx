@@ -174,7 +174,7 @@ class CourseInfo extends React.Component {
       return (
         <div className="course-info-container">
           <div className="course-info">
-            <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
+            <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
               <h3>{courseInfo.courseType.name}</h3>
               <div className="surrounded-border">
