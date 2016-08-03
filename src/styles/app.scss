@@ -317,7 +317,7 @@ input, textarea, select {
 .surrounded-border {
   border: 1px solid $border;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: $container-radius;
   background-color: $container-color;
 }
 

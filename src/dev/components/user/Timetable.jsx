@@ -77,7 +77,6 @@ class Timetable extends React.Component {
   }
 
   render() {
-
     return (
       <div class="container timetable-container bordered-container">
         <div className="content-container align-left">

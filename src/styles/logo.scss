@@ -69,7 +69,7 @@
   .logo-container {
     border: 1px solid $text-dark;
     box-sizing: border-box;
-    border-radius: 1px;
+    border-radius: $logo-radius;
     .upper-text {
       display: inline-block;
       text-transform: uppercase;
@@ -88,7 +88,7 @@
     display: inline-block;
     background: $lightgray;
     border: 1px solid $border;
-    border-radius: 5px;
+    border-radius: $container-radius;
     box-sizing: border-box;
     img {
       display: block;
@@ -100,7 +100,7 @@
       display: block;
       text-align: center;
       background: $container-color;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px; 
+      border-bottom-left-radius: $container-radius;
+      border-bottom-right-radius: $container-radius; 
     }
   }

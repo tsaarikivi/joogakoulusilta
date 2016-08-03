@@ -11,7 +11,7 @@ class UserHeader extends React.Component {
   constructor(){
     super();
     this.count = 0;
-    this.firstexpire = new Date();
+    this.firstexpire = new Date();    
   }
 
   daysLeft(){
@@ -72,7 +72,7 @@ class UserHeader extends React.Component {
       instructor = <Link className="text-link text-link-white" to="instructor">Opettaja</Link>
     }
     return (
-      <div class="container bordered-container user-header-container">
+      <div class="container user-header-container light-bg">
         <div className="content-container">
           {this.renderTickets()}
           <div className="userinfo-container">

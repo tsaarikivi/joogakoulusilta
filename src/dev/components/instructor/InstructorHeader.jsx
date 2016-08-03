@@ -15,7 +15,7 @@ class InstructorHeader extends React.Component {
       errorOut = <p>Error: {error.code} {error.message}</p>
     }
     return (
-      <div class="container bordered-container">
+      <div class="container light-bg">
         <div className="content-container">
           {errorOut}
           <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
