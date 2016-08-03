@@ -19,7 +19,6 @@ export default function(state = INITIAL_STATE, action) {
         case actions.CONFIGURE_DIAGNOSTICS:
             return Object.assign({},state, action.payload)
         case actions.FLUSH_DIAGNOSTICS:
-            console.log("FLUSH_DIAGNOSTICS: ", state);
             if(state.started && state.sessionKey !== "0"){
                 firebase.database().ref('/diagnostics/'+state.sessionKey).update({user: state.user})
                 .catch(error => {
