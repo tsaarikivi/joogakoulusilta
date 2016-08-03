@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../../actions/admin.js'
 
-class InfoForm extends React.Component {
+class TermsForm extends React.Component {
 
   onSubmit(props) {
 
     if(this.props.mode === "addNew"){
-      this.props.actions.addInfo(props)
+      this.props.actions.addTerms(props)
     } else {
-      this.props.actions.modifyInfo(this.props.dbKey, props)
+      this.props.actions.modifyTerms(this.props.dbKey, props)
     }
-    this.props.actions.minimizeInfoForm();
+    this.props.actions.minimizeTermsForm();
   }
 
   renderContent() {
@@ -24,11 +24,11 @@ class InfoForm extends React.Component {
 
     return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-          <label htmlFor="infotitle">Infon otsikko</label>
-          <input type="text" name="infotitle" placeholder="esim: Joogakoulusta" {...title} />
+          <label htmlFor="termstitle">Ehdon otsikko</label>
+          <input type="text" name="termstitle" placeholder="esim: Maksuehdot" {...title} />
 
-          <label htmlFor="infocontent">Infon kuvaus</label>
-          <textarea type="text" name="infocontent" placeholder="esim: Joogakoulu Lauttasaari on pieni ja rento joogastudio." {...content}/>
+          <label htmlFor="termscontent">Ehdon kuvaus</label>
+          <textarea type="text" name="temrscontent" placeholder="esim: Maksuihin sovelletaan Suomen lakien mukaisia ehtoja." {...content}/>
 
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
@@ -41,7 +41,7 @@ class InfoForm extends React.Component {
     return (
       <div className="container transparent-bg">
        	<div className="surrounded-container">
-          <h2 className="header-collapse">Infon tiedot</h2>
+          <h2 className="header-collapse">Ehdon tiedot</h2>
           {this.renderContent()}       
         </div> 
       </div>
@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default reduxForm({
-  form: 'InfoForm',
+  form: 'TermsForm',
   fields: ['title', 'content'],
   validate
-}, null, mapDispatchToProps)(InfoForm)
+}, null, mapDispatchToProps)(TermsForm)

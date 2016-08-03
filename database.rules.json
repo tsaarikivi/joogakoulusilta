@@ -16,6 +16,10 @@
             ".read": "true",
             ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
+        "terms": {
+            ".read": "true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
         "bookingsbycourse": {
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"
