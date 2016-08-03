@@ -3,8 +3,6 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-var md5 = require('md5')
-
 import * as testActionCreators from '../actions/test.js'
 
 class Tests extends React.Component {
