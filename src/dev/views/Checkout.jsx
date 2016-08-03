@@ -51,7 +51,11 @@ class Checkout extends React.Component {
   }
 
   renderStart(){
-      return(<Link className="text-link back-btn" to="user">&lt;Takaisin</Link>)
+      return(
+          <div className="centered">
+            <Link className="text-link back-btn margin-top" to="user">&lt;Takaisin</Link>
+          </div>
+        )
   }
 
   onReady() {
