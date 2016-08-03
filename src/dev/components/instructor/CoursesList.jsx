@@ -64,7 +64,7 @@ class CoursesList extends React.Component {
       <div class="container timetable-container">
         <div className="content-container align-left">
           <h2>Aikataulu</h2>
-          <small>Klikkaa joogatuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
+          <small className="text-fade margin-top margin-bottom small-info">Klikkaa joogatuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
         </div>
         <table className="centered">
           <tbody>

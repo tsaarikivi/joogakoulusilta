@@ -22,10 +22,10 @@ var specialCBookingsRef;
 
 export function updateUserDetails(user) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Päivitetään tiedot.")
+        _showLoadingScreen(dispatch, "Päivitetään tiedot")
         firebase.database().ref('/users/' + user.uid).update(user)
             .then(() => {
-                _hideLoadingScreen(dispatch, "Tiedot päivitetty.", true)
+                _hideLoadingScreen(dispatch, "Tiedot päivitetty", true)
             })
             .catch(error => {
                 console.error("User details update failed: ", error)

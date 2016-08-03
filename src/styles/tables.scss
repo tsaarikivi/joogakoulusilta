@@ -109,7 +109,7 @@
 table {
   tr {
     background: $white;
-    border-radius: 5px;
+    border-radius: $container-radius;
     box-sizing: border-box;
     border: 1px solid $border;
     td {      
@@ -126,8 +126,8 @@ table {
       }
     }
     th {
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: $container-radius;
+      border-top-right-radius: $container-radius;
       background: $lightgray;
       border: none;
       box-sizing: border-box;

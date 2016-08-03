@@ -122,7 +122,7 @@ ul {
 .wide-list {
   li {
     background: $container-color;
-    border-radius: 5px;
+    border-radius: $container-radius;
     border: 1px solid $border;
     box-sizing: border-box;
     .item-row {
@@ -136,7 +136,7 @@ ul {
 .narrow-list {
   li {
     background: $container-color;
-    border-radius: 5px;
+    border-radius: $container-radius;
     border: 1px solid $border;
     box-sizing: border-box;
   }

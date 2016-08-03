@@ -122,7 +122,7 @@ class CourseDetails extends React.Component {
       return (
         <div className="course-info-container">
           <div className="course-info">
-            <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
+            <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
               <h2>{course.courseType.name}</h2>
               <h3>{dayStr}    ( {bookingPerCapacity} )</h3>
