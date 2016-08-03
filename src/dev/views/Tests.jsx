@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import  { getCurrentBaseUrl } from '../helpers/urlParser.js'
+
 var md5 = require('md5')
 
 import * as testActionCreators from '../actions/test.js'
@@ -48,6 +50,7 @@ class Tests extends React.Component {
         <button className="btn-small btn-red" onClick={this.test1.bind(this)}>Test-1</button>
         <button className="btn-small btn-red" onClick={this.test2.bind(this)}>Test-2</button>
         <button className="btn-small btn-red" onClick={this.testFirebaseErrorLogging.bind(this)}>testFirebaseErrorLogging-2</button>
+        <p>{getCurrentBaseUrl(document.location.href)}</p>
       </div>
     )    
   }

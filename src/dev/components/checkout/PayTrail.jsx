@@ -1,4 +1,5 @@
 import React from "react";
+import  { getCurrentBaseUrl } from '../../helpers/urlParser.js'
 
 export default class PayTrail extends React.Component {
 
@@ -24,10 +25,10 @@ export default class PayTrail extends React.Component {
     let referenceNumber = ""
     let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailreturn"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailcancel"
+    let returnAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailreturn"
+    let cancelAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailcancel"
     let pendingAddress = ""
-    let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
+    let notifyAddress = JOOGASERVER + "/paytrailnotification"
     let type = "S1"
     let culture = "fi_FI"
     let preselectedMethod = ""
