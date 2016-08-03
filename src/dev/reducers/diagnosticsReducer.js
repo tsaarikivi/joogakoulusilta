@@ -1,0 +1,74 @@
+import * as actions from '../actions/actionTypes.js'
+
+const INITIAL_STATE = {
+    sessionKey: "0",
+    started: false,
+    user: "0",
+    events: {},
+    flushed: false
+}
+
+//Add events to be discarded here
+var discardEvents = {
+    CHANGE_LOADINGSCREEN_STATE: true
+}
+
+export default function(state = INITIAL_STATE, action) {
+
+    switch (action.type) {
+        case actions.CONFIGURE_DIAGNOSTICS:
+            return Object.assign({},state, action.payload)
+        case actions.FLUSH_DIAGNOSTICS:
+            console.log("FLUSH_DIAGNOSTICS: ", state);
+            if(state.started && state.sessionKey !== "0"){
+                firebase.database().ref('/diagnostics/'+state.sessionKey).update({user: state.user})
+                .catch(error => {
+                    console.error("diagnostics user write to firebase failed");
+                })
+                for(let event in state.events){
+                    let instances = state.events[event];
+                    for(let timestamp in instances){
+                        firebase.database().ref('/diagnostics/'+state.sessionKey+'/events/'+event+'/'+timestamp).update(instances[timestamp])
+                        .catch(error => {
+                            console.error("flushing diagnostics events to firebase failed");
+                        })                
+                    }
+                }
+            }
+            return Object.assign({}, state, {events: {}})
+        default:
+            if(state.started){
+                //Filter only the actions we know of.
+                if(actions[action.type]){
+                    return Object.assign({}, state, processAction(state, action))
+                }
+            }
+            return state
+    }
+}
+
+function processAction(state, action){
+    let timestamp = Date.now();
+    let returnObject = Object.assign({})
+    let eventObject = Object.assign({})
+    /////////
+    if(action.type === actions.ADD_USER && state.user === "0"){
+        returnObject = Object.assign({},returnObject, { user: action.payload.uid})
+        return returnObject;
+    }
+    /////////
+    // Here we can filter only those events, which we are interested in
+    /////////
+    if(!discardEvents[action.type]){
+        let list = {}
+        let events = state.events;
+        if(events[action.type]){
+            list = Object.assign(events[action.type], {[timestamp]: action.payload});
+        } else {
+            list = Object.assign({[timestamp]: action.payload});
+        }
+        eventObject = Object.assign({}, events, {[action.type]: list})
+        returnObject = Object.assign({}, {events: eventObject})
+    }
+    return returnObject;
+}
