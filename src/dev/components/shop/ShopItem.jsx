@@ -41,7 +41,7 @@ class ShopItem extends React.Component {
   renderExpire() {
     if (this.props.item.type === "count") {
       return (
-        <p className="item-expiration">Käyttöaikaa {this.props.item.expiresAfterDays} päivää</p>
+        <p className="text-fade nomargin nopadding">Käyttöaikaa {this.props.item.expiresAfterDays} päivää</p>
       )
     }
     else {
@@ -59,10 +59,10 @@ class ShopItem extends React.Component {
     }
     return (
       <li>
-        <h3 className="item-title">{this.props.item.title}</h3>
-        <p className="item-desc">{this.props.item.desc}</p>
+        <h5 className="item-title nomargin nopadding text-bold">{this.props.item.title}</h5>
+        <p className="item-desc nomargin nopadding">{this.props.item.desc}</p>
         {this.renderExpire()}
-        <p class="item-price">{this.props.item.price} €</p>        
+        <p class="item-price text-blue text-bold">{this.props.item.price} €</p>        
         <span className="item-row">
           {cashBuyButton}
         </span>

@@ -95,10 +95,10 @@ class SpecialCourseInfo extends React.Component {
               <div className="info-info-container">
                 <h3>{info.title}</h3>
                 <div className="surrounded-border">      
-                  <p className="info-line border-bottom info-time text-bold">Hinta: {info.price}&euro;</p>
                   <p className="info-line border-bottom">Aika: {getDayStrMs(info.date)} {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
                   <p className="info-line border-bottom">Sijainti: {info.place.name}, {info.place.address}</p>
-                  <p className="info-line">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                  <p className="info-line border-bottom">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                  <p className="info-line info-time text-bold">Hinta: {info.price}&euro;</p>
                 </div>
                 <div>
                   <div className="centered">
