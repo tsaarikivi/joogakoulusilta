@@ -14,6 +14,7 @@ import Register from './dev/views/Register.jsx'
 import Shop from './dev/views/Shop.jsx'
 import SpecialCourses from './dev/views/SpecialCourses.jsx'
 import User from './dev/views/User.jsx'
+import Tests from './dev/views/Tests.jsx'
 import UserProfile from './dev/views/UserProfile.jsx'
 import ChangeInformation from './dev/views/ChangeInformation.jsx'
 import ForgotPassword from './dev/views/ForgotPassword.jsx'
@@ -26,6 +27,7 @@ export default (
     <Route path="info" component={Info}></Route>
     <Route path="shop" component={Shop}></Route>
     <Route path="user" component={User}></Route>
+    <Route path="tests" component={Tests}></Route>
     <Route path="userInformation" component={ChangeInformation}></Route>
     <Route path="register" component={Register}> </Route>
     <Route path="checkout" component={Checkout}> </Route>

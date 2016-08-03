@@ -276,6 +276,9 @@ export function fetchUserDetails(uid) {
                             if (snapshot.val().instructor) {
                                 usr.roles.instructor = snapshot.val().instructor
                             }
+                            if (snapshot.val().tester) {
+                                usr.roles.tester = snapshot.val().tester
+                            }
                         }
                         dispatch({
                             type: USER_DETAILS_UPDATED_IN_DB,
