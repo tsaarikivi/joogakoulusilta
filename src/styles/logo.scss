@@ -18,6 +18,17 @@
       letter-spacing: 8vw;
     }
   }
+
+  .ticket-logo {
+    margin: 4vw 2vw 4vw 0;
+    width: 16vw;
+    img {
+      padding: 3vw;
+    }
+    .ticket-amnt {
+      padding: 1vw 0;
+    }
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -36,6 +47,17 @@
       font-size: 40px;
       margin: 0 0 0 21px;
       letter-spacing: 24px;
+    }
+  }
+
+  .ticket-logo {
+    margin: 20px 12px 20px 0;
+    width: 50px;
+    img {
+      padding: 10px;
+    }
+    .ticket-amnt {
+      padding: 4px 0;
     }
   }
 }
@@ -59,5 +81,26 @@
       display: inline-block;
       text-transform: uppercase;
       padding: 0;
+    }
+  }
+
+  .ticket-logo {
+    display: inline-block;
+    background: $lightgray;
+    border: 1px solid $border;
+    border-radius: 5px;
+    box-sizing: border-box;
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+    .ticket-amnt {
+      margin: 0;
+      border-top: 1px solid $border;
+      display: block;
+      text-align: center;
+      background: $container-color;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px; 
     }
   }

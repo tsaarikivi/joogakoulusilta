@@ -6,24 +6,36 @@ import * as actionCreators from '../../actions/shop.js'
 
 class ShopItem extends React.Component {
 
+  constructor(){
+    super();
+    this.onceOnly = false;
+  }
+
   static contextTypes = {
     router: React.PropTypes.object
   }
 
-  handleClick(e){
-    e.preventDefault();
-    this.props.actions.addToCart(this.props.item);
-    this.props.actions.getClientTokenFromBraintree()
-    this.context.router.push('checkout');
-
+  componentDidMount(){
+    this.onceOnly = false;
   }
 
-  cashPurchase(e){
-    e.preventDefault();
-    this.props.actions.addToCart(this.props.item);
-    this.props.actions.buyWithCash();
-    this.context.router.push('checkout');
+  payTrailPurchase(){
+    const { item } = this.props
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.addToCart(item);
+      this.props.actions.initializePayTrailTransaction(item.key, item.type)
+      this.context.router.push('checkout');
+    }
+  }
 
+  cashPurchase(){
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.addToCart(this.props.item);
+      this.props.actions.buyWithCash();
+      this.context.router.push('checkout');
+    }
   }
 
   renderExpire() {
@@ -39,16 +51,11 @@ class ShopItem extends React.Component {
     }
   }
 
-  /**
-   * <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.handleClick.bind(this)} >Osta</button>
-        </span>
-   */
-
   render() {
-    let admin = null;
-    if(this.props.admin){
-      admin = <button className="btn-small btn-blue" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+    let cashBuyButton = null;
+    const { admin, instructor } = this.props.roles;
+    if(admin || instructor){
+      cashBuyButton = <button className="btn-small btn-blue margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
     return (
       <li>
@@ -57,7 +64,10 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price">{this.props.item.price} €</p>        
         <span className="item-row">
-          {admin}
+          {cashBuyButton}
+        </span>
+        <span className="item-row">
+          <button className="btn-small btn-blue btn-link" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
         </span>
       </li>
     );

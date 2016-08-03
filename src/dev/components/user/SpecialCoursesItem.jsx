@@ -11,21 +11,51 @@ class SpecialCoursesItem extends React.Component {
     this.props.actions.putSpecialCourseInfo(this.props.item)
   }
 
+  userHasPurchasedThisAlready(){
+    if(this.props.currentUser.transactions.details.special.find((item) => {
+      return item.shopItemKey === this.props.item.key
+    })) {
+      return true;
+    }
+    return false;
+  }
+
+  renderBookings(item) {
+    if (item.bookings === item.maxCapacity) {
+      return <p className="centered table-participants text-red text-bold table-alert">TÄYNNÄ</p>
+    }
+    return (
+      <span >
+        <img className="mini-icon tiny-icon" src="./assets/group.png" />
+        <p className="centered table-participants">{item.bookings}/{item.maxCapacity}</p>
+      </span>
+    )
+  }
+
   render() {
+    let userBooked = null;
+    if(this.userHasPurchasedThisAlready()){
+       userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
+    }
+    const { item } = this.props;
     return (
       <li className="special-course-item" onClick={() => this.itemClicked()}>
-        <p className="table-nonmargin">{this.props.item.title}</p>
-        <p className="table-time">{getDayStrMs(this.props.item.date)}</p>
-        <p className="table-time">{getTimeStrMs(this.props.item.start)} - {getTimeStrMs(this.props.item.end)}</p>
-        <img className="mini-icon" src="./assets/group.png" />
-        <p className="centered table-participants">{this.props.item.bookings}/{this.props.item.maxCapacity}</p>
+        <p className="table-nonmargin">{item.title}</p>
+        <p className="table-time">{getDayStrMs(item.date)}</p>
+        <p className="table-time">{getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</p>        
+        {this.renderBookings(item)}
+        {userBooked}
       </li>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return { currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators({putSpecialCourseInfo}, dispatch) }
 }
 
-export default connect(null, mapDispatchToProps)(SpecialCoursesItem)
+export default connect(mapStateToProps, mapDispatchToProps)(SpecialCoursesItem)

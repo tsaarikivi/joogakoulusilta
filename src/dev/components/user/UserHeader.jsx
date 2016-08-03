@@ -10,75 +10,88 @@ class UserHeader extends React.Component {
 
   constructor(){
     super();
-    this.aikaLoppuu = new Date();
-    this.onkoAikaa = false;
     this.count = 0;
     this.firstexpire = new Date();
   }
 
-  componentWillMount(){
+  daysLeft(){
+    const { time } = this.props.curUsr.transactions;
+    let today = new Date();
+    let duration = 0;
+    let daysLeft = 0;
     if(this.props.curUsr.transactions.time != 0){
-      this.aikaLoppuu.setTime(this.props.curUsr.transactions.time);
-      this.onkoAikaa = true;
+      duration = time - today.getTime()
+      return Math.round(duration / (24*60*60*1000))
+    } else {
+      return 0;
     }
+  }
+
+  componentWillMount(){
     this.count = this.props.curUsr.transactions.count;
     this.firstexpire.setTime(this.props.curUsr.transactions.firstexpire);
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.curUsr.transactions.time != 0){
-      this.aikaLoppuu.setTime(nextProps.curUsr.transactions.time);
-      this.onkoAikaa = true;
-    }
     this.count = nextProps.curUsr.transactions.count;
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
 
-  renderContent() {
-    if(this.onkoAikaa){
-      return (
-        <div>
-          <p>Voit käyttää kurssitarjontaamme <span className="use-times"> {getDayStr(this.aikaLoppuu)} </span> asti.</p>
-        </div>
-      )
-    }
-    else if(this.count > 0){
-      return (
-        <div>
-          <p>Sinulla on <span className="use-times">{this.count}</span> kertalippua käytettävissä. Ensimmäinen vanhenee <span className="use-times"> {getDayStr(this.firstexpire)} </span>.</p>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <p>Sinulla ei ole kertalippuja käytettävissä, eikä aikaa. Käy kaupassamme ostamassa kurssioikeuksia, jos haluat joogaamaan.</p>
-        </div>
-      )
-    }
+
+  renderTickets() {
+    return (
+      <div className="tickets-container" title={"Sinulla on " + this.daysLeft() + " päivää jäljellä aikakortissasi"}>
+        <span className="ticket-logo">
+          <img className="mini-icon" src="./assets/clock.png" />
+          <p className="ticket-amnt">{this.daysLeft()} pv</p>
+        </span>
+        <span className="ticket-logo" title={"Sinulla on käytettävissäsi " + this.count + " kertalippua"}>
+          <img className="mini-icon" src="./assets/ticket.png" />
+          <p className="ticket-amnt">{this.count} krt</p>
+        </span>
+      </div>
+    )
   }
 
   render() {
 
     const { roles, firstname } = this.props.curUsr;
 
-    var admin = null;
-    if(roles.admin === true){
-      admin = <Link className="text-link float-right" to="admin">Admin</Link>
+    let toTheShop = <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+
+    let admin = null;
+    if(roles.admin){
+      admin = <Link className="text-link text-link-white" to="admin">Admin</Link>
     }
-    var instructor = null;
-    if(roles.instructor === true){
-      instructor = <Link className="text-link float-right" to="instructor">Opettaja</Link>
+    let tests = null;
+    if(roles.tester){
+      tests = <Link className="text-link text-link-white" to="tests">Test</Link>
+    }
+    let instructor = null;
+    if(roles.instructor){
+      instructor = <Link className="text-link text-link-white" to="instructor">Opettaja</Link>
     }
     return (
-      <div class="container bordered-container">
-        <div className="content-container align-left">
-          <Link className="text-link float-right" to="userProfile">Käyttäjätiedot</Link>
-          {admin}
-          {instructor}
-          <h1 className="header-collapse">Hei, {firstname}!</h1>
-          <p>Kirjautunut sähköpostilla: {this.props.curUsr.email}</p>                    
-          {this.renderContent()}
-          <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+      <div class="container bordered-container user-header-container">
+        <div className="content-container">
+          {this.renderTickets()}
+          <div className="userinfo-container">
+            <div className="mobile-row">
+              <Link className="text-link text-link-white" to="userProfile">Käyttäjätiedot</Link>
+            </div>
+            <div className="mobile-row">
+              {toTheShop}
+            </div>
+            <div className="mobile-row">
+              {instructor}
+            </div>
+            <div className="mobile-row">
+              {admin}
+            </div>
+            <div className="mobile-row">
+              {tests}
+            </div>
+          </div>
         </div>
       </div>
     )

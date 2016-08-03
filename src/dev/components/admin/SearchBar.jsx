@@ -9,6 +9,10 @@ class SearchBar extends React.Component {
       this.props.changeSearch("")
   }
 
+  componentDidMount(){
+    document.getElementById("userSearch").focus()
+  }
+
   handleChange(event) {
       this.props.changeSearch(event.target.value)
   }
@@ -16,8 +20,8 @@ class SearchBar extends React.Component {
   render() {
     return (
       <form>
-        <label htmlFor="search">Haku</label>
-        <input name="search" type="text" onChange={event => this.handleChange(event)}/>
+        <label htmlFor="usersearch">Haku</label>
+        <input id="userSearch" name="usersearch" type="search" onChange={event => this.handleChange(event)}/>
       </form>
     )
   }

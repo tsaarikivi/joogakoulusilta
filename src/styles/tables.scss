@@ -8,7 +8,7 @@
   table {
     width: 100%;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 2vw;
     tr {
       vertical-align: text-top;
       margin: 0 auto 5vw;
@@ -17,6 +17,9 @@
       th, td {
         width: 100%;
         display: block;
+      }
+      th {
+        font-size: 5vw;
       }
       td {      
         padding: 2vw 0;
@@ -38,11 +41,14 @@
     }
   }
   .table-participants {
-    margin: 0.2vw 0 0 0.5vw;
+    margin: 0 0 0 0.5vw;
   }
   .mini-icon {
     margin: 0.2vw 0.5vw 0 0;
     height: 5.5vw;
+  }
+  .tiny-icon {
+    height: 4.2vw;
   }
 }
 
@@ -54,17 +60,22 @@
   table {
     margin: 0 auto;
     padding: 0;
+    width: 100%;
     tr {
       vertical-align: text-top;
       margin: 0 5px 20px;
-      width: 23%;
+      width: 100%;
+      max-width: 124px;
       display: inline-block;    
       th, td {
         width: 100%;
         display: block;
       }
-      td {      
-        padding: 5px 0;        
+      th {
+        font-size: 16px;
+      }
+      td {
+        padding: 12px 0;       
         .table-time {
           margin-top: 2px;
         }
@@ -101,8 +112,7 @@ table {
     border-radius: 5px;
     box-sizing: border-box;
     border: 1px solid $border;
-    td {
-      padding: 12px 0;
+    td {      
       border-top: 1px solid $border;
       transition: background 0.1s;
       box-sizing: border-box;
@@ -116,6 +126,8 @@ table {
       }
     }
     th {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       background: $lightgray;
       border: none;
       box-sizing: border-box;
@@ -137,4 +149,7 @@ table {
 }
 .table-nonmargin {
   margin-top: 0;
+}
+.glowing {
+  border: 2px solid $blue;
 }

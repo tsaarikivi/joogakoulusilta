@@ -55,7 +55,7 @@ class HomeLoginRegister extends React.Component {
 
         <div className="register-container">
           <p>Oletko uusi käyttäjä?</p>
-          <Link className="text-link" to="register">Rekisteröidy</Link>
+          <Link className="btn-small btn-green text-bold" to="register">Rekisteröidy</Link>
         </div>
       </div>
     )

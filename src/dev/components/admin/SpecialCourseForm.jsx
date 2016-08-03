@@ -111,7 +111,6 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderExpandButton() {
-    console.log("CMPHERR", this.props.cmp)
     if(this.props.cmp.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseForm()}>Piilota</button>
     }

@@ -32,11 +32,6 @@
         margin: 0.6vw 0 0;
         padding: 0;
       }
-      .info-time {
-        margin-top: 3vw;
-        margin-bottom: 0;
-        padding: 0;
-      }
       .info-place {
         margin: 0;
       }
@@ -53,20 +48,8 @@
     }
   }
 
-  .timetable-container {
-    h2 {
-      padding: 0;
-      margin: 0;
-    }
-    small {
-      display: block;
-      padding: 1.5vw 0 3vw;
-    }
-  }
-
   .contact-container {
     text-align: left;
-    text-indent: 10%;
   }
 
   .container {
@@ -80,7 +63,7 @@
       padding: 0;
     }
     small {
-      width: 80%;
+      width: 100%;
       margin-left: auto;
       margin-right: auto;
       padding: 0;
@@ -105,13 +88,12 @@
   }
   .register-container {
     p {
-      margin: 10px 0 8px;
-      padding: 0;
+      margin: 4vw 0;
     }
   }
 
   .content-container {
-    width: 96%;
+    width: 96vw;
     margin: 0 auto;
     box-sizing: border-box;
     padding: 0;
@@ -140,6 +122,34 @@
     span {
       margin: 0 0 3vw;
     }  
+  }
+
+  .tickets-container {
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+  }
+
+  .userinfo-container {
+    display: inline-block;
+    text-align: right;
+    margin-bottom: 2vw;
+    width: 60%;
+  }
+
+  .mobile-row {
+    width: 100%;
+    margin-top: 4vw;
+  }
+
+  .user-header-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .mailbtn-container {
+    margin: 0;
+    padding: 2vw 0;
   }
 }
 
@@ -179,11 +189,6 @@
         margin: 5px 0 0;
         padding: 0;
       }
-      .info-time {
-        margin-top: 15px;
-        margin-bottom: 0;
-        padding: 0;
-      }
       .info-place {
         margin: 0;
       }
@@ -201,20 +206,8 @@
     }
   }
 
-  .timetable-container {
-    h2 {
-      padding: 0;
-      margin: 0;
-    }
-    small {
-      display: block;
-      padding: 10px 0 20px;
-    }
-  }
-
   .contact-container {
     text-align: left;
-    text-indent: 10%;
   }
 
   .container {
@@ -248,8 +241,7 @@
   }
   .register-container {
     p {
-      margin: 10px 0 8px;
-      padding: 0;
+      margin: 15px 0 15px;
     }
   }
 
@@ -278,6 +270,40 @@
     span {
       margin: 0 0 10px;
     }  
+  }
+
+  .tickets-container {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+  }
+
+  .userinfo-container {
+    display: inline-block;
+    margin-top: 20px;
+    a {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+
+  .mobile-row {
+    display: inline-block;
+  }
+
+  .user-header-container {
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .mailbtn-container {
+    margin: 0;
+    padding: 5px 0;
+  }
+
+  .checkout-container {
+    max-width: 300px;
   }
 }
 
@@ -356,12 +382,6 @@
     background-color: rgba(255,255,255, 0.9);
     box-shadow: 0 3px 10px $text-dark;
     border-radius: 5px;
-  }
-}
-
-.timetable-container {
-  small {
-    color: $text-fade;
   }
 }
 

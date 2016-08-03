@@ -26,7 +26,6 @@ export function postCancellation(item, txRef, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data);
                     _hideLoadingScreen(dispatch, "Varaus peruttu", true)
                 })
                 .catch(error => {
@@ -43,7 +42,7 @@ export function postCancellation(item, txRef, courseInfo) {
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Varataan kurssia")
+        _showLoadingScreen(dispatch, "Varataan tuntia")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
@@ -54,7 +53,6 @@ export function postReservation(forward, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
-                    console.log(response.data);
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {

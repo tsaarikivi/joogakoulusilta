@@ -7,7 +7,9 @@ import {
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
     BUY_WITH_CASH,
-    EXECUTE_CASH_PURCHASE
+    BUY_WITH_PAYTRAIL,
+    EXECUTE_CASH_PURCHASE,
+    RESET_SHOP
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -18,12 +20,18 @@ const INITIAL_STATE = {
     },
     items: [],
     token: "",
+    initializedTransaction: "0",
+    authCode: "",
     purchaseResult: {},
     phase: "start"
 }
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case RESET_SHOP:
+            return Object.assign({},INITIAL_STATE,  {items: state.items});
+        case BUY_WITH_PAYTRAIL:
+            return Object.assign({}, state, action.payload);
         case BUY_WITH_CASH:
             return Object.assign({}, state, action.payload);
         case EXECUTE_CASH_PURCHASE:

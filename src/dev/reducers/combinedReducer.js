@@ -32,9 +32,11 @@ import PlaceListReducer from './admin/placeListReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
 import SpecialCourseListReducer from './admin/specialCourseListReducer.js'
 import SearchBarReducer from './admin/searchBarReducer.js'
+import PendingTransactions from './pendingTransactions.js'
 
 const combinedReducer = combineReducers({
     loadingScreen: LoadingScreenReducer,
+    pendingTransactions: PendingTransactions,
     currentUser: UserReducer,
     instructor: InstructorReducer,
     shopItems: ShopReducer,

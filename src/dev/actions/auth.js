@@ -42,7 +42,7 @@ export function authListener() {
                 user.email = userdata.email;
                 user.uid = userdata.uid;
                 user.userdata = userdata;
-                console.log("USER: ", user.uid, user.email, userdata);
+                //console.log("USER: ", user.uid, user.email, userdata);
                 dispatch({
                     type: ADD_USER,
                     payload: user
@@ -52,7 +52,6 @@ export function authListener() {
                 surname = null;
                 alias = null;
             } else {
-                console.log("REMOVE_USR")
                 dispatch({
                     type: REMOVE_USER
                 })
@@ -63,9 +62,7 @@ export function authListener() {
 
 export function loginWithPopUp() {
     return dispatch => {
-        console.log("firebase auth", firebase)
         var provider = new firebase.auth.GoogleAuthProvider
-        console.log("provider", provider)
         Auth.signInWithPopup(provider).catch(error => {
             if (error) {
                 dispatch({
@@ -84,7 +81,7 @@ export function loginWithPopUp() {
 
 export function login(email, password) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen."); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
+        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen"); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
         Auth.signInWithEmailAndPassword(email, password).catch(error => {
             if (error) {
                 dispatch({
@@ -96,7 +93,7 @@ export function login(email, password) {
                         }
                     }
                 })
-                _hideLoadingScreen(dispatch, "Kirjautuminen päättyi virheeseen: " + error.message, false, 2000)
+                _hideLoadingScreen(dispatch, "Tarkista käyttäjätunnus/salasana\nOletko rekisteröitynyt?", false, 3000)
             }
         });
     }

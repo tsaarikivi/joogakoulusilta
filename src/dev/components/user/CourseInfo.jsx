@@ -1,6 +1,8 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from "react-router"
+
 import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
@@ -11,11 +13,43 @@ class CourseInfo extends React.Component {
     super();
     this.fetchStarted = false;
     this.reservationRequestOngoing = false;
+    this.cancellationOngoing = false;
+    this.confirmation = false;
+    this.timeoutId = 0;
   }
 
   componentWillReceiveProps(nextProps){
+    this.cancellationOngoing = false;
   }
 
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+  cancelReservation(forward){
+    const { courseInfo } = this.props;
+    if(this.confirmation){
+      if(!this.cancellationOngoing){
+        this.cancellationOngoing = true;
+        this.props.bookingsActions.postCancellation(
+          courseInfo.bookings.user[0].item, 
+          courseInfo.bookings.user[0].txRef, 
+          courseInfo);
+          this.exitContainer();
+      }
+    } else {
+      this.confirmation = true;
+      this.forceUpdate();
+      this.timeoutId = setTimeout( () => {
+        this.confirmation = false;
+        this.forceUpdate();
+      }, 2000)
+    }
+    
+
+  }
 
   makeReservation(forward) {
     if(!this.reservationRequestOngoing){
@@ -30,9 +64,9 @@ class CourseInfo extends React.Component {
     this.reservationRequestOngoing = false;
   }
 
-  userCanBook(){
+  userCanBook(day){
     const { transactions } = this.props.currentUser;
-    return (transactions.count > 0 || transactions.time > Date.now()) ? true : false;
+    return (transactions.count > 0 || transactions.time > day.getTime()) ? true : false;
   }
 
   courseIsFull(){
@@ -42,7 +76,6 @@ class CourseInfo extends React.Component {
     } else {
       return false; // No bookings for the course yet.
     }
-
   }
 
   //========================================================================
@@ -71,33 +104,6 @@ class CourseInfo extends React.Component {
     var notificationText = null;
     const { courseInfo } = this.props;
     let weekIndex = 0;
-
-    if(courseInfo.cancelled){
-        return(
-                <p className="text-red"> Kurssi on peruttu!</p>
-              );
-    }
-
-    if(courseInfo.bookings){
-    if(courseInfo.bookings.user.length > 0){
-        return(
-                <p className="text-blue"> Sinä olet ilmoittautunut tälle kurssille.</p>
-              );
-    }}
-
-    if(this.courseIsFull()){
-      return(
-        <p className="text-red"> Kurssi on jo täyteen varattu!</p>
-      );
-    }
-
-    if(!this.userCanBook()){
-      return(<div>
-              <p className="info-cantreserve">Sinulla ei ole oikeutta varata. Mene kauppaan</p>
-            </div>
-      );
-    }
-    
     if (hasTimePassed(courseInfo.day, courseInfo.start)) {
       weekIndex = 1;
     } else {
@@ -107,16 +113,56 @@ class CourseInfo extends React.Component {
     let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
+
+    if(courseInfo.cancelled){
+        return(
+                <p className="text-red">Tunti on peruttu!</p>
+              );
+    }
+
+    if(courseInfo.bookings){
+    if(courseInfo.bookings.user.length > 0){
+      if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Course starts less than 3 hours from now.
+        return( <div>
+                  <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
+                  <p className="text-blue"> Kurssin alkuun aikaa alle 3 tuntia.</p>
+                </div>
+              );
+      } else {
+        let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
+        return( <div>
+                  <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
+                  <button className="btn-small btn-red mobile-full" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
+                </div>
+              );
+      }
+    }}
+
+    if(this.courseIsFull()){
+      return(
+        <p className="text-red"> Tunti on jo täyteen varattu!</p>
+      );
+    }
+
+    if(!this.userCanBook(day)){
+      return(<div>
+              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy kaupassamme ostamassa joogaoikeuksia!</p>
+              <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+            </div>
+      );
+    }
+    
+
     if(
       hasTimePassed(courseInfo.day, courseInfo.start) && 
       !hasTimePassed(courseInfo.day, courseInfo.end)){
-        notificationText = <p className="text-red"> Tämän viikon kurssi on alkanut. Varaus on seuraavalle viikolle. </p>
+        notificationText = <p className="text-red"> Tämän viikon tunti on alkanut. Varaus on seuraavalle viikolle. </p>
     }
 
     return(
           <div>
             {notificationText}
-            <button className="btn-small btn-blue" onClick={() => this.makeReservation(weekIndex)} >
+            <button className="btn-small btn-blue mobile-full" onClick={() => this.makeReservation(weekIndex)} >
               Varaa: { dayStr }
             </button>
           </div>
@@ -132,15 +178,19 @@ class CourseInfo extends React.Component {
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
             <div className="info-info-container">
               <h3>{this.props.courseInfo.courseType.name}</h3>
-              <p className="info-time">Klo {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day))} - {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day))}</p>
-              <p className="info-place">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-              <p className="info-instructor">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+              <div className="surrounded-border">
+                <p className="info-line border-bottom">Klo {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day))} - {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day))}</p>
+                <p className="info-line border-bottom">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
+                <p className="info-line">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+              </div>
               <div>
-                <img className="mini-icon" src="./assets/group.png" />
-                {this.renderParticipants()}
+                <div className="centered">
+                  <img className="mini-icon" src="./assets/group.png" />
+                  {this.renderParticipants()}
+                </div>
                 {this.renderReservationButton()}
               </div>
-              <p className="info-desc">{this.props.courseInfo.courseType.desc}</p>
+              <p className="info-desc pre-wrap">{this.props.courseInfo.courseType.desc}</p>
             </div>
           </div>
         </div>

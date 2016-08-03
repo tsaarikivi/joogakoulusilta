@@ -16,20 +16,22 @@ class SpecialCourseInfo extends React.Component {
     router: React.PropTypes.object
   }
 
-  handleClickToBuy(){
+  handlePayTrailBuy(){
+    const { info } = this.props.specialCourseInfo;
     if(!this.onceOnly){
       this.onceOnly = true;
-      this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
-      this.props.shopActions.getClientTokenFromBraintree()
+      this.props.shopActions.addToCart(info);
+      this.props.shopActions.initializePayTrailTransaction(info.key, info.type)
       this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
     }
   }
 
   cashPurchase(){
+    const { info } = this.props.specialCourseInfo;
     if(!this.onceOnly){
       this.onceOnly = true;
-      this.props.shopActions.addToCart(this.props.specialCourseInfo.info);
+      this.props.shopActions.addToCart(info);
       this.props.shopActions.buyWithCash();
       this.props.itemActions.removeSpecialCourseInfo()
       this.context.router.push('checkout');
@@ -41,44 +43,43 @@ class SpecialCourseInfo extends React.Component {
     this.onceOnly = false;
   }
 
-  userHasPurchasedThisAlready(){
-    var returnValue = false;
-    this.props.currentUser.transactions.details.special.forEach((item, index) => {
-      if(item.shopItemKey === this.props.specialCourseInfo.info.key){
-        returnValue = true;
-      }
-    })
-    return returnValue;
-  }
+ userHasPurchasedThisAlready(){
+    if(this.props.currentUser.transactions.details.special.find((item) => {
+      return item.shopItemKey === this.props.specialCourseInfo.info.key
+    })) {
+      return true;
+    }
+    return false;
+ }
 
   renderPurchaseButtons() {
 
-    let admin = null;
+    const { admin, instructor } = this.props.currentUser.roles;
+    const { info } = this.props.specialCourseInfo;
+
+    let cashBuyButton = null;
     if( this.userHasPurchasedThisAlready() === true ){
-      return( <h4>Olet jo ostanut tämän kurssin.</h4> );
+      return( <p className="text-red">Olet jo ostanut tämän kurssin.</p> );
     }
 
 
-    if(this.props.currentUser.roles.admin){
-      admin = <button className="btn-small btn-blue margin-left" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+    if(admin || instructor){
+      cashBuyButton = <button className="btn-small btn-blue mobile-full" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
-    /**
-     * <span className="item-row">
-            <button className="btn-small btn-blue btn-link" onClick={this.handleClickToBuy.bind(this)} >Osta</button>
-          </span>
-     */
-
-    if(this.props.specialCourseInfo.info.bookings < this.props.specialCourseInfo.info.maxCapacity){
+    if(info.bookings < info.maxCapacity){
       return (
         <div>          
           <span className="item-row">
-            {admin}
+            {cashBuyButton}
+          </span>
+          <span className="item-row">
+            <button className="btn-small btn-blue btn-link" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
           </span>
         </div>
       )
     } else {
-      return (<h2>Kurssi on täynnä.</h2> )
+      return (<p className="text-red">Kurssi on täynnä.</p> )
     }
   }
 
@@ -92,18 +93,22 @@ class SpecialCourseInfo extends React.Component {
           <div className="course-info">
             <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
               <div className="info-info-container">
-                <h3>{info.title}</h3>                
-                <h3 className="info-time text-bold">{info.price}&euro;</h3>
-                <p className="info-time">{getDayStrMs(info.date)}</p>
-                <p className="info-place text-blue">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
-                <p className="info-place">Sijainti: {info.place.name}, {info.place.address}</p>
-                <p className="info-instructor">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                <h3>{info.title}</h3>
+                <div className="surrounded-border">      
+                  <p className="info-line border-bottom info-time text-bold">Hinta: {info.price}&euro;</p>
+                  <p className="info-line border-bottom">{getDayStrMs(info.date)}</p>
+                  <p className="info-line border-bottom">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                  <p className="info-line border-bottom">Sijainti: {info.place.name}, {info.place.address}</p>
+                  <p className="info-line">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                </div>
                 <div>
-                  <img className="mini-icon" src="./assets/group.png" />
-                  <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>            
+                  <div className="centered">
+                    <img className="mini-icon" src="./assets/group.png" />
+                    <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>
+                  </div>            
                   {this.renderPurchaseButtons()}
                 </div>              
-                <p className="info-desc">{info.courseType.desc}</p>
+                <p className="info-desc pre-wrap">{info.courseType.desc}</p>
               </div>
           </div>
         </div>

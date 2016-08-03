@@ -56,15 +56,14 @@ class User extends React.Component {
     var emailVerification = null
     if(auth.uid){
       if(!auth.userdata.emailVerified){
-        emailVerification = <div className="container bordered-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
+        emailVerification = <div className="container bordered-container mailbtn-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
       }
     }
     if( this.userFullyLoaded ) {
         return (
-            <div>              
+            <div>
               {emailVerification}
               <UserHeader curUsr={currentUser}/>
-              <UserBookings/>
               <Timetable/>
               <SpecialCourses />
               <ContactInfo />
