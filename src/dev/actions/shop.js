@@ -361,6 +361,7 @@ export function waitForMilliseconds(milliseconds) {
 export function fetchShopItems() {
     var list = Object.assign([])
     return dispatch => {
+        _showLoadingScreen(dispatch, "Haetaan tuotteet.")
         ShopItemsRef.once('value', snapshot => {
                 var shopItems = snapshot.val()
                 for (var key in shopItems) {
@@ -370,6 +371,7 @@ export function fetchShopItems() {
                         list = list.concat(shopItemWithKey)
                     }
                 }
+                _hideLoadingScreen(dispatch, "Tuotteet haettu.", true)
                 dispatch({
                     type: FETCH_SHOP_ITEMS,
                     payload: {
@@ -378,6 +380,7 @@ export function fetchShopItems() {
                 })
             })
             .catch(err => {
+                _hideLoadingScreen(dispatch, "Tuotteiden hakemisessa tapahtui virhe." + String(err), false)
                 console.error("Cant read shopitems: ", err);
             })
     }
