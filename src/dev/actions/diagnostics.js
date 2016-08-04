@@ -13,7 +13,7 @@ import {
 
 export function fetchDiagnostics(startDate, endDate){
     return dispatch => {
-        _showLoadingScreen(dispatch, "Haetaan diagnostiikkadataa.")
+        _showLoadingScreen(dispatch, "Haetaan diagnostiikkadataa")
         firebase.database().ref('/diagnostics/').once('value')
         .then( snapshot => {
             _hideLoadingScreen(dispatch, "Haku valmis", true)

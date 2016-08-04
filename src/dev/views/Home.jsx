@@ -17,7 +17,7 @@ class Home extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps = null){
     if(nextProps.auth.uid) {
       this.context.router.push('user');
     }
