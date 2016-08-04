@@ -40,6 +40,8 @@ export default function(state = INITIAL_STATE, action) {
             return Object.assign({}, state, action.payload);
         case CHECKOUT_TIMEOUT:
             return Object.assign({}, state, action.payload);
+        case DO_PURCHASE_TRANSACTION:
+            return Object.assign({}, state, action.payload);
         case FETCH_SHOP_ITEMS:
             return Object.assign({}, state, action.payload);
         case ADD_TO_CART:

@@ -24,31 +24,44 @@ function processDDataToSessions(rawData){
     let hourly = 0;
     let day = -1;
     let daily = 0;
-    let time = new Date();
+    let hourtime = new Date();
+    let daytime = new Date();
+    let hx;
+    let dx;
     for (let session in rawData) {
-        time.setTime(session);
+        hourtime.setTime(session);
+        hourtime.setMinutes(0)
+        hourtime.setSeconds(0)
+        hourtime.setMilliseconds(0)
+        daytime.setTime(session);
+        daytime.setHours(12)
+        daytime.setMinutes(0)
+        daytime.setSeconds(0)
+        daytime.setMilliseconds(0)
         hourly++;
         daily++;
-        if(hour !== time.getHours()){
+        if(hour !== hourtime.getHours()){
             if(hour !== -1){
-                hourlySessions = Array.concat(hourlySessions, {x: hour, y: hourly});
+                hourlySessions = Array.concat(hourlySessions, {x: hx, y: hourly});
                 hourly = 0;
             }
-            hour = time.getHours()
+            hour = hourtime.getHours()
+            hx = hourtime.toISOString().slice(0,16);
         }
-        if(day !== time.getDate()){
+        if(day !== daytime.getDate()){
             if(day !== -1){
-                dailySessions = Array.concat(dailySessions, {x: day, y: daily});
+                dailySessions = Array.concat(dailySessions, {x: dx, y: daily});
                 daily = 0;
             }
-            day = time.getDate()
+            day = daytime.getDate()
+            dx = daytime.toISOString().slice(0,10);
         }
     }
     if(hour !== -1 && hourly > 0){
-        hourlySessions = Array.concat(hourlySessions, {x: hour, y: hourly});
+        hourlySessions = Array.concat(hourlySessions, {x: hx, y: hourly});
     }
     if(day !== -1 && daily > 0){
-        dailySessions = Array.concat(dailySessions, {x: day, y: daily});
+        dailySessions = Array.concat(dailySessions, {x: dx, y: daily});
     }
     return {sessions: { dailySessions, hourlySessions} };
 }
@@ -65,7 +78,6 @@ export function fetchDiagnostics(startDate, endDate){
             //returnObject = Object.assign({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
 
             _hideLoadingScreen(dispatch, "Haku valmis", true)
-            console.log("returnObject", returnObject);
             dispatch({
                 type: FETCH_DIAGNOSTICS,
                 payload: {
@@ -75,15 +87,7 @@ export function fetchDiagnostics(startDate, endDate){
             })
         })
         .catch( error => {
-            _hideLoadingScreen(dispatch, "Haku epäonnistui" + String(error), true)
-            console.error("Fetching diagnostics data failed: ", error);
-/*            dispatch({
-                type: FETCH_DIAGNOSTICS,
-                payload: {
-                    dataReady:false,
-                    data: error
-                }
-            }) */
+            _hideLoadingScreen(dispatch, "Haku valmis", true)
         })
     }
 }
