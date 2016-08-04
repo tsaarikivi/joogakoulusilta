@@ -49,9 +49,13 @@ class User extends React.Component {
             </div>
           );
       } else {
-            return (
-              <div></div>
-            );
+        return (
+          <div class="container">
+            <div className="centered">
+              <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+            </div>
+          </div>
+        )
       }
   }
 }

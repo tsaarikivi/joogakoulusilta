@@ -7,12 +7,9 @@ import * as shopActionCreators from '../../actions/shop.js'
 
 class ShopList extends React.Component {
   componentWillMount() {
-    this.props.shopActions.fetchShopItems()
-  }
-  componentWillUnmount(){
-  }
-
-  componentWillReceiveProps(nextProps){
+    if (this.props.shopItems.items.length === 0) {
+      this.props.shopActions.fetchShopItems()
+    }    
   }
 
   renderShopItems(item) {

@@ -10,7 +10,7 @@ class SpecialCourses extends React.Component {
 
   componentWillMount() {
     this.props.actions.fetchSpecialCoursesBanner()
-    this.props.actions.fetchSpecialCourseBookings()
+    this.props.actions.fetchSpecialCourseBookings()     
   }
 
   componentWillUnmount(){
