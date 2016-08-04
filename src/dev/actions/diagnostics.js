@@ -21,6 +21,30 @@ function processDDataToSessions(rawData){
             dailySessions: []
         }
     }
+    let hour = -1;
+    let hourly = 0;
+    let day = -1;
+    let daily = 0;
+    let time = new Date();
+    for (let session in rawData) {
+        time.setTime(session);
+        hourly++;
+        daily++;
+        if(hour !== time.getHours()){
+            if(hour !== -1){
+                returnData.sessions.hourlySessions = Array.concat(returnData.sessions.hourlySessions, hourly);
+                hourly = 0;
+            }
+            hour = time.getHours()
+        }
+        if(day !== time.getDate()){
+            if(day !== -1){
+                returnData.sessions.dailySessions = Array.concat(returnData.sessions.dailySessions, daily);
+                daily = 0;
+            }
+            day = time.getDate()
+        }
+    }
 }
 
 export function fetchDiagnostics(startDate, endDate){
