@@ -23,7 +23,6 @@ import ForgotPassword from './dev/views/ForgotPassword.jsx'
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={Home}></IndexRoute>
-    <Route path="diagnostics" component={Diagnostics} />
     <Route path="admin" component={Admin} />
     <Route path="instructor" component={Instructor} />
     <Route path="info" component={Info} />
@@ -38,5 +37,6 @@ export default (
     <Route path="specialCourses" component={SpecialCourses} />
     <Route path="userProfile" component={UserProfile} />
     <Route path="forgotPassword" component={ForgotPassword} />
+    <Route path="diagnostics" component={Diagnostics} />
   </Route>
 )
