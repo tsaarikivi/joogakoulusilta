@@ -100,6 +100,8 @@ class DiagnosticsViewer extends React.Component {
           barWidth={barWidth}
           xType={'time'}
           xDomainRange={xRange}
+          xTickNumber = {4}
+          yTickNumber = {6}
           data={hourlyData}
           />
       </div>
