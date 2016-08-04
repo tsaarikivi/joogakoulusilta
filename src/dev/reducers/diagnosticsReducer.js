@@ -115,6 +115,5 @@ function processAction(state, action){
         eventObject = Object.assign({}, events, {[action.type]: list})
         returnObject = Object.assign({}, {events: eventObject})
     }
-    if(action.type === actions.ADD_USER) console.log("ADD_USER", action, state, returnObject);
     return returnObject;
 }
