@@ -1,6 +1,7 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import * as actionCreators from '../../actions/diagnostics.js'
 
 var DatePicker = require('react-datepicker')
@@ -12,7 +13,20 @@ class DiagnosticsViewer extends React.Component {
   constructor(){
     super()
     this.startDate = moment();
+    this.startDate.hours(0);
+    this.startDate.minutes(0);
+    this.startDate.seconds(0);
+    this.startDate.milliseconds(0);
+
     this.endDate = moment();
+    this.endDate.hours(23);
+    this.endDate.minutes(59);
+    this.endDate.seconds(59);
+    this.endDate.milliseconds(999);
+  }
+
+  componentWillMount(){
+    
   }
 
   onChangeStartDate(date){
@@ -34,7 +48,7 @@ class DiagnosticsViewer extends React.Component {
   }
 
   fetchData(){
-    this.props.actions.fetchDiagnostics(this.startDate, this.endDate)
+    this.props.actions.fetchDiagnostics(this.startDate.valueOf(), this.endDate.valueOf())
   }
 
   componentWillReceiveProps(nextProps){

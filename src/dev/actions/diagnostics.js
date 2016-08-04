@@ -11,17 +11,34 @@ import {
 } from './loadingScreen.js'
 
 
+function processDDataToNumOfEvents(rawData){
+    var returnData = {}
+}
+function processDDataToSessions(rawData){
+    var returnData = {
+        sessions: {
+            hourlySessions: [],
+            dailySessions: []
+        }
+    }
+}
+
 export function fetchDiagnostics(startDate, endDate){
     return dispatch => {
+        var returnObject = {}
         _showLoadingScreen(dispatch, "Haetaan diagnostiikkadataa.")
-        firebase.database().ref('/diagnostics/').once('value')
+        firebase.database().ref('/diagnostics/').orderByKey().startAt(String(startDate)).endAt(String(endDate)).once('value')
         .then( snapshot => {
+
+            returnObject = Object.assing({}, returnObject,processDDataToSessions(snapshot.val()));
+            returnObject = Object.assing({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
+
             _hideLoadingScreen(dispatch, "Haku valmis", true)
             dispatch({
                 type: FETCH_DIAGNOSTICS,
                 payload: {
                     dataReady:true,
-                    data: snapshot.val()
+                    data: returnObject
                 }
             })
         })

@@ -6,7 +6,7 @@ export default class AdminHeader extends React.Component {
     return (
       <div class="container header-container">
         <div className="content-container">
-          <Link className="text-link text-link-white" to="diagnostics">Diagnostiikkaa</Link>
+          <Link className="text-link text-link-white float-right" to="diagnostics">Diagnostiikkaa</Link>
           <h1>Hallinnointisivu</h1>
         </div>
       </div>
