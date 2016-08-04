@@ -3,15 +3,37 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../../actions/diagnostics.js'
 
+var DatePicker = require('react-datepicker')
+var moment = require('moment')
+
+
 class DiagnosticsViewer extends React.Component {
 
   constructor(){
     super()
-    this.startDate = new Date();
-    this.endDate = new Date()
+    this.startDate = moment();
+    this.endDate = moment();
   }
 
-  componentWillMount(){
+  onChangeStartDate(date){
+    this.startDate = date;
+    this.startDate.hours(0);
+    this.startDate.minutes(0);
+    this.startDate.seconds(0);
+    this.startDate.milliseconds(0);
+    this.forceUpdate();
+  }
+
+  onChangeEndDate(date){
+    this.endDate = date;
+    this.endDate.hours(23);
+    this.endDate.minutes(59);
+    this.endDate.seconds(59);
+    this.endDate.milliseconds(999);
+    this.forceUpdate();
+  }
+
+  fetchData(){
     this.props.actions.fetchDiagnostics(this.startDate, this.endDate)
   }
 
@@ -23,6 +45,17 @@ class DiagnosticsViewer extends React.Component {
     return (
       <div class="container light-bg">
         <div className="content-container">
+          <div className="float-left">
+            <p>Alku:</p>
+            <DatePicker className="date-start" selected={this.startDate} onChange={this.onChangeStartDate.bind(this)} />
+          </div>
+          <div className="float-left">
+            <p>Loppu:</p>
+            <DatePicker className="date-end" selected={this.endDate} onChange={this.onChangeEndDate.bind(this)} />
+          </div>
+          <div className="float-left">
+            <button className="btn-small btn-green btn-right" onClick={() => {this.fetchData()}}>Hae tiedot</button>
+          </div>
         </div>
       </div>
     );
