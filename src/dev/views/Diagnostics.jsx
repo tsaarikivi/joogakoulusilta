@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import DiagnosticsHeader from '../components/diagnostics/DiagnosticsHeader.jsx'
+import DiagnosticsViewer from '../components/diagnostics/DiagnosticsViewer.jsx'
 
 class Diagnostics extends React.Component {
 
@@ -35,6 +36,7 @@ componentWillReceiveProps(nextProps){
       return (
         <div>
           <DiagnosticsHeader />
+          <DiagnosticsViewer />
         </div>
       )
     } else {
