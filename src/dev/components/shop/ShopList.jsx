@@ -24,7 +24,7 @@ class ShopList extends React.Component {
   render() {
     if(this.props.shopItems.items.length > 0){
       return (
-        <div className="container">
+        <div className="container bordered-container">
           <div className="content-container align-left">
             <ul className="wide-list">
               {this.props.shopItems.items.map(this.renderShopItems.bind(this))}

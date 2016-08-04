@@ -311,9 +311,9 @@ export function finishedWithUserDetails() {
 
 export function resetPassword(email) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti.");
+        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti");
         firebase.auth().sendPasswordResetEmail(email).then(() => {
-                _hideLoadingScreen(dispatch, "Viesti lähetetty.", true);
+                _hideLoadingScreen(dispatch, "Viesti lähetetty", true);
             })
             .catch((error) => {
                 console.error("Error from: sendPasswordResetEmail - ", error)
@@ -337,7 +337,7 @@ export function sendEmailVerification() {
         _showLoadingScreen(dispatch, "Lähetetään verifiointilinkki sähköpostiisi")
         firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
-                _hideLoadingScreen(dispatch, "Sähköposti lähetetty.", true)
+                _hideLoadingScreen(dispatch, "Sähköposti lähetetty", true)
             })
             .catch((error) => {
                 console.error("Error from: sendEmailVerification - ", error)
