@@ -24,10 +24,18 @@ class DiagnosticsViewer extends React.Component {
     this.endDate.minutes(59);
     this.endDate.seconds(59);
     this.endDate.milliseconds(999);
+    this.width = document.defaultView.innerWidth;
   }
 
-  componentWillMount(){
-    
+
+  onResize(){
+    console.log("RESIZE");
+    this.width = document.defaultView.innerWidth;
+    this.forceUpdate();
+  }
+
+  componentDidMount(){
+    document.onresize = this.onResize()    
   }
 
   onChangeStartDate(date){
@@ -74,7 +82,8 @@ class DiagnosticsViewer extends React.Component {
     if(!dataReady){
       return(<div></div>)
     }
-    let barWidth = Math.round(650/((this.endDate - this.startDate)/3600000));
+    console.log("WIDTH:", this.width);
+    let barWidth = Math.round(this.width/((this.endDate - this.startDate)/3600000));
     barWidth = (barWidth === 0)? 1 : barWidth; 
     let xRange = [this.startDate.format().slice(0,16), this.endDate.format().slice(0,16)]
     let hourlyData = Array.concat(data.sessions.hourlySessions)
@@ -86,7 +95,7 @@ class DiagnosticsViewer extends React.Component {
           axes
           grid
           height={250}
-          width={650}
+          width={this.width}
           datePattern="%Y-%m-%dT%H:%M"
           barWidth={barWidth}
           xType={'time'}
@@ -97,12 +106,13 @@ class DiagnosticsViewer extends React.Component {
     )
   }
 
+
   showDailySessions(){
       const { dataReady, data } = this.props.ddata;
       if(!dataReady){
         return(<div></div>)
       }
-      let barWidth = Math.round(650/((this.endDate - this.startDate)/(24*3600000)));
+      let barWidth = Math.round(this.width/((this.endDate - this.startDate)/(24*3600000)));
       barWidth = (barWidth === 0)? 1 : barWidth; 
       let xRange = [this.startDate.format().slice(0,10), this.endDate.format().slice(0,10)]
       let dailyData = Array.concat(data.sessions.dailySessions)
@@ -113,7 +123,7 @@ class DiagnosticsViewer extends React.Component {
             axes
             grid
             height={250}
-            width={650}
+            width={this.width}
             datePattern="%Y-%m-%d"
             barWidth={barWidth}
             xType={'time'}
