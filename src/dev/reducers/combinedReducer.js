@@ -36,6 +36,8 @@ import SpecialCourseListReducer from './admin/specialCourseListReducer.js'
 import SearchBarReducer from './admin/searchBarReducer.js'
 import PendingTransactions from './pendingTransactions.js'
 import TermsReducer from './termsReducer.js'
+import DiagnosticsReducer from './diagnosticsReducer.js'
+import DiagnosticsViewerReducer from './diagnosticsViewerReducer.js'
 
 const combinedReducer = combineReducers({
     loadingScreen: LoadingScreenReducer,
@@ -70,6 +72,8 @@ const combinedReducer = combineReducers({
     terms: TermsReducer,
     termsList: TermsListReducer,
     termsForm: TermsFormReducer,
+    diagnostics: DiagnosticsReducer,
+    ddata: DiagnosticsViewerReducer
 })
 
 export default combinedReducer;

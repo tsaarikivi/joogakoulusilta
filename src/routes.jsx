@@ -3,6 +3,7 @@ import { Route, IndexRoute  } from 'react-router'
 
 // Views
 import Instructor from './dev/views/Instructor.jsx'
+import Diagnostics from './dev/views/Diagnostics.jsx'
 import Admin from './dev/views/Admin.jsx'
 import Checkout from './dev/views/Checkout.jsx'
 import PaytrailReturn from './dev/views/PaytrailReturn.jsx'
@@ -36,5 +37,6 @@ export default (
     <Route path="specialCourses" component={SpecialCourses} />
     <Route path="userProfile" component={UserProfile} />
     <Route path="forgotPassword" component={ForgotPassword} />
+    <Route path="diagnostics" component={Diagnostics} />
   </Route>
 )
