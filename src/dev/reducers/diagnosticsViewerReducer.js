@@ -1,8 +1,7 @@
 import { FETCH_DIAGNOSTICS } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
-  dataReady:false,
-  data: {}
+  dataReady:false
 }
 
 export default function(state = INITIAL_STATE, action) {

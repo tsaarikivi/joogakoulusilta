@@ -12,15 +12,14 @@ import {
 
 
 function processDDataToNumOfEvents(rawData){
-    var returnData = {}
+    var returnData = {
+        eventCounters: {}
+    }
+    return returnData;
 }
 function processDDataToSessions(rawData){
-    var returnData = {
-        sessions: {
-            hourlySessions: [],
-            dailySessions: []
-        }
-    }
+    var hourlySessions = Object.assign([])
+    var dailySessions = Object.assign([])
     let hour = -1;
     let hourly = 0;
     let day = -1;
@@ -32,32 +31,41 @@ function processDDataToSessions(rawData){
         daily++;
         if(hour !== time.getHours()){
             if(hour !== -1){
-                returnData.sessions.hourlySessions = Array.concat(returnData.sessions.hourlySessions, hourly);
+                hourlySessions = Array.concat(hourlySessions, {x: hour, y: hourly});
                 hourly = 0;
             }
             hour = time.getHours()
         }
         if(day !== time.getDate()){
             if(day !== -1){
-                returnData.sessions.dailySessions = Array.concat(returnData.sessions.dailySessions, daily);
+                dailySessions = Array.concat(dailySessions, {x: day, y: daily});
                 daily = 0;
             }
             day = time.getDate()
         }
     }
+    if(hour !== -1 && hourly > 0){
+        hourlySessions = Array.concat(hourlySessions, {x: hour, y: hourly});
+    }
+    if(day !== -1 && daily > 0){
+        dailySessions = Array.concat(dailySessions, {x: day, y: daily});
+    }
+    return {sessions: { dailySessions, hourlySessions} };
 }
 
 export function fetchDiagnostics(startDate, endDate){
     return dispatch => {
-        var returnObject = {}
+        var returnObject = Object.assign({})
         _showLoadingScreen(dispatch, "Haetaan diagnostiikkadataa.")
         firebase.database().ref('/diagnostics/').orderByKey().startAt(String(startDate)).endAt(String(endDate)).once('value')
         .then( snapshot => {
-
-            returnObject = Object.assing({}, returnObject,processDDataToSessions(snapshot.val()));
-            returnObject = Object.assing({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
+            var rawData = snapshot.val();
+            var sessionData = processDDataToSessions(rawData)
+            returnObject = Object.assign({}, returnObject, sessionData);
+            //returnObject = Object.assign({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
 
             _hideLoadingScreen(dispatch, "Haku valmis", true)
+            console.log("returnObject", returnObject);
             dispatch({
                 type: FETCH_DIAGNOSTICS,
                 payload: {
@@ -69,13 +77,13 @@ export function fetchDiagnostics(startDate, endDate){
         .catch( error => {
             _hideLoadingScreen(dispatch, "Haku epäonnistui" + String(error), true)
             console.error("Fetching diagnostics data failed: ", error);
-            dispatch({
+/*            dispatch({
                 type: FETCH_DIAGNOSTICS,
                 payload: {
                     dataReady:false,
                     data: error
                 }
-            })
+            }) */
         })
     }
 }

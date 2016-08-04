@@ -107,11 +107,7 @@ function processAction(state, action){
     if(approvedEvents[action.type]){
         let list = {}
         let events = state.events;
-        if(events[action.type]){
-            list = Object.assign(events[action.type], {[timestamp]: action.payload});
-        } else {
-            list = Object.assign({[timestamp]: action.payload});
-        }
+        list = Object.assign(events[action.type], {[timestamp]: action.payload});
         eventObject = Object.assign({}, events, {[action.type]: list})
         returnObject = Object.assign({}, {events: eventObject})
     }

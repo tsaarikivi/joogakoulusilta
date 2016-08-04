@@ -1,6 +1,7 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {BarChart} from 'react-easy-chart';
 
 import * as actionCreators from '../../actions/diagnostics.js'
 
@@ -55,6 +56,51 @@ class DiagnosticsViewer extends React.Component {
     console.log("DV-next:", nextProps);
   }
 
+
+  showHourlySessions(){
+    console.log("SHOW HOURLY");
+    const { dataReady, data } = this.props.ddata;
+    if(!dataReady){
+      return(<div></div>)
+    }
+    let hourlyData = Array.concat(data.sessions.hourlySessions)
+    console.log("hourlyD: ", hourlyData);
+    return(
+      <div>
+          <BarChart
+          axisLabels={{x: 'Tunnit', y: 'Sessiot'}}
+          axes
+          height={250}
+          width={650}
+          xType={'linear'}
+          data={hourlyData}
+          />
+      </div>
+    )
+  }
+
+  showDailySessions(){
+    console.log("SHOW DAILY");
+      const { dataReady, data } = this.props.ddata;
+      if(!dataReady){
+        return(<div></div>)
+      }
+      let dailyData = Array.concat(data.sessions.dailySessions)
+      console.log("dailyD: ", dailyData);
+      return(
+        <div>
+            <BarChart
+            axisLabels={{x: 'Päivät', y: 'Sessiot'}}
+            axes
+            height={250}
+            width={650}
+            xType={'linear'}
+            data={dailyData}
+            />
+        </div>
+      )
+    }
+
   render() {
     return (
       <div class="container">
@@ -70,6 +116,8 @@ class DiagnosticsViewer extends React.Component {
           <div className="float-left">
             <button className="btn-small btn-green btn-right" onClick={() => {this.fetchData()}}>Hae tiedot</button>
           </div>
+          {this.showHourlySessions()}
+          {this.showDailySessions()}
         </div>
       </div>
     );
