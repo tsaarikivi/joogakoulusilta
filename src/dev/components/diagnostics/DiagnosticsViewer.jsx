@@ -1,8 +1,7 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {BarChart} from 'react-easy-chart';
-import {LineChart} from 'react-easy-chart';
+import BarChart from './BarChart.js';
 
 import * as actionCreators from '../../actions/diagnostics.js'
 
@@ -82,7 +81,7 @@ class DiagnosticsViewer extends React.Component {
     return(
       <div>
           <BarChart
-          axisLabels={{x: 'Tunnit', y: 'Sessiot'}}
+          axisLabels={{x: 'Aika', y: 'Käyttökerrat'}}
           margin={{top: 10, right: 30, bottom: 60, left: 80}}
           axes
           grid
@@ -110,7 +109,7 @@ class DiagnosticsViewer extends React.Component {
       return(
         <div>
             <BarChart
-            axisLabels={{x: 'Päivät', y: 'Sessiot'}}
+            axisLabels={{x: 'Aika', y: 'Käyttökerrat'}}
             axes
             grid
             height={250}

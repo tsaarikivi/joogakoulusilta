@@ -12,9 +12,7 @@ import {
 
 
 function processDDataToNumOfEvents(rawData){
-    var returnData = {
-        eventCounters: {}
-    }
+    var returnData = Object.assign([])
     return returnData;
 }
 function processDDataToSessions(rawData){
@@ -87,6 +85,7 @@ export function fetchDiagnostics(startDate, endDate){
             })
         })
         .catch( error => {
+            console.error("FETCHDATA ERROR:", error);
             _hideLoadingScreen(dispatch, "Haku valmis", true)
         })
     }
