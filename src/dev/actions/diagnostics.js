@@ -1,6 +1,20 @@
 
 import { CONFIGURE_DIAGNOSTICS, FLUSH_DIAGNOSTICS } from './actionTypes.js'
 
+export function diag(type, payload){
+    return dispatch => {
+        _diag(dispatch, type, payload)
+    }
+}
+
+export function _diag(dispatch, type, payload){
+        dispatch({
+            type, 
+            payload
+        })
+}
+
+
 export function startDiagnostics() {
     return dispatch => {
       dispatch({

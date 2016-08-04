@@ -9,8 +9,100 @@ const INITIAL_STATE = {
 }
 
 //Add events to be discarded here
-var discardEvents = {
-    CHANGE_LOADINGSCREEN_STATE: true
+var approvedEvents = {
+    CONFIGURE_DIAGNOSTICS: false,
+    FLUSH_DIAGNOSTICS: false,
+    GET_CLIENT_TOKEN: false,
+    DO_PURCHASE_TRANSACTION: false,
+    CHECKOUT_ERROR: false,
+    CHECKOUT_TIMEOUT: false,
+    START_CHECKOUT_FLOW: false,
+    BUY_WITH_CASH: false,
+    BUY_WITH_PAYTRAIL: false,
+    EXECUTE_CASH_PURCHASE: false,
+    FETCH_PENDING_TRANSACTIONS: false,
+    FETCH_TERMS: false,
+    FETCH_SHOP_ITEMS: false,
+    RESET_SHOP: false,
+    FETCH_TIMETABLE_BOOKINGS: false,
+    FETCH_TIMETABLE: false,
+    FETCH_SPECIAL_COURSES: false,
+    FETCH_SPECIAL_COURSES_BANNER: false,
+    FETCH_SPECIAL_COURSES_BOOKINGS: false,
+    PUT_SPECIAL_COURSE_INFO: false,
+    REMOVE_SPECIAL_COURSE_INFO: false,
+    ADD_TO_CART: false,
+    CHANGE_LOADINGSCREEN_STATE: false,
+    ADD_USER: false,
+    REMOVE_USER: false,
+    AUTH_ERROR: false,
+    AUTH_TIMEOUT: false,
+    PASSWORD_UPDATED: false,
+    EMAIL_UPDATED: false,
+    PASSWORD_RESET: false,
+    USER_DETAILS_UPDATED_IN_DB: false,
+    STOP_UPDATING_USER_DETAILS_FROM_DB: false,
+    USER_ERROR: false,
+    UPDATE_USERS_TRANSACTIONS: false,
+    UPDATE_USERS_BOOKINGS: false,
+    UPDATE_USERS_SCBOOKINGS: false,
+    FETCH_PLACE_INFO: false,
+    FETCH_INSTRUCTOR_DATA: false,
+    INSTRUCTOR_ERROR: false,
+    FETCH_INSTRUCTOR_INFO: false,
+    PUT_COURSE_INFO: false,
+    FETCH_COURSE_BOOKINGS: false,
+    REMOVE_COURSE_INFO: false,
+    FETCH_USER_LIST: false,
+    FETCH_ADMIN_LIST: false,
+    FETCH_COURSE_TYPE_LIST: false,
+    FETCH_COURSE_LIST: false,
+    FETCH_SPECIAL_COURSE_LIST: false,
+    FETCH_INSTRUCTOR_LIST: false,
+    FETCH_SHOP_LIST: false,
+    FETCH_PLACE_LIST: false,
+    FETCH_TERMS_LIST: false,
+    STOP_FETCH_TERMS_LIST: false,
+    FETCH_INFO_LIST: false,
+    STOP_FETCH_INFO_LIST: false,
+    STOP_FETCH_SHOP_LIST: false,
+    EXPAND_ADMIN_LIST: false,
+    MINIMIZE_ADMIN_LIST: false,
+    EXPAND_USER_LIST: false,
+    MINIMIZE_USER_LIST: false,
+    EXPAND_COURSE_TYPE_LIST: false,
+    MINIMIZE_COURSE_TYPE_LIST: false,
+    EXPAND_COURSE_LIST: false,
+    MINIMIZE_COURSE_LIST: false,
+    EXPAND_INSTRUCTOR_LIST: false,
+    MINIMIZE_INSTRUCTOR_LIST: false,
+    EXPAND_SHOP_LIST: false,
+    MINIMIZE_SHOP_LIST: false,
+    EXPAND_PLACE_LIST: false,
+    MINIMIZE_PLACE_LIST: false,
+    EXPAND_SPECIAL_COURSE_LIST: false,
+    MINIMIZE_SPECIAL_COURSE_LIST: false,
+    EXPAND_PLACE_FORM: false,
+    MINIMIZE_PLACE_FORM: false,
+    EXPAND_COURSE_TYPE_FORM: false,
+    MINIMIZE_COURSE_TYPE_FORM: false,
+    EXPAND_COURSE_FORM: false,
+    MINIMIZE_COURSE_FORM: false,
+    EXPAND_SPECIAL_COURSE_FORM: false,
+    MINIMIZE_SPECIAL_COURSE_FORM: false,
+    EXPAND_TIME_SHOP_FORM: false,
+    MINIMIZE_TIME_SHOP_FORM: false,
+    EXPAND_COUNT_SHOP_FORM: false,
+    MINIMIZE_COUNT_SHOP_FORM: false,
+    EXPAND_INFO_LIST: false,
+    MINIMIZE_INFO_LIST: false,
+    EXPAND_INFO_FORM: false,
+	MINIMIZE_INFO_FORM: false,
+	EXPAND_TERMS_LIST: false,
+	MINIMIZE_TERMS_LIST: false,
+	EXPAND_TERMS_FORM: false,
+	MINIMIZE_TERMS_FORM: false,
+    CHANGE_SEARCH_BAR: false,
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -58,7 +150,7 @@ function processAction(state, action){
     /////////
     // Here we can filter only those events, which we are interested in
     /////////
-    if(!discardEvents[action.type]){
+    if(approvedEvents[action.type]){
         let list = {}
         let events = state.events;
         if(events[action.type]){
@@ -69,5 +161,6 @@ function processAction(state, action){
         eventObject = Object.assign({}, events, {[action.type]: list})
         returnObject = Object.assign({}, {events: eventObject})
     }
+    if(action.type === actions.ADD_USER) console.log("ADD_USER", action, state, returnObject);
     return returnObject;
 }
