@@ -3,13 +3,18 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as authActionCreators from '../../actions/auth.js'
 import * as userActionCreators from '../../actions/user.js'
-import { Link } from 'react-router'
 
 class ProfileHeader extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
   }
+
+  constructor(){
+    super();
+    this.emailVerificationOngoing = false
+  }
+
   handleLogout(){
     if(this.props.auth.uid){
       this.props.authActions.logout();
@@ -19,13 +24,29 @@ class ProfileHeader extends React.Component {
     }
   }
 
+  handleEmailVerify(){
+    if(!this.emailVerificationOngoing){
+      this.emailVerificationOngoing = true;
+      this.props.userActions.sendEmailVerification()
+    } 
+  }
+
   render() {
+    const { auth } = this.props
+
+    var emailVerification = null
+    if(auth.uid){
+      if(!auth.userdata.emailVerified){
+        emailVerification = <button className="btn-small btn-red margin-top margin-left" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button>  
+      }
+    }
+
     return (
-      <div class="container light-bg">
+      <div class="container header-container">
         <div className="content-container">
-        <button className="btn-small btn-red float-right" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
-        <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
-        <h1 className="padded-header">Käyttäjän hallinnointi</h1>        
+        <h1 className="padded-header">Käyttäjän hallinnointi</h1>
+        <button className="btn-small btn-red margin-top" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
+        {emailVerification}
         </div>
       </div>
     );

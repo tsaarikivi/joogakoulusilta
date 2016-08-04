@@ -1,15 +1,13 @@
-import React from "react";
-import { Link } from "react-router"
+import React from 'react'
 
 export default class ShopHeader extends React.Component {
   render() {
     return (
-      <div class="container light-bg">
+      <div class="container header-container">
         <div className="content-container">
-          <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
           <h1>Kauppa</h1>
         </div>
       </div>
-    );
+    )
   }
 }

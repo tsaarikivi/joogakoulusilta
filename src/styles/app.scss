@@ -103,6 +103,10 @@ button, a, select, textarea, body, input {
   .info-line {
     padding: 3vw 2vw;
   }
+
+  .mobile-hidden {
+    display: none;
+  }
 }
 
 //////////////////////////////////////////////////////////////
@@ -185,6 +189,10 @@ button, a, select, textarea, body, input {
 
   .info-line {
     padding: 10px 5px;
+  }
+
+  .desktop-hidden {
+    display: none;
   }
 }
 

@@ -54,7 +54,7 @@
   .container {
     width: 100%;
     margin: 0;
-    padding: 8vw 0;
+    padding: 5vw 0;
     h1 {
 
       line-height: 0.7;
@@ -215,7 +215,7 @@
   .container {
     width: 100%;
     margin: 0 auto;
-    padding: 60px 0;
+    padding: 40px 0;
     h1 {
       line-height: 0.7;
       margin: 0;
@@ -437,4 +437,9 @@
 
 .light-bg {
   background-color: $container-color;
+}
+
+.header-container {
+  margin: 0;
+  padding-bottom: 0;
 }

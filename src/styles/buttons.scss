@@ -42,6 +42,25 @@
     width: 100%;
     text-align: center;
   }
+
+  .nav-btn {
+    padding: 3vw;
+    border: 1px solid $border;
+    border-radius: $btn-radius;
+    box-sizing: border-box;
+    height: 16vw;
+    width: 16vw;
+    margin-top: 5.5vw;
+
+    background: $nav;
+    background: -webkit-linear-gradient($lightnav, $nav); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($lightnav, $nav); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($lightnav, $nav); /* For Firefox 3.6 to 15 */
+    background: linear-gradient($lightnav, $nav); /* Standard syntax */
+    &:active {
+      background: $active-btn;
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////

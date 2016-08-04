@@ -39,7 +39,7 @@ class Register extends React.Component {
     this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
   }
 
-  openTerms() {
+  toggleTerms() {
     if (this.termsOpen === false) {
       document.getElementById("terms-container").classList.remove("hidden")
       this.termsOpen = true
@@ -68,7 +68,7 @@ class Register extends React.Component {
         <input name="lastName" type="text" placeholder="Sukunimi" {...lastName}/>
         {lastName.touched && lastName.error && <div className="form-error">{lastName.error}</div>}
 
-        <a className="text-link block centered margin-bottom cursor-pointer" onClick={() => this.openTerms()}>Käyttöehdot</a>
+        <a className="text-link block centered margin-bottom cursor-pointer" onClick={() => this.toggleTerms()}>Käyttöehdot</a>
         <div id="terms-container" className="hidden">
           <Terms />
         </div>
