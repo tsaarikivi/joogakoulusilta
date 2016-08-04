@@ -57,7 +57,7 @@ class DiagnosticsViewer extends React.Component {
 
   render() {
     return (
-      <div class="container light-bg">
+      <div class="container">
         <div className="content-container">
           <div className="float-left">
             <p>Alku:</p>
