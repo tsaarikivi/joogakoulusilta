@@ -1,10 +1,13 @@
+import axios from "axios"
+
 import {
     UPDATE_USERS_BOOKINGS,
     UPDATE_USERS_TRANSACTIONS,
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS
+    UPDATE_USERS_SCBOOKINGS,
+    SEND_FEEDBABCK
 } from './actionTypes.js'
 
 import {
@@ -19,6 +22,43 @@ var UserRef;
 var TransactionsRef;
 var BookingsRef;
 var specialCBookingsRef;
+
+export function sendFeedback(feedback){
+  return dispatch => {
+    //for diagnostics
+    dispatch({
+      type: SEND_FEEDBABCK
+    })
+    _showLoadingScreen(dispatch, "Lähetetään palaute")
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/feedback' : JOOGASERVER + '/feedback'
+    console.log("JOOGASERVER: ", JOOGAURL);
+    firebase.auth().currentUser.getToken(true)
+    .then(idToken => {
+        return axios.post(JOOGAURL, {
+            current_user: idToken,
+            feedback_message: feedback
+        })
+    })
+    .then(response => {
+        _hideLoadingScreen(dispatch, "Palaute lähetetty", true)
+    })
+    .catch(error => {
+        console.error("FEEDBACK_ERROR:", error);
+        _hideLoadingScreen(dispatch, "Palautteen lähettämisessä tapahtui virhe: " + error.toString(), false)
+        dispatch({
+            type: USER_ERROR,
+            payload: {
+                error: {
+                    code: "FEEDBACK_ERROR",
+                    message: "Sending feedback failed: " + error.toString()
+                }
+            }
+        })
+    });
+
+
+  }
+}
 
 export function updateUserDetails(user) {
     return dispatch => {
