@@ -20,43 +20,7 @@ var approvedEvents = {
     PASSWORD_RESET: true,
     USER_ERROR: true,
     INSTRUCTOR_ERROR: true,
-    EXPAND_ADMIN_LIST: true,
-    MINIMIZE_ADMIN_LIST: true,
-    EXPAND_USER_LIST: true,
-    MINIMIZE_USER_LIST: true,
-    EXPAND_COURSE_TYPE_LIST: true,
-    MINIMIZE_COURSE_TYPE_LIST: true,
-    EXPAND_COURSE_LIST: true,
-    MINIMIZE_COURSE_LIST: true,
-    EXPAND_INSTRUCTOR_LIST: true,
-    MINIMIZE_INSTRUCTOR_LIST: true,
-    EXPAND_SHOP_LIST: true,
-    MINIMIZE_SHOP_LIST: true,
-    EXPAND_PLACE_LIST: true,
-    MINIMIZE_PLACE_LIST: true,
-    EXPAND_SPECIAL_COURSE_LIST: true,
-    MINIMIZE_SPECIAL_COURSE_LIST: true,
-    EXPAND_PLACE_FORM: true,
-    MINIMIZE_PLACE_FORM: true,
-    EXPAND_COURSE_TYPE_FORM: true,
-    MINIMIZE_COURSE_TYPE_FORM: true,
-    EXPAND_COURSE_FORM: true,
-    MINIMIZE_COURSE_FORM: true,
-    EXPAND_SPECIAL_COURSE_FORM: true,
-    MINIMIZE_SPECIAL_COURSE_FORM: true,
-    EXPAND_TIME_SHOP_FORM: true,
-    MINIMIZE_TIME_SHOP_FORM: true,
-    EXPAND_COUNT_SHOP_FORM: true,
-    MINIMIZE_COUNT_SHOP_FORM: true,
-    EXPAND_INFO_LIST: true,
-    MINIMIZE_INFO_LIST: true,
-    EXPAND_INFO_FORM: true,
-	MINIMIZE_INFO_FORM: true,
-	EXPAND_TERMS_LIST: true,
-	MINIMIZE_TERMS_LIST: true,
-	EXPAND_TERMS_FORM: true,
-	MINIMIZE_TERMS_FORM: true,
-    CHANGE_SEARCH_BAR: true
+    SEND_FEEDBABCK: true
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -76,7 +40,7 @@ export default function(state = INITIAL_STATE, action) {
                         firebase.database().ref('/diagnostics/'+state.sessionKey+'/events/'+event+'/'+timestamp).update(instances[timestamp]||{payload: 0})
                         .catch(error => {
                             console.error("flushing diagnostics events to firebase failed");
-                        })                
+                        })
                     }
                 }
             }

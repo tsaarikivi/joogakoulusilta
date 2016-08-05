@@ -38,7 +38,7 @@ export function completePaytrailPayment(pendingTrxId){
             })
             .catch(error => {
                 console.error("PAYTRAIL_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: ", error.toString(), false)
+                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: " + error.toString(), false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -50,7 +50,7 @@ export function completePaytrailPayment(pendingTrxId){
                 })
             });
 
-    } 
+    }
 }
 
 
@@ -160,7 +160,7 @@ export function finishPayTrailTransaction(query){
                     }
                 })
             });
-    }  
+    }
 }
 
 export function getAuthCode(_authcode) {
@@ -206,7 +206,7 @@ export function getAuthCode(_authcode) {
 export function cancelPaytrailPayment(pendingTrxId){
     return dispatch => {
         _cancelPaytrailPayment(dispatch, pendingTrxId)
-    } 
+    }
 }
 
 
@@ -503,4 +503,3 @@ export function removeShopItem(key) {
             })
     }
 } */
-
