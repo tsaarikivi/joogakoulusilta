@@ -1,6 +1,8 @@
 import React from "react"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
+
 import * as authActionCreators from '../../actions/auth.js'
 import * as userActionCreators from '../../actions/user.js'
 
@@ -42,10 +44,13 @@ class ProfileHeader extends React.Component {
     }
 
     return (
-      <div class="container header-container">
+      <div class="container header-container">          
         <div className="content-container">
         <h1 className="padded-header">Käyttäjän hallinnointi</h1>
-        <button className="btn-small btn-red margin-top" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
+        <div className="block margin-top">
+          <Link className="text-link text-link-white margin-top" to="feedback">Lähetä palautetta</Link>
+          <button className="btn-small btn-red margin-top block" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
+        </div>
         {emailVerification}
         </div>
       </div>
