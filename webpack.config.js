@@ -20,10 +20,10 @@ module.exports = [
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components|test)/,
+        exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015', 'stage-0', 'stage-1'],
+          presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
         }
       },
