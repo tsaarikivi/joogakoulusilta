@@ -13,7 +13,25 @@ import {
 
 function processDDataToNumOfEvents(rawData){
     var returnData = Object.assign([])
-    return returnData;
+    let combinedEventData = Object.assign({})
+    for(let sessions in rawData){
+        if(rawData[sessions].events){
+            for(let event in rawData[sessions].events){
+                let newSessions = Object.assign({})
+                for(let eventsession in rawData[sessions].events[event]){
+                    newSessions = Object.assign({},newSessions,{[eventsession]: rawData[sessions].events[event][eventsession]})
+                }
+                let sessionsSofar = combinedEventData[event] || {};
+                let allSessions = Object.assign({}, sessionsSofar, newSessions)
+                combinedEventData = Object.assign({}, combinedEventData, {[event]: allSessions} )
+            }
+        }
+    }
+    for(let event in combinedEventData){
+        let processedData = processDDataToSessions(combinedEventData[event])
+        returnData = Array.concat( returnData, {[event]: processedData})
+    }
+    return {eventSessions: returnData};
 }
 function processDDataToSessions(rawData){
     var hourlySessions = Object.assign([])
@@ -73,7 +91,7 @@ export function fetchDiagnostics(startDate, endDate){
             var rawData = snapshot.val();
             var sessionData = processDDataToSessions(rawData)
             returnObject = Object.assign({}, returnObject, sessionData);
-            //returnObject = Object.assign({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
+            returnObject = Object.assign({}, returnObject,processDDataToNumOfEvents(snapshot.val()));
 
             _hideLoadingScreen(dispatch, "Haku valmis", true)
             dispatch({

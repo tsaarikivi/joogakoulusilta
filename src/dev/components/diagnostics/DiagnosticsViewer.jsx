@@ -30,7 +30,7 @@ class DiagnosticsViewer extends React.Component {
 
   onResize(){
     console.log("RESIZE");
-    this.width = document.defaultView.innerWidth;
+    this.width = document.defaultView.innerWidth - 100;
     this.forceUpdate();
   }
 
@@ -67,15 +67,60 @@ class DiagnosticsViewer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    //console.log("DV-next:", nextProps);
+    console.log("DV-next:", nextProps);
+  }
+
+  showEventSessions(item){
+    const { dataReady, data } = this.props.ddata;
+    if(!dataReady){
+      return(<div></div>)
+    }
+    if(this.endDate - this.startDate < 20*24*60*60*1000){
+      console.log("ReturnMe");
+      return this.showHourlyEventSessions(item)
+    }
+    return this.showDailyEventSessions(item)
   }
 
   showSessions(){
+    const { dataReady, data } = this.props.ddata;
+    if(!dataReady){
+      return(<div></div>)
+    }
     if(this.endDate - this.startDate < 20*24*60*60*1000){
       return this.showHourlySessions()
     }
     return this.showDailySessions()
   }
+
+  showHourlyEventSessions(eventData){
+    console.log("EVENTDATA", eventData, Object.keys(eventData));
+    let barWidth = Math.round(this.width/((this.endDate - this.startDate)/3600000));
+    barWidth = (barWidth === 0)? 1 : barWidth; 
+    let xRange = [this.startDate.format().slice(0,16), this.endDate.format().slice(0,16)]
+    let hourlyData = Array.concat(eventData[Object.keys(eventData)[0]].sessions.hourlySessions)
+    console.log("hourlydata-events", hourlyData);
+    return(
+      <div>
+          <BarChart
+          axisLabels={{x: Object.keys(eventData)[0], y: ''}}
+          margin={{top: 10, right: 30, bottom: 60, left: 80}}
+          axes
+          grid
+          height={100}
+          width={this.width}
+          datePattern="%Y-%m-%dT%H:%M"
+          barWidth={barWidth}
+          xType={'time'}
+          xDomainRange={xRange}
+          xTickNumber = {4}
+          yTickNumber = {6}
+          data={hourlyData}
+          />
+      </div>
+    )
+  }
+
 
   showHourlySessions(){
     const { dataReady, data } = this.props.ddata;
@@ -109,6 +154,34 @@ class DiagnosticsViewer extends React.Component {
   }
 
 
+  showDailyEventSessions(eventData){
+    console.log("EVENTDATA", eventData, Object.keys(eventData));
+    let barWidth = Math.round(this.width/((this.endDate - this.startDate)/(24*3600000)));
+    barWidth = (barWidth === 0)? 1 : barWidth; 
+    let xRange = [this.startDate.format().slice(0,10), this.endDate.format().slice(0,10)]
+    let dailyData = Array.concat(eventData[Object.keys(eventData)[0]].sessions.dailySessions)
+    console.log("hourlydata-events", dailyData);
+    return(
+      <div>
+          <BarChart
+          axisLabels={{x: Object.keys(eventData)[0], y: ''}}
+          margin={{top: 10, right: 30, bottom: 60, left: 80}}
+          axes
+          grid
+          height={100}
+          width={this.width}
+          datePattern="%Y-%m-%d"
+          barWidth={barWidth}
+          xType={'time'}
+          xDomainRange={xRange}
+          xTickNumber = {4}
+          yTickNumber = {6}
+          data={dailyData}
+          />
+      </div>
+    )
+  }
+
   showDailySessions(){
       const { dataReady, data } = this.props.ddata;
       if(!dataReady){
@@ -130,13 +203,30 @@ class DiagnosticsViewer extends React.Component {
             barWidth={barWidth}
             xType={'time'}
             xDomainRange={xRange}
+            xTickNumber = {4}
+            yTickNumber = {6}
             data={dailyData}
             />
         </div>
       )
     }
+  
+  renderGraphs(){
+    const { dataReady, data} = this.props.ddata;
+    if(!dataReady){
+       return(<div></div>)
+    }
+      
+    return(
+      <div>
+          {this.showSessions()}
+          {data.eventSessions.map(this.showEventSessions.bind(this))}
+      </div>
+    )
+  }
 
   render() {
+    const { dataReady, data } = this.props.ddata;
     return (
       <div class="container">
         <div className="content-container">
@@ -159,7 +249,7 @@ class DiagnosticsViewer extends React.Component {
           <div className="float-left">
             <button className="btn-small btn-green btn-right" onClick={() => {this.fetchData()}}>Hae tiedot</button>
           </div>
-          {this.showSessions()}
+          {this.renderGraphs()}
         </div>
       </div>
     );
