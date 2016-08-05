@@ -39,19 +39,25 @@ class ProfileHeader extends React.Component {
     var emailVerification = null
     if(auth.uid){
       if(!auth.userdata.emailVerified){
-        emailVerification = <button className="btn-small btn-red margin-top margin-left" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button>  
+        emailVerification = <a className="btn-small btn-red text-bold" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</a>  
       }
     }
 
     return (
       <div class="container header-container">          
         <div className="content-container">
-        <h1 className="padded-header">Käyttäjän hallinnointi</h1>
-        <div className="block margin-top">
-          <Link className="text-link text-link-white margin-top" to="feedback">Lähetä palautetta</Link>
-          <button className="btn-small btn-red margin-top block" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</button>
-        </div>
-        {emailVerification}
+          <h1 className="padded-header">Käyttäjän hallinnointi</h1>
+          <div className="block margin-top">
+            <div className="block margin-bottom margin-top">
+              {emailVerification}
+            </div>
+            <div className="block margin-top margin-bottom">
+              <Link className="text-link text-link-white" to="feedback">Lähetä palautetta</Link>
+            </div>
+            <div className="block margin-top">
+              <a className="text-link text-link-white" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
+            </div>
+          </div>
         </div>
       </div>
     );
