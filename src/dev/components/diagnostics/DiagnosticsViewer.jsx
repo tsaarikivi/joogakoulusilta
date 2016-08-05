@@ -114,7 +114,7 @@ class DiagnosticsViewer extends React.Component {
           xType={'time'}
           xDomainRange={xRange}
           xTickNumber = {4}
-          yTickNumber = {6}
+          yTickNumber = {2}
           data={hourlyData}
           />
       </div>
@@ -175,7 +175,7 @@ class DiagnosticsViewer extends React.Component {
           xType={'time'}
           xDomainRange={xRange}
           xTickNumber = {4}
-          yTickNumber = {6}
+          yTickNumber = {2}
           data={dailyData}
           />
       </div>
