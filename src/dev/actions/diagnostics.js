@@ -1,8 +1,9 @@
 
-import { 
-    CONFIGURE_DIAGNOSTICS, 
-    FLUSH_DIAGNOSTICS, 
-    FETCH_DIAGNOSTICS 
+import {
+    CONFIGURE_DIAGNOSTICS,
+    FLUSH_DIAGNOSTICS,
+    FETCH_DIAGNOSTICS,
+    USER_AGENT
 } from './actionTypes.js'
 
 import {
@@ -117,7 +118,7 @@ export function diag(type, payload){
 
 export function _diag(dispatch, type, payload){
         dispatch({
-            type, 
+            type,
             payload
         })
 }
@@ -128,6 +129,10 @@ export function startDiagnostics() {
       dispatch({
         type: CONFIGURE_DIAGNOSTICS,
         payload: {started: true, sessionKey: Date.now()}
+      })
+      dispatch({
+        type: USER_AGENT,
+        payload: {userAgent: document.defaultView.navigator.userAgent}
       })
     }
 }
@@ -140,11 +145,11 @@ export function flushDiagnostics(diag) {
 function _flushDiagnostics(dispatch) {
         dispatch({
             type: FLUSH_DIAGNOSTICS
-        })            
+        })
         dispatch({
             type: CONFIGURE_DIAGNOSTICS,
             payload: { flushed: true}
-        })            
+        })
 }
 
 export function flushDiagnosticsAtInterval(milliseconds) {
@@ -152,7 +157,7 @@ export function flushDiagnosticsAtInterval(milliseconds) {
         dispatch({
             type: CONFIGURE_DIAGNOSTICS,
             payload: { flushed: false}
-        })            
+        })
         setTimeout(() => {
             _flushDiagnostics(dispatch)
         }, milliseconds);

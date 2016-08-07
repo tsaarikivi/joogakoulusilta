@@ -46,7 +46,7 @@ export default function(state = INITIAL_STATE, action) {
             return Object.assign({},state, action.payload)
         case actions.FLUSH_DIAGNOSTICS:
             if(state.started && state.sessionKey !== "0"){
-                firebase.database().ref('/diagnostics/'+state.sessionKey).update({user: state.user})
+                firebase.database().ref('/diagnostics/'+state.sessionKey).update({user: state.user, ua: state.userAgent})
                 .catch(error => {
                     console.error("diagnostics user write to firebase failed");
                 })
@@ -79,6 +79,10 @@ function processAction(state, action){
     /////////
     if(action.type === actions.ADD_USER && state.user === "0"){
         returnObject = Object.assign({},returnObject, { user: action.payload.uid})
+        return returnObject;
+    }
+    if(action.type === actions.USER_AGENT){
+        returnObject = Object.assign({},returnObject, { userAgent: action.payload.userAgent})
         return returnObject;
     }
     /////////
