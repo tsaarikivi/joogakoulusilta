@@ -25,6 +25,7 @@ var approvedEvents = {
     ACTIVATE_COURSE: true,
     ACTIVATION_FAILED: true,
     SIGN_OUT: true,
+    REMOVE_USER: true,
     CHECKOUT_ERROR: true,
     START_CHECKOUT_FLOW: true,
     BUY_WITH_CASH: true,

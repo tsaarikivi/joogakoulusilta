@@ -58,7 +58,6 @@ export function postCanceCourse(course, booking, reason = "undefined") {
                         reason: reason
                     })
                 .then(response => {
-                  console.log("CANCEL_COURSE", course, response.data, reason);
                   dispatch({
                     type: CANCEL_COURSE,
                     payload: {course, response: response.data, reason}
