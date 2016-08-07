@@ -1,7 +1,7 @@
 import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
+import {getDayStrMs, getTimeStr, getCourseTimeLocal} from '../../helpers/timeHelper.js'
 
 import { putSpecialCourseInfo } from '../../actions/specialCourses.js'
 
@@ -38,11 +38,17 @@ class SpecialCoursesItem extends React.Component {
        userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
     }
     const { item } = this.props;
+
+    const start = getCourseTimeLocal(0, item.start, 1)
+    const startStr = getTimeStr(start)
+    const end = getCourseTimeLocal(0, item.end, 1)
+    const endStr = getTimeStr(end)
+
     return (
       <li className="special-course-item" onClick={() => this.itemClicked()}>
         <p className="table-nonmargin">{item.title}</p>
         <p className="table-time">{getDayStrMs(item.date)}</p>
-        <p className="table-time">{getTimeStrMs(item.start)} - {getTimeStrMs(item.end)}</p>        
+        <p className="table-time">{startStr} - {endStr}</p>        
         {this.renderBookings(item)}
         {userBooked}
       </li>

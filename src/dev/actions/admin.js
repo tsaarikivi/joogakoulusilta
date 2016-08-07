@@ -557,10 +557,10 @@ export function modifySpecialCourse(data, key) {
                 instructor.uid = null
 
                 firebase.database().ref('/specialCourses/' + key).update({
-                    start: data.date + toMilliseconds(parseInt(data.start)),
-                    end: data.date + toMilliseconds(parseInt(data.end)),
+                    start: toMilliseconds(parseInt(data.start)),
+                    end: toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date + toMilliseconds(parseInt(data.start)),
+                    date: data.date,
                     price: Number(data.price.toFixed(2)),
                     taxpercent: Number(data.taxpercent.toFixed(2)),
                     taxamount: Number(taxamount.toFixed(2)),
@@ -599,10 +599,10 @@ export function addSpecialCourse(data) {
                 instructor.uid = null
 
                 firebase.database().ref('/specialCourses/').push({
-                    start: data.date + toMilliseconds(parseInt(data.start)),
-                    end: data.date + toMilliseconds(parseInt(data.end)),
+                    start: toMilliseconds(parseInt(data.start)),
+                    end: toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date + toMilliseconds(parseInt(data.start)),
+                    date: data.date,
                     price: Number(data.price.toFixed(2)),
                     taxpercent: Number(data.taxpercent.toFixed(2)),
                     taxamount: Number(taxamount.toFixed(2)),
