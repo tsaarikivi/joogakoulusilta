@@ -18,6 +18,19 @@
       text-align: center;
     }
   }
+
+  .shop-list {
+    width: 100%;
+    margin: 0 auto 3vw;
+    padding: 0;
+    box-sizing: border-box;
+    li {
+      width: 100%;
+      display: inline-block;
+      margin: 0 0 2vw;
+      padding: 2vw;
+    }
+  }
   .text-list-item {
     span {
       margin-top: 3vw;
