@@ -17,15 +17,6 @@ class ProfileHeader extends React.Component {
     this.emailVerificationOngoing = false
   }
 
-  handleLogout(){
-    if(this.props.auth.uid){
-      this.props.authActions.logout();
-    }
-    else {
-      console.log("User not logged in. No action taken.");
-    }
-  }
-
   handleEmailVerify(){
     if(!this.emailVerificationOngoing){
       this.emailVerificationOngoing = true;
@@ -54,9 +45,6 @@ class ProfileHeader extends React.Component {
             <div className="block margin-top margin-bottom">
               <Link className="text-link text-link-white" to="feedback">Lähetä palautetta</Link>
             </div>
-            <div className="block margin-top">
-              <a className="text-link text-link-white" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
-            </div>
           </div>
         </div>
       </div>
@@ -70,7 +58,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    authActions: bindActionCreators(authActionCreators, dispatch),
     userActions: bindActionCreators(userActionCreators, dispatch)
   }
 }

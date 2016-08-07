@@ -162,6 +162,7 @@ class CourseInfo extends React.Component {
 
   render() {
     const { courseInfo } = this.props;
+
     let weekIndex = 0;
     if (hasTimePassed(courseInfo.day, courseInfo.start)) {
       weekIndex = 1;
@@ -169,6 +170,8 @@ class CourseInfo extends React.Component {
 
     let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
+    let end = getCourseTimeLocal(weekIndex, courseInfo.end, courseInfo.day);
+    let endStr = getTimeStr(end);
 
     if(this.props.courseInfo.key !== "0"){
       return (
@@ -178,7 +181,7 @@ class CourseInfo extends React.Component {
             <div className="info-info-container">
               <h3>{courseInfo.courseType.name}</h3>
               <div className="surrounded-border">
-                <p className="info-line border-bottom">Aika: {dayStr} - {getTimeStrMs(courseInfo.end)}</p>
+                <p className="info-line border-bottom">Aika: {dayStr} - {endStr}</p>
                 <p className="info-line border-bottom">Sijainti: {courseInfo.place.name}, {courseInfo.place.address}</p>
                 <p className="info-line">Joogaopettaja: {courseInfo.instructor.firstname} {courseInfo.instructor.lastname}</p>
               </div>
