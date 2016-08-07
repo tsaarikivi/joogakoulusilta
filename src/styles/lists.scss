@@ -67,6 +67,20 @@
       text-align: center;
     }
   }
+
+  .shop-list {
+    width: 100%;
+    margin: 0 auto 15px;
+    padding: 0;
+    li {
+      vertical-align: top;
+      width: 49%;
+      display: inline-block;
+      margin: 0 5px 5px 0;
+      padding: 15px;
+    }
+  }
+
   .text-list-item {
     span {
       margin-top: 14px;
@@ -133,7 +147,7 @@ ul {
   }
 }
 
-.narrow-list {
+.narrow-list, .shop-list {
   li {
     background: $container-color;
     border-radius: $container-radius;
@@ -141,6 +155,7 @@ ul {
     box-sizing: border-box;
   }
 }
+
 .special-course-item {
   &:hover {
     background: $lightblue;

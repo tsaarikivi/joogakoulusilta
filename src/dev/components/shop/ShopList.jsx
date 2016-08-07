@@ -23,7 +23,7 @@ class ShopList extends React.Component {
       return (
         <div className="container bordered-container">
           <div className="content-container align-left">
-            <ul className="wide-list">
+            <ul className="shop-list">
               {this.props.shopItems.items.map(this.renderShopItems.bind(this))}
             </ul>
           </div>

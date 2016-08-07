@@ -46,7 +46,7 @@ class ShopItem extends React.Component {
     }
     else {
       return (
-        <div></div>
+        <p className="text-fade nomargin nopadding">Käyttöaikaa {this.props.item.usedays} päivää</p>
       )
     }
   }
@@ -55,7 +55,7 @@ class ShopItem extends React.Component {
     let cashBuyButton = null;
     const { admin, instructor } = this.props.roles;
     if(admin || instructor){
-      cashBuyButton = <button className="btn-small btn-blue margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      cashBuyButton = <button className="btn-small btn-blue mobile-full margin-top" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
     return (
       <li>
@@ -64,10 +64,10 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price text-blue text-bold">{this.props.item.price} €</p>        
         <span className="item-row">
-          {cashBuyButton}
+          <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
         </span>
         <span className="item-row">
-          <button className="btn-small btn-blue btn-link" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
+          {cashBuyButton}
         </span>
       </li>
     );

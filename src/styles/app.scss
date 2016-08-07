@@ -277,6 +277,16 @@ input, textarea, select {
   }  
 }
 
+.text-green {
+  color: $green;
+  div {
+    color: $green;
+  }
+  span {
+    color: $green;
+  }  
+}
+
 .text-red {
   color: $red;
   div {
