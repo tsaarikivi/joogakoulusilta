@@ -5,6 +5,8 @@ import {
     AUTH_TIMEOUT,
     EMAIL_UPDATED,
     PASSWORD_UPDATED,
+    SIGN_OUT,
+    REGISTER_USER
 } from './actionTypes.js'
 import {
     createNewUser
@@ -101,7 +103,11 @@ export function login(email, password) {
 
 export function logout() {
     return dispatch => {
-        Auth.signOut().then(() => {}, error => {
+        Auth.signOut().then(() => {
+          dispatch({
+            type: SIGN_OUT
+          })
+        }, error => {
             if (error) {
                 dispatch({
                     type: AUTH_ERROR,
@@ -128,6 +134,9 @@ export function register(email, password, fName, sName, a) {
         _showLoadingScreen(dispatch, "Rekisteröidään käyttäjää " + email)
         Auth.createUserWithEmailAndPassword(email, password).then(() => {
             _hideLoadingScreen(dispatch, "Käyttäjä " + email + " onnistuneesti rekisteröity", true)
+            dispatch({
+              type: REGISTER_USER
+            })
         }).catch(error => {
             if (error) {
                 dispatch({

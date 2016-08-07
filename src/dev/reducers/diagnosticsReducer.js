@@ -10,6 +10,19 @@ const INITIAL_STATE = {
 
 //Add events to be discarded here
 var approvedEvents = {
+    BOOK_A_COURSE: true,
+    BOOKING_ERROR: true,
+    CANCEL_COURSE: true,
+    COURSE_CANCEL_ERROR: true,
+    CANCEL_ERROR: true,
+    CANCEL_RESERVATION: true,
+    EMAIL_UPDATED: true,
+    PASSWORD_UPDATED: true,
+    ACTIVATE_COURSE: true,
+    ACTIVATION_FAILED: true,
+    FETCH_SHOP_ITEMS: true,
+    FETCH_DIAGNOSTICS: true,
+    SIGN_OUT: true,
     CHECKOUT_ERROR: true,
     START_CHECKOUT_FLOW: true,
     BUY_WITH_CASH: true,
@@ -18,6 +31,9 @@ var approvedEvents = {
     ADD_TO_CART: true,
     AUTH_ERROR: true,
     PASSWORD_RESET: true,
+    VERIFY_EMAIL: true,
+    RESET_SHOP: true,
+    DO_PURCHASE_TRANSACTION: true,
     USER_ERROR: true,
     INSTRUCTOR_ERROR: true,
     SEND_FEEDBABCK: true

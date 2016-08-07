@@ -7,7 +7,10 @@ import {
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
     UPDATE_USERS_SCBOOKINGS,
-    SEND_FEEDBABCK
+    SEND_FEEDBABCK,
+    VERIFY_EMAIL,
+    PASSWORD_RESET,
+    UPDATE_USER_DETAILS
 } from './actionTypes.js'
 
 import {
@@ -65,6 +68,9 @@ export function updateUserDetails(user) {
         _showLoadingScreen(dispatch, "Päivitetään tiedot")
         firebase.database().ref('/users/' + user.uid).update(user)
             .then(() => {
+              dispatch({
+                type: UPDATE_USER_DETAILS
+              })
                 _hideLoadingScreen(dispatch, "Tiedot päivitetty", true)
             })
             .catch(error => {
@@ -353,6 +359,9 @@ export function resetPassword(email) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti");
         firebase.auth().sendPasswordResetEmail(email).then(() => {
+          dispatch({
+            type: PASSWORD_RESET
+          })
                 _hideLoadingScreen(dispatch, "Viesti lähetetty", true);
             })
             .catch((error) => {
@@ -377,6 +386,9 @@ export function sendEmailVerification() {
         _showLoadingScreen(dispatch, "Lähetetään verifiointilinkki sähköpostiisi")
         firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
+              dispatch({
+                type: VERIFY_EMAIL
+              })
                 _hideLoadingScreen(dispatch, "Sähköposti lähetetty", true)
             })
             .catch((error) => {
