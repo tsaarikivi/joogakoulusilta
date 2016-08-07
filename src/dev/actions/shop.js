@@ -11,7 +11,8 @@ import {
     CHECKOUT_TIMEOUT,
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
-    FETCH_PENDING_TRANSACTIONS
+    FETCH_PENDING_TRANSACTIONS,
+    FINISH_WITH_PAYTRAIL
 } from './actionTypes.js'
 
 import {
@@ -136,7 +137,7 @@ export function finishPayTrailTransaction(query){
             .then(response => {
                 _hideLoadingScreen(dispatch, "Osto valmis", true)
                 dispatch({
-                    type: BUY_WITH_PAYTRAIL,
+                    type: FINISH_WITH_PAYTRAIL,
                     payload: {
                         phase: "payTrailComplete",
                         error: {
@@ -176,7 +177,7 @@ export function getAuthCode(_authcode) {
             .then(response => {
                 _hideLoadingScreen(dispatch, "Tunniste valmis", true)
                 dispatch({
-                    type: BUY_WITH_PAYTRAIL,
+                    type: GET_AUTH_CODE,
                     payload: {
                         authCode: response.data,
                         error: {

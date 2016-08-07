@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     sessionKey: "0",
     started: false,
     user: "0",
+    userAgent: "not yet defined",
     events: {},
     flushed: false
 }
@@ -11,6 +12,9 @@ const INITIAL_STATE = {
 //Add events to be discarded here
 var approvedEvents = {
     BOOK_A_COURSE: true,
+    UPDATE_USER_DETAILS: true,
+    FINISH_WITH_PAYTRAIL: true,
+    GET_AUTH_CODE: true,
     BOOKING_ERROR: true,
     CANCEL_COURSE: true,
     COURSE_CANCEL_ERROR: true,
@@ -20,8 +24,6 @@ var approvedEvents = {
     PASSWORD_UPDATED: true,
     ACTIVATE_COURSE: true,
     ACTIVATION_FAILED: true,
-    FETCH_SHOP_ITEMS: true,
-    FETCH_DIAGNOSTICS: true,
     SIGN_OUT: true,
     CHECKOUT_ERROR: true,
     START_CHECKOUT_FLOW: true,

@@ -9,7 +9,9 @@ import {
     BUY_WITH_CASH,
     BUY_WITH_PAYTRAIL,
     EXECUTE_CASH_PURCHASE,
-    RESET_SHOP
+    RESET_SHOP,
+    FINISH_WITH_PAYTRAIL,
+    GET_AUTH_CODE
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -31,6 +33,8 @@ export default function(state = INITIAL_STATE, action) {
         case RESET_SHOP:
             return Object.assign({},INITIAL_STATE,  {items: state.items});
         case BUY_WITH_PAYTRAIL:
+            return Object.assign({}, state, action.payload);
+        case FINISH_WITH_PAYTRAIL:
             return Object.assign({}, state, action.payload);
         case BUY_WITH_CASH:
             return Object.assign({}, state, action.payload);
