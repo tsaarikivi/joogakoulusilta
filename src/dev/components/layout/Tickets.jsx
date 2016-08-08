@@ -33,7 +33,7 @@ export default class Tickets extends React.Component {
 
   render() {
     return (
-      <div className="tickets-container" title={"Sinulla on " + this.daysLeft() + " päivää jäljellä aikakortissasi"}>
+      <div className="tickets-container mobile-hidden" id="tickets-info" title={"Sinulla on " + this.daysLeft() + " päivää jäljellä aikakortissasi"}>
         <span className="ticket-logo">
           <img className="mini-icon" src="./assets/clock.png" />
           <p className="ticket-amnt">{this.daysLeft()} pv</p>

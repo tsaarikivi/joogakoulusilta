@@ -25,10 +25,12 @@ class TopBar extends React.Component {
       this.setState({navOpen: false})
       document.getElementById("nav-btn").classList.remove("mobile-hidden")
       document.getElementById("nav-menu").classList.add("mobile-hidden")
+      document.getElementById("tickets-info").classList.add("mobile-hidden")
     } else {
       this.setState({navOpen: true})
       document.getElementById("nav-btn").classList.add("mobile-hidden")
       document.getElementById("nav-menu").classList.remove("mobile-hidden")
+      document.getElementById("tickets-info").classList.remove("mobile-hidden")
     }
   }
 
@@ -62,10 +64,12 @@ class TopBar extends React.Component {
 
     if (this.props.curUsr.key != '0') {
       return (
-        <div class="container user-header-container">
+        <div class="user-header-container">
+          <div className="nav-atnav align-right">
+            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" onClick={() => this.toggleNav()}/>
+          </div>
           <div className="content-container">
             {this.renderTickets()}
-            <img src="./assets/nav.png" className="nav-btn float-right desktop-hidden" id="nav-btn" onClick={() => this.toggleNav()}/>
             <div className="userinfo-container mobile-hidden" id="nav-menu">
               <div className="mobile-row">
                 <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Aikataulu</Link>
