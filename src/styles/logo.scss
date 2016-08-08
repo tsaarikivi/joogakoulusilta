@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   .logo-container {
     margin: 0 auto 4vw;
     padding: 10vw 0;
@@ -23,10 +23,10 @@
     margin: 4vw 2vw 4vw 0;
     width: 16vw;
     img {
-      padding: 3vw;
+      padding: 0 0 3vw;
     }
     .ticket-amnt {
-      padding: 1vw 0;
+      padding: 2vw 0 0;
     }
   }
 }
@@ -35,7 +35,7 @@
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   .logo-container {
     margin: 0 auto 10px;
     padding: 35px 0;
@@ -54,10 +54,10 @@
     margin: 20px 12px 20px 0;
     width: 50px;
     img {
-      padding: 10px;
+      padding: 7px 0;
     }
     .ticket-amnt {
-      padding: 4px 0;
+      padding: 7px 0;
     }
   }
 }
@@ -91,10 +91,10 @@
     img {
       display: block;
       margin: 0 auto;
+      border-bottom: 1px solid $border;
     }
     .ticket-amnt {
-      margin: 0;
-      border-top: 1px solid $border;
+      margin: 0;      
       display: block;
       text-align: center;
       border-bottom-left-radius: $container-radius;

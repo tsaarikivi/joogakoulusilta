@@ -59,7 +59,7 @@ class ShopItem extends React.Component {
     }
     return (
       <li>
-        <h5 className="item-title nomargin nopadding text-bold">{this.props.item.title}</h5>
+        <p className="item-title margin-bottom nopadding text-bold">{this.props.item.title}</p>
         <p className="item-desc nomargin nopadding">{this.props.item.desc}</p>
         {this.renderExpire()}
         <p class="item-price text-blue text-bold">{this.props.item.price} €</p>        

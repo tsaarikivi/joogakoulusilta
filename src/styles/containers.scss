@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   .course-info-container {
     .course-info {
       margin: 0 auto;
@@ -161,7 +161,7 @@
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   .course-info-container {
     .course-info {
       border-radius: $container-radius;
@@ -224,7 +224,7 @@
   }
   .content-container {
     width: 100%;
-    max-width: 800px;
+    max-width: $desktop-size;
     margin: 0 auto;
   }
 
@@ -249,13 +249,13 @@
 
   .transaction-container {
     width: 100%;
-    max-width: 800px;
+    max-width: $desktop-size;
     margin: 0 auto;
   }
 
   .booking-container {
     width: 100%;
-    max-width: 800px;
+    max-width: $desktop-size;
     margin: 0 auto;
   }
 
@@ -278,17 +278,17 @@
     display: inline-block;
     margin: 0;
     padding: 0;
-    width: 20%;
+    width: 18%;
     vertical-align: top;
   }
 
   .userinfo-container {
     display: inline-block;
     margin-top: 20px;
-    width: 80%;
+    width: 82%;
     a {
       display: inline-block;
-      margin-right: 10px;
+      margin-right: 2px;
     }
   }
 

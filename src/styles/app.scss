@@ -21,7 +21,7 @@ button, a, select, textarea, body, input {
 // MOBILE
 //////////////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 2vw 0;
@@ -117,7 +117,7 @@ button, a, select, textarea, body, input {
 // DESKTOP
 //////////////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 10px 0;
