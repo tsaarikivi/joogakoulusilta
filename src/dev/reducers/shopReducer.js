@@ -50,6 +50,8 @@ export default function(state = INITIAL_STATE, action) {
             return Object.assign({}, state, action.payload);
         case ADD_TO_CART:
             return Object.assign({}, state, action.payload);
+        case GET_AUTH_CODE:
+            return Object.assign({}, state, action.payload);
         case CHECKOUT_ERROR:
             return Object.assign({}, state, action.payload, {
                 phase: "error"

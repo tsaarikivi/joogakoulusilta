@@ -12,7 +12,8 @@ import {
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
     FETCH_PENDING_TRANSACTIONS,
-    FINISH_WITH_PAYTRAIL
+    FINISH_WITH_PAYTRAIL,
+    GET_AUTH_CODE
 } from './actionTypes.js'
 
 import {
