@@ -38,7 +38,11 @@ class SpecialCourses extends React.Component {
     }
     else {
       return (
-        <div></div>
+        <div class="container bordered-container">
+          <div className="content-container">
+            <p className="text-red">Ei tulevia erikoiskursseja. Tule myöhemmin uudelleen!</p>
+          </div>
+        </div>
       )
     }
   }
