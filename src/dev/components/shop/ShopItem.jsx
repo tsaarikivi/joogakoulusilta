@@ -53,12 +53,6 @@ class ShopItem extends React.Component {
 
   renderBuyButtons(){
 
-    if(this.props.ot){
-      return(
-        <p className="text-fade nomargin nopadding">Olet jo ostanut tämän kerran ostettavan tuotteen.</p>
-      )
-    }
-
     let cashBuyButton = null;
     const { admin, instructor } = this.props.roles;
     if(admin || instructor){

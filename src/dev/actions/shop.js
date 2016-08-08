@@ -359,7 +359,7 @@ export function waitForMilliseconds(milliseconds) {
     }
 }
 
-export function fetchShopItems() {
+export function fetchShopItems(oneTime) {
     var list = Object.assign([])
     return dispatch => {
         _showLoadingScreen(dispatch, "Haetaan tuotteet")
@@ -367,9 +367,13 @@ export function fetchShopItems() {
                 var shopItems = snapshot.val()
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key) && !shopItems[key].locked) {
-                        let shopItemWithKey = shopItems[key]
-                        shopItemWithKey.key = key
-                        list = list.concat(shopItemWithKey)
+                        if( oneTime.find( listItem => { return listItem === key})){
+                            console.log("OneTimer already purchased");
+                        } else {
+                            let shopItemWithKey = shopItems[key]
+                            shopItemWithKey.key = key
+                            list = list.concat(shopItemWithKey)   
+                        }
                     }
                 }
                 _hideLoadingScreen(dispatch, "Tuotteet haettu", true)

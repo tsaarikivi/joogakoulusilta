@@ -29,7 +29,6 @@ class DiagnosticsViewer extends React.Component {
 
 
   onResize(){
-    console.log("RESIZE");
     this.width = document.defaultView.innerWidth - 100;
     this.forceUpdate();
   }
@@ -67,7 +66,7 @@ class DiagnosticsViewer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("DV-next:", nextProps);
+    //console.log("DV-next:", nextProps);
   }
 
   showEventSessions(item){
@@ -76,7 +75,6 @@ class DiagnosticsViewer extends React.Component {
       return(<div></div>)
     }
     if(this.endDate - this.startDate < 20*24*60*60*1000){
-      console.log("ReturnMe");
       return this.showHourlyEventSessions(item)
     }
     return this.showDailyEventSessions(item)
@@ -94,12 +92,10 @@ class DiagnosticsViewer extends React.Component {
   }
 
   showHourlyEventSessions(eventData){
-    console.log("EVENTDATA", eventData, Object.keys(eventData));
     let barWidth = Math.round(this.width/((this.endDate - this.startDate)/3600000));
     barWidth = (barWidth === 0)? 1 : barWidth; 
     let xRange = [this.startDate.format().slice(0,16), this.endDate.format().slice(0,16)]
     let hourlyData = Array.concat(eventData[Object.keys(eventData)[0]].sessions.hourlySessions)
-    console.log("hourlydata-events", hourlyData);
     return(
       <div>
           <BarChart
@@ -127,7 +123,6 @@ class DiagnosticsViewer extends React.Component {
     if(!dataReady){
       return(<div></div>)
     }
-    console.log("WIDTH:", this.width);
     let barWidth = Math.round(this.width/((this.endDate - this.startDate)/3600000));
     barWidth = (barWidth === 0)? 1 : barWidth; 
     let xRange = [this.startDate.format().slice(0,16), this.endDate.format().slice(0,16)]
@@ -155,12 +150,10 @@ class DiagnosticsViewer extends React.Component {
 
 
   showDailyEventSessions(eventData){
-    console.log("EVENTDATA", eventData, Object.keys(eventData));
     let barWidth = Math.round(this.width/((this.endDate - this.startDate)/(24*3600000)));
     barWidth = (barWidth === 0)? 1 : barWidth; 
     let xRange = [this.startDate.format().slice(0,10), this.endDate.format().slice(0,10)]
     let dailyData = Array.concat(eventData[Object.keys(eventData)[0]].sessions.dailySessions)
-    console.log("hourlydata-events", dailyData);
     return(
       <div>
           <BarChart

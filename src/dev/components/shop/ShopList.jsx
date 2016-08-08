@@ -7,24 +7,19 @@ import * as shopActionCreators from '../../actions/shop.js'
 
 class ShopList extends React.Component {
   componentWillMount() {
+    const { oneTime } = this.props.currentUser.transactions.details;
     if (this.props.shopItems.items.length === 0) {
-      this.props.shopActions.fetchShopItems()
+      this.props.shopActions.fetchShopItems(oneTime)
     }    
   }
 
   componentWillReceiveProps(nextProps){
+   
   }
 
   renderShopItems(item) {
-    let otProp = false
-    const { oneTime } = this.props.currentUser.transactions.details;
-    if( oneTime.length > 0){
-      if( oneTime.find( listItem => { return listItem === item.key})){
-        otProp = true;
-      }
-    }
     return (
-      <ShopItem key={item.key} item={item} roles={this.props.currentUser.roles} ot={otProp}/>
+      <ShopItem key={item.key} item={item} roles={this.props.currentUser.roles}/>
     )
   }
 
