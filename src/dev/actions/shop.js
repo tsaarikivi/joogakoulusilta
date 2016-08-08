@@ -322,7 +322,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
                     payload: {
                         cart: {},
                         phase: "done",
-                        purchaseResult: result,
+                        purchaseResult: result.data,
                         error: {
                             code: "0",
                             message: "no error"

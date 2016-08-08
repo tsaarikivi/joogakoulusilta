@@ -12,9 +12,19 @@ class ShopList extends React.Component {
     }    
   }
 
+  componentWillReceiveProps(nextProps){
+  }
+
   renderShopItems(item) {
+    let otProp = false
+    const { oneTime } = this.props.currentUser.transactions.details;
+    if( oneTime.length > 0){
+      if( oneTime.find( listItem => { return listItem === item.key})){
+        otProp = true;
+      }
+    }
     return (
-      <ShopItem key={item.key} item={item} roles={this.props.currentUser.roles}/>
+      <ShopItem key={item.key} item={item} roles={this.props.currentUser.roles} ot={otProp}/>
     )
   }
 

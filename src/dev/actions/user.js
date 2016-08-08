@@ -222,7 +222,8 @@ export function fetchUsersTransactions(uid) {
                 details: {
                     valid: [],
                     expired: [],
-                    special: []
+                    special: [],
+                    oneTime: []
                 }
             };
             let now = Date.now();
@@ -237,6 +238,7 @@ export function fetchUsersTransactions(uid) {
                 trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
                 trxdetails.shopItem = all[one].shopItem;
                 trxdetails.shopItemKey = all[one].shopItemKey;
+                trxdetails.oneTime = all[one].oneTime || false;
                 switch (all[one].type) {
                     case "time":
                         if (all[one].expires > now) {
@@ -269,6 +271,9 @@ export function fetchUsersTransactions(uid) {
                         trx.details.valid.push(trxdetails);
                     } else {
                         trx.details.expired.push(trxdetails);
+                    }
+                    if (trxdetails.oneTime) {
+                        trx.details.oneTime.push(trxdetails.shopItemKey)
                     }
                 }
             }

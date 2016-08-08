@@ -662,6 +662,7 @@ export function addShopItem(data, type) {
         taxamount: Number(taxamount.toFixed(2)),
         taxpercent: Number(data.taxpercent.toFixed(2)),
         beforetax: Number(beforetax.toFixed(2)),
+        oneTime: data.oneTime || false
     })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);
@@ -683,6 +684,7 @@ export function modifyShopItem(data, type) {
         taxamount: Number(taxamount.toFixed(2)),
         taxpercent: Number(data.taxpercent.toFixed(2)),
         beforetax: Number(beforetax.toFixed(2)),
+        oneTime: data.oneTime || false
     })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);

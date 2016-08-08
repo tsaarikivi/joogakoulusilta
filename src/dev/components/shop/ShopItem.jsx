@@ -51,24 +51,39 @@ class ShopItem extends React.Component {
     }
   }
 
-  render() {
+  renderBuyButtons(){
+
+    if(this.props.ot){
+      return(
+        <p className="text-fade nomargin nopadding">Olet jo ostanut tämän kerran ostettavan tuotteen.</p>
+      )
+    }
+
     let cashBuyButton = null;
     const { admin, instructor } = this.props.roles;
     if(admin || instructor){
       cashBuyButton = <button className="btn-small btn-blue mobile-full margin-top" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
-    return (
-      <li>
-        <p className="item-title margin-bottom nopadding text-bold">{this.props.item.title}</p>
-        <p className="item-desc nomargin nopadding">{this.props.item.desc}</p>
-        {this.renderExpire()}
-        <p class="item-price text-blue text-bold">{this.props.item.price} €</p>        
+    return(
+      <div>
         <span className="item-row">
           <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
         </span>
         <span className="item-row">
           {cashBuyButton}
         </span>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <li>
+        <p className="item-title margin-bottom nopadding text-bold">{this.props.item.title}</p>
+        <p className="item-desc nomargin nopadding">{this.props.item.desc}</p>
+        {this.renderExpire()}
+        <p class="item-price text-blue text-bold">{this.props.item.price} €</p>
+        {this.renderBuyButtons()}        
       </li>
     );
   }
