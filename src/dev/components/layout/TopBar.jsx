@@ -64,9 +64,9 @@ class TopBar extends React.Component {
 
     if (this.props.curUsr.key != '0') {
       return (
-        <div class="user-header-container">
-          <div className="nav-atnav align-right">
-            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" onClick={() => this.toggleNav()}/>
+        <nav class="user-header-container">
+          <div className="align-right">
+            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
           </div>
           <div className="content-container">
             {this.renderTickets()}
@@ -100,7 +100,7 @@ class TopBar extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </nav>
       )
     } else {
       return <div></div>

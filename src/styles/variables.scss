@@ -1,7 +1,7 @@
 $body-color: #f8f9fa;
 $container-color: #fff;
 $border: #ddd;
-$shadow: #bbbbbf;
+$shadow-color: #000;
 $text-light: #fafafa;
 $text-dark: #454552;
 $text-fade: #787885;
@@ -34,3 +34,5 @@ $logo-radius: 1px;
 
 $mobile-size: 719px;
 $desktop-size: 720px;
+
+$shadow: 0 2px 5px $shadow-color;
