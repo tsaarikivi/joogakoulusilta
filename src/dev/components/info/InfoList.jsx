@@ -20,7 +20,7 @@ class InfoList extends React.Component {
   }
   
   render() {
-    if (this.props.list.list) {
+    if (this.props.list.list.length > 0) {
       return (
         <div class="container bordered-container">
           <Logo />
