@@ -32,7 +32,7 @@ class ShopList extends React.Component {
   render() {
     if(this.props.shopItems.items.length > 0){
       return (
-        <div className="container bordered-container">
+        <div className="container">
           <div className="content-container align-left">
             <ul className="shop-list">
               {this.props.shopItems.items.map(this.renderShopItems.bind(this))}
