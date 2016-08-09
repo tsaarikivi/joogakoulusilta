@@ -60,6 +60,12 @@
   .item-item {
     margin-right: 2vw;
   }
+
+  ul.blank-list {
+    li {
+      margin-bottom: 4vw;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -132,6 +138,12 @@
   .item-item {
     margin-right: 25px;
   }
+
+  ul.blank-list {
+    li {
+      margin-bottom: 10px;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -177,10 +189,8 @@ ul {
 }
 
 ul.blank-list {
-  margin-top: 60px;
   li {
     background: transparent;
     border: none;
-    margin-bottom: 10px;
   }  
 }

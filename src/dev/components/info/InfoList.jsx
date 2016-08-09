@@ -22,7 +22,7 @@ class InfoList extends React.Component {
   render() {
     if (this.props.list.list.length > 0) {
       return (
-        <div class="container bordered-container">
+        <div class="container">
           <Logo />
           <div className="centered">
             <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
