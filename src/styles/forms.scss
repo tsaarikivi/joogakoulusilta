@@ -152,7 +152,10 @@ label.inline-label {
   display: inline-block;
   float: left;
 }
-
+input.rowbox {
+  display: block;
+  float: none;
+}
 
 
 
