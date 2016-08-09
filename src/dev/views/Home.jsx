@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import HomeLoginRegister from '../components/home/HomeLoginRegister.jsx'
+import ContactInfo from '../components/home/ContactInfo.jsx'
 
 class Home extends React.Component {
 
@@ -26,6 +27,7 @@ class Home extends React.Component {
     return (
       <div>
         <HomeLoginRegister />
+        <ContactInfo />
       </div>
     );
   }

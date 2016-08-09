@@ -44,9 +44,9 @@ class HomeLoginRegister extends React.Component {
 
   render() {
     return (
-      <div class="container bordered-container centered">
+      <div class="container centered">
         <Logo />
-        <a className="text-link" href="http://www.joogakoulusilta.com">Tutustu tarkemmin</a>
+        <a className="text-link" href="http://www.joogakoulusilta.com" target="_blank">Tutustu tarkemmin</a>
 
         <h3 className="centered login-header">Kirjaudu sisään Joogakoulu Siltaan</h3>
         <div className="content-container login-container">          

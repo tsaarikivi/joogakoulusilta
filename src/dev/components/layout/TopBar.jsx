@@ -90,7 +90,7 @@ class TopBar extends React.Component {
                 {diagnostics}
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Kauppa</Link>
+                <a className="text-link text-green" href="https://holvi.com/shop/4Z4CW4/" onClick={() => this.toggleNav()} target="_blank">Kauppa</a>
               </div>
               <div className="mobile-row">
                 <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>

@@ -52,6 +52,13 @@ class SpecialCourseInfo extends React.Component {
     return false;
  }
 
+ /**
+  * this belongs bottom of renderPurchaseButton cashBuyButton
+  * <span className="item-row">
+      <button className="btn-small btn-blue btn-link mobile-full" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
+    </span>
+  */
+
   renderPurchaseButtons() {
 
     const { admin, instructor } = this.props.currentUser.roles;
@@ -69,13 +76,13 @@ class SpecialCourseInfo extends React.Component {
 
     if(info.bookings < info.maxCapacity){
       return (
-        <div>          
+        <div>      
           <span className="item-row">
             {cashBuyButton}
-          </span>
+          </span>          
           <span className="item-row">
-            <button className="btn-small btn-blue btn-link mobile-full" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
-          </span>
+            <a className="btn-small btn-blue btn-link mobile-full" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Kauppaan</a>
+          </span>    
         </div>
       )
     } else {
