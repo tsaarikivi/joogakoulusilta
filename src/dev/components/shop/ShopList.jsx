@@ -6,13 +6,21 @@ import ShopItem from './ShopItem.jsx'
 import * as shopActionCreators from '../../actions/shop.js'
 
 class ShopList extends React.Component {
+
   componentWillMount() {
     const { oneTime } = this.props.currentUser.transactions.details;
-    this.props.shopActions.fetchShopItems(oneTime) 
+    if (this.props.shopItems.items.length === 0) {
+      this.props.shopActions.fetchShopItems(oneTime)
+    } 
   }
 
   componentWillReceiveProps(nextProps){
-   
+    const { oneTime } = this.props.currentUser.transactions.details;
+    if (this.props.shopItems.items.length === 0) {
+      if(oneTime){
+        this.props.shopActions.fetchShopItems(oneTime)
+      }
+    }       
   }
 
   renderShopItems(item) {
