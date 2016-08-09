@@ -51,6 +51,14 @@ class ShopItem extends React.Component {
     }
   }
 
+  renderIsOnce() {
+    if (this.props.item.oneTime) {
+      return <p className="text-fade margin-bottom nopadding">Voit ostaa tämän tuotteen vain kerran</p>
+    } else {
+      return <div></div>
+    }
+  }
+
   renderBuyButtons(){
 
     let cashBuyButton = null;
@@ -76,7 +84,8 @@ class ShopItem extends React.Component {
         <p className="item-title margin-bottom nopadding text-bold">{this.props.item.title}</p>
         <p className="item-desc nomargin nopadding">{this.props.item.desc}</p>
         {this.renderExpire()}
-        <p class="item-price text-blue text-bold">{this.props.item.price} €</p>
+        <p class="item-price text-blue text-bold margin-top nopadding">{this.props.item.price} €</p>
+        {this.renderIsOnce()}
         {this.renderBuyButtons()}        
       </li>
     );
