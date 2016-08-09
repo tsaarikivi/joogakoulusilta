@@ -2,6 +2,7 @@ import React from 'react'
 import { reduxForm } from 'redux-form'
 
 import { sendFeedback } from '../actions/user.js'
+import ContactInfo from '../components/home/ContactInfo.jsx'
 
 class Feedback extends React.Component {
   static contextTypes = {
@@ -18,6 +19,7 @@ class Feedback extends React.Component {
 
     return (
       <div className="container">
+        <ContactInfo />
         <div className="content-container login-container">
             <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
                 <h5>Lähetä palautetta joogakoululle</h5>

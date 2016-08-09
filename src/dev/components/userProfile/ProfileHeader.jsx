@@ -42,9 +42,6 @@ class ProfileHeader extends React.Component {
             <div className="block margin-bottom margin-top">
               {emailVerification}
             </div>
-            <div className="block margin-top margin-bottom">
-              <Link className="text-link text-link-white" to="feedback">Lähetä palautetta</Link>
-            </div>
           </div>
         </div>
       </div>

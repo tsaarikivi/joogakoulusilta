@@ -20,19 +20,25 @@ class InfoList extends React.Component {
   }
   
   render() {
-    return (
-      <div class="container bordered-container">
-        <Logo />
-        <div className="centered">
-          <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+    if (this.props.list.list) {
+      return (
+        <div class="container bordered-container">
+          <Logo />
+          <div className="centered">
+            <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+          </div>
+          <div className="content-container">
+            <ul className="wide-list blank-list">
+              {this.props.list.list.map(this.renderList)}
+            </ul>
+          </div>
         </div>
-        <div className="content-container">
-          <ul className="wide-list blank-list">
-            {this.props.list.list.map(this.renderList)}
-          </ul>
-        </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div></div>
+      )
+    }
   }
 }
 
