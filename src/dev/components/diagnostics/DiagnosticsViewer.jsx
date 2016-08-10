@@ -65,12 +65,9 @@ class DiagnosticsViewer extends React.Component {
     this.props.actions.fetchDiagnostics(this.startDate.valueOf(), this.endDate.valueOf())
   }
 
-<<<<<<< HEAD
-=======
   componentWillReceiveProps(nextProps){
     //console.log("DV-next:", nextProps);
   }
->>>>>>> 29849fe04f965b7328347963462ed82fbe50093b
 
   showEventSessions(item){
     const { dataReady, data } = this.props.ddata;

@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router"
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
+import  { getCurrentBaseUrl } from '../helpers/urlParser.js'
 import * as actionCreators from '../actions/shop.js'
 
 class PaytrailCancel extends React.Component {
-  
+
   static contextTypes = {
     router: React.PropTypes.object
   }
@@ -44,7 +44,10 @@ class PaytrailCancel extends React.Component {
   }
 
   renderPayTrailComplete(){
-    setTimeout(() => {this.context.router.push('user')}, 200)
+    let replacementUrl = getCurrentBaseUrl(document.location.href) + "/#/user"
+    document.defaultView.location.replace(replacementUrl)
+
+    //setTimeout(() => {this.context.router.push('user')}, 200)
     return(<div></div>)
   }
 

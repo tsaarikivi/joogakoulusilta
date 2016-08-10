@@ -90,7 +90,6 @@ function processAction(state, action){
     /////////
     // Here we can filter only those events, which we are interested in
     /////////
-    console.log("action type: ", action.type);
     if(approvedEvents[action.type]){
         let list = {}
         let events = state.events;

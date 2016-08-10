@@ -61,12 +61,6 @@ class ShopItem extends React.Component {
 
 
 
-/**
- * this belongs on top of cashBuyButton in renderBuyButtons
- * <span className="item-row">
-          <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
-   </span>
- */
 
 
   renderBuyButtons(){
@@ -77,8 +71,11 @@ class ShopItem extends React.Component {
       cashBuyButton = <button className="btn-small btn-blue mobile-full margin-top" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
     return(
-      <div>        
+      <div>
         <span className="item-row">
+         <span className="item-row">
+                    <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
+             </span>
           {cashBuyButton}
         </span>
       </div>
@@ -93,7 +90,7 @@ class ShopItem extends React.Component {
         {this.renderExpire()}
         <p class="item-price text-blue text-bold margin-top nopadding">{this.props.item.price} €</p>
         {this.renderIsOnce()}
-        {this.renderBuyButtons()}        
+        {this.renderBuyButtons()}
       </li>
     );
   }

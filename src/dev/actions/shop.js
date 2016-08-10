@@ -224,6 +224,7 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId) {
         })
         .then(result => {
             _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
+
             dispatch({
                 type: RESET_SHOP
             })
@@ -368,11 +369,11 @@ export function fetchShopItems(oneTime) {
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key) && !shopItems[key].locked) {
                         if( oneTime.find( listItem => { return listItem === key})){
-                            console.log("OneTimer already purchased");
+                            //console.log("OneTimer already purchased");
                         } else {
                             let shopItemWithKey = shopItems[key]
                             shopItemWithKey.key = key
-                            list = list.concat(shopItemWithKey)   
+                            list = list.concat(shopItemWithKey)
                         }
                     }
                 }
