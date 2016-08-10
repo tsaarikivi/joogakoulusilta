@@ -24,17 +24,19 @@ class DiagnosticsViewer extends React.Component {
     this.endDate.minutes(59);
     this.endDate.seconds(59);
     this.endDate.milliseconds(999);
-    this.width = document.defaultView.innerWidth;
+    this.width = Math.round(document.defaultView.innerWidth/1.5);
+    console.log("C-widht", this.width);
   }
 
 
   onResize(){
-    this.width = document.defaultView.innerWidth - 100;
+    console.log("widht", this.width);
+    this.width = Math.round(document.defaultView.innerWidth/1.5);
     this.forceUpdate();
   }
 
   componentDidMount(){
-    document.onresize = this.onResize()
+    document.defaultView.onresize = this.onResize.bind(this)
   }
 
   onChangeStartDate(date){
