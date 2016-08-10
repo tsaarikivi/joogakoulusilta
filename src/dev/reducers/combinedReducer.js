@@ -14,6 +14,7 @@ import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
 import InstructorReducer from './instructorReducer.js'
 import InfoReducer from './infoReducer.js'
+import TermsListReducer from './admin/termsReducer.js'
 import CourseInfoReducer from './courseInfoReducer.js'
 import SpecialCourseInfoReducer from './specialCourseInfoReducer.js'
 import UserListReducer from './admin/userListReducer.js'
@@ -30,9 +31,13 @@ import ShopItemCountFormReducer from './admin/shopItemCountFormReducer.js'
 import CourseTypeListReducer from './admin/courseTypeListReducer.js'
 import PlaceListReducer from './admin/placeListReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
+import TermsFormReducer from './admin/termsFormReducer.js'
 import SpecialCourseListReducer from './admin/specialCourseListReducer.js'
 import SearchBarReducer from './admin/searchBarReducer.js'
 import PendingTransactions from './pendingTransactions.js'
+import TermsReducer from './termsReducer.js'
+import DiagnosticsReducer from './diagnosticsReducer.js'
+import DiagnosticsViewerReducer from './diagnosticsViewerReducer.js'
 
 const combinedReducer = combineReducers({
     loadingScreen: LoadingScreenReducer,
@@ -63,7 +68,12 @@ const combinedReducer = combineReducers({
     placeList: PlaceListReducer,
     infoList: InfoReducer,
     infoForm: InfoFormReducer,
-    searchBar: SearchBarReducer
+    searchBar: SearchBarReducer,
+    terms: TermsReducer,
+    termsList: TermsListReducer,
+    termsForm: TermsFormReducer,
+    diagnostics: DiagnosticsReducer,
+    ddata: DiagnosticsViewerReducer
 })
 
 export default combinedReducer;

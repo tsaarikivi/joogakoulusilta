@@ -6,13 +6,14 @@ import {
     ADD_TO_CART,
     BUY_WITH_CASH,
     BUY_WITH_PAYTRAIL,
-    GET_CLIENT_TOKEN,
     DO_PURCHASE_TRANSACTION,
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
-    FETCH_PENDING_TRANSACTIONS
+    FETCH_PENDING_TRANSACTIONS,
+    FINISH_WITH_PAYTRAIL,
+    GET_AUTH_CODE
 } from './actionTypes.js'
 
 import {
@@ -38,7 +39,7 @@ export function completePaytrailPayment(pendingTrxId){
             })
             .catch(error => {
                 console.error("PAYTRAIL_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: ", error.toString(), false)
+                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: " + error.toString(), false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
@@ -50,7 +51,7 @@ export function completePaytrailPayment(pendingTrxId){
                 })
             });
 
-    } 
+    }
 }
 
 
@@ -137,7 +138,7 @@ export function finishPayTrailTransaction(query){
             .then(response => {
                 _hideLoadingScreen(dispatch, "Osto valmis", true)
                 dispatch({
-                    type: BUY_WITH_PAYTRAIL,
+                    type: FINISH_WITH_PAYTRAIL,
                     payload: {
                         phase: "payTrailComplete",
                         error: {
@@ -160,7 +161,7 @@ export function finishPayTrailTransaction(query){
                     }
                 })
             });
-    }  
+    }
 }
 
 export function getAuthCode(_authcode) {
@@ -177,7 +178,7 @@ export function getAuthCode(_authcode) {
             .then(response => {
                 _hideLoadingScreen(dispatch, "Tunniste valmis", true)
                 dispatch({
-                    type: BUY_WITH_PAYTRAIL,
+                    type: GET_AUTH_CODE,
                     payload: {
                         authCode: response.data,
                         error: {
@@ -203,14 +204,14 @@ export function getAuthCode(_authcode) {
     }
 }
 
-export function cancelPaytrailPayment(pendingTrxId){
+export function cancelPaytrailPayment(pendingTrxId, resetShop = true){
     return dispatch => {
-        _cancelPaytrailPayment(dispatch, pendingTrxId)
-    } 
+        _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop)
+    }
 }
 
 
-function _cancelPaytrailPayment(dispatch, pendingTrxId) {
+function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
     _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
     let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
 
@@ -223,9 +224,25 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId) {
         })
         .then(result => {
             _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
-            dispatch({
-                type: RESET_SHOP
-            })
+
+            if(resetShop){
+                dispatch({
+                    type: RESET_SHOP
+                })
+            } else {
+                //This is here for PaytrailCancel view needs. We need to clear location history.
+                //View will call resetShop when unmounts.
+                dispatch({
+                    type: FINISH_WITH_PAYTRAIL,
+                    payload: {
+                        phase: "payTrailComplete",
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }                
+                })
+            }
         })
         .catch(error => {
             console.error("PURCHASE ERROR", error);
@@ -321,7 +338,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
                     payload: {
                         cart: {},
                         phase: "done",
-                        purchaseResult: result,
+                        purchaseResult: result.data,
                         error: {
                             code: "0",
                             message: "no error"
@@ -358,18 +375,24 @@ export function waitForMilliseconds(milliseconds) {
     }
 }
 
-export function fetchShopItems() {
+export function fetchShopItems(oneTime) {
     var list = Object.assign([])
     return dispatch => {
+        _showLoadingScreen(dispatch, "Haetaan tuotteet")
         ShopItemsRef.once('value', snapshot => {
                 var shopItems = snapshot.val()
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key) && !shopItems[key].locked) {
-                        let shopItemWithKey = shopItems[key]
-                        shopItemWithKey.key = key
-                        list = list.concat(shopItemWithKey)
+                        if( oneTime.find( listItem => { return listItem === key})){
+                            //console.log("OneTimer already purchased");
+                        } else {
+                            let shopItemWithKey = shopItems[key]
+                            shopItemWithKey.key = key
+                            list = list.concat(shopItemWithKey)
+                        }
                     }
                 }
+                _hideLoadingScreen(dispatch, "Tuotteet haettu", true)
                 dispatch({
                     type: FETCH_SHOP_ITEMS,
                     payload: {
@@ -378,6 +401,7 @@ export function fetchShopItems() {
                 })
             })
             .catch(err => {
+                _hideLoadingScreen(dispatch, "Tuotteiden hakemisessa tapahtui virhe" + String(err), false)
                 console.error("Cant read shopitems: ", err);
             })
     }
@@ -416,7 +440,7 @@ export function removeShopItem(key) {
     return dispatch => ShopItemsRef.child(key).remove()
 }
 
-export function getClientTokenFromBraintree() {
+/*export function getClientTokenFromBraintree() {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan maksuyhteyttä")
         dispatch({
@@ -454,9 +478,9 @@ export function getClientTokenFromBraintree() {
                 })
             });
     }
-}
+}*/
 
-export function doPurchaseTransaction(nonce, clientKey, type) {
+/*export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Suoritetaan maksu.")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
@@ -499,5 +523,4 @@ export function doPurchaseTransaction(nonce, clientKey, type) {
                 })
             })
     }
-}
-
+} */

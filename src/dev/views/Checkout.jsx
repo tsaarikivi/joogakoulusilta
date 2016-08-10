@@ -7,7 +7,6 @@ import * as actionCreators from '../actions/shop.js'
 import SubmitPayTrail from "../components/checkout/SubmitPayTrail.jsx"
 import PayTrail from "../components/checkout/PayTrail.jsx"
 import CashPayment from "../components/checkout/CashPayment.jsx"
-import BraintreePayment from "../components/checkout/BraintreePayment.jsx"
 
 class Checkout extends React.Component {
   
@@ -52,7 +51,11 @@ class Checkout extends React.Component {
   }
 
   renderStart(){
-      return(<Link className="text-link back-btn" to="user">&lt;Takaisin</Link>)
+      return(
+          <div className="centered">
+            <Link className="text-link back-btn margin-top" to="user">&lt;Takaisin</Link>
+          </div>
+        )
   }
 
   onReady() {
@@ -81,14 +84,6 @@ renderCashPayment(){
     )
 }
 
-  renderBtPaymentPhase(){
-    return(
-      <div>
-        <h2 className="centered">Alustetaan maksuyhteyttä...</h2>
-      </div>
-    )
-  }
-
   renderDonePhase(){
     if(this.buyingSpecialCourse){
       this.props.actions.waitForMilliseconds(300); //Set this to define how long the done phase is displayed 
@@ -112,17 +107,6 @@ renderCashPayment(){
     )
   }
 
-  renderPayment(){
-    return (
-      <BraintreePayment 
-        shopItems={this.props.shopItems}
-        onReady={this.onReady.bind(this)}
-        onError={this.onError.bind(this)}
-        onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
-      />
-    );
-  }
-
   renderPayTrailComplete(){
     setTimeout(() => {this.context.router.push('user')}, 200)
     return(<div></div>)
@@ -139,11 +123,6 @@ renderCashPayment(){
         return this.renderPayTrailComplete()
       case "cashPayment":
         return this.renderCashPayment()
-      case "braintreePayment":
-          this.paymentOngoing = false;
-          return this.renderBtPaymentPhase()
-      case "tokenReceived":
-        return this.renderPayment()
       case "done":
         return this.renderDonePhase()
       case "error":

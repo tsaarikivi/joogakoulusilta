@@ -16,6 +16,14 @@
             ".read": "true",
             ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
+        "diagnostics": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "true"
+        },
+        "terms": {
+            ".read": "true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
         "bookingsbycourse": {
             ".read": "auth != null",
             ".write": "auth.uid === 'joogaserver'"

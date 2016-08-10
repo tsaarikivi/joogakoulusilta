@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   table {
     width: 100%;
     margin: 0 auto;
@@ -56,7 +56,7 @@
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   table {
     margin: 0 auto;
     padding: 0;
@@ -109,7 +109,7 @@
 table {
   tr {
     background: $white;
-    border-radius: 5px;
+    border-radius: $container-radius;
     box-sizing: border-box;
     border: 1px solid $border;
     td {      
@@ -126,8 +126,8 @@ table {
       }
     }
     th {
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: $container-radius;
+      border-top-right-radius: $container-radius;
       background: $lightgray;
       border: none;
       box-sizing: border-box;

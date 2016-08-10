@@ -99,19 +99,9 @@ class CourseInfo extends React.Component {
   //========================================================================
   //========================================================================
   //========================================================================
-  renderReservationButton(){
+  renderReservationButton(courseInfo, day, dayStr, weekIndex){
 
     var notificationText = null;
-    const { courseInfo } = this.props;
-    let weekIndex = 0;
-    if (hasTimePassed(courseInfo.day, courseInfo.start)) {
-      weekIndex = 1;
-    } else {
-      weekIndex = 0;
-    }
-
-    let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
-    let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
 
     if(courseInfo.cancelled){
@@ -125,7 +115,7 @@ class CourseInfo extends React.Component {
       if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Course starts less than 3 hours from now.
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
-                  <p className="text-blue"> Kurssin alkuun aikaa alle 3 tuntia.</p>
+                  <p className="text-red"> Kurssin alkuun aikaa alle 3 tuntia. Valitettavasti et voi enää peruuttaa varausta.</p>
                 </div>
               );
       } else {
@@ -147,7 +137,7 @@ class CourseInfo extends React.Component {
     if(!this.userCanBook(day)){
       return(<div>
               <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy kaupassamme ostamassa joogaoikeuksia!</p>
-              <Link className="text-link text-link-white" to="shop">Kauppaan</Link>
+              <a className="text-link text-link-white" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Kauppaan</a>
             </div>
       );
     }
@@ -171,26 +161,38 @@ class CourseInfo extends React.Component {
 
 
   render() {
+    const { courseInfo } = this.props;
+
+    let weekIndex = 0;
+    if (hasTimePassed(courseInfo.day, courseInfo.start)) {
+      weekIndex = 1;
+    }
+
+    let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
+    let dayStr = getDayStr(day) + " " + getTimeStr(day);
+    let end = getCourseTimeLocal(weekIndex, courseInfo.end, courseInfo.day);
+    let endStr = getTimeStr(end);
+
     if(this.props.courseInfo.key !== "0"){
       return (
         <div className="course-info-container">
           <div className="course-info">
-            <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
+            <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
-              <h3>{this.props.courseInfo.courseType.name}</h3>
+              <h3>{courseInfo.courseType.name}</h3>
               <div className="surrounded-border">
-                <p className="info-line border-bottom">Klo {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.start, this.props.courseInfo.day))} - {getTimeStr(getCourseTimeLocal(0, this.props.courseInfo.end, this.props.courseInfo.day))}</p>
-                <p className="info-line border-bottom">Sijainti: {this.props.courseInfo.place.name}, {this.props.courseInfo.place.address}</p>
-                <p className="info-line">Joogaopettaja: {this.props.courseInfo.instructor.firstname} {this.props.courseInfo.instructor.lastname}</p>
+                <p className="info-line border-bottom">Aika: {dayStr} - {endStr}</p>
+                <p className="info-line border-bottom">Sijainti: {courseInfo.place.name}, {courseInfo.place.address}</p>
+                <p className="info-line">Joogaopettaja: {courseInfo.instructor.firstname} {courseInfo.instructor.lastname}</p>
               </div>
               <div>
                 <div className="centered">
                   <img className="mini-icon" src="./assets/group.png" />
                   {this.renderParticipants()}
                 </div>
-                {this.renderReservationButton()}
+                {this.renderReservationButton(courseInfo, day, dayStr, weekIndex)}
               </div>
-              <p className="info-desc pre-wrap">{this.props.courseInfo.courseType.desc}</p>
+              <p className="info-desc pre-wrap">{courseInfo.courseType.desc}</p>
             </div>
           </div>
         </div>

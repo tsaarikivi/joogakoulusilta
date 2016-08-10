@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { removeSpecialCourseInfo } from '../../actions/specialCourses.js'
 import * as shopActionCreators from '../../actions/shop.js'
-import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
+import {getDayStrMs, getTimeStr, getCourseTimeLocal} from '../../helpers/timeHelper.js'
 
 class SpecialCourseInfo extends React.Component {
 
@@ -52,6 +52,13 @@ class SpecialCourseInfo extends React.Component {
     return false;
  }
 
+ /**
+  * this belongs bottom of renderPurchaseButton cashBuyButton
+  * <span className="item-row">
+      <button className="btn-small btn-blue btn-link mobile-full" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
+    </span>
+  */
+
   renderPurchaseButtons() {
 
     const { admin, instructor } = this.props.currentUser.roles;
@@ -64,18 +71,18 @@ class SpecialCourseInfo extends React.Component {
 
 
     if(admin || instructor){
-      cashBuyButton = <button className="btn-small btn-blue mobile-full" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
+      cashBuyButton = <button className="btn-small btn-blue mobile-full margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
     if(info.bookings < info.maxCapacity){
       return (
-        <div>          
+        <div>      
           <span className="item-row">
             {cashBuyButton}
-          </span>
+          </span>          
           <span className="item-row">
-            <button className="btn-small btn-blue btn-link" onClick={this.handlePayTrailBuy.bind(this)} >Osta</button>
-          </span>
+            <a className="btn-small btn-blue btn-link mobile-full" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Kauppaan</a>
+          </span>    
         </div>
       )
     } else {
@@ -86,20 +93,23 @@ class SpecialCourseInfo extends React.Component {
   render() {
     const { info } = this.props.specialCourseInfo
 
+    if(info) {    
+      const start = getCourseTimeLocal(0, info.start, 1)
+      const startStr = getTimeStr(start)
+      const end = getCourseTimeLocal(0, info.end, 1)
+      const endStr = getTimeStr(end)
 
-    if(info) {
       return (
         <div className="course-info-container">
           <div className="course-info">
-            <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
+            <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
               <div className="info-info-container">
                 <h3>{info.title}</h3>
                 <div className="surrounded-border">      
-                  <p className="info-line border-bottom info-time text-bold">Hinta: {info.price}&euro;</p>
-                  <p className="info-line border-bottom">{getDayStrMs(info.date)}</p>
-                  <p className="info-line border-bottom">Klo {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                  <p className="info-line border-bottom">Aika: {getDayStrMs(info.date)} {startStr} - {endStr}</p>
                   <p className="info-line border-bottom">Sijainti: {info.place.name}, {info.place.address}</p>
-                  <p className="info-line">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                  <p className="info-line border-bottom">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
+                  <p className="info-line info-time text-bold">Hinta: {info.price}&euro;</p>
                 </div>
                 <div>
                   <div className="centered">

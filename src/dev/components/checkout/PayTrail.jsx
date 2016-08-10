@@ -1,4 +1,5 @@
 import React from "react";
+import  { getCurrentBaseUrl } from '../../helpers/urlParser.js'
 
 export default class PayTrail extends React.Component {
 
@@ -24,10 +25,10 @@ export default class PayTrail extends React.Component {
     let referenceNumber = ""
     let orderDescription = cart.key;
     let currency = "EUR"
-    let returnAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailreturn"
-    let cancelAddress = "https://joogakoulusilta-projekti.firebaseapp.com/#/paytrailcancel"
+    let returnAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailreturn"
+    let cancelAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailcancel"
     let pendingAddress = ""
-    let notifyAddress = "http://joogaserver-stage.herokuapp.com/paytrailnotification"
+    let notifyAddress = JOOGASERVER + "/paytrailnotification"
     let type = "S1"
     let culture = "fi_FI"
     let preselectedMethod = ""
@@ -51,28 +52,31 @@ export default class PayTrail extends React.Component {
     }
 
     return(
-      <div>
-      <button className="btn-small btn-red" onClick={() => this.cancelPayment(initializedTransaction)}>Peru osto</button>
-
-      <form id="payment">
-        <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
-        <input name="AMOUNT" type="hidden" value={amount}/>
-        <input name="ORDER_NUMBER" type="hidden" value={orderNumber}/>
-        <input name="REFERENCE_NUMBER" type="hidden" value={referenceNumber}/>
-        <input name="ORDER_DESCRIPTION" type="hidden" value={orderDescription}/>
-        <input name="CURRENCY" type="hidden" value={currency}/>
-        <input name="RETURN_ADDRESS" type="hidden" value={returnAddress}/>
-        <input name="CANCEL_ADDRESS" type="hidden" value={cancelAddress}/>
-        <input name="PENDING_ADDRESS" type="hidden" value={pendingAddress}/>
-        <input name="NOTIFY_ADDRESS" type="hidden" value={notifyAddress}/>
-        <input name="TYPE" type="hidden" value={type}/>
-        <input name="CULTURE" type="hidden" value={culture}/>
-        <input name="PRESELECTED_METHOD" type="hidden" value={preselectedMethod}/>
-        <input name="MODE" type="hidden" value={mode}/>
-        <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
-        <input name="GROUP" type="hidden" value={group}/>
-        <input name="AUTHCODE" type="hidden" value={authCode}/>
-      </form>
+      <div className="container">
+        <div className="content-container paytrail-container centered">
+          <div className="mobile-full">
+            <button className="btn-small btn-red margin-bottom" onClick={() => this.cancelPayment(initializedTransaction)}>Peru osto</button>
+          </div>
+          <form id="payment">
+            <input name="MERCHANT_ID" type="hidden" value={merchantId}/>
+            <input name="AMOUNT" type="hidden" value={amount}/>
+            <input name="ORDER_NUMBER" type="hidden" value={orderNumber}/>
+            <input name="REFERENCE_NUMBER" type="hidden" value={referenceNumber}/>
+            <input name="ORDER_DESCRIPTION" type="hidden" value={orderDescription}/>
+            <input name="CURRENCY" type="hidden" value={currency}/>
+            <input name="RETURN_ADDRESS" type="hidden" value={returnAddress}/>
+            <input name="CANCEL_ADDRESS" type="hidden" value={cancelAddress}/>
+            <input name="PENDING_ADDRESS" type="hidden" value={pendingAddress}/>
+            <input name="NOTIFY_ADDRESS" type="hidden" value={notifyAddress}/>
+            <input name="TYPE" type="hidden" value={type}/>
+            <input name="CULTURE" type="hidden" value={culture}/>
+            <input name="PRESELECTED_METHOD" type="hidden" value={preselectedMethod}/>
+            <input name="MODE" type="hidden" value={mode}/>
+            <input name="VISIBLE_METHODS" type="hidden" value={visibleMethods}/>
+            <input name="GROUP" type="hidden" value={group}/>
+            <input name="AUTHCODE" type="hidden" value={authCode}/>
+          </form>
+        </div>      
       </div>
     )
   }

@@ -3,7 +3,12 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import  { getCurrentBaseUrl } from '../helpers/urlParser.js'
+
+//var md5 = require('md5')
+
 import * as testActionCreators from '../actions/test.js'
+import * as userActionCreators from '../actions/user.js'
 
 class Tests extends React.Component {
 
@@ -40,14 +45,23 @@ class Tests extends React.Component {
     this.props.actions.test2();
   }
 
+  sendFeedback(){
+    let feedback = document.getElementById("feedback").value
+    this.props.userActions.sendFeedback(feedback)
+  }
+
   render() {
     return(
       <div>
         <button className="btn-small btn-red" onClick={this.test1.bind(this)}>Test-1</button>
         <button className="btn-small btn-red" onClick={this.test2.bind(this)}>Test-2</button>
         <button className="btn-small btn-red" onClick={this.testFirebaseErrorLogging.bind(this)}>testFirebaseErrorLogging-2</button>
+        <br></br>
+        <button className="btn-small btn-green" onClick={this.sendFeedback.bind(this)}>SendFeedback</button>
+        <textarea type="text" id="feedback"/>
+        <p>{getCurrentBaseUrl(document.location.href)}</p>
       </div>
-    )    
+    )
   }
 }
 
@@ -56,7 +70,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(testActionCreators, dispatch)}
+  return { actions: bindActionCreators(testActionCreators, dispatch),
+        userActions: bindActionCreators(userActionCreators, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tests)

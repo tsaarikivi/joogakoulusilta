@@ -20,7 +20,7 @@ class ShopItemCountForm extends React.Component {
     var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
 
 
-    const { fields: { desc, price, taxpercent, title, usetimes, expiresAfterDays }, handleSubmit } = this.props
+    const { fields: { desc, price, taxpercent, title, usetimes, expiresAfterDays, oneTime }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -42,6 +42,9 @@ class ShopItemCountForm extends React.Component {
 
           <label htmlFor="countTaxpercent">Veroprosentti</label>
           <input type="number" step="0.01" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
+
+          <label htmlFor="oneTime">Kerran ostettava tuote</label>
+          <input type="checkbox" name="oneTime" className="checkbox rowbox" {...oneTime} />
 
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
@@ -80,6 +83,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'ShopItemCountForm',
-  fields: ['desc', 'price', 'taxpercent', 'title', 'usetimes', 'expiresAfterDays'],
+  fields: ['desc', 'price', 'taxpercent', 'title', 'usetimes', 'expiresAfterDays', 'oneTime'],
   validate
 }, mapStateToProps, mapDispatchToProps)(ShopItemCountForm)

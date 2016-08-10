@@ -7,8 +7,10 @@ import {
     FETCH_SHOP_LIST,
     FETCH_PLACE_LIST,
     FETCH_INFO_LIST,
-    FETCH_SPECIAL_COURSE_LIST,
     STOP_FETCH_INFO_LIST,
+    FETCH_TERMS_LIST,
+    STOP_FETCH_TERMS_LIST,
+    FETCH_SPECIAL_COURSE_LIST,
     STOP_FETCH_SHOP_LIST,
 
     EXPAND_ADMIN_LIST,
@@ -27,6 +29,8 @@ import {
     MINIMIZE_PLACE_LIST,
     EXPAND_INFO_LIST,
     MINIMIZE_INFO_LIST,
+    EXPAND_TERMS_LIST,
+    MINIMIZE_TERMS_LIST,
     EXPAND_SPECIAL_COURSE_LIST,
     MINIMIZE_SPECIAL_COURSE_LIST,
 
@@ -42,6 +46,8 @@ import {
     MINIMIZE_TIME_SHOP_FORM,
     EXPAND_COUNT_SHOP_FORM,
     MINIMIZE_COUNT_SHOP_FORM,
+    EXPAND_TERMS_FORM,
+    MINIMIZE_TERMS_FORM,
     EXPAND_INFO_FORM,
     MINIMIZE_INFO_FORM
 } from './actionTypes.js'
@@ -349,6 +355,54 @@ export function fetchPlaceList() {
     }
 }
 
+export function fetchTermsList() {
+    var list = []
+
+    return dispatch => {
+        var returnObject = {}
+        firebase.database().ref('/terms/').on('value', snapshot => {
+            var termItems = snapshot.val()
+            list = Object.assign([])
+            for (var key in termItems) {
+                    termItems[key].key = key
+                    list = list.concat(termItems[key])
+            }
+            returnObject = Object.assign({}, {
+                list: list
+            })
+            dispatch({
+                type: FETCH_TERMS_LIST,
+                payload: returnObject
+            })
+        }, err => {
+            console.error("ERR: fetch terms: ", err);
+        })
+    }
+}
+
+export function stopFetchTermsList() {
+    return dispatch => {
+        firebase.database().ref('/terms/').off('value');
+        dispatch({
+            type: FETCH_TERMS_LIST,
+            payload: {
+                list: Object.assign([])
+            }
+        })
+    }
+}
+
+export function removeTermsItem(item) {
+    return dispatch => {
+        firebase.database().ref('/terms/' + item.key).remove().then(() => {
+
+        }).catch(err => {
+            console.error("Removing terms item falied: ", err)
+        })
+    }
+}
+
+
 export function fetchInfoList() {
     var list = []
 
@@ -503,10 +557,10 @@ export function modifySpecialCourse(data, key) {
                 instructor.uid = null
 
                 firebase.database().ref('/specialCourses/' + key).update({
-                    start: data.date + toMilliseconds(parseInt(data.start)),
-                    end: data.date + toMilliseconds(parseInt(data.end)),
+                    start: toMilliseconds(parseInt(data.start)),
+                    end: toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date + toMilliseconds(parseInt(data.start)),
+                    date: data.date,
                     price: Number(data.price.toFixed(2)),
                     taxpercent: Number(data.taxpercent.toFixed(2)),
                     taxamount: Number(taxamount.toFixed(2)),
@@ -545,10 +599,10 @@ export function addSpecialCourse(data) {
                 instructor.uid = null
 
                 firebase.database().ref('/specialCourses/').push({
-                    start: data.date + toMilliseconds(parseInt(data.start)),
-                    end: data.date + toMilliseconds(parseInt(data.end)),
+                    start: toMilliseconds(parseInt(data.start)),
+                    end: toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date + toMilliseconds(parseInt(data.start)),
+                    date: data.date,
                     price: Number(data.price.toFixed(2)),
                     taxpercent: Number(data.taxpercent.toFixed(2)),
                     taxamount: Number(taxamount.toFixed(2)),
@@ -608,6 +662,7 @@ export function addShopItem(data, type) {
         taxamount: Number(taxamount.toFixed(2)),
         taxpercent: Number(data.taxpercent.toFixed(2)),
         beforetax: Number(beforetax.toFixed(2)),
+        oneTime: data.oneTime || false
     })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);
@@ -629,6 +684,7 @@ export function modifyShopItem(data, type) {
         taxamount: Number(taxamount.toFixed(2)),
         taxpercent: Number(data.taxpercent.toFixed(2)),
         beforetax: Number(beforetax.toFixed(2)),
+        oneTime: data.oneTime || false
     })
         .catch(err => {
             console.error("ERR: update; addShopItem: ", err);
@@ -654,6 +710,27 @@ export function modifyInfo(key, data) {
             console.error("ERR: modifyInfo: ", err);
         })
 }
+
+export function addTerms(data) {
+    return dispatch => firebase.database().ref('/terms/').push({
+        title: data.title,
+        content: data.content
+    })
+        .catch(err => {
+            console.error("ERR: addterms: ", err);
+        })
+}
+
+export function modifyTerms(key, data) {
+    return dispatch => firebase.database().ref('/terms/' + key).update({
+        title: data.title,
+        content: data.content
+    })
+        .catch(err => {
+            console.error("ERR: modifyTerms: ", err);
+        })
+}
+
 
 export function lockUser(key) {
     return dispatch => firebase.database().ref('/users/' + key).update({
@@ -1026,6 +1103,46 @@ export function minimizeInfoForm() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_INFO_FORM,
+            payload: {
+                expanded: false,
+                expander: ""
+            }
+        })
+    }
+}
+
+export function expandTermsList() {
+    return dispatch => {
+        dispatch({
+            type: EXPAND_TERMS_LIST
+        })
+    }
+}
+
+export function minimizeTermsList() {
+    return dispatch => {
+        dispatch({
+            type: MINIMIZE_TERMS_LIST
+        })
+    }
+}
+
+export function expandTermsForm(expander) {
+    return dispatch => {
+        dispatch({
+            type: EXPAND_TERMS_FORM,
+            payload: {
+                expanded: true,
+                expander: expander
+            }
+        })
+    }
+}
+
+export function minimizeTermsForm() {
+    return dispatch => {
+        dispatch({
+            type: MINIMIZE_TERMS_FORM,
             payload: {
                 expanded: false,
                 expander: ""

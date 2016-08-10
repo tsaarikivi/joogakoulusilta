@@ -1,7 +1,7 @@
 $body-color: #f8f9fa;
 $container-color: #fff;
 $border: #ddd;
-$shadow: #bbbbbf;
+$shadow-color: #000;
 $text-light: #fafafa;
 $text-dark: #454552;
 $text-fade: #787885;
@@ -25,3 +25,14 @@ $active-item: $darkblue;
 $link: $blue;
 $link-hover: $darkblue;
 $link-active: $lighterblue;
+$lightnav: $white;
+$nav: $lightgray;
+
+$container-radius: 2px;
+$btn-radius: 2px;
+$logo-radius: 1px;
+
+$mobile-size: 719px;
+$desktop-size: 720px;
+
+$shadow: 0 2px 5px $shadow-color;

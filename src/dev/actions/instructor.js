@@ -1,7 +1,11 @@
 import axios from 'axios'
 import {
     FETCH_INSTRUCTOR_DATA,
-    INSTRUCTOR_ERROR
+    INSTRUCTOR_ERROR,
+    ACTIVATE_COURSE,
+    ACTIVATION_FAILED,
+    CANCEL_COURSE,
+    COURSE_CANCEL_ERROR
 } from './actionTypes.js'
 
 import {
@@ -19,9 +23,16 @@ export function activateCourse(course) {
     return dispatch => {
         firebase.database().ref('/cancelledCourses/' + course.key + '/' + course.cancelInfo.instance).remove()
         .then(()=>{
-            // nothing to do
+            dispatch({
+              type: ACTIVATE_COURSE,
+              payload: {course}
+            })
         })
         .catch(error => {
+          dispatch({
+            type: ACTIVATION_FAILED,
+            payload: {error, course}
+          })
             console.error("Course activation failed: ", error);
         })
     }
@@ -47,9 +58,17 @@ export function postCanceCourse(course, booking, reason = "undefined") {
                         reason: reason
                     })
                 .then(response => {
+                  dispatch({
+                    type: CANCEL_COURSE,
+                    payload: {course, response: response.data, reason}
+                  })
                     _hideLoadingScreen(dispatch, "Tunti peruttu", true)
                 })
                 .catch(error => {
+                  dispatch({
+                    type: COURSE_CANCEL_ERROR,
+                    payload: {error, course}
+                  })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Tunnin perumisesa tapahtui virhe: " + error.data.message, false)
                 });

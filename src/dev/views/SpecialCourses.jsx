@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react'
 
+import SpecialCoursesList from '../components/specialCourses/SpecialCourses.jsx'
+import SpecialCourseInfo from '../components/specialCourses/SpecialCourseInfo.jsx'
 import SpecialCoursesHeader from '../components/specialCourses/SpecialCoursesHeader.jsx'
-import SpecialCoursesList from '../components/specialCourses/SpecialCoursesList.jsx'
 
 export default class SpecialCourses extends React.Component {
   render() {
@@ -9,7 +10,8 @@ export default class SpecialCourses extends React.Component {
       <div>
         <SpecialCoursesHeader />
         <SpecialCoursesList />
+        <SpecialCourseInfo />
       </div>
-    );
+    )
   }
 }

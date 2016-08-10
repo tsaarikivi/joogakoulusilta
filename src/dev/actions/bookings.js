@@ -2,7 +2,11 @@ import axios from 'axios'
 
 import {
     FETCH_COURSE_BOOKINGS,
-    CHANGE_LOADINGSCREEN_STATE
+    CHANGE_LOADINGSCREEN_STATE,
+    BOOK_A_COURSE,
+    BOOKING_ERROR,
+    CANCEL_ERROR,
+    CANCEL_RESERVATION
 } from './actionTypes.js'
 
 import {
@@ -26,9 +30,17 @@ export function postCancellation(item, txRef, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
+                  dispatch({
+                    type: CANCEL_RESERVATION,
+                    payload: {courseInfo, txRef}
+                  })
                     _hideLoadingScreen(dispatch, "Varaus peruttu", true)
                 })
                 .catch(error => {
+                  dispatch({
+                    type: CANCEL_ERROR,
+                    payload: {error, courseInfo, txRef}
+                  })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString(), false)
                 });
@@ -53,9 +65,17 @@ export function postReservation(forward, courseInfo) {
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
+                  dispatch({
+                    type: BOOK_A_COURSE,
+                    payload: {courseInfo}
+                  })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {
+                  dispatch({
+                    type: BOOKING_ERROR,
+                    payload: {error, courseInfo}
+                  })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
                 });

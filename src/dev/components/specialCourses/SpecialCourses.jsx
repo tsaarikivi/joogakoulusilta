@@ -10,14 +10,11 @@ class SpecialCourses extends React.Component {
 
   componentWillMount() {
     this.props.actions.fetchSpecialCoursesBanner()
-    this.props.actions.fetchSpecialCourseBookings()
+    this.props.actions.fetchSpecialCourseBookings()     
   }
 
   componentWillUnmount(){
     this.props.actions.stopSpecialCourseBookings()
-  }
-
-  componentWillReceiveProps(nextProps){
   }
 
   renderSpecialCoursesBanner(item) {
@@ -30,10 +27,8 @@ class SpecialCourses extends React.Component {
   render() {
     if (this.props.specialCoursesBanner.banner.length > 0 && this.props.specialCoursesBanner.bookingsReady) {
       return (
-        <div class="container bordered-container">
+        <div class="container">
           <div className="content-container">
-            <h2 className="nomargin nopadding">Tulevia erityiskursseja</h2>
-            <small className="text-fade margin-top margin-bottom small-info">Klikkaa kurssia avataksesi lisätiedot</small>
             <ul class="narrow-list">
               {this.props.specialCoursesBanner.banner.map(this.renderSpecialCoursesBanner.bind(this))}
             </ul>
@@ -43,7 +38,11 @@ class SpecialCourses extends React.Component {
     }
     else {
       return (
-        <div></div>
+        <div class="container">
+          <div className="content-container">
+            <p className="text-red">Ei tulevia erikoiskursseja. Tule myöhemmin uudelleen!</p>
+          </div>
+        </div>
       )
     }
   }
