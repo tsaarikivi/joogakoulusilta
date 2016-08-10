@@ -204,14 +204,14 @@ export function getAuthCode(_authcode) {
     }
 }
 
-export function cancelPaytrailPayment(pendingTrxId){
+export function cancelPaytrailPayment(pendingTrxId, resetShop = true){
     return dispatch => {
-        _cancelPaytrailPayment(dispatch, pendingTrxId)
+        _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop)
     }
 }
 
 
-function _cancelPaytrailPayment(dispatch, pendingTrxId) {
+function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
     _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
     let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
 
@@ -225,9 +225,24 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId) {
         .then(result => {
             _hideLoadingScreen(dispatch, "Maksun peruminen onnistui", true)
 
-            dispatch({
-                type: RESET_SHOP
-            })
+            if(resetShop){
+                dispatch({
+                    type: RESET_SHOP
+                })
+            } else {
+                //This is here for PaytrailCancel view needs. We need to clear location history.
+                //View will call resetShop when unmounts.
+                dispatch({
+                    type: FINISH_WITH_PAYTRAIL,
+                    payload: {
+                        phase: "payTrailComplete",
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }                
+                })
+            }
         })
         .catch(error => {
             console.error("PURCHASE ERROR", error);
