@@ -44,7 +44,7 @@ class ShopItemCountForm extends React.Component {
           <input type="number" step="0.01" name="countTaxpercent" {...taxpercent} placeholder="esim: 10.5 tai 50" />
 
           <label htmlFor="oneTime">Kerran ostettava tuote</label>
-          <input type="checkbox" name="oneTime" {...oneTime} />
+          <input type="checkbox" name="oneTime" className="checkbox rowbox" {...oneTime} />
 
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>

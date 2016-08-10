@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import * as userActionCreators from '../actions/user.js'
 import * as lsActionCreators from '../actions/loadingScreen.js'
 
-import ContactInfo from '../components/home/ContactInfo.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
 import TimetableHeader from '../components/user/TimetableHeader.jsx'
@@ -44,7 +43,6 @@ class User extends React.Component {
             <div>
               <TimetableHeader />
               <Timetable/>              
-              <ContactInfo />
               <CourseInfo />              
             </div>
           );

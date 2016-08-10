@@ -78,7 +78,7 @@ class Timetable extends React.Component {
 
   render() {
     return (
-      <div class="container timetable-container bordered-container">
+      <div class="container timetable-container">
         <table className="centered">
           <tbody>
             {this.renderWeek()}

@@ -27,7 +27,7 @@ class SpecialCourses extends React.Component {
   render() {
     if (this.props.specialCoursesBanner.banner.length > 0 && this.props.specialCoursesBanner.bookingsReady) {
       return (
-        <div class="container bordered-container">
+        <div class="container">
           <div className="content-container">
             <ul class="narrow-list">
               {this.props.specialCoursesBanner.banner.map(this.renderSpecialCoursesBanner.bind(this))}
@@ -38,7 +38,7 @@ class SpecialCourses extends React.Component {
     }
     else {
       return (
-        <div class="container bordered-container">
+        <div class="container">
           <div className="content-container">
             <p className="text-red">Ei tulevia erikoiskursseja. Tule myöhemmin uudelleen!</p>
           </div>

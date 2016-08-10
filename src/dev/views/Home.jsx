@@ -2,8 +2,8 @@ import React from "react";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import ContactInfo from '../components/home/ContactInfo.jsx'
 import HomeLoginRegister from '../components/home/HomeLoginRegister.jsx'
+import ContactInfo from '../components/home/ContactInfo.jsx'
 
 class Home extends React.Component {
 

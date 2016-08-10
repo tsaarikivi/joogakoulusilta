@@ -7,7 +7,6 @@ import UserAuth from '../components/userProfile/UserAuth.jsx'
 import UserDataForm from '../components/userProfile/UserDataForm.jsx'
 import UserCourseHistory from '../components/userProfile/UserCourseHistory.jsx'
 import UserTransactions from '../components/userProfile/UserTransactions.jsx'
-import ContactInfo from '../components/home/ContactInfo.jsx'
 
 class UserProfile extends React.Component {
 
@@ -35,7 +34,6 @@ class UserProfile extends React.Component {
           <UserDataForm/>
           <UserTransactions/>
           <UserCourseHistory/>
-          <ContactInfo />
         </div>
       );
     } else {
