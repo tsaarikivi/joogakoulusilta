@@ -12,7 +12,8 @@ import {
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
     FETCH_PENDING_TRANSACTIONS,
-    FINISH_WITH_PAYTRAIL
+    FINISH_WITH_PAYTRAIL,
+    GET_AUTH_CODE
 } from './actionTypes.js'
 
 import {
@@ -321,7 +322,7 @@ export function executeCashPurchase(forUsr, itemKey, type) {
                     payload: {
                         cart: {},
                         phase: "done",
-                        purchaseResult: result,
+                        purchaseResult: result.data,
                         error: {
                             code: "0",
                             message: "no error"
@@ -358,7 +359,7 @@ export function waitForMilliseconds(milliseconds) {
     }
 }
 
-export function fetchShopItems() {
+export function fetchShopItems(oneTime) {
     var list = Object.assign([])
     return dispatch => {
         _showLoadingScreen(dispatch, "Haetaan tuotteet")
@@ -366,9 +367,13 @@ export function fetchShopItems() {
                 var shopItems = snapshot.val()
                 for (var key in shopItems) {
                     if (shopItems.hasOwnProperty(key) && !shopItems[key].locked) {
-                        let shopItemWithKey = shopItems[key]
-                        shopItemWithKey.key = key
-                        list = list.concat(shopItemWithKey)
+                        if( oneTime.find( listItem => { return listItem === key})){
+                            console.log("OneTimer already purchased");
+                        } else {
+                            let shopItemWithKey = shopItems[key]
+                            shopItemWithKey.key = key
+                            list = list.concat(shopItemWithKey)   
+                        }
                     }
                 }
                 _hideLoadingScreen(dispatch, "Tuotteet haettu", true)

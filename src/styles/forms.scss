@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   .login-header {
     margin: 3vw 0 2vw;
   }
@@ -64,7 +64,7 @@
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   .login-header {
     margin: 20px 0 20px;
   }
@@ -72,7 +72,7 @@
   form {
     box-sizing: border-box;
     width: 100%;
-    max-width: 800px;
+    max-width: $desktop-size;
     margin: 0 auto;
     padding: 0;
     text-align: left;

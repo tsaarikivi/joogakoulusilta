@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { removeSpecialCourseInfo } from '../../actions/specialCourses.js'
 import * as shopActionCreators from '../../actions/shop.js'
-import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
+import {getDayStrMs, getTimeStr, getCourseTimeLocal} from '../../helpers/timeHelper.js'
 
 class SpecialCourseInfo extends React.Component {
 
@@ -86,8 +86,12 @@ class SpecialCourseInfo extends React.Component {
   render() {
     const { info } = this.props.specialCourseInfo
 
+    if(info) {    
+      const start = getCourseTimeLocal(0, info.start, 1)
+      const startStr = getTimeStr(start)
+      const end = getCourseTimeLocal(0, info.end, 1)
+      const endStr = getTimeStr(end)
 
-    if(info) {
       return (
         <div className="course-info-container">
           <div className="course-info">
@@ -95,7 +99,7 @@ class SpecialCourseInfo extends React.Component {
               <div className="info-info-container">
                 <h3>{info.title}</h3>
                 <div className="surrounded-border">      
-                  <p className="info-line border-bottom">Aika: {getDayStrMs(info.date)} {getTimeStrMs(info.start)} - {getTimeStrMs(info.end)}</p>
+                  <p className="info-line border-bottom">Aika: {getDayStrMs(info.date)} {startStr} - {endStr}</p>
                   <p className="info-line border-bottom">Sijainti: {info.place.name}, {info.place.address}</p>
                   <p className="info-line border-bottom">Joogaopettaja: {info.instructor.firstname} {info.instructor.lastname}</p>
                   <p className="info-line info-time text-bold">Hinta: {info.price}&euro;</p>

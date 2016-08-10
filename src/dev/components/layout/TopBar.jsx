@@ -25,10 +25,21 @@ class TopBar extends React.Component {
       this.setState({navOpen: false})
       document.getElementById("nav-btn").classList.remove("mobile-hidden")
       document.getElementById("nav-menu").classList.add("mobile-hidden")
+      document.getElementById("tickets-info").classList.add("mobile-hidden")
     } else {
       this.setState({navOpen: true})
       document.getElementById("nav-btn").classList.add("mobile-hidden")
       document.getElementById("nav-menu").classList.remove("mobile-hidden")
+      document.getElementById("tickets-info").classList.remove("mobile-hidden")
+    }
+  }
+
+  handleLogout(){
+    if(this.props.auth.uid){
+      this.props.authActions.logout();
+    }
+    else {
+      console.log("User not logged in. No action taken.");
     }
   }
 
@@ -39,36 +50,35 @@ class TopBar extends React.Component {
     let admin = null;
     let diagnostics = null
     if(roles.admin){
-      admin = <Link className="text-link text-link-white" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
-      diagnostics = <Link className="text-link text-link-white" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
+      admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
+      diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
     }
     let tests = null;
     if(roles.tester){
-      tests = <Link className="text-link text-link-white" to="tests" onClick={() => this.toggleNav()}>Test</Link>
+      tests = <Link className="text-link" to="tests" onClick={() => this.toggleNav()}>Test</Link>
     }
     let instructor = null;
     if(roles.instructor){
-      instructor = <Link className="text-link text-link-white" to="instructor" onClick={() => this.toggleNav()}>Opettaja</Link>
+      instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Opettaja</Link>
     }
 
     if (this.props.curUsr.key != '0') {
       return (
-        <div class="container user-header-container light-bg">
+        <nav class="user-header-container">
+          <div className="align-right">
+            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
+          </div>
           <div className="content-container">
             {this.renderTickets()}
-            <img src="./assets/nav.png" className="nav-btn float-right desktop-hidden" id="nav-btn" onClick={() => this.toggleNav()}/>
             <div className="userinfo-container mobile-hidden" id="nav-menu">
               <div className="mobile-row">
-                <Link className="text-link text-link-white" to="user" onClick={() => this.toggleNav()}>Aikataulu</Link>
+                <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Aikataulu</Link>
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-link-white" to="specialCourses" onClick={() => this.toggleNav()}>Erikoiskurssit</Link>
+                <Link className="text-link" to="specialCourses" onClick={() => this.toggleNav()}>Erikoiskurssit</Link>
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-link-white" to="shop" onClick={() => this.toggleNav()}>Kauppa</Link>
-              </div>
-              <div className="mobile-row">
-                <Link className="text-link text-link-white" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>
+                <Link className="text-link" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>
               </div>
               <div className="mobile-row">
                 {instructor}
@@ -82,9 +92,15 @@ class TopBar extends React.Component {
               <div className="mobile-row">
                 {diagnostics}
               </div>
+              <div className="mobile-row">
+                <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Kauppa</Link>
+              </div>
+              <div className="mobile-row">
+                <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
       )
     } else {
       return <div></div>

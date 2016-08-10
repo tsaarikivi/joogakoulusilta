@@ -6,10 +6,14 @@ import ShopItem from './ShopItem.jsx'
 import * as shopActionCreators from '../../actions/shop.js'
 
 class ShopList extends React.Component {
-  componentWillMount() {
+
+  componentWillReceiveProps(nextProps){
+    const { oneTime } = this.props.currentUser.transactions.details;
     if (this.props.shopItems.items.length === 0) {
-      this.props.shopActions.fetchShopItems()
-    }    
+      if(oneTime){
+        this.props.shopActions.fetchShopItems(oneTime)
+      }
+    }       
   }
 
   renderShopItems(item) {
@@ -23,7 +27,7 @@ class ShopList extends React.Component {
       return (
         <div className="container bordered-container">
           <div className="content-container align-left">
-            <ul className="wide-list">
+            <ul className="shop-list">
               {this.props.shopItems.items.map(this.renderShopItems.bind(this))}
             </ul>
           </div>

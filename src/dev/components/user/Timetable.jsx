@@ -90,7 +90,7 @@ class Timetable extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { timetable: state.timetable }
+  return { timetable: state.timetable}
 }
 
 function mapDispatchToProps(dispatch) {
