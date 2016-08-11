@@ -49,9 +49,11 @@ class TopBar extends React.Component {
 
     let admin = null;
     let diagnostics = null
+    let adminShop = null;
     if(roles.admin){
       admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
       diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
+      adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
     }
     let tests = null;
     if(roles.tester){
@@ -60,6 +62,7 @@ class TopBar extends React.Component {
     let instructor = null;
     if(roles.instructor){
       instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Opettaja</Link>
+      adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
     }
 
     if (this.props.curUsr.key != '0') {
@@ -90,7 +93,10 @@ class TopBar extends React.Component {
                 {diagnostics}
               </div>
               <div className="mobile-row">
-                <a className="text-link text-green" href="https://holvi.com/shop/4Z4CW4/" onClick={() => this.toggleNav()} target="_blank">Kauppa</a>
+                {adminShop}
+              </div>
+              <div className="mobile-row">
+                <a className="text-link text-green" href="https://holvi.com/shop/4Z4CW4/" onClick={() => this.toggleNav()} target="_blank">Kauppa - Holvi</a>
               </div>
               <div className="mobile-row">
                 <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>

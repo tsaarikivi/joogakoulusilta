@@ -136,8 +136,9 @@ class CourseInfo extends React.Component {
 
     if(!this.userCanBook(day)){
       return(<div>
-              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Käy kaupassamme ostamassa joogaoikeuksia!</p>
-              <a className="text-link text-link-white" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Kauppaan</a>
+              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Tule paikan päälle tai käy kaupassamme (Holvi) ostamassa tuntioikeuksia!</p>
+              <p className="info-cantreserve">Huomaathan, että ostaessasi Holvi-palvelusta, ostamasi tuote saapuu tilillesi max 24h viiveellä. Kiitos kärsivällisyydestäsi!</p>
+              <a className="text-link text-link-white" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Osta Holvista</a>
             </div>
       );
     }

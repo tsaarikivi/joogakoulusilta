@@ -36,9 +36,9 @@ class ForgotPassword extends React.Component {
                 <Logo />
                 <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
                 <h2 className="centered login-header">Unohditko salasanasi?</h2>
-                <small className="small-text">Anna sähköpostiosoitteesi. Lähetämme sinulle salasanan vaihtolinkin.</small>
-                <small className="small-text">Sähköpostin saapumisessa voi kestää tovi.</small>
-                <div className="content-container login-container">
+                <div className="content-container login-container align-left">
+                    <small className="text-fade margin-top margin-bottom small-info">Anna sähköpostiosoitteesi. Lähetämme sinulle salasanan vaihtolinkin.</small>
+                    <small className="text-fade margin-top margin-bottom small-info">Sähköpostin saapumisessa voi kestää tovi.</small>
                     {this.renderForm()}
                 </div>
             </div>

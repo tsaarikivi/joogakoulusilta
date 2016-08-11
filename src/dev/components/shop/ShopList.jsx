@@ -9,9 +9,7 @@ class ShopList extends React.Component {
 
   componentWillMount() {
     const { oneTime } = this.props.currentUser.transactions.details;
-    if (this.props.shopItems.items.length === 0) {
-      this.props.shopActions.fetchShopItems(oneTime)
-    } 
+    this.props.shopActions.fetchShopItems(oneTime)
   }
 
   componentWillReceiveProps(nextProps){

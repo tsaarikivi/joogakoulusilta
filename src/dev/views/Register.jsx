@@ -89,8 +89,10 @@ class Register extends React.Component {
           <div className="centered">
             <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
           </div>
-          <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>
+          <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>          
           <div className="content-container login-container">
+            <small className="text-fade margin-top margin-bottom small-info">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja tuntien perumiset sähköpostiisi.</small>
+            <small className="text-fade margin-top margin-bottom small-info">Sähköpostiosoitetta käytetään vain vahvistus ja tiedotus viestien lähetykseen. Sähköpostitietoja ei luovuteta kolmannelle osapuolelle mitään tarkoitusta varten.</small>
             {this.renderForm()}
             <b>{this.errorText}</b>
           </div>  

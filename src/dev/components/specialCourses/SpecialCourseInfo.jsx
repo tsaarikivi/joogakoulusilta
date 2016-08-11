@@ -81,7 +81,9 @@ class SpecialCourseInfo extends React.Component {
             {cashBuyButton}
           </span>          
           <span className="item-row">
-            <a className="btn-small btn-blue btn-link mobile-full" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Kauppaan</a>
+            <p className="info-cantreserve">Tule paikan päälle tai käy kaupassamme (Holvi) ostamassa kurssi!</p>
+            <p className="info-cantreserve">Huomaathan, että ostaessasi Holvi-palvelusta, ostamasi tuote saapuu tilillesi max 24h viiveellä. Kiitos kärsivällisyydestäsi!</p>
+            <a className="btn-small btn-blue btn-link mobile-full" href="https://holvi.com/shop/4Z4CW4/" target="_blank">Osta Holvista</a>
           </span>    
         </div>
       )
