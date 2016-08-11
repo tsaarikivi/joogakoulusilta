@@ -7,16 +7,10 @@
 @media screen and (max-width: $mobile-size) {
   .logo-container {
     margin: 0 auto 3vw;
-    padding: 10vw 0;
-    width: 80%;
-    .upper-text {
-      font-size: 10vw;
-    }
-    .lower-text {
-      font-size: 13vw;
-      margin: 0 0 0 7vw;
-      letter-spacing: 8vw;
-    }
+    img {
+      width: 80%;
+      height: auto;
+    }    
   }
 
   .ticket-logo {
@@ -38,15 +32,9 @@
 @media screen and (min-width: $desktop-size) {
   .logo-container {
     margin: 0 auto 10px;
-    padding: 35px 0;
-    width: 250px;
-    .upper-text {
-      font-size: 30px;
-    }
-    .lower-text {
-      font-size: 40px;
-      margin: 0 0 0 21px;
-      letter-spacing: 24px;
+    img {
+      width: 250px;
+      height: auto;
     }
   }
 
@@ -67,21 +55,10 @@
 /////////////////////////////////////////////////////
 
   .logo-container {
-    border: 1px solid $text-dark;
-    box-sizing: border-box;
-    border-radius: $logo-radius;
-    background-color: $container-color;
-    .upper-text {
-      display: inline-block;
-      text-transform: uppercase;
-      margin: 0 auto;
-      padding: 0;
-      color: $text-fade;
-    }
-    .lower-text {
-      display: inline-block;
-      text-transform: uppercase;
-      padding: 0;
+    box-sizing: border-box;    
+    img {
+      box-sizing: border-box;
+      border-radius: $logo-radius;
     }
   }
 
