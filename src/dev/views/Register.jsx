@@ -24,12 +24,6 @@ class Register extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.auth.error.code != 0){
-      this.errorText = nextProps.auth.error.message
-    }
-    else {
-      this.errorText = "";
-    }
     if(nextProps.auth.uid){
       this.context.router.push('/user/')
     }
@@ -91,10 +85,9 @@ class Register extends React.Component {
           </div>
           <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>          
           <div className="content-container login-container">
-            <small className="text-fade margin-top margin-bottom small-info">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja tuntien perumiset sähköpostiisi.</small>
-            <small className="text-fade margin-top margin-bottom small-info">Sähköpostiosoitetta käytetään vain vahvistus ja tiedotus viestien lähetykseen. Sähköpostitietoja ei luovuteta kolmannelle osapuolelle mitään tarkoitusta varten.</small>
+            <p className="text-fade margin-top margin-bottom small-info pushed">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja tuntien perumiset sähköpostiisi.</p>
+            <p className="text-fade margin-top margin-bottom small-info pushed">Sähköpostiosoitetta käytetään vain vahvistus ja tiedotus viestien lähetykseen. Sähköpostitietoja ei luovuteta kolmannelle osapuolelle mitään tarkoitusta varten.</p>
             {this.renderForm()}
-            <b>{this.errorText}</b>
           </div>  
         </div>
       );
