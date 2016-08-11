@@ -59,7 +59,7 @@ class ShopItemCountForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Luo uusi kertakortti</h2>
+          <h2 className="header-collapse">Kertakortin tiedot</h2>
           {this.renderContent()}
         </div>
       </div>

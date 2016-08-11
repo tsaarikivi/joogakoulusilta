@@ -55,7 +55,7 @@ class ShopItemTimeForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-        <h2 className="header-collapse">Aikakortti</h2>
+        <h2 className="header-collapse">Aikakortin tiedot</h2>
         {this.renderContent()}
         </div>
       </div>

@@ -123,7 +123,7 @@ class SpecialCourseForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
+          <h2 className="header-collapse">Kurssin tiedot</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
         </div>
