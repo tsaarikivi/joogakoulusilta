@@ -9,9 +9,10 @@ const INITIAL_STATE = {
     flushed: false
 }
 
-//Add events to be discarded here
+//Add events to be included here
 var approvedEvents = {
     BOOK_A_COURSE: true,
+    LATE_BOOK_A_COURSE: true,
     UPDATE_USER_DETAILS: true,
     FINISH_WITH_PAYTRAIL: true,
     GET_AUTH_CODE: true,

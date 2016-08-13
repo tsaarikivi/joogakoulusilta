@@ -4,6 +4,7 @@ import {
     FETCH_COURSE_BOOKINGS,
     CHANGE_LOADINGSCREEN_STATE,
     BOOK_A_COURSE,
+    LATE_BOOK_A_COURSE,
     BOOKING_ERROR,
     CANCEL_ERROR,
     CANCEL_RESERVATION
@@ -67,7 +68,7 @@ export function postLateReservation(forUser, weeksBehind, courseInfo) {
                     })
                 .then(response => {
                   dispatch({
-                    type: BOOK_A_COURSE,
+                    type: LATE_BOOK_A_COURSE,
                     payload: {courseInfo}
                   })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
