@@ -6,7 +6,6 @@ import { Link } from "react-router"
 import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
-import LateBooking from './LateBooking.jsx'
 import UserList from '../admin/UserList.jsx'
 
 class CourseInfo extends React.Component {
