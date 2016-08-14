@@ -7,6 +7,7 @@ import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment,
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 import LateBooking from './LateBooking.jsx'
+import UserList from '../admin/UserList.jsx'
 
 class CourseInfo extends React.Component {
 
@@ -189,13 +190,20 @@ class CourseInfo extends React.Component {
     if(instructor || admin){
       if(!this.lateReservationRequestOngoing){
         return(
-          <button className="btn-small btn-blue mobile-full" onClick={() => this.makeLateReservation(0)} >
-              Myöhäinen varaus: { dayStr }
-          </button>
+          <div className="content-container">
+            <button className="btn-small btn-blue mobile-full" onClick={() => this.makeLateReservation(0)} >
+                Myöhäinen varaus: { dayStr }
+            </button>
+          </div>
         )      
       } else {
         return(
-          <LateBooking courseInfo={courseInfo}/>
+          <div>
+            <div className="content-container">
+              <h3> Valitse käyttäjä, jolle varaus suoritetaan.</h3>
+            </div>
+            <UserList />
+          </div>
         )
       }
     }
@@ -236,7 +244,7 @@ class CourseInfo extends React.Component {
               </div>
               <p className="info-desc pre-wrap">{courseInfo.courseType.desc}</p>
             </div>
-            {this.renderLateBooking(weekIndex)}
+              {this.renderLateBooking(weekIndex)}
           </div>
         </div>
       )
