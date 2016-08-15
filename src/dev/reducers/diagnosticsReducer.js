@@ -11,6 +11,7 @@ const INITIAL_STATE = {
 
 //Add events to be included here
 var approvedEvents = {
+    REGISTER_USER: true,
     BOOK_A_COURSE: true,
     LATE_BOOK_A_COURSE: true,
     UPDATE_USER_DETAILS: true,
