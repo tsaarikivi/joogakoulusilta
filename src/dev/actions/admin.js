@@ -534,28 +534,11 @@ export function modifyCourse(data, key, courseType, place, instructor) {
     }
 }
 
-export function modifySpecialCourse(data, key) {
-    var courseType = Object.assign({})
-    var instructor = Object.assign({})
-    var place = Object.assign({})
-
+export function modifySpecialCourse(data, key, courseType, place, instructor) {
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
 
     return dispatch => {
-        firebase.database().ref('/places/' + data.place).once("value")
-            .then(snapshot => {
-                place = snapshot.val()
-                return firebase.database().ref('/users/' + data.instructor).once("value")
-            })
-            .then(snapshot => {
-                instructor = snapshot.val()
-                return firebase.database().ref('/courseTypes/' + data.courseType).once("value")
-            })
-            .then(snapshot => {
-                courseType = snapshot.val()
-                instructor.uid = null
-
                 firebase.database().ref('/specialCourses/' + key).update({
                     start: toMilliseconds(parseInt(data.start)),
                     end: toMilliseconds(parseInt(data.end)),
@@ -571,49 +554,30 @@ export function modifySpecialCourse(data, key) {
                     type: "special",
                     title: data.title
                 })
-            })
     }
 }
 
-export function addSpecialCourse(data) {
-    var courseType = Object.assign({})
-    var instructor = Object.assign({})
-    var place = Object.assign({})
+export function addSpecialCourse(data, courseType, place, instructor) {
 
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
-    //TODO: Noi places, users, coursetypes vois lähettää kutsuvasta funktiosta, kun ne on siellä staten osana
 
     return dispatch => {
-        firebase.database().ref('/places/' + data.place).once("value")
-            .then(snapshot => {
-                place = snapshot.val()
-                return firebase.database().ref('/users/' + data.instructor).once("value")
-            })
-            .then(snapshot => {
-                instructor = snapshot.val()
-                return firebase.database().ref('/courseTypes/' + data.courseType).once("value")
-            })
-            .then(snapshot => {
-                courseType = snapshot.val()
-                instructor.uid = null
-
-                firebase.database().ref('/specialCourses/').push({
-                    start: toMilliseconds(parseInt(data.start)),
-                    end: toMilliseconds(parseInt(data.end)),
-                    maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date,
-                    price: Number(data.price.toFixed(2)),
-                    taxpercent: Number(data.taxpercent.toFixed(2)),
-                    taxamount: Number(taxamount.toFixed(2)),
-                    beforetax: Number(beforetax.toFixed(2)),
-                    place: place,
-                    instructor: instructor,
-                    courseType: courseType,
-                    type: "special",
-                    title: data.title
-                })
-            })
+        firebase.database().ref('/specialCourses/').push({
+            start: toMilliseconds(parseInt(data.start)),
+            end: toMilliseconds(parseInt(data.end)),
+            maxCapacity: parseInt(data.maxCapacity),
+            date: data.date,
+            price: Number(data.price.toFixed(2)),
+            taxpercent: Number(data.taxpercent.toFixed(2)),
+            taxamount: Number(taxamount.toFixed(2)),
+            beforetax: Number(beforetax.toFixed(2)),
+            place: place,
+            instructor: instructor,
+            courseType: courseType,
+            type: "special",
+            title: data.title
+        })
     }
 }
 

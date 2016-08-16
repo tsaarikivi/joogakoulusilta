@@ -11,15 +11,6 @@ class SpecialCoursesItem extends React.Component {
     this.props.actions.putSpecialCourseInfo(this.props.item)
   }
 
-  userHasPurchasedThisAlready(){
-    if(this.props.currentUser.transactions.details.special.find((item) => {
-      return item.shopItemKey === this.props.item.key
-    })) {
-      return true;
-    }
-    return false;
-  }
-
   renderBookings(item) {
     if (item.bookings.counter === item.maxCapacity) {
       return <p className="centered table-participants text-red text-bold table-alert">TÄYNNÄ</p>
@@ -33,10 +24,6 @@ class SpecialCoursesItem extends React.Component {
   }
 
   render() {
-    let userBooked = null;
-    if(this.userHasPurchasedThisAlready()){
-       userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
-    }
     const { item } = this.props;
 
     const start = getCourseTimeLocal(0, item.start, 1)
@@ -50,7 +37,6 @@ class SpecialCoursesItem extends React.Component {
         <p className="table-time">{getDayStrMs(item.date)}</p>
         <p className="table-time">{startStr} - {endStr}</p>        
         {this.renderBookings(item)}
-        {userBooked}
       </li>
     );
   }
