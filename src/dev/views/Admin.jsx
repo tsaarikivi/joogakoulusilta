@@ -49,11 +49,9 @@ componentWillReceiveProps(nextProps){
       return (
         <div>
           <AdminHeader />
-          <PendingTransactionsList />
           <AdminList />
           <InstructorList />
           <UserList />
-          <InfoList />
           <ShopList />
           <PlaceList />
           <CourseTypeList />

@@ -25,12 +25,10 @@ class DiagnosticsViewer extends React.Component {
     this.endDate.seconds(59);
     this.endDate.milliseconds(999);
     this.width = Math.round(document.defaultView.innerWidth/1.5);
-    console.log("C-widht", this.width);
   }
 
 
   onResize(){
-    console.log("widht", this.width);
     this.width = Math.round(document.defaultView.innerWidth/1.5);
     this.forceUpdate();
   }

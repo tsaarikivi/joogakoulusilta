@@ -61,7 +61,12 @@ class ShopItem extends React.Component {
 
 
 
-
+/*
+-------Laita tämä {cashBuyButton} yläpuolelle
+      <span className="item-row">
+                <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
+      </span>
+*/
 
   renderBuyButtons(){
 
@@ -73,9 +78,6 @@ class ShopItem extends React.Component {
     return(
       <div>
         <span className="item-row">
-         <span className="item-row">
-                    <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
-             </span>
           {cashBuyButton}
         </span>
       </div>

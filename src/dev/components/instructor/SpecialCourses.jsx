@@ -9,8 +9,8 @@ import * as actionCreators from '../../actions/specialCourses.js'
 class SpecialCourses extends React.Component {
 
   componentWillMount() {
-    this.props.actions.fetchSpecialCoursesBanner()
-    this.props.actions.fetchSpecialCourseBookings()     
+    this.props.actions.fetchSpecialCoursesBanner(this.props.currentUser.uid)
+    this.props.actions.fetchSpecialCourseBookings(this.props.currentUser.uid)     
   }
 
   componentWillUnmount(){
@@ -18,7 +18,7 @@ class SpecialCourses extends React.Component {
   }
 
   renderSpecialCoursesBanner(item) {
-    item.bookings = this.props.specialCoursesBanner.bookings[item.key] || {counter: 0};
+    item.bookings = this.props.specialCoursesBanner.bookings[item.key] || {counter: 0, userList: []};
     return (
       <SpecialCoursesItem key={item.key} item={item} admin={this.props.currentUser.roles.admin}/>
     )

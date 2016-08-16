@@ -74,7 +74,7 @@ class SpecialCourseInfo extends React.Component {
       cashBuyButton = <button className="btn-small btn-blue mobile-full margin-bottom" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
 
-    if(info.bookings < info.maxCapacity){
+    if(info.bookings.counter < info.maxCapacity){
       return (
         <div>      
           <span className="item-row">
@@ -116,7 +116,7 @@ class SpecialCourseInfo extends React.Component {
                 <div>
                   <div className="centered">
                     <img className="mini-icon" src="./assets/group.png" />
-                    <p className="table-participants margin-bottom">{info.bookings}/{info.maxCapacity}</p>
+                    <p className="table-participants margin-bottom">{info.bookings.counter}/{info.maxCapacity}</p>
                   </div>            
                   {this.renderPurchaseButtons()}
                 </div>              

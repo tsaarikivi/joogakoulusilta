@@ -24,7 +24,6 @@ class PaytrailCancel extends React.Component {
   }
 
   renderStart(){
-    console.log("RenderStart - PROPS", this.props);
     if(this.props.location.search === ""){ //This should not really happen. Something has failed, and let's get user back to the user view.
       return(<Link className="text-link back-btn" to="user">&lt;Takaisin</Link>)
     }

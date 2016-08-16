@@ -4,6 +4,7 @@ import {
     FETCH_COURSE_BOOKINGS,
     CHANGE_LOADINGSCREEN_STATE,
     BOOK_A_COURSE,
+    LATE_BOOK_A_COURSE,
     BOOKING_ERROR,
     CANCEL_ERROR,
     CANCEL_RESERVATION
@@ -42,7 +43,7 @@ export function postCancellation(item, txRef, courseInfo) {
                     payload: {error, courseInfo, txRef}
                   })
                     console.error(error);
-                    _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.toString(), false)
+                    _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.data, false)
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
@@ -50,6 +51,44 @@ export function postCancellation(item, txRef, courseInfo) {
         });
     }
 }
+
+export function postLateReservation(forUser, weeksBehind, courseInfo) {
+    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : JOOGASERVER + '/reserveLateSlot'
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Varataan tuntia jälkikäteen")
+        let now = new Date();
+        firebase.auth().currentUser.getToken(true).then(idToken => {
+            axios.post(
+                    JOOGAURL, {
+                        user: idToken,
+                        forUser: forUser,
+                        courseInfo: courseInfo,
+                        weeksBehind: weeksBehind,
+                        timezoneOffset: now.getTimezoneOffset() * 60 * 1000
+                    })
+                .then(response => {
+                  dispatch({
+                    type: LATE_BOOK_A_COURSE,
+                    payload: {courseInfo}
+                  })
+                    _hideLoadingScreen(dispatch, "Varaus onnistui", true)
+                })
+                .catch(error => {
+                  dispatch({
+                    type: BOOKING_ERROR,
+                    payload: {error, courseInfo}
+                  })
+                    console.error(error);
+                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.data, false, 5000)
+                });
+        }).catch(error => {
+            console.error("Failde to get authentication token for current user: ", error);
+            _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
+        });
+    }
+}
+
+
 
 export function postReservation(forward, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
@@ -77,7 +116,7 @@ export function postReservation(forward, courseInfo) {
                     payload: {error, courseInfo}
                   })
                     console.error(error);
-                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
+                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.data, false)
                 });
         }).catch(error => {
             console.error("Failde to get authentication token for current user: ", error);
