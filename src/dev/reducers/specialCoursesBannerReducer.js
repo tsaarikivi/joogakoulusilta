@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_USER_TO_SC_BOOKINGS:
-      let newBookings = state.bookings
+      let newBookings = Object.assign(state.bookings)
       if(newBookings[action.payload.key].userList){
         newBookings[action.payload.key].userList = newBookings[action.payload.key].userList.concat(action.payload.user)
       } else {

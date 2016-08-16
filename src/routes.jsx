@@ -20,6 +20,7 @@ import UserProfile from './dev/views/UserProfile.jsx'
 import ChangeInformation from './dev/views/ChangeInformation.jsx'
 import ForgotPassword from './dev/views/ForgotPassword.jsx'
 import Feedback from './dev/views/Feedback.jsx'
+import UserOverview from './dev/views/UserOverview.jsx'
 
 export default (
   <Route path="/" component={Layout}>
@@ -40,5 +41,6 @@ export default (
     <Route path="forgotPassword" component={ForgotPassword} />
     <Route path="diagnostics" component={Diagnostics} />
     <Route path="feedback" component={Feedback} />
+    <Route path="useroverview" component={UserOverview} />
   </Route>
 )

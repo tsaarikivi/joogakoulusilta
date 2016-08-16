@@ -54,7 +54,7 @@
         },
         "transactions": {
             "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
                 ".write": "auth.uid === 'joogaserver'"
             }
         },

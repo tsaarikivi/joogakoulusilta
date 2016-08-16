@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { daysLeft } from '../../helpers/timeHelper.js'
+
 export default class Tickets extends React.Component {
 
   constructor(){
@@ -18,25 +20,17 @@ export default class Tickets extends React.Component {
     this.firstexpire.setTime(nextProps.curUsr.transactions.firstexpire);
   }
 
-  daysLeft(){
+  daysRemaining(){
     const { time } = this.props.curUsr.transactions;
-    let today = new Date();
-    let duration = 0;
-    let daysLeft = 0;
-    if(this.props.curUsr.transactions.time != 0){
-      duration = time - today.getTime()
-      return Math.round(duration / (24*60*60*1000))
-    } else {
-      return 0;
-    }
+    return daysLeft(time)
   }
 
   render() {
     return (
-      <div className="tickets-container mobile-hidden" id="tickets-info" title={"Sinulla on " + this.daysLeft() + " päivää jäljellä aikakortissasi"}>
+      <div className="tickets-container mobile-hidden" id="tickets-info" title={"Sinulla on " + this.daysRemaining() + " päivää jäljellä aikakortissasi"}>
         <span className="ticket-logo">
           <img className="mini-icon" src="./assets/clock.png" />
-          <p className="ticket-amnt">{this.daysLeft()} pv</p>
+          <p className="ticket-amnt">{this.daysRemaining()} pv</p>
         </span>
         <span className="ticket-logo" title={"Sinulla on käytettävissäsi " + this.count + " kertalippua"}>
           <img className="mini-icon" src="./assets/ticket.png" />

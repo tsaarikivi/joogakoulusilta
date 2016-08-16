@@ -37,9 +37,11 @@ import SearchBarReducer from './admin/searchBarReducer.js'
 import PendingTransactions from './pendingTransactions.js'
 import TermsReducer from './termsReducer.js'
 import DiagnosticsReducer from './diagnosticsReducer.js'
+import UserOverviewReducer from './UserOverviewReducer.js'
 import DiagnosticsViewerReducer from './diagnosticsViewerReducer.js'
 
 const combinedReducer = combineReducers({
+    userOverview: UserOverviewReducer,
     loadingScreen: LoadingScreenReducer,
     pendingTransactions: PendingTransactions,
     currentUser: UserReducer,
