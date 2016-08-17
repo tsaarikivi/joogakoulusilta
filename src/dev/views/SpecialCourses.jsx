@@ -1,10 +1,32 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import SpecialCoursesList from '../components/specialCourses/SpecialCourses.jsx'
 import SpecialCourseInfo from '../components/specialCourses/SpecialCourseInfo.jsx'
 import SpecialCoursesHeader from '../components/specialCourses/SpecialCoursesHeader.jsx'
 
-export default class SpecialCourses extends React.Component {
+class SpecialCourses extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
+
+  componentWillMount(){
+      if(this.props.currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
+  }
+
+  componentWillUnmount(){
+  }
+
+
+  componentWillReceiveProps(nextProps){
+      if(nextProps.currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
+  }
+
   render() {
     return (
       <div>
@@ -15,3 +37,9 @@ export default class SpecialCourses extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return { auth: state.auth, currentUser: state.currentUser }
+}
+
+export default connect(mapStateToProps, null)(SpecialCourses)

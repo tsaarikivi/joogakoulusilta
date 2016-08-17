@@ -17,7 +17,6 @@ import SpecialCourses from './dev/views/SpecialCourses.jsx'
 import User from './dev/views/User.jsx'
 import Tests from './dev/views/Tests.jsx'
 import UserProfile from './dev/views/UserProfile.jsx'
-import ChangeInformation from './dev/views/ChangeInformation.jsx'
 import ForgotPassword from './dev/views/ForgotPassword.jsx'
 import Feedback from './dev/views/Feedback.jsx'
 import UserOverview from './dev/views/UserOverview.jsx'
@@ -32,7 +31,6 @@ export default (
     <Route path="shop" component={Shop} />
     <Route path="user" component={User} />
     <Route path="tests" component={Tests} />
-    <Route path="userInformation" component={ChangeInformation} />
     <Route path="register" component={Register} />
     <Route path="checkout" component={Checkout} />
     <Route path="paytrailreturn" component={PaytrailReturn} />

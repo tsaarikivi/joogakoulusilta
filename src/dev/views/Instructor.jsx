@@ -20,18 +20,25 @@ class Instructor extends React.Component {
   }
 
 componentWillMount(){
+  if(this.props.currentUser.locked){
+    this.context.router.push('lockeduser')
+  }
 }
 
 componentWillUnmount(){
 }
 
 componentWillReceiveProps(nextProps){
+  if(nextProps.currentUser.locked){
+    this.context.router.push('lockeduser')
+  }
   if(nextProps.currentUser.roles.instructor === true){
     this.allowShow = true;
   }
 }
 
   render() {
+    console.log("I-props:", this.props);
     if(this.props.currentUser.key === "0"){
       return <div/>
     }
