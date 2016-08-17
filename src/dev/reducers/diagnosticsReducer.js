@@ -11,6 +11,8 @@ const INITIAL_STATE = {
 
 //Add events to be included here
 var approvedEvents = {
+    REMOVE_TRANSACTION: true,
+    REMOVE_TRANSACTION_ERROR: true,
     REGISTER_USER: true,
     BOOK_A_COURSE: true,
     LATE_BOOK_A_COURSE: true,

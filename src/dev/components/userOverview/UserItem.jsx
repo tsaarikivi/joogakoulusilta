@@ -25,9 +25,10 @@ export default class UserItem extends React.Component {
     return(<div/>)
   }
 
-  renderValidItem(item) {
+  renderValidItem(valid) {
+    const { item } = this.props
     return (
-      <ValidItem key={this.counter++} item={item} />
+      <ValidItem key={this.counter++} item={valid} user={item.uid} />
     )
   }
 
@@ -49,9 +50,10 @@ export default class UserItem extends React.Component {
     return(<div/>)
   }
 
-  renderSpecialItem(item){
+  renderSpecialItem(special){
+    const { item } = this.props
     return (
-      <SpecialItem key={this.counter++} item={item} />
+      <SpecialItem key={this.counter++} item={special} user={item.uid} />
     )
   }
 

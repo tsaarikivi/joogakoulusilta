@@ -1,8 +1,11 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
+import * as actionCreators from '../../actions/shop.js'
 import { daysLeft, getDayStrMs } from '../../helpers/timeHelper.js'
 
-export default class SpecialItem extends React.Component {
+class SpecialItem extends React.Component {
 
   constructor(){
     super()
@@ -16,9 +19,10 @@ export default class SpecialItem extends React.Component {
     }
   }
 
-  remove(item) {
+  remove(item, user) {
+    console.log("SPECIAL: ", item, user);
     if(this.confirmation) {
-      //removeAction (item)
+      this.props.actions.removeTransaction (item, user)
       this.confirmation = false
     } else {
       this.confirmation = true
@@ -32,13 +36,19 @@ export default class SpecialItem extends React.Component {
 
   render() {
     let removeButtonText = (this.confirmation)? "Vahvista poisto" : "Poista"
-    const { item } = this.props
+    const { item, user } = this.props
     return (
     <li>
         <span className="item-row">{getDayStrMs(item.shopItem.date)}  {item.shopItem.title}</span>
         <span className="item-row">ostettu: {getDayStrMs(item.purchasetime)} ostotapa: {item.paymentInstrumentType}</span>
-        <button className="btn-small btn-red" onClick={() => {this.remove(item)}}>{removeButtonText}</button>
+        <button className="btn-small btn-red" onClick={() => {this.remove(item, user)}}>{removeButtonText}</button>
     </li>
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch)}
+}
+
+export default connect(null, mapDispatchToProps)(SpecialItem)

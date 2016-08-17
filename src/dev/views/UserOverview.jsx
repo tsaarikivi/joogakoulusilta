@@ -27,6 +27,9 @@ componentWillReceiveProps(nextProps){
   if(nextProps.currentUser.roles.admin === true){
     this.allowShow = true;
   }
+  if(nextProps.userOverview.refreshRequired){
+    this.props.actions.fetchUsersToOverview()
+  }
 }
 
   render() {
