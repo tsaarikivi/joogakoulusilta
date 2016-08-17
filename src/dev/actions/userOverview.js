@@ -12,7 +12,7 @@ import {
 export function fetchUsersToOverview(){
     var userList = Object.assign([])
     return dispatch => {
-        _showLoadingScreen(dispatch, "Haetaan käyttäjät.")
+        _showLoadingScreen(dispatch, "Haetaan käyttäjät")
         firebase.database().ref('/users/').once('value')
         .then( snapshot => {
             let users = snapshot.val()
@@ -27,11 +27,11 @@ export function fetchUsersToOverview(){
                     usersReady: true
                 }
             })
-            _hideLoadingScreen(dispatch, "Käyttäjät haettu.", true)
+            _hideLoadingScreen(dispatch, "Käyttäjät haettu", true)
         })
         .catch(err => {
             console.error("Virhe käyttäjien hakemisessa: ", err);
-            _hideLoadingScreen(dispatch, "Käyttäjien hakemisessa tapahtui virhe.", false, 4000)
+            _hideLoadingScreen(dispatch, "Käyttäjien hakemisessa tapahtui virhe", false, 4000)
         })
     }
 }

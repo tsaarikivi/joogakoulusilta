@@ -455,3 +455,8 @@
 .container-shadow {
   box-shadow: $shadow;
 }
+
+.halved-container {
+  width: 60%;
+  display: inline-block;
+}
