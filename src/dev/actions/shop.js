@@ -1,6 +1,8 @@
 import axios from "axios"
 
 import {
+    REMOVE_TRANSACTION,
+    REMOVE_TRANSACTION_ERROR,
     START_CHECKOUT_FLOW,
     FETCH_SHOP_ITEMS,
     ADD_TO_CART,
@@ -22,6 +24,38 @@ import {
 } from './loadingScreen.js'
 
 const ShopItemsRef = firebase.database().ref('/shopItems/')
+
+export function removeTransaction(transaction, user){
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Perutaan osto.")
+        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/removeTransaction' : JOOGASERVER + '/removeTransaction'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(JOOGAURL, {
+                    current_user: idToken,
+                    for_user: user,
+                    transaction: transaction
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Osto peruttu.", true)
+                dispatch({
+                    type: REMOVE_TRANSACTION,
+                    payload:{transaction, user}
+                })
+            })
+            .catch(error => {
+                console.error("PAYTRAIL_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Oston perumisessa tapahtui virhe: " + error.data, false, 5000)
+                dispatch({
+                    type: REMOVE_TRANSACTION_ERROR,
+                    payload:{transaction, user}
+                })
+            });
+
+    }
+}
+
 
 export function completePaytrailPayment(pendingTrxId){
     return dispatch => {
