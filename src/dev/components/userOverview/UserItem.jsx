@@ -18,9 +18,12 @@ export default class UserItem extends React.Component {
     if(credits){
       if(credits.details.special.length > 0){
         return(
-          <ul>
-          {credits.details.special.map(this.renderSpecialItem.bind(this))}
-          </ul>
+          <div>
+            <p>Ostetut kurssit:</p>
+            <ul className="wide-list">
+            {credits.details.special.map(this.renderSpecialItem.bind(this))}
+            </ul>
+          </div>
         )
       }
     }
@@ -46,8 +49,8 @@ export default class UserItem extends React.Component {
     const {item} = this.props
     return (
       <li className="text-list-item">
-        <span className="item-row">{item.uid} --- {item.email}</span>
         <span className="item-row">{item.firstname} {item.lastname}</span>
+        <span className="item-row">{item.email}</span>
         {this.renderCredits()}
         {this.renderSpecials()}
       </li>

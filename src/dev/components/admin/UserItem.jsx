@@ -76,6 +76,7 @@ class UserItem extends React.Component {
       <li className="text-list-item">
         <span className="item-row">{item.firstname} {item.lastname}</span>
         <span className="item-row">{item.email}</span>
+        <span className="item-row">{item.uid}</span>
         {this.renderButtons()}
       </li>
     )
