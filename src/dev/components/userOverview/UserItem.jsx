@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { daysLeft, getDayStrMs } from '../../helpers/timeHelper.js'
+import SpecialItem from './SpecialItem.jsx'
+import ValidItem from './ValidItem.jsx'
 
 export default class UserItem extends React.Component {
 
@@ -9,19 +11,36 @@ export default class UserItem extends React.Component {
     this.counter = 0;
   }
 
-  renderSpecialItem(item){
-    return (<li key={this.counter++} >{getDayStrMs(item.shopItem.date)}  {item.shopItem.title}, ostettu: {getDayStrMs(item.purchasetime)} ostotapa: {item.paymentInstrumentType}</li>)
-  }
-
-  renderSpecials(){
+  renderCredits(){
     const { credits } = this.props
     if(credits){
-      if(credits.details.special.length > 0){
-        return(
+      let firstExpires = (credits.firstexpire !== 0)? ", josta kaikki tai osa vanhenee " + getDayStrMs(credits.firstexpire) : ""
+      return(
+        <div>
+          <p className="text-fade">Kertoja: {credits.count}{firstExpires}</p> 
+          <p className="text-fade">Päiviä: {daysLeft(credits.time)}</p>
+        </div>
+      )
+    }
+    return(<div/>)
+  }
+
+  renderValidItem(item) {
+    return (
+      <ValidItem key={this.counter++} item={item} />
+    )
+  }
+
+  renderValidTransactions() {
+    const { credits } = this.props
+    if (credits) {
+      const { valid } = credits.details
+      if (valid.length > 0) {
+        return (
           <div>
-            <p>Ostetut kurssit:</p>
+            <p className="text-bold">Voimassa olevat kortit:</p>
             <ul className="wide-list">
-            {credits.details.special.map(this.renderSpecialItem.bind(this))}
+              {valid.map(this.renderValidItem.bind(this))}
             </ul>
           </div>
         )
@@ -30,20 +49,29 @@ export default class UserItem extends React.Component {
     return(<div/>)
   }
 
-  renderCredits(){
+  renderSpecialItem(item){
+    return (
+      <SpecialItem key={this.counter++} item={item} />
+    )
+  }
+
+  renderSpecials(){
     const { credits } = this.props
     if(credits){
-      let firstExpires = (credits.firstexpire !== 0)? ", josta kaikki tai osa vanhenee " + getDayStrMs(credits.firstexpire) : ""
-      return(
-        <div>
-          <p>Kertoja: {credits.count}{firstExpires}</p> 
-          <p>Päiviä: {daysLeft(credits.time)}</p>
-        </div>
-      )
+      const { special } = credits.details
+      if(special.length > 0){
+        return(
+          <div>
+            <p className="text-bold">Ostetut kurssit:</p>
+            <ul className="wide-list">
+              {special.map(this.renderSpecialItem.bind(this))}
+            </ul>
+          </div>
+        )
+      }
     }
     return(<div/>)
   }
-
 
   render() {
     const {item} = this.props
@@ -52,6 +80,7 @@ export default class UserItem extends React.Component {
         <span className="item-row">{item.firstname} {item.lastname}</span>
         <span className="item-row">{item.email}</span>
         {this.renderCredits()}
+        {this.renderValidTransactions()}
         {this.renderSpecials()}
       </li>
     )
