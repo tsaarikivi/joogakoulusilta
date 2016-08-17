@@ -19,13 +19,20 @@ class Tests extends React.Component {
 
   constructor(){
     super();
+    this.allowShow = false;
   }
 
   componentWillMount() {
+   if(this.props.currentUser.roles.admin === true){
+    this.allowShow = true;
   }
+ }
 
   componentWillReceiveProps(nextProps){
+    if(nextProps.currentUser.roles.admin === true){
+    this.allowShow = true;
   }
+}
 
   testFirebaseErrorLogging(){
     this.props.actions.testFirebaseErrorLogging();
@@ -65,19 +72,28 @@ class Tests extends React.Component {
   }
 
   render() {
-    return(
-      <div>
-        <button className="btn-small btn-red" onClick={this.testLateReserve.bind(this)}>LateReserve</button>
-        <br/>
-        <button className="btn-small btn-red" onClick={this.test1.bind(this)}>Test-1</button>
-        <button className="btn-small btn-red" onClick={this.test2.bind(this)}>Test-2</button>
-        <button className="btn-small btn-red" onClick={this.testFirebaseErrorLogging.bind(this)}>testFirebaseErrorLogging-2</button>
-        <br/>
-        <button className="btn-small btn-green" onClick={this.sendFeedback.bind(this)}>SendFeedback</button>
-        <textarea type="text" id="feedback"/>
-        <p>{getCurrentBaseUrl(document.location.href)}</p>
-      </div>
-    )
+    if(this.allowShow){
+      return(
+        <div>
+          <button className="btn-small btn-red" onClick={this.testLateReserve.bind(this)}>LateReserve</button>
+          <br/>
+          <button className="btn-small btn-red" onClick={this.test1.bind(this)}>Test-1</button>
+          <button className="btn-small btn-red" onClick={this.test2.bind(this)}>Test-2</button>
+          <button className="btn-small btn-red" onClick={this.testFirebaseErrorLogging.bind(this)}>testFirebaseErrorLogging-2</button>
+          <br/>
+          <button className="btn-small btn-green" onClick={this.sendFeedback.bind(this)}>SendFeedback</button>
+          <textarea type="text" id="feedback"/>
+          <p>{getCurrentBaseUrl(document.location.href)}</p>
+        </div>
+      )
+    }
+      return(
+        <div>
+          <p>Sinun pitää olla järjestelmän pääkäyttäjä.</p>
+          <p>Ota yhteys järjestelmän valvojaan lisäoikeuksien saamiseksi.</p>
+       </div>
+      )
+    
   }
 }
 

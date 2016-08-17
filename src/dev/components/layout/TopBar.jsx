@@ -45,15 +45,17 @@ class TopBar extends React.Component {
 
   render() {
 
-    const { roles, firstname } = this.props.curUsr; 
+    const { roles, firstname, locked } = this.props.curUsr; 
 
-    let admin = null;
+    let admin = null
     let diagnostics = null
-    let adminShop = null;
+    let adminShop = null
+    let userOverview = null
     if(roles.admin){
       admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
       diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
       adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
+      userOverview = <Link className="text-link" to="useroverview" onClick={() => this.toggleNav()}>Käyttäjälista</Link>
     }
     let tests = null;
     if(roles.tester){
@@ -66,6 +68,24 @@ class TopBar extends React.Component {
     }
 
     if (this.props.curUsr.key != '0') {
+      if(locked){
+        return(
+        <nav class="user-header-container">
+          <div className="align-right">
+            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
+          </div>
+          <div className="content-container">
+            {this.renderTickets()}
+            <div className="userinfo-container mobile-hidden" id="nav-menu">
+              <div className="mobile-row">
+                <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+          
+        )
+      }
       return (
         <nav class="user-header-container">
           <div className="align-right">
@@ -85,6 +105,9 @@ class TopBar extends React.Component {
               </div>
               <div className="mobile-row">
                 {admin}
+              </div>
+              <div className="mobile-row">
+                {userOverview}
               </div>
               <div className="mobile-row">
                 {tests}
