@@ -38,7 +38,6 @@ componentWillReceiveProps(nextProps){
 }
 
   render() {
-    console.log("I-props:", this.props);
     if(this.props.currentUser.key === "0"){
       return <div/>
     }

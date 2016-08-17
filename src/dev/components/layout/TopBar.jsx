@@ -45,7 +45,6 @@ class TopBar extends React.Component {
 
   render() {
 
-    console.log("top-props: ", this.props.curUsr);
     const { roles, firstname, locked } = this.props.curUsr; 
 
     let admin = null;
