@@ -52,7 +52,7 @@ export default class UserItem extends React.Component {
 
   renderSpecialItem(special){
     const { item } = this.props
-    if( (special.shopItem.start - Date.now()) >= 0 ) {
+    if( (special.shopItem.date - Date.now()) >= 0 ) {
       return (
         <SpecialItem key={this.counter++} item={special} user={item.uid} />
       )
