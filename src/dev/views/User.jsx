@@ -26,6 +26,9 @@ class User extends React.Component {
   currentUserReady(currentUser){
     if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
       this.userFullyLoaded = true;
+      if(currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
     }
   }
 
