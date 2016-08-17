@@ -47,13 +47,15 @@ class TopBar extends React.Component {
 
     const { roles, firstname } = this.props.curUsr; 
 
-    let admin = null;
+    let admin = null
     let diagnostics = null
-    let adminShop = null;
+    let adminShop = null
+    let userOverview = null
     if(roles.admin){
       admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
       diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
       adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
+      userOverview = <Link className="text-link" to="useroverview" onClick={() => this.toggleNav()}>Käyttäjälista</Link>
     }
     let tests = null;
     if(roles.tester){
@@ -85,6 +87,9 @@ class TopBar extends React.Component {
               </div>
               <div className="mobile-row">
                 {admin}
+              </div>
+              <div className="mobile-row">
+                {userOverview}
               </div>
               <div className="mobile-row">
                 {tests}
