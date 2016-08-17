@@ -27,7 +27,7 @@ const ShopItemsRef = firebase.database().ref('/shopItems/')
 
 export function removeTransaction(transaction, user){
     return dispatch => {
-        _showLoadingScreen(dispatch, "Perutaan osto.")
+        _showLoadingScreen(dispatch, "Perutaan osto")
         let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/removeTransaction' : JOOGASERVER + '/removeTransaction'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
@@ -38,7 +38,7 @@ export function removeTransaction(transaction, user){
                 })
             })
             .then(response => {
-                _hideLoadingScreen(dispatch, "Osto peruttu.", true)
+                _hideLoadingScreen(dispatch, "Osto peruttu", true)
                 dispatch({
                     type: REMOVE_TRANSACTION,
                     payload:{transaction, user}
