@@ -21,6 +21,7 @@ import ChangeInformation from './dev/views/ChangeInformation.jsx'
 import ForgotPassword from './dev/views/ForgotPassword.jsx'
 import Feedback from './dev/views/Feedback.jsx'
 import UserOverview from './dev/views/UserOverview.jsx'
+import LockedUser from './dev/views/LockedUser.jsx'
 
 export default (
   <Route path="/" component={Layout}>
@@ -42,5 +43,6 @@ export default (
     <Route path="diagnostics" component={Diagnostics} />
     <Route path="feedback" component={Feedback} />
     <Route path="useroverview" component={UserOverview} />
+    <Route path="lockeduser" component={LockedUser} />
   </Route>
 )
