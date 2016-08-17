@@ -10,7 +10,6 @@ export default class UserItem extends React.Component {
   }
 
   renderSpecialItem(item){
-    console.log("PRO", item);
     return (<li key={this.counter++} >{getDayStrMs(item.shopItem.date)}  {item.shopItem.title}, ostettu: {getDayStrMs(item.purchasetime)} ostotapa: {item.paymentInstrumentType}</li>)
   }
 
