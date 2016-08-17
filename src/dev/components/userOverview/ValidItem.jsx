@@ -20,7 +20,6 @@ class ValidItem extends React.Component {
   }
 
   remove(item, user) {
-    console.log("VALID", item, user);
     if(this.confirmation) {
       this.props.actions.removeTransaction (item, user)
       this.confirmation = false
