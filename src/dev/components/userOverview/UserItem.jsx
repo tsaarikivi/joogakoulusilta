@@ -22,7 +22,7 @@ export default class UserItem extends React.Component {
         </div>
       )
     }
-    return(<div/>)
+    return null
   }
 
   renderValidItem(valid) {
@@ -47,14 +47,17 @@ export default class UserItem extends React.Component {
         )
       }
     }
-    return(<div/>)
+    return null
   }
 
   renderSpecialItem(special){
     const { item } = this.props
-    return (
-      <SpecialItem key={this.counter++} item={special} user={item.uid} />
-    )
+    if( (special.shopItem.start - Date.now()) >= 0 ) {
+      return (
+        <SpecialItem key={this.counter++} item={special} user={item.uid} />
+      )
+    }
+    return null
   }
 
   renderSpecials(){
@@ -64,7 +67,7 @@ export default class UserItem extends React.Component {
       if(special.length > 0){
         return(
           <div>
-            <p className="text-bold">Ostetut kurssit:</p>
+            <p className="text-bold">Ostetut kurssit: (yht. {special.length})</p>
             <ul className="wide-list">
               {special.map(this.renderSpecialItem.bind(this))}
             </ul>
@@ -72,7 +75,7 @@ export default class UserItem extends React.Component {
         )
       }
     }
-    return(<div/>)
+    return null
   }
 
   render() {
