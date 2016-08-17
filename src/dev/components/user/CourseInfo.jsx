@@ -6,6 +6,7 @@ import { Link } from "react-router"
 import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import {removeCourseInfo} from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
+import UserList from '../admin/UserList.jsx'
 
 class CourseInfo extends React.Component {
 
@@ -13,6 +14,7 @@ class CourseInfo extends React.Component {
     super();
     this.fetchStarted = false;
     this.reservationRequestOngoing = false;
+    this.lateReservationRequestOngoing = false;
     this.cancellationOngoing = false;
     this.confirmation = false;
     this.timeoutId = 0;
@@ -20,6 +22,9 @@ class CourseInfo extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.cancellationOngoing = false;
+    if(nextProps.courseInfo.closeInfo){
+      this.exitContainer()
+    }
   }
 
   componentWillUnmount(){
@@ -59,9 +64,20 @@ class CourseInfo extends React.Component {
     }
   }
 
+  makeLateReservation(forward) {
+    if(!this.lateReservationRequestOngoing){
+      this.lateReservationRequestOngoing = true;
+      this.forceUpdate()
+    }
+  }
+
+
   exitContainer() {
     this.props.courseActions.removeCourseInfo()
     this.reservationRequestOngoing = false;
+    this.lateReservationRequestOngoing = false;
+    this.cancellationOngoing = false;
+    this.confirmation = false;
   }
 
   userCanBook(day){
@@ -160,6 +176,38 @@ class CourseInfo extends React.Component {
         );
   }
 
+  renderLateBooking(weekIndex){
+    if(weekIndex === 0){
+      return(<div></div>)  //Course booking is still open.
+    }
+    const { courseInfo } = this.props;
+    const { instructor, admin } = this.props.currentUser.roles
+
+    let day = getCourseTimeLocal(0, courseInfo.start, courseInfo.day);
+    let dayStr = getDayStr(day) + " " + getTimeStr(day);
+
+    if(instructor || admin){
+      if(!this.lateReservationRequestOngoing){
+        return(
+          <div className="content-container">
+            <button className="btn-small btn-blue mobile-full" onClick={() => this.makeLateReservation(0)} >
+                Myöhäinen varaus: { dayStr }
+            </button>
+          </div>
+        )      
+      } else {
+        return(
+          <div>
+            <div className="content-container">
+              <h3> Valitse käyttäjä, jolle varaus suoritetaan.</h3>
+            </div>
+            <UserList />
+          </div>
+        )
+      }
+    }
+  }
+
 
   render() {
     const { courseInfo } = this.props;
@@ -195,6 +243,7 @@ class CourseInfo extends React.Component {
               </div>
               <p className="info-desc pre-wrap">{courseInfo.courseType.desc}</p>
             </div>
+              {this.renderLateBooking(weekIndex)}
           </div>
         </div>
       )

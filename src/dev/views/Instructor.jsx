@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import InstructorHeader from '../components/instructor/InstructorHeader.jsx'
 import CoursesList from '../components/instructor/CoursesList.jsx'
 import CoursesDetails from '../components/instructor/CourseDetails.jsx'
+import SpecialCourses from '../components/instructor/SpecialCourses.jsx'
+import SpecialCourseInfo from '../components/instructor/SpecialCourseInfo.jsx'
 
 
 class Instructor extends React.Component {
@@ -39,6 +41,8 @@ componentWillReceiveProps(nextProps){
           <InstructorHeader />
           <CoursesList />
           <CoursesDetails />
+          <SpecialCourses />
+          <SpecialCourseInfo />
         </div>
       )
     } else {

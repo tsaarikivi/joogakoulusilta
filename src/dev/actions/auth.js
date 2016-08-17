@@ -1,3 +1,5 @@
+import axios from "axios"
+
 import {
     ADD_USER,
     REMOVE_USER,
@@ -124,6 +126,21 @@ export function logout() {
 
 }
 
+function sendRegistrationNotification(){
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/notifyRegistration' : JOOGASERVER + '/notifyRegistration'
+    firebase.auth().currentUser.getToken(true)
+    .then(idToken => {
+        return axios.post(JOOGAURL, {
+            current_user: idToken
+        })
+    })
+    .then(response => {
+    })
+    .catch(error => {
+        console.error("REGISTRATION_NOTIFICATION_ERROR:", error);
+    });
+}
+
 export function register(email, password, fName, sName, a) {
 
     firstName = fName;
@@ -137,6 +154,9 @@ export function register(email, password, fName, sName, a) {
             dispatch({
               type: REGISTER_USER
             })
+            setTimeout(()=>{
+                sendRegistrationNotification();
+            },2000)
         }).catch(error => {
             if (error) {
                 dispatch({

@@ -2,20 +2,22 @@ import { FETCH_SPECIAL_COURSES_BANNER,
          FETCH_SPECIAL_COURSES,
          PUT_SPECIAL_COURSE_INFO,
          REMOVE_SPECIAL_COURSE_INFO,
-         FETCH_SPECIAL_COURSES_BOOKINGS
+         FETCH_SPECIAL_COURSES_BOOKINGS,
+         ADD_USER_TO_SC_BOOKINGS
           } from './actionTypes.js'
 
 const CoursesRef = firebase.database().ref('/specialCourses/')
 
-export function fetchSpecialCourses() {
+export function fetchSpecialCourses( instructor = null) {
   var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var specialCourses = snapshot.val()
       for (var key in specialCourses) {
-          let courseItemWithKey = specialCourses[key]
-          courseItemWithKey.key = key
-          list = list.concat(courseItemWithKey)
+        if(instructor === null || specialCourses[key].instructor.uid === instructor){
+          specialCourses[key].key = key
+          list = list.concat(specialCourses[key])
+        }
       }
       dispatch({
         type: FETCH_SPECIAL_COURSES,
@@ -25,8 +27,27 @@ export function fetchSpecialCourses() {
   }
 }
 
-export function fetchSpecialCourseBookings(){
+function convertIdToName(dispatch,userIdList, courseKey){
+    userIdList.map(uid => {
+      firebase.database().ref('/users/'+ uid).once('value').then(snapshot => {
+        let user = snapshot.val()
+        dispatch({
+          type: ADD_USER_TO_SC_BOOKINGS,
+          payload: {
+            key: courseKey, 
+            user: user.firstname + " " + user.lastname}
+        })
+      })
+      .catch(err => { 
+        console.error("Conversion error: ", err);
+        reject(err)
+      })
+    })
+}
+
+export function fetchSpecialCourseBookings(instructor = null){
   var returnObject = Object.assign({})
+  var userIdList = Object.assign([]);
   return dispatch => {
     firebase.database().ref('scbookingsbycourse').on('value', snapshot => {
       var one = null
@@ -35,10 +56,17 @@ export function fetchSpecialCourseBookings(){
       var all = snapshot.val()
       for (one in all){
         counter = 0
+        userIdList = Object.assign([]);
         for (oneuser in all[one]){
           counter++
+          userIdList = userIdList.concat(oneuser)
         }
-        returnObject[one] = counter
+        if(instructor !== null){
+          convertIdToName(dispatch, userIdList, one)
+        }
+        returnObject[one] = {
+          counter: counter
+        }
       }
       dispatch({
         type: FETCH_SPECIAL_COURSES_BOOKINGS,
@@ -60,22 +88,26 @@ export function stopSpecialCourseBookings(){
   }
 }
 
-export function fetchSpecialCoursesBanner() {
+export function fetchSpecialCoursesBanner(instructor = null) {
   var list = Object.assign([])
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var specialCourses = snapshot.val()
       for (var key in specialCourses) {
-          let courseItemWithKey = specialCourses[key]
-          courseItemWithKey.key = key
-          list = list.concat(courseItemWithKey)
+          if(instructor === null || specialCourses[key].instructor.uid === instructor){
+            specialCourses[key].key = key
+            list = list.concat(specialCourses[key])
+          }
       }
       list.sort(function(a, b) {
         return a.date - b.date
       })
       dispatch({
         type: FETCH_SPECIAL_COURSES_BANNER,
-        payload: {banner: list}
+        payload: {
+          fetchReady: true,
+          banner: list
+        }
       })
     })
   }

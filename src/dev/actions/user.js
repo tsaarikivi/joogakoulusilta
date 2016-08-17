@@ -250,10 +250,10 @@ export function fetchUsersTransactions(uid) {
                         trxdetails.usetimes = all[one].usetimes;
                         if (all[one].expires > now) {
                             trx.count += all[one].unusedtimes;
-                        }
-                        if (all[one].expires < trx.firstexpire || trx.firstexpire === 0) {
-                            if (all[one].unusedtimes > 0) {
-                                trx.firstexpire = all[one].expires;
+                            if (all[one].expires < trx.firstexpire || trx.firstexpire === 0) {
+                                if (all[one].unusedtimes > 0) {
+                                    trx.firstexpire = all[one].expires;
+                                }
                             }
                         }
                         break;

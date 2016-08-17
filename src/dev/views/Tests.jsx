@@ -9,6 +9,7 @@ import  { getCurrentBaseUrl } from '../helpers/urlParser.js'
 
 import * as testActionCreators from '../actions/test.js'
 import * as userActionCreators from '../actions/user.js'
+import * as bookingActionCreators from '../actions/bookings.js'
 
 class Tests extends React.Component {
 
@@ -50,13 +51,28 @@ class Tests extends React.Component {
     this.props.userActions.sendFeedback(feedback)
   }
 
+  testLateReserve(){
+    let bookForUser = 'OmdRIx7cU6c6DwJADkFXqnap9ao2';
+    let weeksBack = 1;
+    let course = null
+    firebase.database().ref('/courses/-KNcWXwm6zpYimw3ATZ1').once('value')
+    .then( snapshot => {
+      course = snapshot.val();
+      course.key = '-KNcWXwm6zpYimw3ATZ1'
+    this.props.bookingActions.postLateReservation(bookForUser, weeksBack, course)
+
+    })
+  }
+
   render() {
     return(
       <div>
+        <button className="btn-small btn-red" onClick={this.testLateReserve.bind(this)}>LateReserve</button>
+        <br/>
         <button className="btn-small btn-red" onClick={this.test1.bind(this)}>Test-1</button>
         <button className="btn-small btn-red" onClick={this.test2.bind(this)}>Test-2</button>
         <button className="btn-small btn-red" onClick={this.testFirebaseErrorLogging.bind(this)}>testFirebaseErrorLogging-2</button>
-        <br></br>
+        <br/>
         <button className="btn-small btn-green" onClick={this.sendFeedback.bind(this)}>SendFeedback</button>
         <textarea type="text" id="feedback"/>
         <p>{getCurrentBaseUrl(document.location.href)}</p>
@@ -71,7 +87,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(testActionCreators, dispatch),
-        userActions: bindActionCreators(userActionCreators, dispatch)}
+        userActions: bindActionCreators(userActionCreators, dispatch),
+      bookingActions: bindActionCreators(bookingActionCreators, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tests)
