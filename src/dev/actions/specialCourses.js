@@ -8,24 +8,7 @@ import { FETCH_SPECIAL_COURSES_BANNER,
 
 const CoursesRef = firebase.database().ref('/specialCourses/')
 
-export function fetchSpecialCourses( instructor = null) {
-  var list = Object.assign([])
-  return dispatch => {
-    CoursesRef.once('value', snapshot => {
-      var specialCourses = snapshot.val()
-      for (var key in specialCourses) {
-        if(instructor === null || specialCourses[key].instructor.uid === instructor){
-          specialCourses[key].key = key
-          list = list.concat(specialCourses[key])
-        }
-      }
-      dispatch({
-        type: FETCH_SPECIAL_COURSES,
-        payload: list
-      })
-    })
-  }
-}
+
 
 function convertIdToName(dispatch,userIdList, courseKey){
     userIdList.map(uid => {
@@ -90,11 +73,12 @@ export function stopSpecialCourseBookings(){
 
 export function fetchSpecialCoursesBanner(instructor = null) {
   var list = Object.assign([])
+  var now = new Date()
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var specialCourses = snapshot.val()
       for (var key in specialCourses) {
-          if(instructor === null || specialCourses[key].instructor.uid === instructor){
+          if((instructor === null || specialCourses[key].instructor.uid === instructor) && specialCourses[key].date > now){
             specialCourses[key].key = key
             list = list.concat(specialCourses[key])
           }
