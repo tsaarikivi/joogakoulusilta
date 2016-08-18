@@ -145,8 +145,18 @@ class CourseInfo extends React.Component {
     }}
 
     if(this.courseIsFull()){
+
+      let notificationRequestButton = null
+      // if user not in list
+      notificationRequestButton = <button className="btn-small btn-blue mobile-full">Ole kuulolla vapautuvista paikoista</button>
+      // if user in list
+      notificationRequestButton = <button className="btn-small btn-red mobile-full">Poistu kuulolta</button>
+
       return(
-        <p className="text-red"> Tunti on jo täyteen varattu!</p>
+        <div>
+           <p className="text-red"> Tunti on jo täyteen varattu!</p>
+           {notificationRequestButton}
+        </div>
       );
     }
 
