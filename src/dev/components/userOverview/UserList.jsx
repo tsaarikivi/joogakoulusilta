@@ -17,11 +17,18 @@ class UserList extends React.Component {
 
   renderList(item) {
     const { credits } = this.props.userOverview
-    if (item.email.toUpperCase().indexOf(this.state.keyword) !== -1) {
+    let name = ""
+    if (item.firstname && item.lastname) {
+        name = (item.firstname + " " + item.lastname).toUpperCase()
+    }
+    if (
+        item.email.toUpperCase().indexOf(this.state.keyword) !== -1
+        || name.toUpperCase().indexOf(this.state.keyword) !== -1
+        ) {
       return (
         <Item key={item.uid} item={item} credits={credits[item.uid]}/>
       )
-    }    
+    }
   }
 
   activateSearch() {
@@ -47,7 +54,7 @@ class UserList extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="content-container align-left">          
+        <div className="content-container align-left">
           <h2 className="header-collapse">Käyttäjät</h2>
           {this.renderContent()}
         </div>

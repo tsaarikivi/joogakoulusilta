@@ -12,16 +12,23 @@ class UserList extends React.Component {
   }
 
   renderList(item) {
-    if (item.email.toUpperCase().indexOf(this.props.searchBar.value.toUpperCase()) !== -1) {
+    let name = ""
+    if (item.firstname && item.lastname) {
+        name = (item.firstname + " " + item.lastname).toUpperCase()
+    }
+    if (
+        item.email.toUpperCase().indexOf(this.props.searchBar.value.toUpperCase()) !== -1
+        || name.indexOf(this.props.searchBar.value.toUpperCase()) !== -1
+    ) {
       return (
         <Item key={item.key} item={item} />
       )
-    }    
+    }
   }
 
   renderContent() {
-    if (this.props.list.expanded || 
-        this.props.shopItems.phase === "cashPayment" || 
+    if (this.props.list.expanded ||
+        this.props.shopItems.phase === "cashPayment" ||
         this.props.courseInfo.key !== "0") {
       return (
         <ul className="wide-list">
@@ -48,7 +55,7 @@ class UserList extends React.Component {
   render() {
     return (
       <div className="container bordered-container">
-        <div className="content-container align-left">          
+        <div className="content-container align-left">
           <h2 className="header-collapse">Käyttäjät</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
