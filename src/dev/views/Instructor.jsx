@@ -32,7 +32,7 @@ componentWillReceiveProps(nextProps){
   if(nextProps.currentUser.locked){
     this.context.router.push('lockeduser')
   }
-  if(nextProps.currentUser.roles.instructor === true){
+  if(nextProps.currentUser.roles.instructor === true || nextProps.currentUser.roles.admin === true){
     this.allowShow = true;
   }
 }
@@ -54,7 +54,7 @@ componentWillReceiveProps(nextProps){
     } else {
       return(
         <div>
-          <p>Sinun pitää olla ohjaaja, jotta voit nähdä sivun sisällön.</p>
+          <p>Sinun pitää olla järjestelmän pääkäyttäjä, jotta voit nähdä sivun sisällön.</p>
           <p>Ota yhteys järjestelmän valvojaan lisäoikeuksien saamiseksi.</p>
        </div>
       )

@@ -28,7 +28,7 @@ class CoursesList extends React.Component {
         <th className="text-bold text-blue">{dayname}</th>
         {
           courses.map(function(item) {
-            if (item.day === dayNumber && item.instructor.key === currentUser.key) {
+            if (item.day === dayNumber) {
               return (
                 <Course key={item.key} item={item} booking={bookings[item.key]}/>
               )
@@ -43,7 +43,7 @@ class CoursesList extends React.Component {
         <th>{dayname}</th>
         {
           courses.map(function(item) {
-            if (item.day === dayNumber && item.instructor.key === currentUser.key) {
+            if (item.day === dayNumber) {
               return (
                 <Course key={item.key} item={item} booking={bookings[item.key]}/>
               )
@@ -64,7 +64,7 @@ class CoursesList extends React.Component {
       <div class="container timetable-container">
         <div className="content-container align-left">
           <h2>Aikataulu</h2>
-          <small className="text-fade margin-top margin-bottom small-info">Klikkaa tuntia avataksesi lisätiedot ja peruuttaaksesi tunnin</small>
+          <small className="text-fade margin-top margin-bottom small-info">Klikkaa tuntia avataksesi lisätiedot ja peruuttaaksesi tunti</small>
         </div>
         <table className="centered">
           <tbody>
