@@ -145,7 +145,7 @@ class CourseInfo extends React.Component {
     }}
 
     if(this.courseIsFull()){
-      notifyButton = null
+      let notifyButton = null
       // if user in notify list
       notifyButton = <button className="btn-small btn-red mobile-full">Poistu kuulolta</button>
       // if user not in list
