@@ -9,8 +9,8 @@ import * as actionCreators from '../../actions/specialCourses.js'
 class SpecialCourses extends React.Component {
 
   componentWillMount() {
-    this.props.actions.fetchSpecialCoursesBanner(this.props.currentUser.uid)
-    this.props.actions.fetchSpecialCourseBookings(this.props.currentUser.uid)     
+    this.props.actions.fetchSpecialCoursesBanner()
+    this.props.actions.fetchSpecialCourseBookings("admin")     
   }
 
   componentWillUnmount(){
@@ -29,6 +29,7 @@ class SpecialCourses extends React.Component {
       return (
         <div class="container">
           <div className="content-container">
+            <h2>Kurssit</h2>
             <ul class="narrow-list">
               {this.props.specialCoursesBanner.banner.map(this.renderSpecialCoursesBanner.bind(this))}
             </ul>
@@ -40,7 +41,8 @@ class SpecialCourses extends React.Component {
       return (
         <div class="container">
           <div className="content-container">
-            <p className="text-red">Ei tulevia erikoiskursseja. Tule myöhemmin uudelleen!</p>
+            <h2>Kurssit</h2>
+            <p className="text-red">Ei tulevia kursseja. Tule myöhemmin uudelleen!</p>
           </div>
         </div>
       )

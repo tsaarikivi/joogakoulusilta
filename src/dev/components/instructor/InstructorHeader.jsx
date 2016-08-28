@@ -17,7 +17,7 @@ class InstructorHeader extends React.Component {
       <div class="container header-container">
         <div className="content-container">
           {errorOut}
-          <h1>Opettajan sivu</h1>
+          <h1>Tuntien ja kurssien hallinnointi</h1>
         </div>
       </div>
     );
