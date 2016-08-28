@@ -33,6 +33,7 @@ class AuthManager extends React.Component {
         this.props.userActions.fetchUsersTransactions(auth.uid)
         this.props.userActions.fetchUsersBookings(auth.uid)
         this.props.userActions.fetchUsersSpecialCourseBookings(auth.uid)
+        this.props.userActions.fetchUserCourseQueue(auth.uid)
         this.userInitialized = true;
       }
       if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
@@ -52,7 +53,8 @@ class AuthManager extends React.Component {
 
   componentWillUnmount() {
     this.props.authActions.logout();
-    this.props.userActions.finishedWithUserDetails()
+    this.props.userActions.finishedWithUserDetails();
+    this.props.userActions.stopFetchUserCourseQueue(this.props.auth.uid);
   }
 
 

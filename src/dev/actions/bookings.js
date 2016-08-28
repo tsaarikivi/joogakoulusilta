@@ -7,7 +7,10 @@ import {
     LATE_BOOK_A_COURSE,
     BOOKING_ERROR,
     CANCEL_ERROR,
-    CANCEL_RESERVATION
+    CANCEL_RESERVATION,
+    ENTER_QUEUE,
+    FLAG_COURSE_INFO_TO_EXIT,
+    EXIT_QUEUE
 } from './actionTypes.js'
 
 import {
@@ -15,6 +18,71 @@ import {
     _showLoadingScreen
 } from './loadingScreen.js'
 
+export function postEnterQueue(courseInfo, weekIndex){
+    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/requestQueue' : JOOGASERVER + '/requestQueue'
+    return dispatch => {
+        dispatch({
+            type: FLAG_COURSE_INFO_TO_EXIT
+        })
+        _showLoadingScreen(dispatch, "Kirjataan sinut jonotuslistaan")
+        let now = new Date();
+        firebase.auth().currentUser.getToken(true).then(idToken => {
+            axios.post(
+                    JOOGAURL, {
+                        user: idToken,
+                        courseInfo: courseInfo,
+                        weeksForward: weekIndex
+                    })
+                .then(response => {
+                  dispatch({
+                    type: ENTER_QUEUE
+                  })
+                    _hideLoadingScreen(dispatch, "Sinut on kirjattu", true)
+                })
+                .catch(error => {
+                    console.error(error);
+                    _hideLoadingScreen(dispatch, "Kirjauksessa tapahtui virhe: " + error.data, false)
+                });
+        }).catch(error => {
+            console.error("Failde to get authentication token for current user: ", error);
+            _hideLoadingScreen(dispatch, "Kirjauksessa tapahtui virhe: " + error.toString(), false)
+        });
+
+    }
+}
+
+export function postExitQueue(courseInfo, weekIndex){
+    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/exitQueue' : JOOGASERVER + '/exitQueue'
+    return dispatch => {
+        dispatch({
+            type: FLAG_COURSE_INFO_TO_EXIT
+        })
+        _showLoadingScreen(dispatch, "Poistetaan sinut jonotuslistalta")
+        let now = new Date();
+        firebase.auth().currentUser.getToken(true).then(idToken => {
+            axios.post(
+                    JOOGAURL, {
+                        user: idToken,
+                        courseInfo: courseInfo,
+                        weeksForward: weekIndex
+                    })
+                .then(response => {
+                  dispatch({
+                    type: EXIT_QUEUE
+                  })
+                    _hideLoadingScreen(dispatch, "Sinut on poistettu listalta", true)
+                })
+                .catch(error => {
+                    console.error(error);
+                    _hideLoadingScreen(dispatch, "Poistossa tapahtui virhe: " + error.data, false)
+                });
+        }).catch(error => {
+            console.error("Failde to get authentication token for current user: ", error);
+            _hideLoadingScreen(dispatch, "Poistossa tapahtui virhe: " + error.toString(), false)
+        });
+
+    }
+}
 
 export function postCancellation(item, txRef, courseInfo) {
     var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : JOOGASERVER + '/cancelSlot'
@@ -143,6 +211,7 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
                 booking.participants.push({
                     key: user,
                     name: instanceObj[user].user,
+                    email: instanceObj[user].email || null,
                     transactionReference: instanceObj[user].transactionReference
                 });
                 if (user === uid) {

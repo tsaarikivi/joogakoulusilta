@@ -56,6 +56,14 @@ class CourseInfo extends React.Component {
 
   }
 
+  enterQueue(weekIndex){
+    this.props.bookingsActions.postEnterQueue(this.props.courseInfo, weekIndex)
+  }
+
+  exitQueue(weekIndex){
+    this.props.bookingsActions.postExitQueue(this.props.courseInfo, weekIndex)
+  }
+
   makeReservation(forward) {
     if(!this.reservationRequestOngoing){
       this.reservationRequestOngoing = true;
@@ -145,11 +153,15 @@ class CourseInfo extends React.Component {
     }}
 
     if(this.courseIsFull()){
+      const { coursequeue } = this.props.currentUser;
       let notifyButton = null
-      // if user in notify list
-      notifyButton = <button className="btn-small btn-red mobile-full">Poistu kuulolta</button>
-      // if user not in list
-      notifyButton = <button className="btn-small btn-blue mobile-full">Ole kuulolla vapautuvista paikoista</button>
+
+      if (coursequeue[this.props.courseInfo.key]) {
+        notifyButton = <button className="btn-small btn-red mobile-full" onClick={() => this.exitQueue(weekIndex)} >Poistu kuulolta</button>
+      } else {
+        notifyButton = <button className="btn-small btn-blue mobile-full" onClick={() => this.enterQueue(weekIndex)} >Ole kuulolla vapautuvista paikoista</button>
+      }
+      
       return(
         <div>
           <p className="text-red"> Tunti on jo täyteen varattu!</p>
