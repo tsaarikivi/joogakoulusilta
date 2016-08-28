@@ -71,14 +71,14 @@ export function stopSpecialCourseBookings(){
   }
 }
 
-export function fetchSpecialCoursesBanner(instructor = null) {
+export function fetchSpecialCoursesBanner() {
   var list = Object.assign([])
   var now = new Date()
   return dispatch => {
     CoursesRef.once('value', snapshot => {
       var specialCourses = snapshot.val()
       for (var key in specialCourses) {
-          if((instructor === null || specialCourses[key].instructor.uid === instructor) && specialCourses[key].date > now){
+          if(specialCourses[key].date > now){
             specialCourses[key].key = key
             list = list.concat(specialCourses[key])
           }

@@ -29,6 +29,7 @@ class SpecialCourseInfo extends React.Component {
   }
 
   renderParticipants(){
+    console.log("INFO: ", this.props);
     const { bookings } = this.props.specialCourseInfo.info
     if(bookings.counter > 0){
       return(
