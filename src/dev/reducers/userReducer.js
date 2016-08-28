@@ -4,7 +4,8 @@ import {
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS
+    UPDATE_USERS_SCBOOKINGS,
+    FETCH_USER_COURSE_QUEUE
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -29,7 +30,8 @@ const INITIAL_STATE = {
             valid: [],
             special: []
         }
-    }
+    },
+    coursequeue: {}
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -45,9 +47,11 @@ export default function(state = INITIAL_STATE, action) {
             console.error("USER_ERROR: ", action.payload)
             return Object.assign({}, state, action.payload);
         case USER_DETAILS_UPDATED_IN_DB:
-            return Object.assign({}, state, action.payload);;
+            return Object.assign({}, state, action.payload);
         case STOP_UPDATING_USER_DETAILS_FROM_DB:
             return INITIAL_STATE;
+        case FETCH_USER_COURSE_QUEUE:
+            return Object.assign({}, state, action.payload);
         default:
             return state;
     }

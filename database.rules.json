@@ -89,6 +89,14 @@
         "shopItems": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "queuebyuser": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver'"
+        },
+        "queuebycourse": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver'"
         }
     }
 }

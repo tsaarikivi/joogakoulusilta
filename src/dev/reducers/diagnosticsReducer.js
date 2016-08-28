@@ -11,6 +11,8 @@ const INITIAL_STATE = {
 
 //Add events to be included here
 var approvedEvents = {
+    ENTER_QUEUE: true,
+    EXIT_QUEUE: true,
     REMOVE_TRANSACTION: true,
     REMOVE_TRANSACTION_ERROR: true,
     REGISTER_USER: true,

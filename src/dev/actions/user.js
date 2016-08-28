@@ -10,7 +10,8 @@ import {
     SEND_FEEDBABCK,
     VERIFY_EMAIL,
     PASSWORD_RESET,
-    UPDATE_USER_DETAILS
+    UPDATE_USER_DETAILS,
+    FETCH_USER_COURSE_QUEUE
 } from './actionTypes.js'
 
 import {
@@ -343,6 +344,29 @@ export function fetchUserDetails(uid) {
                 payload: err
             })
         })
+    }
+}
+
+export function fetchUserCourseQueue(uid) {
+    return dispatch => {
+        firebase.database().ref('/queuebyuser/'+uid).on('value', snapshot => {
+            let returnObject = Object.assign({})
+            if (snapshot.val() != null) {
+                returnObject = snapshot.val()
+            }
+            dispatch({
+                type: FETCH_USER_COURSE_QUEUE,
+                payload: {coursequeue: returnObject}
+            })
+        }, err => {
+            console.error("fetching user coursequeue:", err);
+        })
+    }
+}
+
+export function stopFetchUserCourseQueue(uid) {
+    return dispatch => {
+        firebase.database().ref('/queuebyuser/'+uid).off('value')
     }
 }
 
