@@ -38,16 +38,25 @@ class TimeTableItem extends React.Component {
 
   render() {
     const { booking, item } = this.props;
+    const { coursequeue } = this.props.currentUser;
+
     var courseCancelled = null;
     if(item.cancelled){
       courseCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
     }
+
     var userBooked = null;
     if(booking){
       if(booking.user.length > 0){
          userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
       }
     }
+
+    let listening = null
+    if (coursequeue[this.props.item.key]) {
+      listening = <img className="mini-icon tiny-icon" src="./assets/ear.png" />
+    }
+
     if(booking){
       var allBooked = <span>
                         <img className="mini-icon tiny-icon" src="./assets/group.png" />
@@ -71,6 +80,7 @@ class TimeTableItem extends React.Component {
         <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
         {this.renderBooked(item, allBooked)}
         {userBooked}
+        {listening}
         {courseCancelled}
       </td>
     );

@@ -57,7 +57,9 @@
     "rebuild": "webpack && npm install",
     "dev": "webpack-dev-server --content-base public --inline --hot",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.jsx --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "build:stage": "NODE_ENV='production' webpack && firebase use stage && firebase deploy",
+    "build:production": "NODE_ENV='production' webpack && firebase use production && firebase deploy"
   },
   "repository": {
     "type": "git",
