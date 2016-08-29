@@ -52,15 +52,15 @@ class TopBar extends React.Component {
     let adminShop = null
     let userOverview = null
     let instructor = null;
+    let tests = null;
     if(roles.admin){
       admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
-      diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
       adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
       userOverview = <Link className="text-link" to="useroverview" onClick={() => this.toggleNav()}>Käyttäjälista</Link>
       instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Tuntien Hallinnointi</Link>
     }
-    let tests = null;
     if(roles.tester){
+      diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
       tests = <Link className="text-link" to="tests" onClick={() => this.toggleNav()}>Test</Link>
     }
     if(roles.instructor){
