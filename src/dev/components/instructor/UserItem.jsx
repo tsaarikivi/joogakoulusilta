@@ -4,10 +4,11 @@ export default class UserItem extends React.Component {
 
 
   render() {
-   const { name } = this.props.item
+   const { item } = this.props
     return (
       <li>
-      <p>{name}</p>
+      <p>{item.name}</p>
+      <p>{item.email}</p>
       </li>
     );
   }
