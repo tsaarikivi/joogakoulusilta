@@ -22,10 +22,10 @@ class UserItem extends React.Component {
     }
   }
 
-  executeLateReservation(){
+  executeLateReservation(backWeeks){
     if(!this.lateReservationOngoing){
       this.lateReservationOngoing = true;
-      this.props.bookingActions.postLateReservation(this.props.item.uid, 0, this.props.courseInfo)
+      this.props.bookingActions.postLateReservation(this.props.item.uid, backWeeks, this.props.courseInfo)
       this.props.courseActions.flagCourseInfoToExit()
     }
   }
@@ -42,9 +42,13 @@ class UserItem extends React.Component {
       )
     }
     if(this.props.courseInfo.key !== "0") {
+      let backWeeks = 0
+      if (this.props.backWeeks) {
+        backWeeks = this.props.backWeeks
+      }
       return (
         <span className="item-row">
-          <button className="btn-small btn-blue" onClick={() => this.executeLateReservation()}>Varaus</button>
+          <button className="btn-small btn-blue" onClick={() => this.executeLateReservation(backWeeks)}>Varaus</button>
         </span>
       )      
     }
