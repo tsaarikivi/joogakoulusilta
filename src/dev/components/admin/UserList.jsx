@@ -21,7 +21,7 @@ class UserList extends React.Component {
         || name.indexOf(this.props.searchBar.value.toUpperCase()) !== -1
     ) {
       return (
-        <Item key={item.key} item={item} />
+        <Item key={item.key} item={item} backWeeks={this.props.backWeeks}/>
       )
     }
   }

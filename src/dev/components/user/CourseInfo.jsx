@@ -197,13 +197,16 @@ class CourseInfo extends React.Component {
   }
 
   renderLateBooking(weekIndex){
+    let weeks = 0
+    let backWeeks = 0
     if(weekIndex === 0){
-      return(<div></div>)  //Course booking is still open.
+      weeks = -1
+      backWeeks = 1
     }
     const { courseInfo } = this.props;
     const { instructor, admin } = this.props.currentUser.roles
 
-    let day = getCourseTimeLocal(0, courseInfo.start, courseInfo.day);
+    let day = getCourseTimeLocal(weeks, courseInfo.start, courseInfo.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
     if(instructor || admin){
@@ -221,7 +224,7 @@ class CourseInfo extends React.Component {
             <div className="content-container">
               <h3> Valitse käyttäjä, jolle varaus suoritetaan.</h3>
             </div>
-            <UserList />
+            <UserList backWeeks={backWeeks}/>
           </div>
         )
       }
