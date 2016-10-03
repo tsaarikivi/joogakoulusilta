@@ -20,6 +20,7 @@ class SearchBar extends React.Component {
   handleKeys(event) {
     if(event.keyCode === 13) {
       event.preventDefault()
+      document.getElementById("search-btn").click()
     }
   }
 

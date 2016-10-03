@@ -44,7 +44,7 @@ class UserList extends React.Component {
             <div className="halved-container">
               <SearchBar />
             </div>
-            <button className="btn-small btn-blue search-btn" onClick={() => this.activateSearch()}>{searchButtonText}</button>
+            <button className="btn-small btn-blue search-btn" id="search-btn" onClick={() => this.activateSearch()}>{searchButtonText}</button>
           </span>
           {userList.map(this.renderList.bind(this))}
         </ul>
