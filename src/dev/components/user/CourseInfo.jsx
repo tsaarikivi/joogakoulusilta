@@ -212,8 +212,8 @@ class CourseInfo extends React.Component {
     if(instructor || admin){
       if(!this.lateReservationRequestOngoing){
         return(
-          <div className="content-container">
-            <button className="btn-small btn-blue mobile-full" onClick={() => this.makeLateReservation(0)} >
+          <div>
+            <button className="btn-small btn-green mobile-full" onClick={() => this.makeLateReservation(0)} >
                 Myöhäinen varaus: { dayStr }
             </button>
           </div>
@@ -265,8 +265,8 @@ class CourseInfo extends React.Component {
                 {this.renderReservationButton(courseInfo, day, dayStr, weekIndex)}
               </div>
               <p className="info-desc pre-wrap">{courseInfo.courseType.desc}</p>
-            </div>
               {this.renderLateBooking(weekIndex)}
+            </div>
           </div>
         </div>
       )
