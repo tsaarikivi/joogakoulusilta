@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 
 import * as authActionCreators from '../../actions/auth.js'
 import * as userActionCreators from '../../actions/user.js'
-import {getDayStr,getTimeStr} from '../../helpers/timeHelper.js'
+import { getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
 import Tickets from './Tickets.jsx'
 
-class TopBar extends React.Component {  
+class TopBar extends React.Component {
 
   renderTickets() {
     return (
@@ -17,25 +17,25 @@ class TopBar extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({navOpen: false})
+    this.setState({ navOpen: false })
   }
 
   toggleNav() {
     if (this.state.navOpen) {
-      this.setState({navOpen: false})
+      this.setState({ navOpen: false })
       document.getElementById("nav-btn").classList.remove("mobile-hidden")
       document.getElementById("nav-menu").classList.add("mobile-hidden")
       document.getElementById("tickets-info").classList.add("mobile-hidden")
     } else {
-      this.setState({navOpen: true})
+      this.setState({ navOpen: true })
       document.getElementById("nav-btn").classList.add("mobile-hidden")
       document.getElementById("nav-menu").classList.remove("mobile-hidden")
       document.getElementById("tickets-info").classList.remove("mobile-hidden")
     }
   }
 
-  handleLogout(){
-    if(this.props.auth.uid){
+  handleLogout() {
+    if (this.props.auth.uid) {
       this.props.authActions.logout();
     }
     else {
@@ -45,7 +45,7 @@ class TopBar extends React.Component {
 
   render() {
 
-    const { roles, firstname, locked } = this.props.curUsr; 
+    const { roles, firstname, locked } = this.props.curUsr;
 
     let admin = null
     let diagnostics = null
@@ -53,52 +53,49 @@ class TopBar extends React.Component {
     let userOverview = null
     let instructor = null;
     let tests = null;
-    if(roles.admin){
+    if (roles.admin) {
       admin = <Link className="text-link" to="admin" onClick={() => this.toggleNav()}>Admin</Link>
       adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
       userOverview = <Link className="text-link" to="useroverview" onClick={() => this.toggleNav()}>Käyttäjälista</Link>
       instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Tuntien Hallinnointi</Link>
     }
-    if(roles.tester){
+    if (roles.tester) {
       diagnostics = <Link className="text-link" to="diagnostics" onClick={() => this.toggleNav()}>Diagnostiikka</Link>
       tests = <Link className="text-link" to="tests" onClick={() => this.toggleNav()}>Test</Link>
     }
-    if(roles.instructor){
+    if (roles.instructor) {
       adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
     }
 
     if (this.props.curUsr.key != '0') {
-      if(locked){
-        return(
-        <nav class="user-header-container">
-          <div className="align-right">
-            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
-          </div>
-          <div className="content-container">
-            {this.renderTickets()}
-            <div className="userinfo-container mobile-hidden" id="nav-menu">
-              <div className="mobile-row">
-                <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
+      if (locked) {
+        return (
+          <nav class="user-header-container">
+            <div className="align-right">
+              <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()} />
+            </div>
+            <div className="content-container">
+              {this.renderTickets()}
+              <div className="userinfo-container mobile-hidden" id="nav-menu">
+                <div className="mobile-row">
+                  <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
-          
+          </nav>
+
         )
       }
       return (
         <nav class="user-header-container">
           <div className="align-right">
-            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
+            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()} />
           </div>
           <div className="content-container">
             {this.renderTickets()}
             <div className="userinfo-container mobile-hidden" id="nav-menu">
               <div className="mobile-row">
                 <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Joogatunnit & varaukset</Link>
-              </div>
-              <div className="mobile-row">
-                <Link className="text-link" to="specialCourses" onClick={() => this.toggleNav()}>Kurssit</Link>
               </div>
               <div className="mobile-row">
                 {instructor}
@@ -137,7 +134,7 @@ class TopBar extends React.Component {
     } else {
       return <div></div>
     }
-    
+
   }
 
 }
