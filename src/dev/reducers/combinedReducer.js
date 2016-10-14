@@ -39,6 +39,7 @@ import TermsReducer from './termsReducer.js'
 import DiagnosticsReducer from './diagnosticsReducer.js'
 import UserOverviewReducer from './UserOverviewReducer.js'
 import DiagnosticsViewerReducer from './diagnosticsViewerReducer.js'
+import history from './historyReducer.js'
 
 const combinedReducer = combineReducers({
     userOverview: UserOverviewReducer,
@@ -75,7 +76,8 @@ const combinedReducer = combineReducers({
     termsList: TermsListReducer,
     termsForm: TermsFormReducer,
     diagnostics: DiagnosticsReducer,
-    ddata: DiagnosticsViewerReducer
+    ddata: DiagnosticsViewerReducer,
+    history: history
 })
 
 export default combinedReducer;
