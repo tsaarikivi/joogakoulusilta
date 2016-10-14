@@ -1,12 +1,10 @@
 import React from 'react'
 
-import HistoryStatus from './HistoryStatus.jsx'
-
 export default class HistoryItem extends React.Component {
 
     render() {
         return <li className="history-item">
-            {this.renderCourseName()}
+            <span className="history-course">{this.props.item.courseName}</span> <span>({this.props.item.weekday} {this.props.item.time})</span>
             <ul className="history-item-list">
                 {this.renderItem()}
             </ul>
@@ -14,20 +12,11 @@ export default class HistoryItem extends React.Component {
     }
 
     renderItem() {
-        const { item } = this.props
         let ret = []
-        Object.keys(item).forEach(key => {
-            let obj = item[key];
-            let len = Object.keys(obj).length
-            ret.push(<HistoryStatus amt={len} key={key} />)
+        let i = 0
+        this.props.item.data.map(amt => {
+            ret.push(<li key={i++} className="history-amt">{amt}</li>)
         })
-        return ret.reverse()
-    }
-
-    renderCourseName() {
-        const { item } = this.props
-        const people = item[Object.keys(item)[0]]
-        const courseName = people[Object.keys(people)[0]].courseName
-        return <div className="history-course">{courseName}</div>
+        return ret
     }
 }
