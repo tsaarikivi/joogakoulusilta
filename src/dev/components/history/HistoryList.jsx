@@ -31,7 +31,6 @@ export default class HistoryList extends React.Component {
                 let o = obj[a]
                 data.push(Object.keys(o).length)
             })
-            data.reverse()
             const r = {
                 data,
                 weekday,
