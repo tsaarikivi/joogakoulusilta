@@ -7,10 +7,10 @@ export default class HistoryItem extends React.Component {
     render() {
         return <li className="history-item">
             <span className="history-course">{this.props.item.courseName}</span> <span>({this.props.item.weekday} {this.props.item.time})</span>
-            <ul className="history-item-list">
-                <small className="text-fade">keskiarvolla : {this.renderAverage()}</small>
+            <div className="history-item-list">
+                <small className="text-fade">keskiarvolla : {this.renderAverage()}</small> <small className="text-fade">viimeisimmät : {this.renderLast()}</small>
                 {this.renderItem()}
-            </ul>
+            </div>
         </li>
     }
 
@@ -28,5 +28,10 @@ export default class HistoryItem extends React.Component {
             sum += amt
         })
         return Number(sum / this.props.item.data.length).toFixed(2)
+    }
+
+    renderLast() {
+        let { data } = this.props.item
+        return data.slice(Math.max(data.length - 5, 0)).toString()
     }
 }
