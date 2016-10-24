@@ -242,11 +242,9 @@ class CourseInfo extends React.Component {
     }
 
     let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
-    let dayStatic = getCourseTimeLocal(0, courseInfo.start, courseInfo.day);
-    let dayStr = getDayStr(dayStatic) + " " + getTimeStr(dayStatic);
+    let dayStr = getDayStr(day) + " " + getTimeStr(day);
     let end = getCourseTimeLocal(weekIndex, courseInfo.end, courseInfo.day);
-    let endStatic = getCourseTimeLocal(0, courseInfo.end, courseInfo.day);
-    let endStr = getTimeStr(endStatic);
+    let endStr = getTimeStr(end);
 
     if (this.props.courseInfo.key !== "0") {
       return (
