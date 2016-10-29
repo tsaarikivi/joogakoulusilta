@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from "react-router"
 
-import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
+import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr, getTimeStrMsBeginnignOfDay, getWeekday } from '../../helpers/timeHelper.js'
 import { removeCourseInfo } from '../../actions/courses.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 import UserList from '../admin/UserList.jsx'
@@ -208,7 +208,7 @@ class CourseInfo extends React.Component {
     const { instructor, admin } = this.props.currentUser.roles
 
     let day = getCourseTimeLocal(weeks, courseInfo.start, courseInfo.day);
-    let dayStr = getDayStr(day) + " " + getTimeStr(day);
+    let dayStr = getDayStr(day)
 
     if (instructor || admin) {
       if (!this.lateReservationRequestOngoing) {
@@ -242,9 +242,7 @@ class CourseInfo extends React.Component {
     }
 
     let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
-    let dayStr = getDayStr(day) + " " + getTimeStr(day);
-    let end = getCourseTimeLocal(weekIndex, courseInfo.end, courseInfo.day);
-    let endStr = getTimeStr(end);
+    let dayStr = getWeekday(courseInfo.day) + " " + getTimeStrMsBeginnignOfDay(courseInfo.start) + " - " + getTimeStrMsBeginnignOfDay(courseInfo.end);
 
     if (this.props.courseInfo.key !== "0") {
       return (
@@ -254,7 +252,7 @@ class CourseInfo extends React.Component {
             <div className="info-info-container">
               <h3>{courseInfo.courseType.name}</h3>
               <div className="surrounded-border">
-                <p className="info-line border-bottom">Aika: {dayStr}- {endStr}</p>
+                <p className="info-line border-bottom">Aika: {dayStr}</p>
                 <p className="info-line border-bottom">Sijainti: {courseInfo.place.name}, {courseInfo.place.address}</p>
                 <p className="info-line">Joogaopettaja: {courseInfo.instructor.firstname} {courseInfo.instructor.lastname}</p>
               </div>

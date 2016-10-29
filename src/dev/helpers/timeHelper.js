@@ -55,17 +55,17 @@ export function getCourseTimeLocal(weeksForward, timeOfStart, dayNumber) {
     return courseTime;
 }
 
-export function daysLeft(time){
+export function daysLeft(time) {
     let today = new Date();
     let duration = 0;
     let daysLeft = 0;
-    if(time != 0){
-      duration = time - today.getTime()
-      return Math.round(duration / (24*60*60*1000))
+    if (time != 0) {
+        duration = time - today.getTime()
+        return Math.round(duration / (24 * 60 * 60 * 1000))
     } else {
-      return 0;
+        return 0;
     }
-  }
+}
 
 export function getDayStrMs(ms) {
     let day = new Date();
@@ -116,6 +116,11 @@ export function getDayStr(day) {
     let weekday = day.getDay();
     let weekdays = ['sunnuntai', 'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai']
     return weekdays[weekday] + " " + day.getDate() + "." + month + "." + day.getFullYear()
+}
+
+export function getWeekday(dayNum) {
+    const weekdays = ['maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai', 'sunnuntai']
+    return weekdays[dayNum - 1]
 }
 
 export function getTimeStr(day) {
