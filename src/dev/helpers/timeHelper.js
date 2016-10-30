@@ -97,7 +97,7 @@ export function toHplusMfromMs(ms) {
 
 export function getTimeStrMsBeginnignOfDay(ms) {
     let day = new Date();
-    day.setHours(0);
+    day.setHours(1);
     day.setMinutes(0);
     day.setSeconds(0);
     day.setMilliseconds(0);
