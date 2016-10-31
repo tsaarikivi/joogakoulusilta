@@ -6,18 +6,18 @@ import ValidItem from './ValidItem.jsx'
 
 export default class UserItem extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
     this.counter = 0;
   }
 
-  renderCredits(){
+  renderCredits() {
     const { credits } = this.props
-    if(credits){
-      let firstExpires = (credits.firstexpire !== 0)? ", josta kaikki tai osa vanhenee " + getDayStrMs(credits.firstexpire) : ""
-      return(
+    if (credits) {
+      let firstExpires = (credits.firstexpire !== 0) ? ", josta kaikki tai osa vanhenee " + getDayStrMs(credits.firstexpire) : ""
+      return (
         <div>
-          <p className="text-fade">Kertoja: {credits.count}{firstExpires}</p> 
+          <p className="text-fade">Kertoja: {credits.count}{firstExpires}</p>
           <p className="text-fade">Päiviä: {daysLeft(credits.time)}</p>
         </div>
       )
@@ -50,9 +50,9 @@ export default class UserItem extends React.Component {
     return null
   }
 
-  renderSpecialItem(special){
+  renderSpecialItem(special) {
     const { item } = this.props
-    if( (special.shopItem.date - Date.now()) >= 0 ) {
+    if ((special.shopItem.date - Date.now()) >= 0) {
       return (
         <SpecialItem key={this.counter++} item={special} user={item.uid} />
       )
@@ -60,12 +60,12 @@ export default class UserItem extends React.Component {
     return null
   }
 
-  renderSpecials(){
+  renderSpecials() {
     const { credits } = this.props
-    if(credits){
+    if (credits) {
       const { special } = credits.details
-      if(special.length > 0){
-        return(
+      if (special.length > 0) {
+        return (
           <div>
             <p className="text-bold">Ostetut kurssit: (yht. {special.length})</p>
             <ul className="wide-list">
@@ -80,13 +80,15 @@ export default class UserItem extends React.Component {
 
   render() {
     const {item} = this.props
+    /**
+     * {this.renderValidTransactions()}
+        {this.renderSpecials()}
+     */
     return (
       <li className="text-list-item">
         <span className="item-row">{item.firstname} {item.lastname}</span>
         <span className="item-row">{item.email}</span>
         {this.renderCredits()}
-        {this.renderValidTransactions()}
-        {this.renderSpecials()}
       </li>
     )
   }
