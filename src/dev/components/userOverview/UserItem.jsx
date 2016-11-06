@@ -80,15 +80,13 @@ export default class UserItem extends React.Component {
 
   render() {
     const {item} = this.props
-    /**
-     * {this.renderValidTransactions()}
-        {this.renderSpecials()}
-     */
     return (
       <li className="text-list-item">
         <span className="item-row">{item.firstname} {item.lastname}</span>
         <span className="item-row">{item.email}</span>
         {this.renderCredits()}
+        {this.renderValidTransactions()}
+        {this.renderSpecials()}
       </li>
     )
   }
