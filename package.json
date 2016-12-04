@@ -56,7 +56,7 @@
   },
   "scripts": {
     "rebuild": "webpack && npm install",
-    "dev": "webpack-dev-server --content-base public --inline --hot",
+    "start": "webpack-dev-server --content-base public --inline --hot",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.jsx --recursive ./test",
     "test:watch": "npm run test -- --watch",
     "deploy:stage": "NODE_ENV='production' webpack && firebase use stage && firebase deploy",
