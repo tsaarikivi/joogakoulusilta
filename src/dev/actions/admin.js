@@ -92,21 +92,27 @@ function _fetchUserList(dispatch) {
                 }
             }
             userList.sort((a, b) => {
-                return a.firstname.toUpperCase() < - b.firstname.toUpperCase()
+                if (a.firstname && b.firstname)
+                    return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+                return -1
             });
             dispatch({
                 type: FETCH_USER_LIST,
                 payload: userList
             });
             adminList.sort((a, b) => {
-                return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+                if (a.firstname && b.firstname)
+                    return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+                return -1
             });
             dispatch({
                 type: FETCH_ADMIN_LIST,
                 payload: adminList
             });
             instructorList.sort((a, b) => {
-                return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+                if (a.firstname && b.firstname)
+                    return a.firstname.toUpperCase() - b.firstname.toUpperCase()
+                return -1
             });
             dispatch({
                 type: FETCH_INSTRUCTOR_LIST,
@@ -364,8 +370,8 @@ export function fetchTermsList() {
             var termItems = snapshot.val()
             list = Object.assign([])
             for (var key in termItems) {
-                    termItems[key].key = key
-                    list = list.concat(termItems[key])
+                termItems[key].key = key
+                list = list.concat(termItems[key])
             }
             returnObject = Object.assign({}, {
                 list: list
@@ -539,21 +545,21 @@ export function modifySpecialCourse(data, key, courseType, place, instructor) {
     const taxamount = data.price - beforetax
 
     return dispatch => {
-                firebase.database().ref('/specialCourses/' + key).update({
-                    start: toMilliseconds(parseInt(data.start)),
-                    end: toMilliseconds(parseInt(data.end)),
-                    maxCapacity: parseInt(data.maxCapacity),
-                    date: data.date + toMilliseconds(parseInt(data.start)),
-                    price: Number(data.price.toFixed(2)),
-                    taxpercent: Number(data.taxpercent.toFixed(2)),
-                    taxamount: Number(taxamount.toFixed(2)),
-                    beforetax: Number(beforetax.toFixed(2)),
-                    place: place,
-                    instructor: instructor,
-                    courseType: courseType,
-                    type: "special",
-                    title: data.title
-                })
+        firebase.database().ref('/specialCourses/' + key).update({
+            start: toMilliseconds(parseInt(data.start)),
+            end: toMilliseconds(parseInt(data.end)),
+            maxCapacity: parseInt(data.maxCapacity),
+            date: data.date + toMilliseconds(parseInt(data.start)),
+            price: Number(data.price.toFixed(2)),
+            taxpercent: Number(data.taxpercent.toFixed(2)),
+            taxamount: Number(taxamount.toFixed(2)),
+            beforetax: Number(beforetax.toFixed(2)),
+            place: place,
+            instructor: instructor,
+            courseType: courseType,
+            type: "special",
+            title: data.title
+        })
     }
 }
 
